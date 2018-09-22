@@ -1,0 +1,8 @@
+.idea
+db
+node_modules
+rpi_router.log
+outgoing_queue_data
+coverage
+incoming_queue_data
+router_log.txt
