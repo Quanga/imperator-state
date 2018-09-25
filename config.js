@@ -4,6 +4,8 @@
 
 const path = require('path');
 const fs = require('fs');
+var serveStatic = require('serve-static');
+
 
 /***********************************************************
  default to the test .env file to load environment variables
@@ -51,6 +53,13 @@ module.exports = {
 		persist: false,
 		secure: false
 	},
+	web: {
+		routes: {
+			// To serve static at '/'
+			'/': serveStatic(process.env.SERVE_STATIC_PATH)
+		}
+	},
+
 	endpoints: (process.env.HAPPNER_REPLICATION_ENABLED == 'true' ? {
 		edgeMesh: { // remote mesh node
 			config: {
@@ -94,13 +103,18 @@ module.exports = {
 			construct: {
 				type: "async",
 				name: "Queue",
-				parameters: [
-					{name: "options", required: true, value: process.env.ROUTER_INCOMING_QUEUE_DIR},
-					{
-						name: "cb", required: true, value: function (err) {
-							if (err)throw err;
-						}
+				parameters: [{
+					name: "options",
+					required: true,
+					value: process.env.ROUTER_INCOMING_QUEUE_DIR
+				},
+				{
+					name: "cb",
+					required: true,
+					value: function (err) {
+						if (err) throw err;
 					}
+				}
 				]
 			}
 		},
@@ -109,13 +123,18 @@ module.exports = {
 			construct: {
 				type: "async",
 				name: "Queue",
-				parameters: [
-					{name: "options", required: true, value: process.env.ROUTER_OUTGOING_QUEUE_DIR},
-					{
-						name: "cb", required: true, value: function (err) {
-							if (err)throw err;
-						}
+				parameters: [{
+					name: "options",
+					required: true,
+					value: process.env.ROUTER_OUTGOING_QUEUE_DIR
+				},
+				{
+					name: "cb",
+					required: true,
+					value: function (err) {
+						if (err) throw err;
 					}
+				}
 				]
 			}
 		},
@@ -151,6 +170,8 @@ module.exports = {
 		}
 	},
 	components: {
+
+
 		portService: {},
 		portUtil: {
 			$configure: function (portUtilConfig) {

@@ -17,20 +17,20 @@ App.prototype.start = function ($happn) {
 			.then(() => {
 				return $happn.exchange.portService.initialise();
 			})
-			.then(()=>{
+			.then(() => {
 				return $happn.exchange.packetRepository.initialise();
 			})
-			.then(()=>{
+			.then(() => {
 				return $happn.exchange.nodeRepository.initialise();
 			})
-			.then( ()=> {
+			.then(() => {
 				return $happn.exchange.queueService.watchIncomingQueue();
 			})
 			.then(function () {
 				return $happn.exchange.queueService.watchOutgoingQueue();
 			})
 			.then(function () {
-				$happn.exchange.transmissionService.initialise();
+				return $happn.exchange.transmissionService.initialise();
 			})
 			.then(() => {
 				$happn.log.info("READY!");
@@ -38,13 +38,10 @@ App.prototype.start = function ($happn) {
 			})
 			.catch((err) => {
 				$happn.log.error("start error", err);
-				quit(err);
-
 				reject(err);
+				quit(err);
 			});
 	});
-
-	
 };
 
 

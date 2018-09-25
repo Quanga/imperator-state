@@ -27,7 +27,7 @@ ServerHelper.prototype.startServer = function () {
 		setTimeout(() => {
 			resolve();
 		}, 5000);
-	})
+	});
 };
 
 ServerHelper.prototype.stopServer = function () {

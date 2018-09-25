@@ -3,7 +3,9 @@ const async = require('async');
 
 describe("0x08-IBC-data-request-test", function () {
 
-	require('dotenv').config({path: './test/.env-test'});
+	require('dotenv').config({
+		path: './test/.env-test'
+	});
 
 	var ServerHelper = require('../helpers/server_helper');
 	var serverHelper = new ServerHelper();
@@ -76,10 +78,10 @@ describe("0x08-IBC-data-request-test", function () {
 
 	it('can send a key switch disarmed on IBC 8', function (done) {
 
-		var PacketBuilder = require('../../lib/builders/packet_builder');
-		var packetBuilder = new PacketBuilder();
-		var StringBuilder = require('../../lib/builders/string_builder');
-		var stringBuilder = new StringBuilder();
+		const PacketBuilder = require('../../lib/builders/packet_builder');
+		const packetBuilder = new PacketBuilder();
+		const StringBuilder = require('../../lib/builders/string_builder');
+		const stringBuilder = new StringBuilder();
 
 		async.waterfall([
 
@@ -96,11 +98,11 @@ describe("0x08-IBC-data-request-test", function () {
                  */
 
 				//data
-				var deviceId = packetBuilder.createDeviceIdData(8);
-				var deviceType = packetBuilder.createDeviceTypeData(0);
-				var rawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 0, 1, 0]); // key switch disarmed, isolation relay on
+				let deviceId = packetBuilder.createDeviceIdData(8);
+				let deviceType = packetBuilder.createDeviceTypeData(0);
+				let rawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 0, 1, 0]); // key switch disarmed, isolation relay on
 
-				var deviceData = stringBuilder
+				let deviceData = stringBuilder
 					.append(deviceId)
 					.to(deviceType)
 					.and(rawData)
@@ -110,7 +112,7 @@ describe("0x08-IBC-data-request-test", function () {
 				var message = packetBuilder
 					.withStart('AAAA')
 					.withCommand(8) // the command we're testing - 0x08
-					.withSerial(8)  // IBC serial 8
+					.withSerial(8) // IBC serial 8
 					.withDeviceData(deviceData)
 					.build();
 
@@ -132,7 +134,9 @@ describe("0x08-IBC-data-request-test", function () {
 								return cb(new Error('Empty result!'));
 
 							var ibc = result[0];
-							cb(null, {ibc: ibc});
+							cb(null, {
+								ibc: ibc
+							});
 
 						})
 						.catch(function (err) {
@@ -142,7 +146,6 @@ describe("0x08-IBC-data-request-test", function () {
 				}, 5000);
 			}
 		], function (err, result) {
-
 			if (err)
 				return done(err);
 
@@ -163,10 +166,10 @@ describe("0x08-IBC-data-request-test", function () {
 
 	it('can send a key switch armed on IBC 8', function (done) {
 
-		var PacketBuilder = require('../../lib/builders/packet_builder');
-		var packetBuilder = new PacketBuilder();
-		var StringBuilder = require('../../lib/builders/string_builder');
-		var stringBuilder = new StringBuilder();
+		let PacketBuilder = require('../../lib/builders/packet_builder');
+		let packetBuilder = new PacketBuilder();
+		let StringBuilder = require('../../lib/builders/string_builder');
+		let stringBuilder = new StringBuilder();
 
 		async.waterfall([
 
@@ -198,7 +201,7 @@ describe("0x08-IBC-data-request-test", function () {
 				var message = packetBuilder
 					.withStart('AAAA')
 					.withCommand(8) // the command we're testing - 0x08
-					.withSerial(8)  // IBC serial 8
+					.withSerial(8) // IBC serial 8
 					.withDeviceData(deviceData)
 					.build();
 
@@ -220,7 +223,9 @@ describe("0x08-IBC-data-request-test", function () {
 								return cb(new Error('Empty result!'));
 
 							var ibc = result[0];
-							cb(null, {ibc: ibc});
+							cb(null, {
+								ibc: ibc
+							});
 
 						})
 						.catch(function (err) {
@@ -287,7 +292,7 @@ describe("0x08-IBC-data-request-test", function () {
 				var message = packetBuilder
 					.withStart('AAAA')
 					.withCommand(8) // the command we're testing - 0x08
-					.withSerial(8)  // IBC serial 8
+					.withSerial(8) // IBC serial 8
 					.withDeviceData(deviceData)
 					.build();
 
@@ -329,7 +334,7 @@ describe("0x08-IBC-data-request-test", function () {
 				var message = packetBuilder
 					.withStart('AAAA')
 					.withCommand(8) // the command we're testing - 0x08
-					.withSerial(8)  // IBC serial 8
+					.withSerial(8) // IBC serial 8
 					.withDeviceData(deviceData)
 					.build();
 
@@ -351,7 +356,9 @@ describe("0x08-IBC-data-request-test", function () {
 								return cb(new Error('Empty result!'));
 
 							var ibc = result[0];
-							cb(null, {ibc: ibc});
+							cb(null, {
+								ibc: ibc
+							});
 
 						})
 						.catch(function (err) {
@@ -384,7 +391,6 @@ describe("0x08-IBC-data-request-test", function () {
 		async.waterfall([
 
 			function (cb) {
-
 				var message = 'aaaa0a08000d05428447';
 
 				serialPortHelper.sendMessage(message)
@@ -409,7 +415,6 @@ describe("0x08-IBC-data-request-test", function () {
 						.catch(function (err) {
 							cb(err);
 						});
-
 				}, 5000);
 			}
 		], function (err, result) {
