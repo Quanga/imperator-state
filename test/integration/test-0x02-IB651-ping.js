@@ -24,17 +24,31 @@ describe("IB651-ping-request-test", function () {
 	var serialPortHelper = new SerialPortHelper();
 
 	this.timeout(30000);
+	
+	const SerailPortService = require('../../lib/services/serial_port_service');
+	let serialPortService = new SerailPortService;
+	
+	
+	const MockHappn = require('../mocks/mock_happn');
+	let mockHappn = null;
 
-	before('setup virtual serial ports', function (done) {
-
-		serialPortHelper.initialise()
-			.then(() => {
-				done();
-			})
-			.catch(err => {
-				done(err);
-			});
+	before('setup comm port', function(done){
+		mockHappn = new MockHappn();
+		serialPortService.initialise(mockHappn).then(done());
 	});
+
+
+
+	// before('setup virtual serial ports', function (done) {
+
+	// 	serialPortHelper.initialise()
+	// 		.then(() => {
+	// 			done();
+	// 		})
+	// 		.catch(err => {
+	// 			done(err);
+	// 		});
+	// });
 
 	before('start test server', function (done) {
 

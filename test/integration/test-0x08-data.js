@@ -19,17 +19,29 @@ describe("0x08-IBC-data-request-test", function () {
 	var SerialPortHelper = require('../helpers/serial_port_helper');
 	var serialPortHelper = new SerialPortHelper();
 
+	const SerailPortService = require('../../lib/services/serial_port_service');
+	let serialPortService = new SerailPortService;
+	
+	
+	const MockHappn = require('../mocks/mock_happn');
+	let mockHappn = null;
+
 	this.timeout(30000);
 
-	before('setup virtual serial ports', function (done) {
+	// before('setup virtual serial ports', function (done) {
 
-		serialPortHelper.initialise()
-			.then(() => {
-				done();
-			})
-			.catch(err => {
-				done(err);
-			});
+	// 	serialPortHelper.initialise()
+	// 		.then(() => {
+	// 			done();
+	// 		})
+	// 		.catch(err => {
+	// 			done(err);
+	// 		});
+	// });
+
+	before('setup comm port', function(done){
+		mockHappn = new MockHappn();
+		serialPortService.initialise(mockHappn).then(done());
 	});
 
 	before('start test server', function (done) {

@@ -1,13 +1,13 @@
 var SerialPort = require('serialport');
-const rslv = require('path').resolve;
+//const rslv = require('path').resolve;
 var spawn = require('child_process').spawn;
 
 function SerialPortHelper() {
 	require('dotenv').config({path: './test/.env-test'});
 
 	// rewrite the ports to match the virtual ports
-	process.env.TEST_OUTGOING_PORT = rslv('./ttyV0');
-	process.env.ROUTER_SERIAL_PORT = rslv('./ttyV1');
+	//process.env.TEST_OUTGOING_PORT = rslv('./ttyV0');
+	//process.env.ROUTER_SERIAL_PORT = rslv('./ttyV1');
 }
 
 SerialPortHelper.prototype.initialise = function () {
@@ -104,7 +104,7 @@ SerialPortHelper.prototype.sendMessage = function (message) {
 						resolve();
 					}, 1000);
 				});
-			})
+			});
 		});
 	});
 };
