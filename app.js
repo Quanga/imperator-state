@@ -4,16 +4,16 @@
 
 function App() {}
 
-App.prototype.start = function ($happn) {
+App.prototype.start = function($happn) {
 	$happn.log.info("READY!");
 
-
-	var quit = function (err) {
+	var quit = function(err) {
 		process.exit(err.code || 1);
 	};
 
 	return new Promise((resolve, reject) => {
-		$happn.exchange.queueService.initialise()
+		$happn.exchange.queueService
+			.initialise()
 			.then(() => {
 				return $happn.exchange.portService.initialise();
 			})
@@ -24,25 +24,30 @@ App.prototype.start = function ($happn) {
 				return $happn.exchange.nodeRepository.initialise();
 			})
 			.then(() => {
-				return $happn.exchange.queueService.watchIncomingQueue();
+				$happn.exchange.queueService.watchIncomingQueue();
 			})
-			.then(function () {
-				return $happn.exchange.queueService.watchOutgoingQueue();
+			.then(() => {
+				$happn.log.info("watch incoming started");
 			})
-			.then(function () {
-				return $happn.exchange.transmissionService.initialise();
+			.then(function() {
+				$happn.exchange.queueService.watchOutgoingQueue();
+			})
+			.then(function() {
+				$happn.exchange.transmissionService.initialise();
+			})
+			.then(function() {
+				$happn.exchange.packetSimulatorService.initialise();
 			})
 			.then(() => {
 				$happn.log.info("READY!");
 				resolve();
 			})
-			.catch((err) => {
+			.catch(err => {
 				$happn.log.error("start error", err);
 				reject(err);
 				quit(err);
 			});
 	});
 };
-
 
 module.exports = App;

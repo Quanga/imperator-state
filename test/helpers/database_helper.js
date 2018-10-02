@@ -3,73 +3,75 @@
  */
 
 function DatabaseHelper() {
-
-	var MockHappn = require('../mocks/mock_happn');
+	var MockHappn = require("../mocks/mock_happn");
 	this.__mockHappn = new MockHappn();
 
-	var NodeRepository = require('../../lib/repositories/node_repository');
+	var NodeRepository = require("../../lib/repositories/node_repository");
 	this.__nodeRepository = new NodeRepository();
 
-	this.__nodeRepository.initialise(this.__mockHappn, function (err) {
-		if (err)
-			console.log('### DATABASEHELPER INITIALISE ERROR!: ' + err);
-	});
+	try {
+		this.__nodeRepository
+			.initialise(this.__mockHappn)
+			.then(console.log("### DATABASEHELPER INITIALISE PASS!"));
+	} catch (err) {
+		console.log("### DATABASEHELPER INITIALISE ERROR!: " + err);
+	}
 }
 
-DatabaseHelper.prototype.clearDatabase = function () {
-
+DatabaseHelper.prototype.clearDatabase = function() {
 	var self = this;
 
-	return new Promise(function (resolve, reject) {
+	return new Promise(function(resolve, reject) {
+		console.log(":: CLEARING DATABASE....");
 
-		console.log(':: CLEARING DATABASE....');
+		self.__nodeRepository
+			.deleteNodeData(self.__mockHappn)
+			.then(() => {
+				resolve();
+			})
+			.catch(err => {
+				reject(err);
+			});
 
-		self.__nodeRepository.deleteNodeData(self.__mockHappn, function (err) {
-			if (err)
-				return reject(err);
-
-			resolve();
-		});
+		//resolve();
 	});
 };
 
-DatabaseHelper.prototype.getNodeData = function () {
-
+DatabaseHelper.prototype.getNodeData = function() {
 	var self = this;
 
-	return new Promise(function (resolve, reject) {
-		self.__nodeRepository.getNodeData(self.__mockHappn, function (err, result) {
-			if (err)
-				return reject(err);
-
-			resolve(result);
-		});
+	return new Promise(function(resolve, reject) {
+		self.__nodeRepository
+			.getNodeData(self.__mockHappn)
+			.then(result => resolve(result))
+			.catch(err => {
+				reject(err);
+			});
 	});
 };
 
-DatabaseHelper.prototype.getNodeTreeData = function (serial, typeId) {
-
+DatabaseHelper.prototype.getNodeTreeData = function(serial, typeId) {
 	var self = this;
 
-	return new Promise(function (resolve, reject) {
-		self.__nodeRepository.findNodeTreeData(self.__mockHappn, serial, typeId, function (err, result) {
-			if (err)
-				return reject(err);
-
-			resolve(result);
-		});
+	return new Promise(function(resolve, reject) {
+		self.__nodeRepository
+			.findNodeTreeData(self.__mockHappn, serial, typeId)
+			.then(result => resolve(result))
+			.catch(err => {
+				reject(err);
+			});
 	});
-
 };
 
-DatabaseHelper.prototype.getLogData = function (nodeSerial) {
-
+DatabaseHelper.prototype.getLogData = function(nodeSerial) {
 	var self = this;
 
-	return new Promise(function (resolve, reject) {
-		self.__nodeRepository.getLogData(self.__mockHappn, nodeSerial, function (err, result) {
-			if (err)
-				return reject(err);
+	return new Promise(function(resolve, reject) {
+		self.__nodeRepository.getLogData(self.__mockHappn, nodeSerial, function(
+			err,
+			result
+		) {
+			if (err) return reject(err);
 
 			resolve(result);
 		});

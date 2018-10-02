@@ -2,46 +2,45 @@
  * Created by grant on 2016/06/20.
  */
 
-const path = require('path');
-const fs = require('fs');
-var serveStatic = require('serve-static');
-
+const path = require("path");
+const fs = require("fs");
+var serveStatic = require("serve-static");
 
 /***********************************************************
  default to the test .env file to load environment variables
  ***********************************************************/
 
 //if (!process.env.NODE_ENV)
-require('dotenv').config({
-	path: './test/.env-test'
+require("dotenv").config({
+	path: "./test/.env-test"
 });
 
 /***********************************************************
  ensure that the queue directories exist
  ***********************************************************/
 
-if (!fs.existsSync(process.env['ROUTER_INCOMING_QUEUE_DIR']))
-	fs.mkdirSync(process.env['ROUTER_INCOMING_QUEUE_DIR']);
+if (!fs.existsSync(process.env["ROUTER_INCOMING_QUEUE_DIR"]))
+	fs.mkdirSync(process.env["ROUTER_INCOMING_QUEUE_DIR"]);
 
-if (!fs.existsSync(process.env['ROUTER_OUTGOING_QUEUE_DIR']))
-	fs.mkdirSync(process.env['ROUTER_OUTGOING_QUEUE_DIR']);
+if (!fs.existsSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]))
+	fs.mkdirSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]);
 
 /***********************************************************
  HAPPNER configuration
  ***********************************************************/
 
 module.exports = {
-	name: 'aece_rpi_router',
+	name: "aece_rpi_router",
 	util: {
 		logCacheSize: 1000,
-		logLevel: 'info',
+		logLevel: "info",
 		logTimeDelta: true,
 		logStackTraces: true, // if last arg to logger is instanceof Error
 		logComponents: [],
-		logMessageDelimiter: '\t',
+		logMessageDelimiter: "\t",
 		logDateFormat: null,
 		logLayout: null,
-		logFile: 'router_log.txt',
+		logFile: "router_log.txt",
 		logFileMaxSize: 1048576, // 1mb
 		logFileBackups: 10,
 		logFileNameAbsolute: true,
@@ -50,71 +49,81 @@ module.exports = {
 	happn: {
 		host: process.env.HAPPNER_LOCAL_IP,
 		//port: process.env.HAPPNER_LOCAL_PORT,
+		//port: process.env.HAPPNER_LOCAL_PORT,
+		setOptions: {
+			timeout: 15000 //15 SECONDS, THIS IS THE MAXIMUM AMOUNT OF TIME IN
+			// MILLISECONDS, ANY METHOD WILL WAIT BEFORE RAISING A TIMEOUT ERROR
+		},
+
 		persist: false,
 		secure: false
 	},
 	web: {
 		routes: {
 			// To serve static at '/'
-			'/': serveStatic(process.env.SERVE_STATIC_PATH)
+			"/www/": serveStatic(path.join(__dirname, "client/build/"))
 		}
 	},
-
-	endpoints: (process.env.HAPPNER_REPLICATION_ENABLED == 'true' ? {
-		edgeMesh: { // remote mesh node
-			config: {
-				host: process.env.HAPPNER_EDGE_IP,
-				port: process.env.HAPPNER_EDGE_PORT,
-				username: process.env.HAPPNER_EDGE_USERNAME,
-				password: process.env.HAPPNER_EDGE_PASSWORD
-			}
-		}
-	} : null),
+	// endpoints:
+	// 	process.env.HAPPNER_REPLICATION_ENABLED == "true"
+	// 		? {
+	// 			edgeMesh: {
+	// 				// remote mesh node
+	// 				config: {
+	// 					host: process.env.HAPPNER_EDGE_IP,
+	// 					port: process.env.HAPPNER_EDGE_PORT,
+	// 					username: process.env.HAPPNER_EDGE_USERNAME,
+	// 					password: process.env.HAPPNER_EDGE_PASSWORD
+	// 				}
+	// 			}
+	// 		  }
+	// 		: null,
 	modules: {
 		app: {
-			path: __dirname + '/app.js'
+			path: __dirname + "/app.js"
 		},
 		queueService: {
-			path: __dirname + path.sep + 'server.js',
+			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "QueueService"
 			}
 		},
 		portService: {
-			path: __dirname + '/lib/services/serial_port_service.js'
+			path: __dirname + "/lib/services/serial_port_service.js"
 		},
 		portUtil: {
-			path: __dirname + path.sep + 'server.js',
+			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "PortUtil"
-			},
+			}
 		},
 		packetService: {
-			path: __dirname + '/lib/services/packet_service.js'
+			path: __dirname + "/lib/services/packet_service.js"
 		},
 		messageReader: {
-			path: __dirname + '/lib/readers/incoming_message_reader.js'
+			path: __dirname + "/lib/readers/incoming_message_reader.js"
 		},
 		messageHandler: {
-			path: __dirname + '/lib/handlers/message_handlers'
+			path: __dirname + "/lib/handlers/message_handlers"
 		},
 		incomingFileQueue: {
 			path: "file-queue",
 			construct: {
 				type: "async",
 				name: "Queue",
-				parameters: [{
-					name: "options",
-					required: true,
-					value: process.env.ROUTER_INCOMING_QUEUE_DIR
-				},
-				{
-					name: "cb",
-					required: true,
-					value: function (err) {
-						if (err) throw err;
+				parameters: [
+					{
+						name: "options",
+						required: true,
+						value: process.env.ROUTER_INCOMING_QUEUE_DIR
+					},
+					{
+						name: "cb",
+						required: true,
+						value: function(err) {
+							if (err) throw err;
+						}
 					}
-				}
 				]
 			}
 		},
@@ -123,70 +132,75 @@ module.exports = {
 			construct: {
 				type: "async",
 				name: "Queue",
-				parameters: [{
-					name: "options",
-					required: true,
-					value: process.env.ROUTER_OUTGOING_QUEUE_DIR
-				},
-				{
-					name: "cb",
-					required: true,
-					value: function (err) {
-						if (err) throw err;
+				parameters: [
+					{
+						name: "options",
+						required: true,
+						value: process.env.ROUTER_OUTGOING_QUEUE_DIR
+					},
+					{
+						name: "cb",
+						required: true,
+						value: function(err) {
+							if (err) throw err;
+						}
 					}
-				}
 				]
 			}
 		},
 		parserFactory: {
-			path: __dirname + '/lib/parsers/parser_factory.js'
+			path: __dirname + "/lib/parsers/parser_factory.js"
 		},
 		dataService: {
-			path: __dirname + path.sep + 'server.js',
+			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "DataService"
 			}
 		},
 		dataMapper: {
-			path: __dirname + '/lib/mappers/data_mapper.js'
+			path: __dirname + "/lib/mappers/data_mapper.js"
 		},
 		packetRepository: {
-			path: __dirname + path.sep + 'server.js',
+			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "PacketRepository"
 			}
 		},
 		nodeRepository: {
-			path: __dirname + path.sep + 'server.js',
+			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "NodeRepository"
 			}
 		},
 		transmissionService: {
-			path: __dirname + path.sep + 'server.js',
+			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "TransmissionService"
+			}
+		},
+		packetSimulatorService: {
+			path: __dirname + path.sep + "server.js",
+			construct: {
+				name: "PacketSimulatorService"
 			}
 		}
 	},
 	components: {
-
-
 		portService: {},
 		portUtil: {
-			$configure: function (portUtilConfig) {
+			$configure: function(portUtilConfig) {
 				return portUtilConfig;
 			}
 		},
 		queueService: {
-			$configure: function (queueServiceConfig) {
+			$configure: function(queueServiceConfig) {
 				return queueServiceConfig;
 			}
 		},
 		incomingFileQueue: {},
 		outgoingFileQueue: {},
 		transmissionService: {
-			$configure: function (transmissionServiceConfig) {
+			$configure: function(transmissionServiceConfig) {
 				return transmissionServiceConfig;
 			}
 		},
@@ -195,23 +209,28 @@ module.exports = {
 		packetService: {},
 		parserFactory: {},
 		dataService: {
-			$configure: function (dataServiceConfig) {
+			$configure: function(dataServiceConfig) {
 				return dataServiceConfig;
 			}
 		},
 		dataMapper: {},
 		app: {
-			startMethod: 'start'
+			startMethod: "start"
 		},
 		packetRepository: {
-			$configure: function (packetRepositoryConfig) {
+			$configure: function(packetRepositoryConfig) {
 				return packetRepositoryConfig;
 			}
 		},
 		nodeRepository: {
-			$configure: function (nodeRepositoryConfig) {
+			$configure: function(nodeRepositoryConfig) {
 				return nodeRepositoryConfig;
 			}
 		},
+		packetSimulatorService: {
+			$configure: function(packetSimulatorServiceConfig) {
+				return packetSimulatorServiceConfig;
+			}
+		}
 	}
 };

@@ -1,7 +1,7 @@
 module.exports.configs = {
-	'queueServiceConfig': {
+	queueServiceConfig: {
 		component: {
-			name: 'QueueService',
+			name: "QueueService",
 			config: {
 				incomingQueueDir: process.env.ROUTER_INCOMING_QUEUE_DIR,
 				outgoingQueueDir: process.env.ROUTER_OUTGOING_QUEUE_DIR,
@@ -9,37 +9,37 @@ module.exports.configs = {
 			}
 		}
 	},
-	'portUtilConfig': {
+	portUtilConfig: {
 		component: {
-			name: 'PortUtil',
+			name: "PortUtil",
 			config: {
 				port: process.env.ROUTER_SERIAL_PORT,
 				baudRate: process.env.ROUTER_BAUD_RATE
 			}
 		}
 	},
-	'dataServiceConfig': {
+	dataServiceConfig: {
 		component: {
-			name: 'DataService',
+			name: "DataService",
 			config: {
 				nodeEnv: process.env.NODE_ENV,
 				edgeIP: process.env.EDGE_IP,
 				edgePort: process.env.HAPPNER_EDGE_PORT,
 				localIP: process.env.HAPPNER_LOCAL_IP,
 				localPort: process.env.HAPPNER_LOCAL_PORT,
-				replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === 'true',
+				replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === "true",
 				mySqlHost: process.env.MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
 				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
 				mySqlDb: process.env.ROUTER_MYSQL_DATABASE,
 				mySqlConnectionLimit: process.env.ROUTER_MYSQL_CONNECTION_LIMIT,
-				disableIB651Inserts: process.env.DISABLE_IB651_INSERTS === 'true'
+				disableIB651Inserts: process.env.DISABLE_IB651_INSERTS === "true"
 			}
 		}
 	},
-	'packetRepositoryConfig': {
+	packetRepositoryConfig: {
 		component: {
-			name: 'PacketRepository',
+			name: "PacketRepository",
 			config: {
 				mySqlHost: process.env.MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
@@ -48,9 +48,9 @@ module.exports.configs = {
 			}
 		}
 	},
-	'nodeRepositoryConfig': {
+	nodeRepositoryConfig: {
 		component: {
-			name: 'NodeRepository',
+			name: "NodeRepository",
 			config: {
 				mySqlHost: process.env.MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
@@ -59,11 +59,20 @@ module.exports.configs = {
 			}
 		}
 	},
-	'transmissionServiceConfig': {
+	transmissionServiceConfig: {
 		component: {
-			name: 'TransmissionService',
+			name: "TransmissionService",
 			config: {
 				transmissionSendInterval: process.env.ROUTER_TRANSMISSION_SEND_INTERVAL
+			}
+		}
+	},
+	packetSimulatorServiceConfig: {
+		component: {
+			name: "PacketSimulatorService",
+			config: {
+				enabled: process.env.ROUTER_SIMULATOR_ENABLED,
+				generateDataInterval: process.env.ROUTER_SIMULATOR_GENERATE_INTERVAL
 			}
 		}
 	}
