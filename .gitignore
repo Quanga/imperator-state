@@ -8,4 +8,6 @@ incoming_queue_data
 router_log.txt
 .env-test
 package-lock.json
+.nyc_output
+.vscode
 
