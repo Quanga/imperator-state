@@ -121,7 +121,10 @@ module.exports = {
 						name: "cb",
 						required: true,
 						value: function(err) {
-							if (err) throw err;
+							if (err) {
+								console.log(err);
+								throw err;
+							}
 						}
 					}
 				]
@@ -142,7 +145,10 @@ module.exports = {
 						name: "cb",
 						required: true,
 						value: function(err) {
-							if (err) throw err;
+							if (err) {
+								console.log(err);
+								throw err;
+							}
 						}
 					}
 				]
@@ -186,6 +192,8 @@ module.exports = {
 		}
 	},
 	components: {
+		parserFactory: {},
+
 		portService: {},
 		portUtil: {
 			$configure: function(portUtilConfig) {
@@ -207,7 +215,6 @@ module.exports = {
 		messageReader: {},
 		messageHandler: {},
 		packetService: {},
-		parserFactory: {},
 		dataService: {
 			$configure: function(dataServiceConfig) {
 				return dataServiceConfig;

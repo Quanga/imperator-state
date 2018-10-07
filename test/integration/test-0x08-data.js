@@ -154,18 +154,22 @@ describe("0x08-IBC-data-request-test", function() {
 				}
 			],
 			function(err, result) {
-				if (err) return done(err);
+				if (err) {
+					console.log("error00000", err);
+					return done(err);
+				}
 
-				console.log(result);
+				//
 
 				try {
 					expect(result.ibc["p.communication_status"]).to.equal(1);
 					expect(result.ibc["p.fire_button"]).to.equal(0);
 					expect(result.ibc["p.key_switch_status"]).to.equal(0);
 					expect(result.ibc["p.isolation_relay"]).to.equal(1);
-
+					console.log("result correct");
 					done();
 				} catch (err) {
+					console.log(err);
 					done(err);
 				}
 			}

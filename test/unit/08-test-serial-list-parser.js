@@ -25,7 +25,7 @@ describe("serial-list-parser-test", function() {
 		callback();
 	});
 
-	it("can create a result array with ISC list from a parsed packet", function(callback) {
+	it("can create a result array with ISC list from a parsed packet", function() {
 		/*
          ISC serial list for IBC id 8
 
@@ -351,15 +351,18 @@ describe("serial-list-parser-test", function() {
 			}
 		];
 
-		parser.parse(mockHappn, testObj, function(err, parsedPacketArr) {
-			if (err) return callback(err);
+		let test = async () => {
+			try {
+				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
-			parser.buildNodeData(mockHappn, parsedPacketArr, function(err, result) {
-				if (err) return callback(err);
+				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
 				assert.deepEqual(result, expected);
-				callback();
-			});
-		});
+			} catch (err) {
+				console.log("error", err);
+			}
+		};
+
+		return test();
 	});
 });

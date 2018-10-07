@@ -27,7 +27,7 @@ module.exports.configs = {
 				edgePort: process.env.HAPPNER_EDGE_PORT,
 				localIP: process.env.HAPPNER_LOCAL_IP,
 				localPort: process.env.HAPPNER_LOCAL_PORT,
-				replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === "true",
+				replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === "false",
 				mySqlHost: process.env.MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
 				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,

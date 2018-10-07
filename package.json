@@ -1,35 +1,36 @@
 {
-  "name": "aece-router_v2",
-  "version": "0.0.1",
-  "description": "Command router for Raspberry Pi",
-  "main": "server.js",
-  "scripts": {
-    "test": "mocha test/unit/*-test-*.js; istanbul cover _mocha -- test/unit/*-test-*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Quanga/aece_ver2.git"
-  },
-  "author": "Tim Bewsey",
-  "license": "",
-  "homepage": "https://github.com/team-tenacious/aece-rpi-router#readme",
-  "devDependencies": {
-    "dotenv": "^2.0.0",
-    "expect.js": "^0.3.1",
-    "gulp": "^3.9.1",
-    "istanbul": "*",
-    "mocha": "*"
-  },
-  "dependencies": {
-    "async": "2.0.1",
-    "bluebird": "^3.5.1",
-    "eslint": "^5.6.0",
-    "file-queue": "0.2.1",
-    "happn-3": "^7.3.0",
-    "happner-2": "8.3.1",
-    "mysql": "2.12.*",
-    "promise-mysql": "^3.3.1",
-    "serialport": "*",
-    "uuid": "^3.2.1"
-  }
+	"name": "aece-router_v2",
+	"version": "0.0.1",
+	"description": "Command router for Raspberry Pi",
+	"main": "server.js",
+	"scripts": {
+		"test": "mocha test/unit/*-test-*.js; istanbul cover _mocha -- test/unit/*-test-*.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Quanga/aece_ver2.git"
+	},
+	"author": "Tim Bewsey",
+	"license": "",
+	"homepage": "https://github.com/team-tenacious/aece-rpi-router#readme",
+	"devDependencies": {
+		"dotenv": "^2.0.0",
+		"expect.js": "^0.3.1",
+		"gulp": "^3.9.1",
+		"istanbul": "*",
+		"mocha": "*"
+	},
+	"dependencies": {
+		"async": "2.0.1",
+		"bluebird": "^3.5.1",
+		"eslint": "^5.6.0",
+		"file-queue": "^0.3.0",
+		"graceful-fs": "^4.1.11",
+		"happn-3": "^7.3.0",
+		"happner-2": "8.3.1",
+		"mysql": "2.12.*",
+		"promise-mysql": "^3.3.1",
+		"serialport": "*",
+		"uuid": "^3.2.1"
+	}
 }

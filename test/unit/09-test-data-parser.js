@@ -25,7 +25,7 @@ describe("data-parser-test", function() {
 		callback();
 	});
 
-	it("can create a node result array with one set of node data from a parsed packet", function(callback) {
+	it("can create a node result array with one set of node data from a parsed packet", function() {
 		/*
          AAAA 0A 08 0001 00C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
          */
@@ -75,15 +75,16 @@ describe("data-parser-test", function() {
 			}
 		];
 
-		parser.parse(mockHappn, testObj, function(err, parsedPacketArr) {
-			if (err) return callback(err);
-
-			parser.buildNodeData(mockHappn, parsedPacketArr, function(err, result) {
-				if (err) return callback(err);
-				console.log("result", result);
+		let test = async () => {
+			try {
+				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 				assert.deepEqual(result, expected);
-				callback();
-			});
-		});
+				console.log("result", result);
+			} catch (err) {
+				console.log("err", err);
+			}
+		};
+		return test();
 	});
 });
