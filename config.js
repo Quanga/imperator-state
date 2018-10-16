@@ -4,16 +4,14 @@
 
 const path = require("path");
 const fs = require("fs");
-var serveStatic = require("serve-static");
+//var serveStatic = require("serve-static");
 
 /***********************************************************
  default to the test .env file to load environment variables
  ***********************************************************/
 
-//if (!process.env.NODE_ENV)
-require("dotenv").config({
-	path: "./test/.env-test"
-});
+// if (!process.env.NODE_ENV)
+require("dotenv").config();
 
 /***********************************************************
  ensure that the queue directories exist
@@ -30,7 +28,7 @@ if (!fs.existsSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]))
  ***********************************************************/
 
 module.exports = {
-	name: "aece_rpi_router",
+	name: "aece_rpi_router2",
 	util: {
 		logCacheSize: 1000,
 		logLevel: "info",
@@ -58,12 +56,12 @@ module.exports = {
 		persist: false,
 		secure: false
 	},
-	web: {
-		routes: {
-			// To serve static at '/'
-			"/www/": serveStatic(path.join(__dirname, "client/build/"))
-		}
-	},
+	// web: {
+	// 	routes: {
+	// 		// To serve static at '/'
+	// 		"/www/": serveStatic(path.join(__dirname, "client/build/"))
+	// 	}
+	// },
 	// endpoints:
 	// 	process.env.HAPPNER_REPLICATION_ENABLED == "true"
 	// 		? {
@@ -94,14 +92,12 @@ module.exports = {
 		portUtil: {
 			path: __dirname + path.sep + "server.js",
 			construct: {
-				name: "PortUtil"
+				name: "PortUtil",
+				type: "async"
 			}
 		},
 		packetService: {
 			path: __dirname + "/lib/services/packet_service.js"
-		},
-		messageReader: {
-			path: __dirname + "/lib/readers/incoming_message_reader.js"
 		},
 		messageHandler: {
 			path: __dirname + "/lib/handlers/message_handlers"
@@ -169,13 +165,20 @@ module.exports = {
 		packetRepository: {
 			path: __dirname + path.sep + "server.js",
 			construct: {
-				name: "PacketRepository"
+				name: "PacketRepository",
+				type: "async"
 			}
 		},
 		nodeRepository: {
 			path: __dirname + path.sep + "server.js",
 			construct: {
 				name: "NodeRepository"
+			}
+		},
+		logsRepository: {
+			path: __dirname + path.sep + "server.js",
+			construct: {
+				name: "LogsRepository"
 			}
 		},
 		transmissionService: {
@@ -193,7 +196,6 @@ module.exports = {
 	},
 	components: {
 		parserFactory: {},
-
 		portService: {},
 		portUtil: {
 			$configure: function(portUtilConfig) {
@@ -212,7 +214,6 @@ module.exports = {
 				return transmissionServiceConfig;
 			}
 		},
-		messageReader: {},
 		messageHandler: {},
 		packetService: {},
 		dataService: {
@@ -232,6 +233,11 @@ module.exports = {
 		nodeRepository: {
 			$configure: function(nodeRepositoryConfig) {
 				return nodeRepositoryConfig;
+			}
+		},
+		logsRepository: {
+			$configure: function(logsRepositoryConfig) {
+				return logsRepositoryConfig;
 			}
 		},
 		packetSimulatorService: {

@@ -69,7 +69,7 @@ describe("node-tree-utils-test", function() {
 		callback();
 	});
 
-	it("successfully finds sub-tree", function(callback) {
+	it("successfully finds sub-tree", async function() {
 		var expected = [
 			{
 				name: "ISC-5",
@@ -101,18 +101,18 @@ describe("node-tree-utils-test", function() {
 			}
 		];
 
-		try {
-			nodeTreeUtils.findSubTree(treeNodes, 32, 1).then(result => {
+		let test = async () => {
+			try {
+				let result = await nodeTreeUtils.findSubTree(treeNodes, 32, 1);
 				assert.deepEqual(result, expected);
-
-				callback();
-			});
-		} catch (err) {
-			callback(err);
-		}
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+		return test();
 	});
 
-	it("successfully finds IB651 parent", function(callback) {
+	it("successfully finds IB651 parent", async function() {
 		var expected = {
 			name: "ISC-7",
 			type_id: 1,
@@ -121,28 +121,24 @@ describe("node-tree-utils-test", function() {
 			serial: "33"
 		};
 
-		try {
-			nodeTreeUtils
-				.findSubTree(treeNodes, 33, 1)
-				.then(subTree => {
-					nodeTreeUtils.findParent(subTree, 2);
-					console.log(subTree);
-				})
-				.then(result => {
-					assert.deepEqual(result, expected);
-				});
+		let test = async () => {
+			try {
+				let subTree = await nodeTreeUtils.findSubTree(treeNodes, 33, 1);
+				let result = await nodeTreeUtils.findParent(subTree, 2);
+				//console.log(subTree);
+				assert.deepEqual(result, expected);
 
-			//var result = nodeTreeUtils.findParent(subTree, 2);
+				//var result = nodeTreeUtils.findParent(subTree, 2);
 
-			//assert.deepEqual(result, expected);
-
-			callback();
-		} catch (err) {
-			callback(err);
-		}
+				//assert.deepEqual(result, expected);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+		return test();
 	});
 
-	it("successfully finds ISC parent", function(callback) {
+	it("successfully finds ISC parent", async function() {
 		var expected = {
 			name: "IBC",
 			type_id: 0,
@@ -150,14 +146,16 @@ describe("node-tree-utils-test", function() {
 			serial: "123"
 		};
 
-		try {
-			var result = nodeTreeUtils.findParent(treeNodes, 1);
+		let test = async () => {
+			try {
+				var result = nodeTreeUtils.findParent(treeNodes, 1);
 
-			assert.deepEqual(result, expected);
+				assert.deepEqual(result, expected);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
 
-			callback();
-		} catch (err) {
-			callback(err);
-		}
+		return test();
 	});
 });

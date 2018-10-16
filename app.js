@@ -13,10 +13,11 @@ App.prototype.start = function($happn) {
 			await $happn.exchange.portService.initialise();
 			await $happn.exchange.packetRepository.initialise();
 			await $happn.exchange.nodeRepository.initialise();
+			await $happn.exchange.logsRepository.initialise();
 			await $happn.exchange.queueService.initialise();
 			await $happn.exchange.queueService.watchIncomingQueue();
 			await $happn.exchange.queueService.watchOutgoingQueue();
-			$happn.exchange.transmissionService.initialise();
+			//$happn.exchange.transmissionService.initialise();
 			$happn.exchange.packetSimulatorService.initialise();
 			$happn.log.info("STARTUP COMLETE!");
 		} catch (err) {

@@ -9,6 +9,7 @@ module.exports = {
 	DataService: require("./lib/services/data_service"),
 	PacketRepository: require("./lib/repositories/packet_repository"),
 	NodeRepository: require("./lib/repositories/node_repository"),
+	LogsRepository: require("./lib/repositories/logs_repository"),
 	TransmissionService: require("./lib/services/transmission_service"),
 	PacketSimulatorService: require("./lib/services/packet_simulator_service")
 };

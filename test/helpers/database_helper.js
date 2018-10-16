@@ -32,8 +32,6 @@ DatabaseHelper.prototype.clearDatabase = function() {
 			.catch(err => {
 				reject(err);
 			});
-
-		//resolve();
 	});
 };
 
@@ -58,6 +56,7 @@ DatabaseHelper.prototype.getNodeTreeData = function(serial, typeId) {
 			.findNodeTreeData(self.__mockHappn, serial, typeId)
 			.then(result => resolve(result))
 			.catch(err => {
+				console.log("err" + err);
 				reject(err);
 			});
 	});

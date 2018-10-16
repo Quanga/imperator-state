@@ -2,14 +2,9 @@
  * Created by grant on 2016/11/29.
  */
 
-var expect = require("expect.js"),
-	async = require("async");
+var expect = require("expect.js");
 
 describe("IB651-ping-request-test", function() {
-	require("dotenv").config({
-		path: "./test/.env-test"
-	});
-
 	var ServerHelper = require("../helpers/server_helper");
 	var serverHelper = new ServerHelper();
 
@@ -24,73 +19,29 @@ describe("IB651-ping-request-test", function() {
 
 	this.timeout(30000);
 
-	const SerailPortService = require("../../lib/services/serial_port_service");
-	let serialPortService = new SerailPortService();
+	var PacketBuilder = require("../../lib/builders/packet_builder");
 
-	const MockHappn = require("../mocks/mock_happn");
-	let mockHappn = null;
-
-	before("setup comm port", function(done) {
-		mockHappn = new MockHappn();
-		serialPortService.initialise(mockHappn).then(done());
+	before("cleaning up queues", async function() {
+		await fileHelper.clearQueueFiles();
 	});
 
-	// before('setup virtual serial ports', function (done) {
-
-	// 	serialPortHelper.initialise()
-	// 		.then(() => {
-	// 			done();
-	// 		})
-	// 		.catch(err => {
-	// 			done(err);
-	// 		});
-	// });
-
-	before("start test server", function(done) {
-		serverHelper
-			.startServer()
-			.then(() => {
-				done();
-			})
-			.catch(err => {
-				done(err);
-			});
+	before("start test server", async function() {
+		await serverHelper.startServer();
 	});
 
-	beforeEach("cleaning up queues", function(done) {
-		fileHelper
-			.clearQueueFiles()
-			.then(function() {
-				done();
-			})
-			.catch(function(err) {
-				done(err);
-			});
+	beforeEach("cleaning up db", async function() {
+		await databaseHelper.clearDatabase();
 	});
 
-	beforeEach("cleaning up db", function(done) {
-		databaseHelper
-			.clearDatabase()
-			.then(function() {
-				done();
-			})
-			.catch(function(err) {
-				done(err);
-			});
+	after("stop test server", async function() {
+		await serverHelper.stopServer();
 	});
 
-	after("stop test server", function(done) {
-		serverHelper
-			.stopServer()
-			.then(() => {
-				done();
-			})
-			.catch(err => {
-				done(err);
-			});
-	});
+	let timer = ms => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	};
 
-	it("can send a ping request containing IB651s 1, 2 & 3, where no IB651s currently in database", function(done) {
+	it.only("can send a ping request containing IB651s 1, 2 & 3, where no IB651s currently in database", async function() {
 		// AAAA0E020001000100020003(CRC)
 		// start - AAAA
 		// length - 0E
@@ -99,490 +50,365 @@ describe("IB651-ping-request-test", function() {
 		// data - 000100020003 (serials 1, 2, 3)
 		// crc - ?
 
-		var PacketBuilder = require("../../lib/builders/packet_builder");
-		var packetBuilder = new PacketBuilder();
+		let step1 = async () => {
+			var packetBuilder = new PacketBuilder();
+			var message = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.build();
 
-		async.waterfall(
-			[
-				function(cb) {
-					// set up the initial IBC and single ISC via an ISC ping
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.build();
+			console.log("## INITIAL MESSAGE: " + message);
 
-					console.log("## INITIAL MESSAGE: " + message);
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			packetBuilder.reset();
 
-					// now send an ISC ping with 3 IB651's
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(256)
-						.withSerialData(512)
-						.withSerialData(768)
-						.build();
+			// now send an ISC ping with 3 IB651's
+			let messageb = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(256)
+				.withSerialData(512)
+				.withSerialData(768)
+				.build();
 
-					console.log("## PING MESSAGE: " + message);
+			await serialPortHelper.sendMessage(messageb);
+			await serialPortHelper.sendMessage("AAAA");
+		};
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						databaseHelper
-							.getNodeTreeData(1, 1)
-							.then(function(result) {
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+		let step2 = async () => {
+			let result = await databaseHelper.getNodeTreeData(1, 1);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-								var ib651_1 = null,
-									ib651_2 = null,
-									ib651_3 = null;
+			let ib651_1 = null,
+				ib651_2 = null,
+				ib651_3 = null;
 
-								console.log(result);
-								result.forEach(x => {
-									if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2)
-										ib651_1 = x;
+			result.forEach(x => {
+				if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
+				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
+				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
+			});
 
-									if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2)
-										ib651_2 = x;
+			return {
+				ib651_1: ib651_1,
+				ib651_2: ib651_2,
+				ib651_3: ib651_3
+			};
+		};
 
-									if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2)
-										ib651_3 = x;
-								});
+		let step3 = async result => {
+			try {
+				//check communication status on each
+				expect(result.ib651_1["c.communication_status"]).to.equal(1);
+				expect(result.ib651_1["c.window_id"]).to.equal(1);
 
-								cb(null, {
-									ib651_1: ib651_1,
-									ib651_2: ib651_2,
-									ib651_3: ib651_3
-								});
-							})
-							.catch(function(err) {
-								console.log("error", err);
-								cb(err);
-							});
-					}, 5000);
-				}
-			],
-			function(err, result) {
-				if (err) {
-					console.log("errort", err);
-					return done(err);
-				}
+				expect(result.ib651_2["c.communication_status"]).to.equal(1);
+				expect(result.ib651_2["c.window_id"]).to.equal(2);
 
-				console.log(result);
-
-				try {
-					//check communication status on each
-					expect(result.ib651_1["c.communication_status"]).to.equal(1);
-					expect(result.ib651_1["c.window_id"]).to.equal(1);
-
-					expect(result.ib651_2["c.communication_status"]).to.equal(1);
-					expect(result.ib651_2["c.window_id"]).to.equal(2);
-
-					expect(result.ib651_3["c.communication_status"]).to.equal(1);
-					expect(result.ib651_3["c.window_id"]).to.equal(3);
-
-					done();
-				} catch (err) {
-					console.log("error", err);
-					done(err);
-				}
+				expect(result.ib651_3["c.communication_status"]).to.equal(1);
+				expect(result.ib651_3["c.window_id"]).to.equal(3);
+			} catch (err) {
+				return Promise.reject(err);
 			}
-		);
+		};
+
+		let test = async () => {
+			try {
+				await timer(4000);
+				await step1();
+				await timer(2000);
+				let result = await step2();
+				await step3(result);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+		return test();
 	});
 
-	it("can send a ping request containing IB651s 1, 2 & 3, where IB651s 1 & 2 are currently in database", function(done) {
+	it.only("can send a ping request containing IB651s 1, 2 & 3, where IB651s 1 & 2 are currently in database", async function() {
 		/* INITIAL STATE: AAAA0E02000100010002(CRC)
-         start - AAAA
-         length - 0E
-         command - 02
-         serial - 0001
-         data - 00010002 (serials 1, 2)
-         crc - ?
-         */
+					 start - AAAA
+					 length - 0E
+					 command - 02
+					 serial - 0001
+					 data - 00010002 (serials 1, 2)
+					 crc - ?
+					 */
 
 		/* TEST: AAAA0E020001000100020003(CRC)
-         start - AAAA
-         length - 0E
-         command - 02
-         serial - 0001
-         data - 000100020003 (serials 1, 2, 3)
-         crc - ?
-         */
+			 start - AAAA
+			 length - 0E
+			 command - 02
+			 serial - 0001
+			 data - 000100020003 (serials 1, 2, 3)
+			 crc - ?
+			 */
 
-		var PacketBuilder = require("../../lib/builders/packet_builder");
-		var packetBuilder = new PacketBuilder();
+		let step1 = async () => {
+			let packetBuilder = new PacketBuilder();
 
-		async.waterfall(
-			[
-				function(cb) {
-					// set up the initial IBC and single ISC via an ISC ping
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.build();
+			// set up the initial IBC and single ISC via an ISC ping
 
-					console.log("## MESSAGE: " + message);
+			let message = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.build();
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
 
-					var initial = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(256)
-						.withSerialData(512)
-						.build();
+			packetBuilder.reset();
 
-					console.log("## INITIAL: " + initial);
+			let initial = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(256)
+				.withSerialData(512)
+				.build();
 
-					serialPortHelper
-						.sendMessage(initial)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			await serialPortHelper.sendMessage(initial);
+			await serialPortHelper.sendMessage("AAAA");
 
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(256)
-						.withSerialData(512)
-						.withSerialData(768)
-						.build();
+			packetBuilder.reset();
 
-					console.log("## MESSAGE: " + message);
+			let messageb = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(256)
+				.withSerialData(512)
+				.withSerialData(768)
+				.build();
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						databaseHelper
-							.getNodeTreeData(1, 1)
-							.then(function(result) {
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+			await serialPortHelper.sendMessage(messageb);
+			await serialPortHelper.sendMessage("AAAA");
+		};
 
-								var ib651_1 = null,
-									ib651_2 = null,
-									ib651_3 = null;
+		let step2 = async () => {
+			let result = await databaseHelper.getNodeTreeData(1, 1);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-								result.forEach(x => {
-									if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2)
-										ib651_1 = x;
+			var ib651_1 = null,
+				ib651_2 = null,
+				ib651_3 = null;
 
-									if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2)
-										ib651_2 = x;
+			result.forEach(x => {
+				if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
+				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
+				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
+			});
 
-									if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2)
-										ib651_3 = x;
-								});
+			return {
+				ib651_1: ib651_1,
+				ib651_2: ib651_2,
+				ib651_3: ib651_3
+			};
+		};
 
-								console.log({
-									ib651_1: ib651_1,
-									ib651_2: ib651_2,
-									ib651_3: ib651_3
-								});
-								cb(null, {
-									ib651_1: ib651_1,
-									ib651_2: ib651_2,
-									ib651_3: ib651_3
-								});
-							})
-							.catch(function(err) {
-								cb(err);
-							});
-					}, 10000);
-				}
-			],
-			function(err, result) {
-				if (err) return done(err);
+		let step3 = async result => {
+			try {
+				expect(result.ib651_1["c.communication_status"]).to.equal(1);
+				expect(result.ib651_1["c.window_id"]).to.equal(1);
 
-				try {
-					//check communication status on each
-					expect(result.ib651_1["c.communication_status"]).to.equal(1);
-					expect(result.ib651_1["c.window_id"]).to.equal(1);
+				expect(result.ib651_2["c.communication_status"]).to.equal(1);
+				expect(result.ib651_2["c.window_id"]).to.equal(2);
 
-					expect(result.ib651_2["c.communication_status"]).to.equal(1);
-					expect(result.ib651_2["c.window_id"]).to.equal(2);
-
-					expect(result.ib651_3["c.communication_status"]).to.equal(1);
-					expect(result.ib651_3["c.window_id"]).to.equal(3);
-
-					done();
-				} catch (err) {
-					done(err);
-				}
+				expect(result.ib651_3["c.communication_status"]).to.equal(1);
+				expect(result.ib651_3["c.window_id"]).to.equal(3);
+			} catch (err) {
+				return Promise.reject(err);
 			}
-		);
+		};
+
+		let test = async () => {
+			try {
+				await timer(3500);
+				await step1();
+				await timer(2000);
+				let results = await step2();
+				await step3(results);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return test();
 	});
 
-	it("can send a ping request containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", function(done) {
-		var PacketBuilder = require("../../lib/builders/packet_builder");
-		var packetBuilder = new PacketBuilder();
+	it.only("can send a ping request containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", async function() {
+		let step1 = async () => {
+			var packetBuilder = new PacketBuilder();
 
-		async.waterfall(
-			[
-				function(cb) {
-					// set up the initial IBC and single ISC via an ISC ping
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.build();
+			// set up the initial IBC and single ISC via an ISC ping
+			let message = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.build();
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
 
-					/* INITIAL STATE: AAAA0E0200010004(CRC)
-                 start - AAAA
-                 length - 0E
-                 command - 02
-                 serial - 0001
-                 data - 0004 (serial 4)
-                 crc - ?
-                 */
+			packetBuilder.reset();
 
-					var initial = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(1024)
-						.build();
+			/* INITIAL STATE: AAAA0E0200010004(CRC)
+			 start - AAAA
+			 length - 0E
+			 command - 02
+			 serial - 0001
+			 data - 0004 (serial 4)
+			 crc - ?
+			 */
 
-					serialPortHelper
-						.sendMessage(initial)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			let initial = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(1024)
+				.build();
 
-					/* TEST: AAAA0E020001000100020003(CRC)
-                 start - AAAA
-                 length - 0E
-                 command - 02
-                 serial - 0001
-                 data - 000100020003 (serials 1, 2, 3)
-                 crc - ?
-                 */
+			await serialPortHelper.sendMessage(initial);
+			await serialPortHelper.sendMessage("AAAA");
 
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(256)
-						.withSerialData(512)
-						.withSerialData(768)
-						.build();
+			packetBuilder.reset();
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						databaseHelper
-							.getNodeTreeData(1, 1) // get node data for ISC serial 1
-							.then(function(result) {
-								console.log(result);
+			/* TEST: AAAA0E020001000100020003(CRC)
+		 start - AAAA
+		 length - 0E
+		 command - 02
+		 serial - 0001
+		 data - 000100020003 (serials 1, 2, 3)
+		 crc - ?
+		 */
 
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+			let messageb = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(256)
+				.withSerialData(512)
+				.withSerialData(768)
+				.build();
 
-								var ib651_1 = null,
-									ib651_2 = null,
-									ib651_3 = null,
-									ib651_4 = null;
+			await serialPortHelper.sendMessage(messageb);
+			await serialPortHelper.sendMessage("AAAA");
+		};
 
-								result.forEach(x => {
-									if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2)
-										ib651_1 = x;
+		let step2 = async () => {
+			let result = await databaseHelper.getNodeTreeData(1, 1); // get node data for ISC serial 1
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-									if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2)
-										ib651_2 = x;
+			var ib651_1 = null,
+				ib651_2 = null,
+				ib651_3 = null,
+				ib651_4 = null;
 
-									if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2)
-										ib651_3 = x;
+			result.forEach(x => {
+				if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
 
-									if (parseInt(x["c.serial"]) == 4 && x["c.type_id"] == 2)
-										ib651_4 = x;
-								});
+				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
 
-								cb(null, {
-									ib651_1: ib651_1,
-									ib651_2: ib651_2,
-									ib651_3: ib651_3,
-									ib651_4: ib651_4
-								});
-							})
-							.catch(function(err) {
-								cb(err);
-							});
-					}, 5000);
-				}
-			],
-			function(err, result) {
-				if (err) return done(err);
+				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
 
-				//check communication status on each
+				if (parseInt(x["c.serial"]) == 4 && x["c.type_id"] == 2) ib651_4 = x;
+			});
 
-				try {
-					expect(result.ib651_1["c.communication_status"]).to.equal(1);
-					expect(result.ib651_1["c.parent_id"]).to.equal(
-						result.ib651_1["p.id"]
-					);
-					expect(result.ib651_1["c.window_id"]).to.equal(1);
+			return {
+				ib651_1: ib651_1,
+				ib651_2: ib651_2,
+				ib651_3: ib651_3,
+				ib651_4: ib651_4
+			};
+		};
 
-					expect(result.ib651_2["c.communication_status"]).to.equal(1);
-					expect(result.ib651_2["c.parent_id"]).to.equal(
-						result.ib651_2["p.id"]
-					);
-					expect(result.ib651_2["c.window_id"]).to.equal(2);
+		let step3 = async result => {
+			try {
+				expect(result.ib651_1["c.communication_status"]).to.equal(1);
+				expect(result.ib651_1["c.parent_id"]).to.equal(result.ib651_1["p.id"]);
+				expect(result.ib651_1["c.window_id"]).to.equal(1);
 
-					expect(result.ib651_3["c.communication_status"]).to.equal(1);
-					expect(result.ib651_3["c.parent_id"]).to.equal(
-						result.ib651_3["p.id"]
-					);
-					expect(result.ib651_3["c.window_id"]).to.equal(3);
+				expect(result.ib651_2["c.communication_status"]).to.equal(1);
+				expect(result.ib651_2["c.parent_id"]).to.equal(result.ib651_2["p.id"]);
+				expect(result.ib651_2["c.window_id"]).to.equal(2);
 
-					expect(result.ib651_4["c.communication_status"]).to.equal(0);
-					expect(result.ib651_4["c.parent_id"]).to.equal(
-						result.ib651_4["p.id"]
-					);
-					expect(result.ib651_4["c.window_id"]).to.equal(0);
+				expect(result.ib651_3["c.communication_status"]).to.equal(1);
+				expect(result.ib651_3["c.parent_id"]).to.equal(result.ib651_3["p.id"]);
+				expect(result.ib651_3["c.window_id"]).to.equal(3);
 
-					done();
-				} catch (err) {
-					done(err);
-				}
+				expect(result.ib651_4["c.communication_status"]).to.equal(0);
+				expect(result.ib651_4["c.parent_id"]).to.equal(result.ib651_4["p.id"]);
+				expect(result.ib651_4["c.window_id"]).to.equal(0);
+			} catch (err) {
+				return Promise.reject(err);
 			}
-		);
+		};
+
+		let test = async () => {
+			try {
+				await timer(4000);
+				await step1();
+				await timer(2000);
+				let result = await step2();
+				await step3(result);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+		return test();
 	});
 
-	it("can send a ping request that changes the ordering of window ids of existing IB651s in database", function(done) {
-		var PacketBuilder = require("../../lib/builders/packet_builder");
-		var packetBuilder = new PacketBuilder();
+	it.only("can send a ping request that changes the ordering of window ids of existing IB651s in database", async function() {
+		let step1 = async () => {
+			var packetBuilder = new PacketBuilder();
 
-		async.waterfall(
-			[
-				function(cb) {
-					// set up the initial IBC and single ISC via an ISC ping
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.build();
+			// set up the initial IBC and single ISC via an ISC ping
+			let message = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.build();
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
 
-					/* INITIAL STATE: AAAA0E0200010002(CRC)
-                 start - AAAA
-                 length - 0E
-                 command - 02
-                 serial - 0001
-                 data - 00010002 (serials 1 & 2)
-                 crc - ?
-                 */
+			packetBuilder.reset();
+			/* INITIAL STATE: AAAA0E0200010002(CRC)
+						 start - AAAA
+						 length - 0E
+						 command - 02
+						 serial - 0001
+						 data - 00010002 (serials 1 & 2)
+						 crc - ?
+						 */
 
-					var initial = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(256)
-						.withSerialData(512)
-						.build();
+			let initial = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(256)
+				.withSerialData(512)
+				.build();
 
-					serialPortHelper
-						.sendMessage(initial)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			await serialPortHelper.sendMessage(initial);
+			await serialPortHelper.sendMessage("AAAA");
 
-					/* TEST: AAAA0E020001000200010003(CRC)
+			packetBuilder.reset();
+
+			/* TEST: AAAA0E020001000200010003(CRC)
                  start - AAAA
                  length - 0E
                  command - 02
@@ -591,72 +417,66 @@ describe("IB651-ping-request-test", function() {
                  crc - ?
                  */
 
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(2)
-						.withSerial(1)
-						.withSerialData(512)
-						.withSerialData(256)
-						.withSerialData(768)
-						.build();
+			let messageb = packetBuilder
+				.withStart("AAAA")
+				.withCommand(2)
+				.withSerial(1)
+				.withSerialData(512)
+				.withSerialData(256)
+				.withSerialData(768)
+				.build();
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(() => {
-							cb();
-						})
-						.catch(err => {
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						databaseHelper
-							.getNodeTreeData(1, 1)
-							.then(function(result) {
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+			await serialPortHelper.sendMessage(messageb);
+			await serialPortHelper.sendMessage("AAAA");
+		};
 
-								var ib651_1 = null,
-									ib651_2 = null,
-									ib651_3 = null;
+		let step2 = async () => {
+			let result = await databaseHelper.getNodeTreeData(1, 1);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-								result.forEach(x => {
-									if (x["c.serial"] == 2 && x["c.type_id"] == 2) ib651_2 = x;
+			var ib651_1 = null,
+				ib651_2 = null,
+				ib651_3 = null;
 
-									if (x["c.serial"] == 1 && x["c.type_id"] == 2) ib651_1 = x;
+			result.forEach(x => {
+				if (x["c.serial"] == 2 && x["c.type_id"] == 2) ib651_2 = x;
 
-									if (x["c.serial"] == 3 && x["c.type_id"] == 2) ib651_3 = x;
-								});
+				if (x["c.serial"] == 1 && x["c.type_id"] == 2) ib651_1 = x;
 
-								cb(null, {
-									ib651_1: ib651_1,
-									ib651_2: ib651_2,
-									ib651_3: ib651_3
-								});
-							})
-							.catch(function(err) {
-								console.log(err);
-								cb(err);
-							});
-					}, 5000);
-				}
-			],
-			function(err, result) {
-				if (err) return done(err);
+				if (x["c.serial"] == 3 && x["c.type_id"] == 2) ib651_3 = x;
+			});
 
-				//check window_id ordering on each
+			return {
+				ib651_1: ib651_1,
+				ib651_2: ib651_2,
+				ib651_3: ib651_3
+			};
+		};
 
-				try {
-					expect(result.ib651_2["c.window_id"]).to.equal(1);
-					expect(result.ib651_1["c.window_id"]).to.equal(2);
-					expect(result.ib651_3["c.window_id"]).to.equal(3);
-
-					done();
-				} catch (err) {
-					done(err);
-				}
+		let step3 = async result => {
+			try {
+				expect(result.ib651_2["c.window_id"]).to.equal(1);
+				expect(result.ib651_1["c.window_id"]).to.equal(2);
+				expect(result.ib651_3["c.window_id"]).to.equal(3);
+			} catch (err) {
+				console.log(err);
+				return Promise.reject(err);
 			}
-		);
+		};
+
+		let test = async () => {
+			try {
+				await timer(3500);
+				await step1();
+				await timer(2000);
+				let result = await step2();
+				await step3(result);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return test();
 	});
 });

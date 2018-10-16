@@ -1,13 +1,12 @@
 var SerialPort = require("serialport");
-//const rslv = require('path').resolve;
 var spawn = require("child_process").spawn;
 
 function SerialPortHelper() {
-	require("dotenv").config({ path: "./test/.env-test" });
+	require("dotenv").config({ path: "./.env" });
 
 	// rewrite the ports to match the virtual ports
-	//process.env.TEST_OUTGOING_PORT = rslv('./ttyV0');
-	//process.env.ROUTER_SERIAL_PORT = rslv('./ttyV1');
+	//process.env.TEST_OUTGOING_PORT = rslv("./ttyV0");
+	//process.env.ROUTER_SERIAL_PORT = rslv("./ttyV1");
 }
 
 SerialPortHelper.prototype.initialise = function() {
@@ -48,33 +47,33 @@ SerialPortHelper.prototype.initialise = function() {
 };
 
 SerialPortHelper.prototype.sendMessage = function(message) {
-	console.log("message >>>>> :", message);
 	return new Promise(function(resolve, reject) {
-		var serialPort = new SerialPort(process.env.TEST_OUTGOING_PORT, {
+		let serialPort = new SerialPort(process.env.TEST_OUTGOING_PORT, {
 			baudRate: parseInt(process.env.ROUTER_BAUD_RATE),
 			autoOpen: false
 		});
 
-		serialPort.on("data", function(data) {
-			console.log("Data >>>>> :", data);
-		});
+		//serialPort.on('data', function (data) {
+		//    console.log('Data >>>>> :', data);
+		//});
+		//
 
 		serialPort.on("error", function(err) {
 			console.log("port error:", err);
 		});
 
 		serialPort.on("close", function() {
-			console.log("port closed!");
+			//console.log("port closed!");
 		});
 
 		serialPort.on("open", function() {
-			console.log("port open!");
+			//console.log("port open!");
 		});
 
 		serialPort.open(function(err) {
 			if (err) return reject(err);
 
-			console.log("## MESSAGE: " + message);
+			console.log("## SENDING MESSAGE: " + message);
 			var buffer = new Buffer(message, "hex");
 
 			serialPort.write(buffer, function(err) {
@@ -83,23 +82,23 @@ SerialPortHelper.prototype.sendMessage = function(message) {
 					return reject(err);
 				}
 
-				console.log("written....");
+				//console.log("written....");
+				serialPort.drain(function(err) {
+					if (err) return reject(err);
+
+					//console.log("drained....");
+
+					serialPort.close(function(err) {
+						if (err) return reject(err);
+
+						setTimeout(() => {
+							resolve();
+						}, 100);
+					});
+				});
 			});
 
 			//make sure the target port has received it
-			serialPort.drain(function(err) {
-				if (err) return reject(err);
-
-				console.log("drained....");
-
-				serialPort.close(function(err) {
-					if (err) return reject(err);
-
-					setTimeout(() => {
-						resolve();
-					}, 1000);
-				});
-			});
 		});
 	});
 };

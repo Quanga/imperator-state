@@ -14,23 +14,24 @@
 	"license": "",
 	"homepage": "https://github.com/team-tenacious/aece-rpi-router#readme",
 	"devDependencies": {
-		"dotenv": "^2.0.0",
+		"dotenv": "^6.1.0",
+		"eslint": "^5.6.1",
 		"expect.js": "^0.3.1",
 		"gulp": "^3.9.1",
-		"istanbul": "*",
-		"mocha": "*"
+		"istanbul": "0.4.5",
+		"mocha": "5.2.0",
+		"prettier-eslint": "^8.8.2"
 	},
 	"dependencies": {
-		"async": "2.0.1",
-		"bluebird": "^3.5.1",
-		"eslint": "^5.6.0",
+		"async": "2.6.1",
+		"bluebird": "^3.5.2",
 		"file-queue": "^0.3.0",
-		"graceful-fs": "^4.1.11",
 		"happn-3": "^7.3.0",
 		"happner-2": "8.3.1",
+		"memory": "0.0.3",
 		"mysql": "2.12.*",
 		"promise-mysql": "^3.3.1",
-		"serialport": "*",
+		"serialport": "^7.0.2",
 		"uuid": "^3.2.1"
 	}
 }

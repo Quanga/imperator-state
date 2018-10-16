@@ -4,7 +4,7 @@
 
 var assert = require("assert");
 
-describe("data-parser-test", function() {
+describe("data-parser-test", async function() {
 	var MockHappn = require("../mocks/mock_happn");
 	var Utils = require("../../lib/utils/packet_utils");
 	var DataParser = require("../../lib/parsers/data_parser");
@@ -17,21 +17,16 @@ describe("data-parser-test", function() {
 
 	this.timeout(30000);
 
-	before("it sets up the dependencies", function(callback) {
-		utils = new Utils();
-		commandConstant = new Constants().ibcToPiCommands[parseInt(0b00001000, 16)]; // command 8
-		parser = new DataParser(commandConstant);
-
-		callback();
-	});
-
-	it("can create a node result array with one set of node data from a parsed packet", function() {
+	it("can create a node result array with one set of node data from a parsed packet", async function() {
 		/*
          AAAA 0A 08 0001 00C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
          */
+		commandConstant = new Constants().ibcToPiCommands[parseInt(0b00001000, 16)]; // command 8
+		parser = new DataParser(commandConstant);
+		utils = new Utils();
 
-		var packet = "AAAA0A08000100C0CA96";
-		var testObj = utils.splitPacket(packet);
+		let packet = "AAAA0A08000100C0CA96";
+		let testObj = await utils.splitPacket(packet);
 
 		var expected = [
 			{
@@ -80,9 +75,8 @@ describe("data-parser-test", function() {
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 				assert.deepEqual(result, expected);
-				console.log("result", result);
 			} catch (err) {
-				console.log("err", err);
+				return Promise.reject(err);
 			}
 		};
 		return test();

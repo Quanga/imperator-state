@@ -4,7 +4,7 @@
 
 var assert = require("assert");
 
-describe("data-list-parser-test", function() {
+describe("data-list-parser-test", async function() {
 	const MockHappn = require("../mocks/mock_happn");
 	const Utils = require("../../lib/utils/packet_utils");
 	const DataListParser = require("../../lib/parsers/data_list_parser");
@@ -17,22 +17,17 @@ describe("data-list-parser-test", function() {
 
 	this.timeout(30000);
 
-	before("it sets up the dependencies", function(callback) {
+	before("it sets up the dependencies", async function() {
 		utils = new Utils();
 		commandConstant = new Constants().ibcToPiCommands[parseInt(0b00000011, 16)]; // command 3
 		parser = new DataListParser(commandConstant);
-
-		callback();
 	});
 
-	it("can create a result array with nodes containing ISC and IB651 data from a parsed packet", function() {
+	it("can create a result array with nodes containing ISC and IB651 data from a parsed packet", async function() {
 		/*
          start  length  command ISC serial  ISC data    IB651 data  CRC
          AAAA   0C      03      0004        4040        210E        CAF6
          */
-
-		var packet = "AAAA0C0300044040210ECAF6";
-		var testObj = utils.splitPacket(packet);
 
 		// NOTE: top-level IBC does not have a parent_id (ie: null)
 		// NOTE: IB651 serial is unknown (ie: null) - this will ultimately be retrieved from the DB
@@ -119,11 +114,19 @@ describe("data-list-parser-test", function() {
 
 		let test = async () => {
 			try {
+				let packet = "AAAA0C0300044040210ECAF6";
+				let testObj = await utils.splitPacket(packet);
+
+				//console.log("running................");
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-				assert.deepEqual(result, expected);
+				await assert.deepEqual(result, expected);
+				//console.log(result);
+				//return results;
 			} catch (err) {
 				console.log("error ", err);
+				return Promise.reject(err);
 			}
 		};
 

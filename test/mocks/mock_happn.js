@@ -2,22 +2,20 @@
  * Created by grant on 2016/07/15.
  */
 
-var path = require('path');
-require('dotenv').config({path: path.dirname(__dirname) + path.sep + '.env-test'});
+require("dotenv").config();
 
-
-var MockHappn = function () {
+var MockHappn = function() {
 	this.__queueLength = 1;
 };
 
 Object.defineProperty(MockHappn.prototype, "log", {
-	get: function () {
+	get: function() {
 		return {
-			error: function (message, err) {
+			error: function(message, err) {
 				console.log(message);
-				throw(err);
+				throw err;
 			},
-			info: function (message) {
+			info: function(message) {
 				console.log(message);
 			}
 		};
@@ -25,7 +23,7 @@ Object.defineProperty(MockHappn.prototype, "log", {
 });
 
 Object.defineProperty(MockHappn.prototype, "config", {
-	get: function () {
+	get: function() {
 		return {
 			nodeEnv: process.env.NODE_ENV,
 			edgeIP: process.env.EDGE_IP,
@@ -48,77 +46,76 @@ Object.defineProperty(MockHappn.prototype, "config", {
 });
 
 Object.defineProperty(MockHappn.prototype, "exchange", {
-	get: function () {
+	get: function() {
 		var self = this;
 
 		return {
 			incomingFileQueue: {
-				length: function () {
-					return new Promise(function (resolve) {
+				length: function() {
+					return new Promise(function(resolve) {
 						resolve(self.__queueLength);
 						self.__queueLength -= 1;
 					});
 				},
-				pop: function () {
-					return new Promise(function (resolve) {
+				pop: function() {
+					return new Promise(function(resolve) {
 						resolve("my incoming message");
 					});
 				},
-				push: function () {
-					return new Promise(function (resolve) {
+				push: function() {
+					return new Promise(function(resolve) {
 						resolve("my incoming message");
 					});
 				}
 			},
 			outgoingFileQueue: {
-				length: function (callback) {
+				length: function(callback) {
 					callback(null, self.__queueLength);
 					self.__queueLength -= 1;
 				},
-				pop: function (callback) {
+				pop: function(callback) {
 					callback(null, "my outgoing message");
 				},
-				push: function () {
-					return new Promise(function (resolve) {
+				push: function() {
+					return new Promise(function(resolve) {
 						resolve();
 					});
 				}
 			},
 			dataService: {
-				insertPacketArr: function () {
-					return new Promise(function (resolve) {
+				insertPacketArr: function() {
+					return new Promise(function(resolve) {
 						resolve(1);
 					});
 				},
-				upsertNodeDataArr: function () {
-					return new Promise(function (resolve) {
+				upsertNodeDataArr: function() {
+					return new Promise(function(resolve) {
 						resolve();
 					});
 				}
 			},
 			packetService: {
-				extractData: function (message) {
-					return new Promise(function (resolve) {
-						resolve({message: message});
+				extractData: function(message) {
+					return new Promise(function(resolve) {
+						resolve({ message: message });
 					});
 				}
 			},
 			portUtil: {
-				getInstance: function () {
-					return new Promise(function (resolve) {
+				getInstance: function() {
+					return new Promise(function(resolve, reject) {
 						resolve({
-							on: function () {
+							on: function(eventType, handler) {
 								return true;
 							}
-
 						});
 					});
 				}
 			},
 			messageHandler: {
-				createMessageReceiveHandler: function () {
-					return new Promise(function (resolve) {
-						resolve(function () {
+				MessageReceiveHandler: function() {
+					return new Promise(function(resolve, reject) {
+						resolve(function() {
 							return true;
 						});
 					});

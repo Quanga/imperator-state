@@ -5,32 +5,46 @@
 var assert = require("assert");
 
 describe("packet-reader-test", function() {
-	const Parser = require("../../lib/readers/incoming_message_reader");
+	//const Parser = require("@serialport/parser-readline");
+	const Delimiter = require("@serialport/parser-delimiter");
+
 	let parser = null;
 
 	this.timeout(2000);
 
 	before("it sets up the dependencies", function(callback) {
-		parser = new Parser();
+		parser = new Delimiter({
+			delimiter: Buffer.from("AAAA", "hex"),
+			encoding: "hex"
+			//includeDelimiter: true
+		});
+
 		callback();
 	});
 
 	it("can parse a default IBC message with delimiting bytes at the beginning of the message ", function(callback) {
 		var testMessage = "AAAA0A0800015540C212";
 
-		var func = parser.readline("AAAA");
+		parser.on("data", logme);
+		parser.on("error", console.log);
 
-		var emitter = {
-			emit: function(eventName, data) {
-				assert.equal(data, testMessage.toLowerCase());
-				callback();
-			}
-		};
+		parser.write(Buffer.from(testMessage, "hex"), endCall);
 
-		func(emitter, new Buffer(testMessage, "hex"));
+		function endCall() {
+			parser.end();
+		}
+
+		function logme(message) {
+			console.log(`logging - aaaa${message.toString()}`);
+			assert.equal(`aaaa${message.toString()}`, testMessage.toLowerCase());
+			callback();
+		}
+		setTimeout(() => {
+			callback();
+		}, 4000);
 	});
 
-	it("can parse a message with ISC serial list with 1 ISC and  delimiting bytes at the beginning of the message ", function(callback) {
+	it("can parse a message with ISC serial list with 1 ISC and  delimiting bytes at the beginning of the message ", async function() {
 		var testMessage = "AAAA0A010001002542DA";
 
 		var func = parser.readline("AAAA");

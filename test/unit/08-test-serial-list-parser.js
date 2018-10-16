@@ -4,7 +4,7 @@
 
 var assert = require("assert");
 
-describe("serial-list-parser-test", function() {
+describe("serial-list-parser-test", async function() {
 	var MockHappn = require("../mocks/mock_happn");
 	var Utils = require("../../lib/utils/packet_utils");
 	var SerialListParser = require("../../lib/parsers/serial_list_parser");
@@ -25,7 +25,7 @@ describe("serial-list-parser-test", function() {
 		callback();
 	});
 
-	it("can create a result array with ISC list from a parsed packet", function() {
+	it("can create a result array with ISC list from a parsed packet", async function() {
 		/*
          ISC serial list for IBC id 8
 
@@ -34,7 +34,7 @@ describe("serial-list-parser-test", function() {
          */
 
 		var packet = "AAAA1601000800250026002E0032002A0012002C7BCA";
-		var testObj = utils.splitPacket(packet);
+		var testObj = await utils.splitPacket(packet);
 
 		var expected = [
 			{
@@ -359,7 +359,8 @@ describe("serial-list-parser-test", function() {
 
 				assert.deepEqual(result, expected);
 			} catch (err) {
-				console.log("error", err);
+				//console.log("error", err);
+				return Promise.reject(err);
 			}
 		};
 

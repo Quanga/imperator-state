@@ -2,93 +2,50 @@
  * Created by grant on 2016/11/29.
  */
 
-var async = require("async"),
-	expect = require("expect.js");
+const expect = require("expect.js");
 
 describe("ISC-ping-request-test", function() {
-	require("dotenv").config({ path: "./test/.env-test" });
+	const PacketBuilder = require("../../lib/builders/packet_builder");
 
-	var ServerHelper = require("../helpers/server_helper");
-	var serverHelper = new ServerHelper();
+	const ServerHelper = require("../helpers/server_helper");
+	const serverHelper = new ServerHelper();
 
-	var DatabaseHelper = require("../helpers/database_helper");
-	var databaseHelper = new DatabaseHelper();
+	const DatabaseHelper = require("../helpers/database_helper");
+	const databaseHelper = new DatabaseHelper();
 
-	var FileHelper = require("../helpers/file_helper");
-	var fileHelper = new FileHelper();
+	const FileHelper = require("../helpers/file_helper");
+	const fileHelper = new FileHelper();
 
-	var SerialPortHelper = require("../helpers/serial_port_helper");
-	var serialPortHelper = new SerialPortHelper();
-
-	const SerailPortService = require("../../lib/services/serial_port_service");
-	let serialPortService = new SerailPortService();
-
-	const MockHappn = require("../mocks/mock_happn");
-	let mockHappn = null;
+	const SerialPortHelper = require("../helpers/serial_port_helper");
+	const serialPortHelper = new SerialPortHelper();
 
 	this.timeout(30000);
 
-	// before('setup virtual serial ports', function (done) {
-
-	// 	serialPortHelper.initialise()
-	// 		.then(() => {
-	// 			done();
-	// 		})
-	// 		.catch(err => {
-	// 			done(err);
-	// 		})
-	// });
-
-	before("setup comm port", function(done) {
-		mockHappn = new MockHappn();
-		serialPortService.initialise(mockHappn).then(done());
+	before("cleaning up queues", async function() {
+		await fileHelper.clearQueueFiles();
 	});
 
-	before("start test server", function(done) {
-		serverHelper
-			.startServer()
-			.then(() => {
-				done();
-			})
-			.catch(err => {
-				done(err);
-			});
+	before("start test server", async function() {
+		await serverHelper.startServer();
 	});
 
-	beforeEach("clean up queues", function(done) {
-		fileHelper
-			.clearQueueFiles()
-			.then(function() {
-				return done();
-			})
-			.catch(function(err) {
-				return done(err);
-			});
+	beforeEach("cleaning up db", async function() {
+		try {
+			await databaseHelper.clearDatabase();
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	});
 
-	beforeEach("clean up db", function(done) {
-		databaseHelper
-			.clearDatabase()
-			.then(function() {
-				done();
-			})
-			.catch(function(err) {
-				done(err);
-			});
+	after("stop test server", async function() {
+		await serverHelper.stopServer();
 	});
 
-	after("stop test server", function(done) {
-		serverHelper
-			.stopServer()
-			.then(() => {
-				done();
-			})
-			.catch(err => {
-				done(err);
-			});
-	});
+	let timer = ms => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	};
 
-	it("can send a ping request containing ISCs 1, 2 & 3, where no ISCs currently in database", function(done) {
+	it.only("can send a ping request containing ISCs 1, 2 & 3, where no ISCs currently in database", async function() {
 		// AAAA0E010001000100020003(CRC)
 		// start - AAAA
 		// length - 0E
@@ -97,78 +54,68 @@ describe("ISC-ping-request-test", function() {
 		// data - 000100020003 (serials 1, 2, 3)
 		// crc - ?
 
-		var PacketBuilder = require("../../lib/builders/packet_builder");
-		var packetBuilder = new PacketBuilder();
+		let step1 = async function() {
+			let packetBuilder = new PacketBuilder();
+			let message = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.withSerialData(2)
+				.withSerialData(3)
+				.build();
 
-		async.waterfall(
-			[
-				function(cb) {
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.withSerialData(2)
-						.withSerialData(3)
-						.build();
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
+		};
 
-					console.log("sending");
+		let step2 = async function() {
+			let result = await databaseHelper.getNodeTreeData(1, 0);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(function() {
-							cb();
-						})
-						.catch(function(err) {
-							console.log("port error: ", err);
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						databaseHelper
-							.getNodeTreeData(1, 0)
-							.then(function(result) {
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+			let isc1 = null,
+				isc2 = null,
+				isc3 = null;
 
-								var isc1 = null,
-									isc2 = null,
-									isc3 = null;
+			result.forEach(x => {
+				if (parseInt(x["c.serial"]) === 1 && x["c.type_id"] == 1) isc1 = x;
+				if (parseInt(x["c.serial"]) === 2 && x["c.type_id"] == 1) isc2 = x;
+				if (parseInt(x["c.serial"]) === 3 && x["c.type_id"] == 1) isc3 = x;
+			});
 
-								result.forEach(x => {
-									if (x["c.serial"] == 1 && x["c.type_id"] == 1) isc1 = x;
+			return { isc1: isc1, isc2: isc2, isc3: isc3 };
+		};
 
-									if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
-
-									if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
-								});
-
-								cb(null, { isc1: isc1, isc2: isc2, isc3: isc3 });
-							})
-							.catch(function(err) {
-								cb(err);
-							});
-					}, 10000);
-				}
-			],
-			function(err, result) {
-				if (err) return done(err);
-
-				try {
-					expect(result.isc1["c.communication_status"]).to.equal(1); // communication status
-					expect(result.isc2["c.communication_status"]).to.equal(1);
-					expect(result.isc3["c.communication_status"]).to.equal(1);
-
-					done();
-				} catch (err) {
-					done(err);
-				}
+		let step3 = async function(result) {
+			try {
+				expect(result.isc1["c.communication_status"]).to.equal(1); // communication status
+				expect(result.isc2["c.communication_status"]).to.equal(1);
+				expect(result.isc3["c.communication_status"]).to.equal(1);
+			} catch (err) {
+				console.log(err);
+				return Promise.reject();
 			}
-		);
+		};
+
+		let startTest = async function() {
+			try {
+				console.log("STARTING TESTS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+				await timer(3500);
+				console.log("SENDING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+				await step1();
+				await timer(3000);
+				let result = await step2();
+				await step3(result);
+			} catch (err) {
+				return Promise.reject();
+			}
+		};
+
+		return startTest();
 	});
 
-	it("can send a ping request containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", function(done) {
+	it.only("can send a ping request containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function() {
 		/* INITIAL STATE: AAAA0E01000100010002(CRC)
          start - AAAA
          length - 0E
@@ -186,130 +133,112 @@ describe("ISC-ping-request-test", function() {
          data - 000100020003 (serials 1, 2, 3)
          crc - ?
          */
+		let packetBuilder = new PacketBuilder();
 
-		var PacketBuilder = require("../../lib/builders/packet_builder");
-		var packetBuilder = new PacketBuilder();
+		let step1 = async function() {
+			let initial = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.withSerialData(2)
+				.build();
 
-		async.waterfall(
-			[
-				function(cb) {
-					var initial = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.withSerialData(2)
-						.build();
+			//await serialPortHelper.sendMessage(initial);
+			//await timer(500);
+			//await serialPortHelper.sendMessage(initial);
 
-					console.log("## INITIAL: " + initial);
+			//await timer(500);
+			await serialPortHelper.sendMessage(initial);
+			console.log("SENDING 1<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", initial);
 
-					serialPortHelper
-						.sendMessage(initial)
-						.then(function() {
-							cb();
-						})
-						.catch(function(err) {
-							console.log("port error: ", err);
-							cb(err);
-						});
-				},
-				function(cb) {
-					var message = packetBuilder.withSerialData(3).build();
+			let message = packetBuilder.withSerialData(3).build();
+			await serialPortHelper.sendMessage("AAAA");
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(function() {
-							cb();
-						})
-						.catch(function(err) {
-							console.log("port error: ", err);
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						databaseHelper
-							.getNodeTreeData(1, 0)
-							.then(function(result) {
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+			await timer(100);
 
-								var isc1 = null,
-									isc2 = null,
-									isc3 = null;
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
+			console.log("SENDING 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", message);
+		};
 
-								result.forEach(x => {
-									if (x["c.serial"] == 1 && x["c.type_id"] == 1) isc1 = x;
+		let step2 = async function() {
+			let dbresult = await databaseHelper.getNodeTreeData(1, 0);
 
-									if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
+			if (dbresult == null || dbresult.length == 0)
+				return new Error("Empty dbresult!");
 
-									if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
-								});
+			let isc1 = null,
+				isc2 = null,
+				isc3 = null;
 
-								cb(null, { isc1: isc1, isc2: isc2, isc3: isc3 });
-							})
-							.catch(function(err) {
-								cb(err);
-							});
-					}, 5000);
-				}
-			],
-			function(err, result) {
-				if (err) return done(err);
+			dbresult.forEach(x => {
+				if (x["c.serial"] == 1 && x["c.type_id"] == 1) isc1 = x;
+				if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
+				if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
+			});
 
-				try {
-					//check communication status on each
-					expect(result.isc1["c.communication_status"]).to.equal(1);
-					expect(result.isc2["c.communication_status"]).to.equal(1);
-					expect(result.isc3["c.communication_status"]).to.equal(1);
+			return { isc1: isc1, isc2: isc2, isc3: isc3 };
+		};
 
-					done();
-				} catch (err) {
-					done(err);
-				}
+		let step4 = async function(result) {
+			try {
+				expect(result.isc1["c.communication_status"]).to.equal(1);
+				expect(result.isc2["c.communication_status"]).to.equal(1);
+				expect(result.isc3["c.communication_status"]).to.equal(1);
+			} catch (err) {
+				console.log(err);
+				return Promise.reject();
 			}
-		);
+		};
+
+		let startTest = async function() {
+			try {
+				console.log("STARTING TESTS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+				await timer(3500);
+				await step1();
+				await timer(1000);
+				let result = await step2();
+
+				await step4(result);
+			} catch (err) {
+				console.log(err);
+				return Promise.reject();
+			}
+		};
+
+		return startTest();
 	});
 
-	it("can send a ping request containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", function(done) {
-		var PacketBuilder = require("../../lib/builders/packet_builder");
+	it.only("can send a ping request containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", async function() {
 		var packetBuilder = new PacketBuilder();
 
-		async.waterfall(
-			[
-				function(cb) {
-					/* INITIAL STATE: AAAA0E0100010004(CRC)
-                 start - AAAA
-                 length - 0E
-                 command - 01
-                 serial - 0001
-                 data - 0004 (serial 4)
-                 crc - ?
-                 */
+		let step1 = async () => {
+			/* INITIAL STATE: AAAA0E0100010004(CRC)
+			 start - AAAA
+			 length - 0E
+			 command - 01
+			 serial - 0001
+			 data - 0004 (serial 4)
+			 crc - ?
+			 */
 
-					var initial = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(4)
-						.build();
+			let initial = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(4)
+				.build();
 
-					console.log("## INITIAL: " + initial);
+			//console.log("## INITIAL: " + initial);
 
-					serialPortHelper
-						.sendMessage(initial)
-						.then(function() {
-							cb();
-						})
-						.catch(function(err) {
-							console.log("port error: ", err);
-							cb(err);
-						});
-				},
-				function(cb) {
-					packetBuilder.reset();
+			await serialPortHelper.sendMessage(initial);
+			await serialPortHelper.sendMessage("AAAA");
 
-					/* TEST: AAAA0E010001000100020003(CRC)
+			await timer(1000);
+			packetBuilder.reset();
+
+			/* TEST: AAAA0E010001000100020003(CRC)
                  start - AAAA
                  length - 0E
                  command - 01
@@ -317,78 +246,70 @@ describe("ISC-ping-request-test", function() {
                  data - 000100020003 (serials 1, 2, 3)
                  crc - ?
                  */
+			let message = packetBuilder
+				.withStart("AAAA")
+				.withCommand(1)
+				.withSerial(1)
+				.withSerialData(1)
+				.withSerialData(2)
+				.withSerialData(3)
+				.build();
 
-					var message = packetBuilder
-						.withStart("AAAA")
-						.withCommand(1)
-						.withSerial(1)
-						.withSerialData(1)
-						.withSerialData(2)
-						.withSerialData(3)
-						.build();
+			await serialPortHelper.sendMessage(message);
+			await serialPortHelper.sendMessage("AAAA");
+		};
 
-					console.log("## MESSAGE: " + message);
+		let step2 = async () => {
+			let result = await databaseHelper.getNodeTreeData(1, 0);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-					serialPortHelper
-						.sendMessage(message)
-						.then(function() {
-							cb();
-						})
-						.catch(function(err) {
-							console.log("port error: ", err);
-							cb(err);
-						});
-				},
-				function(cb) {
-					setTimeout(function() {
-						console.log("## GETTING TREE DATA....");
+			//console.log("### NODE TREE RESULT: " + JSON.stringify(result));
 
-						databaseHelper
-							.getNodeTreeData(1, 0)
-							.then(function(result) {
-								if (result == null || result.length == 0)
-									return cb(new Error("Empty result!"));
+			var isc1 = null,
+				isc2 = null,
+				isc3 = null,
+				isc4 = null;
 
-								console.log("### NODE TREE RESULT: " + JSON.stringify(result));
+			result.forEach(x => {
+				if (x["c.serial"] == 1 && x["c.type_id"] == 1) isc1 = x;
 
-								var isc1 = null,
-									isc2 = null,
-									isc3 = null,
-									isc4 = null;
+				if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
 
-								result.forEach(x => {
-									if (x["c.serial"] == 1 && x["c.type_id"] == 1) isc1 = x;
+				if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
 
-									if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
+				if (x["c.serial"] == 4 && x["c.type_id"] == 1) isc4 = x;
+			});
+			return { isc1: isc1, isc2: isc2, isc3: isc3, isc4: isc4 };
+		};
 
-									if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
-
-									if (x["c.serial"] == 4 && x["c.type_id"] == 1) isc4 = x;
-								});
-
-								cb(null, { isc1: isc1, isc2: isc2, isc3: isc3, isc4: isc4 });
-							})
-							.catch(function(err) {
-								cb(err);
-							});
-					}, 5000);
-				}
-			],
-			function(err, result) {
-				if (err) return done(err);
-
-				try {
-					//check communication status on each
-					expect(result.isc1["c.communication_status"]).to.equal(1);
-					expect(result.isc2["c.communication_status"]).to.equal(1);
-					expect(result.isc3["c.communication_status"]).to.equal(1);
-					expect(result.isc4["c.communication_status"]).to.equal(1);
-
-					done();
-				} catch (err) {
-					done(err);
-				}
+		let step3 = async result => {
+			//check communication status on each
+			try {
+				expect(result.isc1["c.communication_status"]).to.equal(1);
+				expect(result.isc2["c.communication_status"]).to.equal(1);
+				expect(result.isc3["c.communication_status"]).to.equal(1);
+				expect(result.isc4["c.communication_status"]).to.equal(1);
+			} catch (err) {
+				console.log(err);
+				return Promise.reject();
 			}
-		);
+		};
+
+		let test = async () => {
+			try {
+				await timer(4000);
+
+				await step1();
+				await timer(1000);
+				let result = await step2();
+				await step3(result);
+			} catch (err) {
+				console.log(err);
+				return Promise.reject();
+			}
+		};
+
+		return test();
 	});
 });
