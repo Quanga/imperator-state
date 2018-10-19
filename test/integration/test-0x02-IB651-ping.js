@@ -62,7 +62,6 @@ describe("IB651-ping-request-test", function() {
 			console.log("## INITIAL MESSAGE: " + message);
 
 			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
 
 			packetBuilder.reset();
 
@@ -77,7 +76,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(messageb);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {
@@ -156,15 +154,14 @@ describe("IB651-ping-request-test", function() {
 
 			// set up the initial IBC and single ISC via an ISC ping
 
-			let message = packetBuilder
+			let messagea = packetBuilder
 				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
 				.build();
 
-			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
+			await serialPortHelper.sendMessage(messagea);
 
 			packetBuilder.reset();
 
@@ -177,7 +174,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
-			await serialPortHelper.sendMessage("AAAA");
 
 			packetBuilder.reset();
 
@@ -191,7 +187,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(messageb);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {
@@ -248,7 +243,7 @@ describe("IB651-ping-request-test", function() {
 
 	it.only("can send a ping request containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", async function() {
 		let step1 = async () => {
-			var packetBuilder = new PacketBuilder();
+			let packetBuilder = new PacketBuilder();
 
 			// set up the initial IBC and single ISC via an ISC ping
 			let message = packetBuilder
@@ -259,8 +254,8 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
 
+			await timer(1000);
 			packetBuilder.reset();
 
 			/* INITIAL STATE: AAAA0E0200010004(CRC)
@@ -280,7 +275,7 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
-			await serialPortHelper.sendMessage("AAAA");
+			await timer(1000);
 
 			packetBuilder.reset();
 
@@ -303,7 +298,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(messageb);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {
@@ -358,9 +352,9 @@ describe("IB651-ping-request-test", function() {
 
 		let test = async () => {
 			try {
-				await timer(4000);
+				await timer(4500);
 				await step1();
-				await timer(2000);
+				await timer(5000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {
@@ -383,7 +377,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
 
 			packetBuilder.reset();
 			/* INITIAL STATE: AAAA0E0200010002(CRC)
@@ -404,7 +397,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
-			await serialPortHelper.sendMessage("AAAA");
 
 			packetBuilder.reset();
 
@@ -427,7 +419,6 @@ describe("IB651-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(messageb);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {

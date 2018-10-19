@@ -66,7 +66,6 @@ describe("ISC-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async function() {
@@ -153,12 +152,10 @@ describe("ISC-ping-request-test", function() {
 			console.log("SENDING 1<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", initial);
 
 			let message = packetBuilder.withSerialData(3).build();
-			await serialPortHelper.sendMessage("AAAA");
 
 			await timer(100);
 
 			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
 			console.log("SENDING 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", message);
 		};
 
@@ -233,7 +230,6 @@ describe("ISC-ping-request-test", function() {
 			//console.log("## INITIAL: " + initial);
 
 			await serialPortHelper.sendMessage(initial);
-			await serialPortHelper.sendMessage("AAAA");
 
 			await timer(1000);
 			packetBuilder.reset();
@@ -256,7 +252,6 @@ describe("ISC-ping-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(message);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {
