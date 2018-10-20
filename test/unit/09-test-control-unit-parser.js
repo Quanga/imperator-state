@@ -4,10 +4,10 @@
 
 var assert = require("assert");
 
-describe("data-parser-test", async function() {
+describe("parser-control-unit-parser-test", async function() {
 	var MockHappn = require("../mocks/mock_happn");
 	var Utils = require("../../lib/utils/packet_utils");
-	var DataParser = require("../../lib/parsers/data_parser");
+	var DataParser = require("../../lib/parsers/control_unit_parser");
 	var Constants = require("../../lib/constants/command_constants");
 
 	var mockHappn = new MockHappn();
@@ -21,7 +21,9 @@ describe("data-parser-test", async function() {
 		/*
          AAAA 0A 08 0001 00C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
          */
-		commandConstant = new Constants().ibcToPiCommands[parseInt(0b00001000, 16)]; // command 8
+		commandConstant = new Constants().incomingCommands[
+			parseInt(0b00001000, 16)
+		]; // command 8
 		parser = new DataParser(commandConstant);
 		utils = new Utils();
 

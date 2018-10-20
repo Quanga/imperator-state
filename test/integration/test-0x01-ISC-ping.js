@@ -103,7 +103,7 @@ describe("ISC-ping-request-test", function() {
 				await timer(3500);
 				console.log("SENDING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 				await step1();
-				await timer(3000);
+				await timer(4000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {

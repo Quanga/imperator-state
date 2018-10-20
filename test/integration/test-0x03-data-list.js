@@ -4,11 +4,7 @@
 
 const expect = require("expect.js");
 
-describe("data-list-request-test", function() {
-	require("dotenv").config({
-		path: "./.env"
-	});
-
+describe("parser-ib651-parser-test", function() {
 	const ServerHelper = require("../helpers/server_helper");
 	let serverHelper = new ServerHelper();
 
@@ -68,7 +64,6 @@ describe("data-list-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
-			await serialPortHelper.sendMessage("AAAA");
 
 			packetBuilder.reset();
 
@@ -85,7 +80,6 @@ describe("data-list-request-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial2);
-			await serialPortHelper.sendMessage("AAAA");
 
 			packetBuilder.reset();
 
@@ -182,7 +176,6 @@ describe("data-list-request-test", function() {
 			await timer(5000);
 
 			await serialPortHelper.sendMessage(finalmessage);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {
@@ -260,7 +253,6 @@ describe("data-list-request-test", function() {
 			var initial = "aaaa080300011ae3";
 
 			await serialPortHelper.sendMessage(initial);
-			await serialPortHelper.sendMessage("AAAA");
 		};
 
 		let step2 = async () => {
@@ -276,7 +268,6 @@ describe("data-list-request-test", function() {
 				await timer(3500);
 
 				let result = await step2();
-				console.log(result.length);
 				expect(result.length).to.equal(0);
 			} catch (err) {
 				return Promise.reject(err);

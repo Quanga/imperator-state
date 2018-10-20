@@ -20,10 +20,6 @@ describe("0x08-IBC-data-request-test", async function() {
 
 	this.timeout(25000);
 
-	// before("setup virtual serial ports", async function() {
-	// 	await serialPortHelper.initialise();
-	// });
-
 	before("cleaning up queues", async function() {
 		await fileHelper.clearQueueFiles();
 	});
@@ -39,7 +35,6 @@ describe("0x08-IBC-data-request-test", async function() {
 
 	after("stop test server", async function() {
 		await serverHelper.stopServer();
-		//await serialPortHelper.close();
 	});
 
 	// it("can send a key switch disarmed on IBC 8", function(done) {
@@ -124,14 +119,13 @@ describe("0x08-IBC-data-request-test", async function() {
 	// 		});
 	// });
 
-	it("can send a key switch armed on IBC 8 where previous state was disarmed", async function() {
+	it.only("can send a key switch armed on IBC 8 where previous state was disarmed", async function() {
 		let timer = ms => {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		};
 
 		let checkDatabase = async function() {
 			try {
-				await timer(7000);
 				console.log("Checking database --------------------------");
 				let result = await databaseHelper.getNodeTreeData(8, 0);
 
@@ -163,7 +157,7 @@ describe("0x08-IBC-data-request-test", async function() {
 		let startTest = async function() {
 			try {
 				console.log("STARTING TESTS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-				await timer(6500);
+				await timer(4500);
 				await SendMessage({
 					from: 1,
 					serial: 8,
@@ -172,7 +166,7 @@ describe("0x08-IBC-data-request-test", async function() {
 				});
 				console.log("SEND MESSAGE 1 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
-				await timer(1000);
+				await timer(200);
 				await SendMessage({
 					form: 2,
 					serial: 8,
@@ -190,14 +184,13 @@ describe("0x08-IBC-data-request-test", async function() {
 					data: [0, 0, 0, 0, 0, 0, 1, 1]
 				});
 				console.log("SEND MESSAGE 3 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+				await timer(4000);
 
 				let results = await checkDatabase();
-				await timer(5500);
-
 				let ass = await checkResults(results);
 				return ass;
 			} catch (err) {
-				console.log(err);
+				return Promise.reject(err);
 			}
 		};
 
@@ -244,7 +237,7 @@ describe("0x08-IBC-data-request-test", async function() {
 
 			serialPortHelper.sendMessage(message);
 		} catch (err) {
-			//done(err);
+			return Promise.reject(err);
 		}
 	};
 
