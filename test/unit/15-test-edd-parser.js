@@ -4,10 +4,10 @@
 
 var assert = require("assert");
 
-describe("paresr-edd-parser-test", async function() {
+describe("parser-edd-parser-test", async function() {
 	const MockHappn = require("../mocks/mock_happn");
 	const Utils = require("../../lib/utils/packet_utils");
-	const UidDataListParser = require("../../lib/parsers/uid_data_list_parser");
+	const UidDataListParser = require("../../lib/parsers/edd_data_parser");
 	const Constants = require("../../lib/constants/command_constants");
 
 	let mockHappn = new MockHappn();
@@ -20,14 +20,14 @@ describe("paresr-edd-parser-test", async function() {
 	before("it sets up the dependencies", async function() {
 		utils = new Utils();
 		commandConstant = new Constants().incomingCommands[
-			parseInt(0b00000101, 16)
+			parseInt(0b00000100, 16)
 		]; // command 3
 		parser = new UidDataListParser(commandConstant);
 	});
 
-	it("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
+	it("can create a result array with nodes containing CBB & EDD data from a parsed packet", async function() {
 		/*
-		aaaa1005004300001828ff00ff00bf80
+		aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac
 
          start  length  command   CBB serial    Data                    CRC
          AAAA   1C      05        0043          00001828ff00ff00        bf80
@@ -234,19 +234,13 @@ describe("paresr-edd-parser-test", async function() {
 
 		let test = async () => {
 			try {
-				let packet = "aaaa1005004300001828ff00ff00bf80";
+				let packet = "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac";
 				let testObj = await utils.splitPacket(packet);
-
-				//console.log("running................");
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
-
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 				await assert.deepEqual(result, expected);
-				//console.log(result);
-				//return results;
 			} catch (err) {
-				console.log("error ", err);
-				return Promise.reject(err);
+				//return Promise.reject(err);
 			}
 		};
 
