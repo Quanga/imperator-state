@@ -417,7 +417,7 @@ describe("IB651-ping-request-test", function() {
 				.withSerialData(256)
 				.withSerialData(768)
 				.build();
-
+			//await timer(1500);
 			await serialPortHelper.sendMessage(messageb);
 		};
 

@@ -93,12 +93,10 @@ SerialPortHelper.prototype.sendMessage = function(message) {
 
 						setTimeout(() => {
 							resolve();
-						}, 100);
+						}, 10);
 					});
 				});
 			});
-
-			//make sure the target port has received it
 		});
 	});
 };
