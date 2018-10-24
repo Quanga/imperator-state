@@ -134,12 +134,11 @@ describe("0x08-IBC-data-request-test", async function() {
 				}
 
 				let ibc = result[0];
-				//console.log(JSON.stringify(ibc, null, 2));
 				return {
 					ibc: ibc
 				};
 			} catch (err) {
-				console.log(err);
+				return Promise.reject(err);
 			}
 		};
 
@@ -150,7 +149,7 @@ describe("0x08-IBC-data-request-test", async function() {
 				expect(result.ibc["p.key_switch_status"]).to.equal(1);
 				expect(result.ibc["p.isolation_relay"]).to.equal(1);
 			} catch (err) {
-				console.log(err);
+				return Promise.reject(err);
 			}
 		};
 
