@@ -33,7 +33,7 @@ describe("Benchmark tests", function() {
 		await serverHelper.stopServer();
 	});
 
-	this.timeout(20000);
+	this.timeout(25000);
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
@@ -79,11 +79,11 @@ describe("Benchmark tests", function() {
 			console.log("sending messages");
 
 			for (let i = 0; i < 1000; i++) {
-				// const res = await serialPortHelper.sendMessage(
-				// 	"aaaa4805004364000a291f01b80b20011c0c2101800c2201e40c2301480d2401ac0d2501100e2601740e2701d80e28013c0f2901a00f2a0104102b0168102c01cc102d0130114a5d"
-				// );
+				let res = await serialPortHelper.sendMessage(
+					"aaaa4805004364000a291f01b80b20011c0c2101800c2201e40c2301480d2401ac0d2501100e2601740e2701d80e28013c0f2901a00f2a0104102b0168102c01cc102d0130114a5d"
+				);
 
-				const res = await serialPortHelper.sendMessage(message);
+				res = await serialPortHelper.sendMessage(message);
 				console.log(`sending message ${res} -- ${i}`);
 			}
 			console.log("LOOOOP COMPLETE");

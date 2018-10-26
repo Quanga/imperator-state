@@ -82,11 +82,8 @@ SerialPortHelper.prototype.sendMessage = function(message) {
 					return reject(err);
 				}
 
-				console.log("written....");
 				serialPort.drain(function(err) {
 					if (err) return reject(err);
-
-					console.log("drained....");
 
 					serialPort.close(function(err) {
 						if (err) return reject(err);

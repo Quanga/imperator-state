@@ -2,7 +2,8 @@
  * Created by grant on 2016/06/20.
  */
 
-var Happner = require("happner-2");
+const Happner = require("happner-2");
+
 module.exports = {
 	PortUtil: require("./lib/utils/port_util"),
 	QueueService: require("./lib/services/queue_service"),

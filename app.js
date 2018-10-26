@@ -5,9 +5,6 @@
 function App() {}
 
 App.prototype.start = function($happn) {
-	var quit = function(err) {
-		process.exit(err.code || 1);
-	};
 	let startup = async () => {
 		try {
 			await $happn.exchange.portService.initialise();
@@ -19,10 +16,12 @@ App.prototype.start = function($happn) {
 			await $happn.exchange.queueService.watchOutgoingQueue();
 			//$happn.exchange.transmissionService.initialise();
 			$happn.exchange.packetSimulatorService.initialise();
-			$happn.log.info("STARTUP COMLETE!");
+			$happn.log.info(
+				"------------------- STARTUP COMPLETE -------------------"
+			);
 		} catch (err) {
 			$happn.log.error("start error", err);
-			quit(err);
+			process.exit(err.code || 1);
 		}
 	};
 

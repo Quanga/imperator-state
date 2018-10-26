@@ -2,9 +2,8 @@
  * Created by grant on 2016/06/20.
  */
 
-const path = require("path");
+//const path = require("path");
 const fs = require("fs");
-//var serveStatic = require("serve-static");
 
 /***********************************************************
  default to the test .env file to load environment variables
@@ -46,11 +45,8 @@ module.exports = {
 	},
 	happn: {
 		host: process.env.HAPPNER_LOCAL_IP,
-		//port: process.env.HAPPNER_LOCAL_PORT,
-		//port: process.env.HAPPNER_LOCAL_PORT,
 		setOptions: {
-			timeout: 15000 //15 SECONDS, THIS IS THE MAXIMUM AMOUNT OF TIME IN
-			// MILLISECONDS, ANY METHOD WILL WAIT BEFORE RAISING A TIMEOUT ERROR
+			timeout: 15000
 		},
 
 		persist: false,
@@ -78,29 +74,29 @@ module.exports = {
 	// 		: null,
 	modules: {
 		app: {
-			path: __dirname + "/app.js"
+			path: `${__dirname}/app.js`
 		},
 		queueService: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "QueueService"
 			}
 		},
 		portService: {
-			path: __dirname + "/lib/services/serial_port_service.js"
+			path: `${__dirname}/lib/services/serial_port_service.js`
 		},
 		portUtil: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "PortUtil",
 				type: "async"
 			}
 		},
 		packetService: {
-			path: __dirname + "/lib/services/packet_service.js"
+			path: `${__dirname}/lib/services/packet_service.js`
 		},
 		messageHandler: {
-			path: __dirname + "/lib/handlers/message_handlers"
+			path: `${__dirname}/lib/handlers/message_handlers`
 		},
 		incomingFileQueue: {
 			path: "file-queue",
@@ -151,50 +147,53 @@ module.exports = {
 			}
 		},
 		parserFactory: {
-			path: __dirname + "/lib/parsers/parser_factory.js"
+			path: `${__dirname}/lib/parsers/parser_factory.js`
 		},
 		dataService: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "DataService"
 			}
 		},
 		dataMapper: {
-			path: __dirname + "/lib/mappers/data_mapper.js"
+			path: `${__dirname}/lib/mappers/data_mapper.js`
 		},
 		packetRepository: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "PacketRepository",
 				type: "async"
 			}
 		},
 		nodeRepository: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "NodeRepository"
 			}
 		},
 		logsRepository: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "LogsRepository"
 			}
 		},
 		transmissionService: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "TransmissionService"
 			}
 		},
 		packetSimulatorService: {
-			path: __dirname + path.sep + "server.js",
+			path: `${__dirname}/server.js`,
 			construct: {
 				name: "PacketSimulatorService"
 			}
 		}
 	},
 	components: {
+		app: {
+			startMethod: "start"
+		},
 		parserFactory: {},
 		portService: {},
 		portUtil: {
@@ -222,9 +221,6 @@ module.exports = {
 			}
 		},
 		dataMapper: {},
-		app: {
-			startMethod: "start"
-		},
 		packetRepository: {
 			$configure: function(packetRepositoryConfig) {
 				return packetRepositoryConfig;
