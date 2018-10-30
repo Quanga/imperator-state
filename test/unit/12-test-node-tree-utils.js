@@ -113,63 +113,7 @@ describe("node-tree-utils-test", function() {
 	});
 
 	it("successfully finds  a sub-tree2", async function() {
-		var expected = [
-			{
-				name: "IBC",
-				type_id: 0,
-				id: 1,
-				serial: "123"
-			},
-			{
-				name: "ISC-5",
-				type_id: 1,
-				id: 10,
-				parent_id: 1,
-				serial: "32"
-			},
-			{
-				name: "ISC-7",
-				type_id: 1,
-				id: 13,
-				parent_id: 1,
-				serial: "33"
-			},
-			{
-				name: "IB651-1",
-				type_id: 2,
-				id: 101,
-				parent_id: 10,
-				serial: "811"
-			},
-			{
-				name: "IB651-2",
-				type_id: 2,
-				id: 102,
-				parent_id: 10,
-				serial: "812"
-			},
-			{
-				name: "IB651-3",
-				type_id: 2,
-				id: 103,
-				parent_id: 10,
-				serial: "813"
-			},
-			{
-				name: "IB651-4",
-				type_id: 2,
-				id: 104,
-				parent_id: 13,
-				serial: "814"
-			},
-			{
-				name: "IB651-5",
-				type_id: 2,
-				id: 105,
-				parent_id: 13,
-				serial: "815"
-			}
-		];
+		var expected = [];
 
 		let test = async () => {
 			try {

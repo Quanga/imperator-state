@@ -62,7 +62,7 @@ describe("IB651-ping-request-test", function() {
 			console.log("## INITIAL MESSAGE: " + message);
 
 			await serialPortHelper.sendMessage(message);
-
+			await timer(1000);
 			packetBuilder.reset();
 
 			// now send an ISC ping with 3 IB651's
@@ -92,7 +92,7 @@ describe("IB651-ping-request-test", function() {
 				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
 				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
 			});
-
+			//console.log(result);
 			return {
 				ib651_1: ib651_1,
 				ib651_2: ib651_2,
@@ -118,7 +118,7 @@ describe("IB651-ping-request-test", function() {
 
 		let test = async () => {
 			try {
-				await timer(4000);
+				await timer(4500);
 				await step1();
 				await timer(2000);
 				let result = await step2();

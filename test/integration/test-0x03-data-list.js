@@ -80,6 +80,7 @@ describe("parser-ib651-parser-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial2);
+			await timer(1000);
 
 			packetBuilder.reset();
 
@@ -173,35 +174,39 @@ describe("parser-ib651-parser-test", function() {
 				.withDeviceData(ib651_2_DeviceData)
 				.withDeviceData(ib651_3_DeviceData)
 				.build();
-			await timer(5000);
+			await timer(2000);
 
 			await serialPortHelper.sendMessage(finalmessage);
 		};
 
 		let step2 = async () => {
-			let result = await databaseHelper.getNodeTreeData(1, 1);
+			try {
+				let result = await databaseHelper.getNodeTreeData(1, 1);
 
-			if (result == null || result.length == 0)
-				return new Error("Empty result!");
+				if (result == null || result.length == 0)
+					return new Error("Empty result!");
 
-			var isc = null,
-				ib651_1 = null,
-				ib651_2 = null,
-				ib651_3 = null;
+				var isc = null,
+					ib651_1 = null,
+					ib651_2 = null,
+					ib651_3 = null;
 
-			result.forEach(x => {
-				if (parseInt(x["p.serial"]) == 1 && x["p.type_id"] == 1) isc = x;
-				if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
-				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
-				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
-			});
+				result.forEach(x => {
+					if (parseInt(x["p.serial"]) == 1 && x["p.type_id"] == 1) isc = x;
+					if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
+					if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
+					if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
+				});
 
-			return {
-				isc: isc,
-				ib651_1: ib651_1,
-				ib651_2: ib651_2,
-				ib651_3: ib651_3
-			};
+				return {
+					isc: isc,
+					ib651_1: ib651_1,
+					ib651_2: ib651_2,
+					ib651_3: ib651_3
+				};
+			} catch (err) {
+				return Promise.reject(err);
+			}
 		};
 
 		let step3 = async result => {
