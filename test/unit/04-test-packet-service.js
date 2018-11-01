@@ -17,30 +17,43 @@ describe("packet-service-test", function() {
 		callback();
 	});
 
-	it("can parse a key switch DISARMED message and check crc", function() {
+	it("can parse a key switch DISARMED message and check crc", async function() {
 		//  FRAGMENT:  [start]  [length]    [command]    [serial] [data]  [CRC]
 		//  HEX:       [AAAA]   [0A]        [08]         [0001]   [5540]  [C212]
 
 		var testMessage = new Buffer("AAAA0A0800015540C212", "hex");
-
-		packetService.parseBinaryMessage(mockHappn, testMessage);
+		try {
+			await packetService.parseBinaryMessage(mockHappn, testMessage);
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	});
 
-	it("can parse a key switch ARMED message and check crc", function() {
+	it("can parse a key switch ARMED message and check crc", async function() {
 		//  FRAGMENT:  [start]  [length]    [command]    [serial] [data]  [CRC]
 		//  HEX:       [AAAA]   [0A]        [08]         [0001]   [55C0]  [CA96]
+		try {
+			var testMessage = new Buffer("AAAA0A08000155C0CA96", "hex");
 
-		var testMessage = new Buffer("AAAA0A08000155C0CA96", "hex");
-
-		console.log(packetService.parseBinaryMessage(mockHappn, testMessage));
+			let result = await packetService.parseBinaryMessage(
+				mockHappn,
+				testMessage
+			);
+			console.log(result);
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	});
 
-	it("can parse an IBC response packet and check crc", function() {
+	it("can parse an IBC response packet and check crc", async function() {
 		//  FRAGMENT:  [start]  [length]    [command]    [serial] [data]    [CRC]
 		//  HEX:       [AAAA]   [0A]        [01]         [0007]   [-]       [52D8]
+		try {
+			var testMessage = new Buffer("AAAA0A010001000752D8", "hex");
 
-		var testMessage = new Buffer("AAAA0A010001000752D8", "hex");
-
-		packetService.parseBinaryMessage(mockHappn, testMessage);
+			packetService.parseBinaryMessage(mockHappn, testMessage);
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	});
 });

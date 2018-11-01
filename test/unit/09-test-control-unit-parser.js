@@ -61,7 +61,6 @@ describe("parser-control-unit-parser-test", async function() {
 				parent_id: null,
 				parent_type: null,
 				parent_serial: null,
-				tree_parent_id: null,
 				window_id: null,
 				crc: null,
 				x: 0,

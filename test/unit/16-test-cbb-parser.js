@@ -4,10 +4,11 @@
 
 var assert = require("assert");
 
-describe("cbb-parser-test", async function() {
+describe("parser-CBB_LIST-parser-test", async function() {
 	const MockHappn = require("../mocks/mock_happn");
 	var DataListParser = require("../../lib/parsers/deviceListParser");
-	const commTemplate = require("../../lib/constants/comm_templates");
+	const PacketTemplate = require("../../lib/constants/packetTemplates");
+	const PacketModel = require("../../lib/models/packetModel");
 
 	let mockHappn = new MockHappn();
 
@@ -16,25 +17,93 @@ describe("cbb-parser-test", async function() {
 	before("it sets up the dependencies", async function() {});
 
 	it("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
-		/*
-
-         start  length  command CBB serial  Data                                      data  CRC
-         AAAA   1C      04      0043        1b43e93c611b43e93d621b43e93e631b43e93f64        14ac
-         */
-
-		// NOTE: top-level IBC does not have a parent_id (ie: null)
-		// NOTE: IB651 serial is unknown (ie: null) - this will ultimately be retrieved from the DB
-
-		var expected = [];
+		var expected = [
+			{
+				serial: 67,
+				parent_serial: null,
+				type_id: 3,
+				parent_type: 0,
+				parent_id: null,
+				window_id: 5,
+				communication_status: 1,
+				blast_armed: null,
+				key_switch_status: null,
+				isolation_relay: null,
+				mains: null,
+				low_bat: null,
+				too_low_bat: null,
+				DC_supply_voltage_status: null,
+				shaft_fault: null,
+				cable_fault: null,
+				earth_leakage: null
+			},
+			{
+				serial: 457435452,
+				parent_serial: 67,
+				type_id: 4,
+				parent_type: 3,
+				parent_id: null,
+				window_id: 97,
+				detonator_status: null,
+				bridge_wire: null,
+				calibration: null,
+				program: null,
+				booster_fired_lfs: null,
+				tagged: null,
+				logged: null
+			},
+			{
+				serial: 457435453,
+				parent_serial: 67,
+				type_id: 4,
+				parent_type: 3,
+				parent_id: null,
+				window_id: 98,
+				detonator_status: null,
+				bridge_wire: null,
+				calibration: null,
+				program: null,
+				booster_fired_lfs: null,
+				tagged: null,
+				logged: null
+			},
+			{
+				serial: 457435454,
+				parent_serial: 67,
+				type_id: 4,
+				parent_type: 3,
+				parent_id: null,
+				window_id: 99,
+				detonator_status: null,
+				bridge_wire: null,
+				calibration: null,
+				program: null,
+				booster_fired_lfs: null,
+				tagged: null,
+				logged: null
+			},
+			{
+				serial: 457435455,
+				parent_serial: 67,
+				type_id: 4,
+				parent_type: 3,
+				parent_id: null,
+				window_id: 100,
+				detonator_status: null,
+				bridge_wire: null,
+				calibration: null,
+				program: null,
+				booster_fired_lfs: null,
+				tagged: null,
+				logged: null
+			}
+		];
 
 		let test = async () => {
 			try {
-				const PacketModel = require("../../lib/models/packetModel");
+				const parser = new DataListParser();
+				const packetTemplate = new PacketTemplate();
 
-				var parser = null;
-				parser = new DataListParser();
-
-				const packetTemplate = new commTemplate();
 				let template = packetTemplate.incomingCommTemplate[4];
 
 				let packet = "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac";

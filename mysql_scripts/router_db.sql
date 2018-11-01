@@ -2,6 +2,16 @@
 -- NOTE: the logs table should already exist if the web application is already installed.
 -- ***
 
+CREATE TABLE warnings (
+   id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   message TEXT NOT NULL,
+   acknowledged tinyint(1) DEFAULT NULL,
+   user_id int(11) DEFAULT NULL,
+   created datetime DEFAULT NULL,
+   modified datetime DEFAULT NULL
+);
+
+
 CREATE TABLE logs (
    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
    message TEXT NOT NULL,
@@ -67,7 +77,6 @@ CREATE TABLE nodes (
   energy_storing INT(11) NULL,
   bridge_wire INT(11) NULL,
   parent_id INT(11) NULL,
-  tree_parent_id INT(11) NULL,
   window_id INT(11) NULL,
   created TIMESTAMP DEFAULT now(),
   modified DATETIME NULL
