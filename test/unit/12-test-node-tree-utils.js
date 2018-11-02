@@ -143,8 +143,6 @@ describe("node-tree-utils-test", function() {
 				assert.deepEqual(result, expected);
 
 				//var result = nodeTreeUtils.findParent(subTree, 2);
-
-				//assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);
 			}
