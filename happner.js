@@ -37,6 +37,25 @@ module.exports.configs = {
 			}
 		}
 	},
+	eventServiceConfig: {
+		component: {
+			name: "EventService",
+			config: {
+				// nodeEnv: process.env.NODE_ENV,
+				// edgeIP: process.env.EDGE_IP,
+				// edgePort: process.env.HAPPNER_EDGE_PORT,
+				// localIP: process.env.HAPPNER_LOCAL_IP,
+				// localPort: process.env.HAPPNER_LOCAL_PORT,
+				// replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === "false",
+				// mySqlHost: process.env.MYSQL_HOST,
+				// mySqlUser: process.env.ROUTER_MYSQL_USER,
+				// mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
+				// mySqlDb: process.env.ROUTER_MYSQL_DATABASE,
+				// mySqlConnectionLimit: process.env.ROUTER_MYSQL_CONNECTION_LIMIT,
+				// disableIB651Inserts: process.env.DISABLE_IB651_INSERTS === "true"
+			}
+		}
+	},
 	packetRepositoryConfig: {
 		component: {
 			name: "PacketRepository",
@@ -62,6 +81,17 @@ module.exports.configs = {
 	logsRepositoryConfig: {
 		component: {
 			name: "LogsRepository",
+			config: {
+				mySqlHost: process.env.MYSQL_HOST,
+				mySqlUser: process.env.ROUTER_MYSQL_USER,
+				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
+				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
+			}
+		}
+	},
+	warningsRepositoryConfig: {
+		component: {
+			name: "WarningsRepository",
 			config: {
 				mySqlHost: process.env.MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,

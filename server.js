@@ -8,9 +8,11 @@ module.exports = {
 	PortUtil: require("./lib/utils/port_util"),
 	QueueService: require("./lib/services/queue_service"),
 	DataService: require("./lib/services/data_service"),
+	EventService: require("./lib/services/event_service"),
 	PacketRepository: require("./lib/repositories/packet_repository"),
 	NodeRepository: require("./lib/repositories/node_repository"),
 	LogsRepository: require("./lib/repositories/logs_repository"),
+	WarningsRepository: require("./lib/repositories/warnings_repository"),
 	TransmissionService: require("./lib/services/transmission_service"),
 	PacketSimulatorService: require("./lib/services/packet_simulator_service")
 };

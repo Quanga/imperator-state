@@ -155,6 +155,12 @@ module.exports = {
 				name: "DataService"
 			}
 		},
+		eventService: {
+			path: `${__dirname}/server.js`,
+			construct: {
+				name: "EventService"
+			}
+		},
 		dataMapper: {
 			path: `${__dirname}/lib/mappers/data_mapper.js`
 		},
@@ -171,10 +177,17 @@ module.exports = {
 				name: "NodeRepository"
 			}
 		},
+
 		logsRepository: {
 			path: `${__dirname}/server.js`,
 			construct: {
 				name: "LogsRepository"
+			}
+		},
+		warningsRepository: {
+			path: `${__dirname}/server.js`,
+			construct: {
+				name: "WarningsRepository"
 			}
 		},
 		transmissionService: {
@@ -220,6 +233,7 @@ module.exports = {
 				return dataServiceConfig;
 			}
 		},
+		eventService: {},
 		dataMapper: {},
 		packetRepository: {
 			$configure: function(packetRepositoryConfig) {
@@ -234,6 +248,11 @@ module.exports = {
 		logsRepository: {
 			$configure: function(logsRepositoryConfig) {
 				return logsRepositoryConfig;
+			}
+		},
+		warningsRepository: {
+			$configure: function(warningsRepositoryConfig) {
+				return warningsRepositoryConfig;
 			}
 		},
 		packetSimulatorService: {

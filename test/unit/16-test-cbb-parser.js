@@ -24,7 +24,7 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				type_id: 3,
 				parent_type: 0,
 				parent_id: null,
-				window_id: 5,
+				window_id: 4,
 				communication_status: 1,
 				blast_armed: null,
 				key_switch_status: null,

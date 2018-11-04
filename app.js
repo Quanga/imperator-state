@@ -11,6 +11,8 @@ App.prototype.start = function($happn) {
 			await $happn.exchange.packetRepository.initialise();
 			await $happn.exchange.nodeRepository.initialise();
 			await $happn.exchange.logsRepository.initialise();
+			await $happn.exchange.warningsRepository.initialise();
+
 			await $happn.exchange.queueService.initialise();
 			await $happn.exchange.queueService.watchIncomingQueue();
 			await $happn.exchange.queueService.watchOutgoingQueue();

@@ -58,9 +58,9 @@ describe("parser-ib651-parser-test", function() {
 			// set up the initial IBC with a single ISC via ping request (0x01)
 			let initial = packetBuilder
 				.withStart("AAAA")
-				.withCommand(1)
+				.withCommand(2)
 				.withSerial(1)
-				.withSerialData(1)
+				.withSerialData(256)
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
@@ -94,7 +94,7 @@ describe("parser-ib651-parser-test", function() {
 		 */
 
 			//ISC data
-			var iscDeviceId = packetBuilder.createDeviceIdData(0);
+			var iscDeviceId = packetBuilder.createDeviceIdData(1);
 			var iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
 			var iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 1, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
 
@@ -105,7 +105,7 @@ describe("parser-ib651-parser-test", function() {
 				.complete();
 
 			//IB651 # 1 data
-			var ib651_1_Id = packetBuilder.createDeviceIdData(1);
+			var ib651_1_Id = packetBuilder.createDeviceIdData(0);
 			var ib651_1_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
 			var ib651_1_RawData = packetBuilder.createRawData([
 				0,
