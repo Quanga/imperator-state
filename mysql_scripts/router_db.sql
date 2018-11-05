@@ -59,6 +59,7 @@ CREATE TABLE nodes (
   earth_leakage INT(11) NULL,
   shaft_fault INT(11) NULL,
   detonator_status INT(11) NULL,
+  detonator_lfs INT(11) NULL,
   partial_blast_lfs INT(11) NULL,
   full_blast_lfs INT(11) NULL,
   booster_fired_lfs INT(11) NULL,

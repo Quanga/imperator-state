@@ -194,7 +194,7 @@ describe("0x08-IBC-data-request-test", async function() {
 			//data
 			var deviceId = packetBuilder.createDeviceIdData(12); // unused
 			var deviceType = packetBuilder.createDeviceTypeData(0); // unused
-			var rawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 0, 1, 0]); // key switch disarmed, isolation relay on
+			var rawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 0, 1, 1]); // key switch disarmed, isolation relay on
 
 			var deviceData = stringBuilder
 				.append(deviceId)

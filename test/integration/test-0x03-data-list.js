@@ -51,8 +51,8 @@ describe("parser-ib651-parser-test", function() {
 		// data - 4030 2120 2240 2310 (data for IB651s)
 		// crc - ?
 
-		var packetBuilder = new PacketBuilder();
-		var stringBuilder = new StringBuilder();
+		let packetBuilder = new PacketBuilder();
+		let stringBuilder = new StringBuilder();
 
 		let step1 = async () => {
 			// set up the initial IBC with a single ISC via ping request (0x01)
@@ -94,40 +94,43 @@ describe("parser-ib651-parser-test", function() {
 		 */
 
 			//ISC data
-			var iscDeviceId = packetBuilder.createDeviceIdData(1);
-			var iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
-			var iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 1, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
+			let iscDeviceId = packetBuilder.createDeviceIdData(1);
+			let iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
+			let iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
+			//let iscRawData = packetBuilder.createRawData([1, 1, 1, 1, 1, 1, 1, 1]); // 30 hex = 00001100 bin (little endian)
 
-			var iscDeviceData = stringBuilder
-				.append(iscDeviceId)
-				.to(iscDeviceType)
-				.and(iscRawData)
+			let iscDeviceData = stringBuilder
+				.append(iscDeviceType)
+				.to(iscRawData)
+				.and(iscDeviceId)
 				.complete();
 
 			//IB651 # 1 data
-			var ib651_1_Id = packetBuilder.createDeviceIdData(0);
-			var ib651_1_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			var ib651_1_RawData = packetBuilder.createRawData([
-				0,
-				0,
-				0,
-				0,
-				0,
+			let ib651_1_Id = packetBuilder.createDeviceIdData(0);
+			let ib651_1_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
+			let ib651_1_RawData = packetBuilder.createRawData([
 				1,
-				0,
-				0
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
 			]); //20 hex = 00000100 binary (little endian)
 
-			var ib651_1_DeviceData = stringBuilder
-				.append(ib651_1_Id)
-				.to(ib651_1_Type)
-				.and(ib651_1_RawData)
+			let stringBuilder2 = new StringBuilder();
+
+			let ib651_1_DeviceData = stringBuilder2
+				.append(ib651_1_Type)
+				.to(ib651_1_RawData)
+				.and(ib651_1_Id)
 				.complete();
 
 			//IB651 # 2 data
-			var ib651_2_Id = packetBuilder.createDeviceIdData(2);
-			var ib651_2_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			var ib651_2_RawData = packetBuilder.createRawData([
+			let ib651_2_Id = packetBuilder.createDeviceIdData(2);
+			let ib651_2_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
+			let ib651_2_RawData = packetBuilder.createRawData([
 				0,
 				0,
 				0,
@@ -138,30 +141,32 @@ describe("parser-ib651-parser-test", function() {
 				0
 			]); //40 hex = 00000010 binary (little endian)
 
-			var ib651_2_DeviceData = stringBuilder
-				.append(ib651_2_Id)
-				.to(ib651_2_Type)
-				.and(ib651_2_RawData)
+			let stringBuilder3 = new StringBuilder();
+
+			let ib651_2_DeviceData = stringBuilder3
+				.append(ib651_2_Type)
+				.to(ib651_2_RawData)
+				.and(ib651_2_Id)
 				.complete();
 
 			//IB651 # 3 data
-			var ib651_3_Id = packetBuilder.createDeviceIdData(3);
-			var ib651_3_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			var ib651_3_RawData = packetBuilder.createRawData([
-				0,
-				0,
-				0,
-				0,
+			let ib651_3_Id = packetBuilder.createDeviceIdData(3);
+			let ib651_3_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
+			let ib651_3_RawData = packetBuilder.createRawData([
 				1,
-				0,
 				1,
-				0
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
 			]); // 10 hex = 00001000 binary (little endian)
 
-			var ib651_3_DeviceData = stringBuilder
-				.append(ib651_3_Id)
-				.to(ib651_3_Type)
-				.and(ib651_3_RawData)
+			let ib651_3_DeviceData = stringBuilder
+				.append(ib651_3_Type)
+				.to(ib651_3_RawData)
+				.and(ib651_3_Id)
 				.complete();
 
 			//complete packet
@@ -214,6 +219,7 @@ describe("parser-ib651-parser-test", function() {
 				//check communication status on each
 
 				expect(result.isc["p.communication_status"]).to.equal(1);
+				expect(result.ib651_1["c.communication_status"]).to.equal(1);
 				expect(result.ib651_1["c.communication_status"]).to.equal(1);
 
 				//TODO: check this:

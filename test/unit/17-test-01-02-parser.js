@@ -116,7 +116,6 @@ describe("parser-01-02-parser-test", async function() {
 				booster_fired_lfs: null,
 				partial_blast_lfs: null,
 				missing_pulse_detected_lfs: null,
-				cable_fault: null,
 				DC_supply_voltage: null,
 				mains: null
 			},
@@ -133,7 +132,6 @@ describe("parser-01-02-parser-test", async function() {
 				booster_fired_lfs: null,
 				partial_blast_lfs: null,
 				missing_pulse_detected_lfs: null,
-				cable_fault: null,
 				DC_supply_voltage: null,
 				mains: null
 			},
@@ -150,7 +148,6 @@ describe("parser-01-02-parser-test", async function() {
 				booster_fired_lfs: null,
 				partial_blast_lfs: null,
 				missing_pulse_detected_lfs: null,
-				cable_fault: null,
 				DC_supply_voltage: null,
 				mains: null
 			}
@@ -189,10 +186,10 @@ describe("parser-01-02-parser-test", async function() {
 				window_id: null,
 				communication_status: 1,
 				key_switch_status: 0,
-				cable_fault: 0,
 				isolation_relay: 0,
 				earth_leakage: 0,
-				blast_armed: 1
+				blast_armed: 1,
+				cable_fault: 0
 			},
 			{
 				serial: null,
@@ -207,7 +204,6 @@ describe("parser-01-02-parser-test", async function() {
 				booster_fired_lfs: 0,
 				partial_blast_lfs: 0,
 				missing_pulse_detected_lfs: 0,
-				cable_fault: null,
 				DC_supply_voltage: 0,
 				mains: 0
 			},
@@ -224,7 +220,6 @@ describe("parser-01-02-parser-test", async function() {
 				booster_fired_lfs: 0,
 				partial_blast_lfs: 0,
 				missing_pulse_detected_lfs: 1,
-				cable_fault: null,
 				DC_supply_voltage: 0,
 				mains: 0
 			},
@@ -241,7 +236,6 @@ describe("parser-01-02-parser-test", async function() {
 				booster_fired_lfs: 0,
 				partial_blast_lfs: 0,
 				missing_pulse_detected_lfs: 1,
-				cable_fault: null,
 				DC_supply_voltage: 0,
 				mains: 0
 			}

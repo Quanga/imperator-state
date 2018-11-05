@@ -12,11 +12,15 @@ function DatabaseHelper() {
 	const LogsRepository = require("../../lib/repositories/logs_repository");
 	this.__logsRepository = new LogsRepository();
 
+	const WarningsRepository = require("../../lib/repositories/warnings_repository");
+	this.__warningsRepository = new WarningsRepository();
+
 	this.__nodeRepository
 		.initialise(this.__mockHappn)
 		.then(() => {
 			this.__logsRepository.initialise(this.__mockHappn);
 		})
+		.then(() => this.__warningsRepository.initialise(this.__mockHappn))
 		.then(() => {
 			console.log("### DATABASEHELPER INITIALISE PASS!");
 		})
@@ -29,8 +33,9 @@ DatabaseHelper.prototype.clearDatabase = function() {
 	let clearDatabaseAsync = async () => {
 		console.log(":: CLEARING DATABASE....");
 		try {
-			await this.__nodeRepository.deleteNodeData(this.__mockHappn);
-			await this.__logsRepository.deleteLogsData(this.__mockHappn);
+			await this.__nodeRepository.deleteAll(this.__mockHappn);
+			await this.__logsRepository.deleteAll(this.__mockHappn);
+			await this.__warningsRepository.deleteAll(this.__mockHappn);
 		} catch (err) {
 			return Promise.reject(err);
 		}
