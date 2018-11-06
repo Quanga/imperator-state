@@ -1,16 +1,6 @@
-/**
- * Created by grant on 2016/06/20.
- */
-
-//const path = require("path");
+/* eslint-disable no-mixed-spaces-and-tabs */
 const fs = require("fs");
-
-/***********************************************************
- default to the test .env file to load environment variables
- ***********************************************************/
-
-// if (!process.env.NODE_ENV)
-require("dotenv").config();
+require("dotenv").load();
 
 /***********************************************************
  ensure that the queue directories exist
@@ -27,7 +17,7 @@ if (!fs.existsSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]))
  ***********************************************************/
 
 module.exports = {
-	name: "aece_rpi_router2",
+	name: process.env.ROUTER_INSTANCE_NAME,
 	util: {
 		logCacheSize: 1000,
 		logLevel: "info",
@@ -48,34 +38,28 @@ module.exports = {
 		setOptions: {
 			timeout: 15000
 		},
-
 		persist: false,
 		secure: false
 	},
-	// web: {
-	// 	routes: {
-	// 		// To serve static at '/'
-	// 		"/www/": serveStatic(path.join(__dirname, "client/build/"))
-	// 	}
-	// },
-	// endpoints:
-	// 	process.env.HAPPNER_REPLICATION_ENABLED == "true"
-	// 		? {
-	// 			edgeMesh: {
-	// 				// remote mesh node
-	// 				config: {
-	// 					host: process.env.HAPPNER_EDGE_IP,
-	// 					port: process.env.HAPPNER_EDGE_PORT,
-	// 					username: process.env.HAPPNER_EDGE_USERNAME,
-	// 					password: process.env.HAPPNER_EDGE_PASSWORD
-	// 				}
-	// 			}
-	// 		  }
-	// 		: null,
+	endpoints:
+		process.env.REPLICATION_ENABLED == "true"
+			? {
+				awsEdge: {
+					// remote mesh node
+					config: {
+						host: process.env.REPLICATION_ENDPOINT,
+						port: process.env.REPLICATION_PORT
+						// username: process.env.HAPPNER_EDGE_USERNAME,
+						// password: process.env.HAPPNER_EDGE_PASSWORD
+					}
+				}
+			  }
+			: null,
 	modules: {
 		app: {
 			path: `${__dirname}/app.js`
 		},
+
 		queueService: {
 			path: `${__dirname}/server.js`,
 			construct: {
@@ -195,15 +179,14 @@ module.exports = {
 			construct: {
 				name: "TransmissionService"
 			}
-		},
-		packetSimulatorService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "PacketSimulatorService"
-			}
 		}
 	},
 	components: {
+		queueService: {
+			$configure: function(queueServiceConfig) {
+				return queueServiceConfig;
+			}
+		},
 		app: {
 			startMethod: "start"
 		},
@@ -214,11 +197,7 @@ module.exports = {
 				return portUtilConfig;
 			}
 		},
-		queueService: {
-			$configure: function(queueServiceConfig) {
-				return queueServiceConfig;
-			}
-		},
+
 		incomingFileQueue: {},
 		outgoingFileQueue: {},
 		transmissionService: {
@@ -253,11 +232,6 @@ module.exports = {
 		warningsRepository: {
 			$configure: function(warningsRepositoryConfig) {
 				return warningsRepositoryConfig;
-			}
-		},
-		packetSimulatorService: {
-			$configure: function(packetSimulatorServiceConfig) {
-				return packetSimulatorServiceConfig;
 			}
 		}
 	}

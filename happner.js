@@ -107,14 +107,5 @@ module.exports.configs = {
 				transmissionSendInterval: process.env.ROUTER_TRANSMISSION_SEND_INTERVAL
 			}
 		}
-	},
-	packetSimulatorServiceConfig: {
-		component: {
-			name: "PacketSimulatorService",
-			config: {
-				enabled: process.env.ROUTER_SIMULATOR_ENABLED,
-				generateDataInterval: process.env.ROUTER_SIMULATOR_GENERATE_INTERVAL
-			}
-		}
 	}
 };
