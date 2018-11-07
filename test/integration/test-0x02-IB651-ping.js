@@ -118,7 +118,7 @@ describe("IB651-ping-request-test", function() {
 
 		let test = async () => {
 			try {
-				await timer(4500);
+				await timer(7500);
 				await step1();
 				await timer(3000);
 				let result = await step2();

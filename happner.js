@@ -23,17 +23,16 @@ module.exports.configs = {
 			name: "DataService",
 			config: {
 				// nodeEnv: process.env.NODE_ENV,
-				// edgeIP: process.env.EDGE_IP,
-				// edgePort: process.env.HAPPNER_EDGE_PORT,
-				// localIP: process.env.HAPPNER_LOCAL_IP,
-				// localPort: process.env.HAPPNER_LOCAL_PORT,
-				// replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === "false",
-				// mySqlHost: process.env.MYSQL_HOST,
-				// mySqlUser: process.env.ROUTER_MYSQL_USER,
-				// mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-				// mySqlDb: process.env.ROUTER_MYSQL_DATABASE,
-				// mySqlConnectionLimit: process.env.ROUTER_MYSQL_CONNECTION_LIMIT,
-				// disableIB651Inserts: process.env.DISABLE_IB651_INSERTS === "true"
+			}
+		}
+	},
+	serverServiceConfig: {
+		component: {
+			name: "ServerService",
+			config: {
+				replicationEnabled: process.env.REPLICATION_ENABLED,
+				endpoint: process.env.REPLICATION_ENDPOINT,
+				port: process.env.REPLICATION_PORT
 			}
 		}
 	},
@@ -44,15 +43,6 @@ module.exports.configs = {
 				// nodeEnv: process.env.NODE_ENV,
 				// edgeIP: process.env.EDGE_IP,
 				// edgePort: process.env.HAPPNER_EDGE_PORT,
-				// localIP: process.env.HAPPNER_LOCAL_IP,
-				// localPort: process.env.HAPPNER_LOCAL_PORT,
-				// replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED === "false",
-				// mySqlHost: process.env.MYSQL_HOST,
-				// mySqlUser: process.env.ROUTER_MYSQL_USER,
-				// mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-				// mySqlDb: process.env.ROUTER_MYSQL_DATABASE,
-				// mySqlConnectionLimit: process.env.ROUTER_MYSQL_CONNECTION_LIMIT,
-				// disableIB651Inserts: process.env.DISABLE_IB651_INSERTS === "true"
 			}
 		}
 	},

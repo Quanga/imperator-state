@@ -11,7 +11,8 @@ App.prototype.start = function($happn) {
 		nodeRepository,
 		logsRepository,
 		warningsRepository,
-		queueService
+		queueService,
+		serverService
 	} = $happn.exchange;
 
 	const { error: logError } = $happn.log;
@@ -27,6 +28,9 @@ App.prototype.start = function($happn) {
 			await queueService.initialise();
 			await queueService.watchIncomingQueue();
 			await queueService.watchOutgoingQueue();
+
+			await serverService.initialise();
+
 			//$happn.exchange.transmissionService.initialise();
 			$happn.log.info(
 				"------------------- STARTUP COMPLETE -------------------"

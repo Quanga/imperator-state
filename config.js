@@ -41,20 +41,20 @@ module.exports = {
 		persist: false,
 		secure: false
 	},
-	endpoints:
-		process.env.REPLICATION_ENABLED == "true"
-			? {
-				awsEdge: {
-					// remote mesh node
-					config: {
-						host: process.env.REPLICATION_ENDPOINT,
-						port: process.env.REPLICATION_PORT
-						// username: process.env.HAPPNER_EDGE_USERNAME,
-						// password: process.env.HAPPNER_EDGE_PASSWORD
-					}
-				}
-			  }
-			: null,
+	// endpoints:
+	// 	process.env.REPLICATION_ENABLED == "true"
+	// 		? {
+	// 			awsEdge: {
+	// 				// remote mesh node
+	// 				config: {
+	// 					host: process.env.REPLICATION_ENDPOINT,
+	// 					port: process.env.REPLICATION_PORT
+	// 					// username: process.env.HAPPNER_EDGE_USERNAME,
+	// 					// password: process.env.HAPPNER_EDGE_PASSWORD
+	// 				}
+	// 			}
+	// 		  }
+	// 		: null,
 	modules: {
 		app: {
 			path: `${__dirname}/app.js`
@@ -64,6 +64,12 @@ module.exports = {
 			path: `${__dirname}/server.js`,
 			construct: {
 				name: "QueueService"
+			}
+		},
+		serverService: {
+			path: `${__dirname}/server.js`,
+			construct: {
+				name: "ServerService"
 			}
 		},
 		portService: {
@@ -185,6 +191,11 @@ module.exports = {
 		queueService: {
 			$configure: function(queueServiceConfig) {
 				return queueServiceConfig;
+			}
+		},
+		serverService: {
+			$configure: function(serverServiceConfig) {
+				return serverServiceConfig;
 			}
 		},
 		app: {
