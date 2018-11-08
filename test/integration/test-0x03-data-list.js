@@ -51,16 +51,16 @@ describe("parser-ib651-parser-test", function() {
 		// data - 4030 2120 2240 2310 (data for IB651s)
 		// crc - ?
 
-		var packetBuilder = new PacketBuilder();
-		var stringBuilder = new StringBuilder();
+		let packetBuilder = new PacketBuilder();
+		let stringBuilder = new StringBuilder();
 
 		let step1 = async () => {
 			// set up the initial IBC with a single ISC via ping request (0x01)
 			let initial = packetBuilder
 				.withStart("AAAA")
-				.withCommand(1)
+				.withCommand(2)
 				.withSerial(1)
-				.withSerialData(1)
+				.withSerialData(256)
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
@@ -80,6 +80,7 @@ describe("parser-ib651-parser-test", function() {
 				.build();
 
 			await serialPortHelper.sendMessage(initial2);
+			await timer(1000);
 
 			packetBuilder.reset();
 
@@ -93,40 +94,43 @@ describe("parser-ib651-parser-test", function() {
 		 */
 
 			//ISC data
-			var iscDeviceId = packetBuilder.createDeviceIdData(0);
-			var iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
-			var iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 1, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
+			let iscDeviceId = packetBuilder.createDeviceIdData(1);
+			let iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
+			let iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
+			//let iscRawData = packetBuilder.createRawData([1, 1, 1, 1, 1, 1, 1, 1]); // 30 hex = 00001100 bin (little endian)
 
-			var iscDeviceData = stringBuilder
-				.append(iscDeviceId)
-				.to(iscDeviceType)
-				.and(iscRawData)
+			let iscDeviceData = stringBuilder
+				.append(iscDeviceType)
+				.to(iscRawData)
+				.and(iscDeviceId)
 				.complete();
 
 			//IB651 # 1 data
-			var ib651_1_Id = packetBuilder.createDeviceIdData(1);
-			var ib651_1_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			var ib651_1_RawData = packetBuilder.createRawData([
-				0,
-				0,
-				0,
-				0,
-				0,
+			let ib651_1_Id = packetBuilder.createDeviceIdData(0);
+			let ib651_1_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
+			let ib651_1_RawData = packetBuilder.createRawData([
 				1,
-				0,
-				0
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
 			]); //20 hex = 00000100 binary (little endian)
 
-			var ib651_1_DeviceData = stringBuilder
-				.append(ib651_1_Id)
-				.to(ib651_1_Type)
-				.and(ib651_1_RawData)
+			let stringBuilder2 = new StringBuilder();
+
+			let ib651_1_DeviceData = stringBuilder2
+				.append(ib651_1_Type)
+				.to(ib651_1_RawData)
+				.and(ib651_1_Id)
 				.complete();
 
 			//IB651 # 2 data
-			var ib651_2_Id = packetBuilder.createDeviceIdData(2);
-			var ib651_2_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			var ib651_2_RawData = packetBuilder.createRawData([
+			let ib651_2_Id = packetBuilder.createDeviceIdData(2);
+			let ib651_2_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
+			let ib651_2_RawData = packetBuilder.createRawData([
 				0,
 				0,
 				0,
@@ -137,30 +141,32 @@ describe("parser-ib651-parser-test", function() {
 				0
 			]); //40 hex = 00000010 binary (little endian)
 
-			var ib651_2_DeviceData = stringBuilder
-				.append(ib651_2_Id)
-				.to(ib651_2_Type)
-				.and(ib651_2_RawData)
+			let stringBuilder3 = new StringBuilder();
+
+			let ib651_2_DeviceData = stringBuilder3
+				.append(ib651_2_Type)
+				.to(ib651_2_RawData)
+				.and(ib651_2_Id)
 				.complete();
 
 			//IB651 # 3 data
-			var ib651_3_Id = packetBuilder.createDeviceIdData(3);
-			var ib651_3_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			var ib651_3_RawData = packetBuilder.createRawData([
-				0,
-				0,
-				0,
-				0,
+			let ib651_3_Id = packetBuilder.createDeviceIdData(3);
+			let ib651_3_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
+			let ib651_3_RawData = packetBuilder.createRawData([
 				1,
-				0,
 				1,
-				0
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
 			]); // 10 hex = 00001000 binary (little endian)
 
-			var ib651_3_DeviceData = stringBuilder
-				.append(ib651_3_Id)
-				.to(ib651_3_Type)
-				.and(ib651_3_RawData)
+			let ib651_3_DeviceData = stringBuilder
+				.append(ib651_3_Type)
+				.to(ib651_3_RawData)
+				.and(ib651_3_Id)
 				.complete();
 
 			//complete packet
@@ -173,35 +179,39 @@ describe("parser-ib651-parser-test", function() {
 				.withDeviceData(ib651_2_DeviceData)
 				.withDeviceData(ib651_3_DeviceData)
 				.build();
-			await timer(5000);
+			await timer(2000);
 
 			await serialPortHelper.sendMessage(finalmessage);
 		};
 
 		let step2 = async () => {
-			let result = await databaseHelper.getNodeTreeData(1, 1);
+			try {
+				let result = await databaseHelper.getNodeTreeData(1, 1);
 
-			if (result == null || result.length == 0)
-				return new Error("Empty result!");
+				if (result == null || result.length == 0)
+					return new Error("Empty result!");
 
-			var isc = null,
-				ib651_1 = null,
-				ib651_2 = null,
-				ib651_3 = null;
+				var isc = null,
+					ib651_1 = null,
+					ib651_2 = null,
+					ib651_3 = null;
 
-			result.forEach(x => {
-				if (parseInt(x["p.serial"]) == 1 && x["p.type_id"] == 1) isc = x;
-				if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
-				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
-				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
-			});
+				result.forEach(x => {
+					if (parseInt(x["p.serial"]) == 1 && x["p.type_id"] == 1) isc = x;
+					if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
+					if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
+					if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
+				});
 
-			return {
-				isc: isc,
-				ib651_1: ib651_1,
-				ib651_2: ib651_2,
-				ib651_3: ib651_3
-			};
+				return {
+					isc: isc,
+					ib651_1: ib651_1,
+					ib651_2: ib651_2,
+					ib651_3: ib651_3
+				};
+			} catch (err) {
+				return Promise.reject(err);
+			}
 		};
 
 		let step3 = async result => {
@@ -209,6 +219,7 @@ describe("parser-ib651-parser-test", function() {
 				//check communication status on each
 
 				expect(result.isc["p.communication_status"]).to.equal(1);
+				expect(result.ib651_1["c.communication_status"]).to.equal(1);
 				expect(result.ib651_1["c.communication_status"]).to.equal(1);
 
 				//TODO: check this:

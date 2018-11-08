@@ -3,36 +3,44 @@
  */
 
 function DatabaseHelper() {
-	var MockHappn = require("../mocks/mock_happn");
+	const MockHappn = require("../mocks/mock_happn");
 	this.__mockHappn = new MockHappn();
 
-	var NodeRepository = require("../../lib/repositories/node_repository");
+	const NodeRepository = require("../../lib/repositories/node_repository");
 	this.__nodeRepository = new NodeRepository();
 
-	try {
-		this.__nodeRepository
-			.initialise(this.__mockHappn)
-			.then(console.log("### DATABASEHELPER INITIALISE PASS!"));
-	} catch (err) {
-		console.log("### DATABASEHELPER INITIALISE ERROR!: " + err);
-	}
+	const LogsRepository = require("../../lib/repositories/logs_repository");
+	this.__logsRepository = new LogsRepository();
+
+	const WarningsRepository = require("../../lib/repositories/warnings_repository");
+	this.__warningsRepository = new WarningsRepository();
+
+	this.__nodeRepository
+		.initialise(this.__mockHappn)
+		.then(() => {
+			this.__logsRepository.initialise(this.__mockHappn);
+		})
+		.then(() => this.__warningsRepository.initialise(this.__mockHappn))
+		.then(() => {
+			console.log("### DATABASEHELPER INITIALISE PASS!");
+		})
+		.catch(err => {
+			console.log("### DATABASEHELPER INITIALISE ERROR!: " + err);
+		});
 }
 
 DatabaseHelper.prototype.clearDatabase = function() {
-	var self = this;
-
-	return new Promise(function(resolve, reject) {
+	let clearDatabaseAsync = async () => {
 		console.log(":: CLEARING DATABASE....");
-
-		self.__nodeRepository
-			.deleteNodeData(self.__mockHappn)
-			.then(() => {
-				resolve();
-			})
-			.catch(err => {
-				reject(err);
-			});
-	});
+		try {
+			await this.__nodeRepository.deleteAll(this.__mockHappn);
+			await this.__logsRepository.deleteAll(this.__mockHappn);
+			await this.__warningsRepository.deleteAll(this.__mockHappn);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	};
+	return clearDatabaseAsync();
 };
 
 DatabaseHelper.prototype.getNodeData = function() {

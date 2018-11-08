@@ -6,29 +6,27 @@ var assert = require("assert");
 
 describe("parser-control-unit-parser-test", async function() {
 	var MockHappn = require("../mocks/mock_happn");
-	var Utils = require("../../lib/utils/packet_utils");
-	var DataParser = require("../../lib/parsers/control_unit_parser");
-	var Constants = require("../../lib/constants/command_constants");
+	var DataParser = require("../../lib/parsers/deviceDataParser");
+	const commTemplate = require("../../lib/constants/comm_templates");
 
 	var mockHappn = new MockHappn();
-	var parser = null;
-	var utils = null;
-	var commandConstant = null;
 
 	this.timeout(30000);
 
 	it("can create a node result array with one set of node data from a parsed packet", async function() {
+		const PacketModel = require("../../lib/models/packetModel");
+
 		/*
          AAAA 0A 08 0001 00C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
          */
-		commandConstant = new Constants().incomingCommands[
-			parseInt(0b00001000, 16)
-		]; // command 8
-		parser = new DataParser(commandConstant);
-		utils = new Utils();
+		var parser = null;
+		parser = new DataParser();
+
+		const packetTemplate = new commTemplate();
+		let template = packetTemplate.incomingCommTemplate[8];
 
 		let packet = "AAAA0A08000100C0CA96";
-		let testObj = await utils.splitPacket(packet);
+		var testObj = new PacketModel(template, packet, 0);
 
 		var expected = [
 			{
@@ -36,7 +34,6 @@ describe("parser-control-unit-parser-test", async function() {
 				type_id: 0,
 				key_switch_status: 1,
 				communication_status: 1,
-				temperature: null,
 				blast_armed: 0,
 				fire_button: 0,
 				isolation_relay: 1,
@@ -62,9 +59,8 @@ describe("parser-control-unit-parser-test", async function() {
 				energy_storing: null,
 				bridge_wire: null,
 				parent_id: null,
-				parent_type: 0,
-				parent_serial: 1,
-				tree_parent_id: null,
+				parent_type: null,
+				parent_serial: null,
 				window_id: null,
 				crc: null,
 				x: 0,

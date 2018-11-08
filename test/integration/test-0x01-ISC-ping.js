@@ -143,17 +143,12 @@ describe("ISC-ping-request-test", function() {
 				.withSerialData(2)
 				.build();
 
-			//await serialPortHelper.sendMessage(initial);
-			//await timer(500);
-			//await serialPortHelper.sendMessage(initial);
-
-			//await timer(500);
 			await serialPortHelper.sendMessage(initial);
 			console.log("SENDING 1<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", initial);
 
 			let message = packetBuilder.withSerialData(3).build();
 
-			await timer(100);
+			await timer(1000);
 
 			await serialPortHelper.sendMessage(message);
 			console.log("SENDING 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", message);
@@ -174,7 +169,7 @@ describe("ISC-ping-request-test", function() {
 				if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
 				if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
 			});
-
+			console.log(dbresult);
 			return { isc1: isc1, isc2: isc2, isc3: isc3 };
 		};
 
@@ -184,23 +179,21 @@ describe("ISC-ping-request-test", function() {
 				expect(result.isc2["c.communication_status"]).to.equal(1);
 				expect(result.isc3["c.communication_status"]).to.equal(1);
 			} catch (err) {
-				console.log(err);
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 
 		let startTest = async function() {
 			try {
 				console.log("STARTING TESTS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-				await timer(3500);
+				await timer(5500);
 				await step1();
-				await timer(1000);
+				await timer(4000);
 				let result = await step2();
 
 				await step4(result);
 			} catch (err) {
-				console.log(err);
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 
@@ -286,8 +279,7 @@ describe("ISC-ping-request-test", function() {
 				expect(result.isc3["c.communication_status"]).to.equal(1);
 				expect(result.isc4["c.communication_status"]).to.equal(1);
 			} catch (err) {
-				console.log(err);
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 
@@ -296,12 +288,11 @@ describe("ISC-ping-request-test", function() {
 				await timer(4000);
 
 				await step1();
-				await timer(1000);
+				await timer(2000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {
-				console.log(err);
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 

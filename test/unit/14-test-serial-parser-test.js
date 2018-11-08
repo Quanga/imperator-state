@@ -119,4 +119,71 @@ describe("pipe-serialiport-pipe-tests", async () => {
 			return Promise.reject(err);
 		}
 	});
+
+	it.only("dumps begining buffer if no ready", async () => {
+		const spy = sinon.spy();
+		const parser = new AeceParser({ delimiter: Buffer.from("AAAA", "hex") });
+
+		try {
+			parser.on("data", data => {
+				console.log("receiving back data - " + data.toString("hex"));
+				spy(data);
+			});
+			parser.write(
+				Buffer.from(
+					"3a0144163b01a8163c010c17639daaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+
+			await timer(1);
+
+			assert.deepEqual(
+				spy.getCall(0).args[0],
+				Buffer.from(
+					"aaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+			assert(spy.called);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	});
+
+	it.only("dumps begining buffer if no ready in small chunks", async () => {
+		const spy = sinon.spy();
+		const parser = new AeceParser({ delimiter: Buffer.from("AAAA", "hex") });
+
+		try {
+			parser.on("data", data => {
+				console.log("receiving back data - " + data.toString("hex"));
+				spy(data);
+			});
+			parser.write(Buffer.from("3a01", "hex"));
+			parser.write(Buffer.from("44163b01", "hex"));
+			parser.write(Buffer.from("a8163c01", "hex"));
+			parser.write(Buffer.from("0c", "hex"));
+
+			parser.write(
+				Buffer.from(
+					"17639daaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+
+			await timer(1);
+
+			assert.deepEqual(
+				spy.getCall(0).args[0],
+				Buffer.from(
+					"aaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+			assert(spy.called);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	});
 });
