@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/07/15.
- */
-
 require("dotenv").config();
 
 var MockHappn = function() {

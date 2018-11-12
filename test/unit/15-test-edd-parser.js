@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/06/17.
- */
-
 var assert = require("assert");
 
 describe("parser-CBB_DATA-parser-test", async function() {
@@ -299,7 +295,7 @@ describe("parser-CBB_DATA-parser-test", async function() {
 				let packet =
 					"aaaa4805004364008a211001dc05110140061201a4061301080714016c071501d00716013408170198081801fc08190160091a01c4091b01280a1c018c0a1d01f00a1e01540b8f97";
 
-				var testObj = new PacketModel(template, packet, 0);
+				var testObj = new PacketModel(template, packet, Date.now(), 0);
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 				await assert.deepEqual(result, expected);
@@ -367,7 +363,7 @@ describe("parser-CBB_DATA-parser-test", async function() {
 				let template = packetTemplate.incomingCommTemplate[4];
 
 				let packet = "aaaa0d040043ffffffffff8a44";
-				let testObj = new PacketModel(template, packet, 0);
+				let testObj = new PacketModel(template, packet, Date.now(), 0);
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 

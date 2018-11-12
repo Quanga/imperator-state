@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/06/17.
- */
-
 var assert = require("assert");
 
 describe("parser-01-02-parser-test", async function() {
@@ -73,7 +69,7 @@ describe("parser-01-02-parser-test", async function() {
 				let template = packetTemplate.incomingCommTemplate[1];
 
 				let packet = "aaaa0c01000100010002bf5d";
-				var testObj = new PacketModel(template, packet, 0);
+				var testObj = new PacketModel(template, packet, Date.now(), 0);
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
@@ -161,7 +157,7 @@ describe("parser-01-02-parser-test", async function() {
 				let template = packetTemplate.incomingCommTemplate[2];
 
 				let packet = "aaaa0e0200010100020003000118";
-				var testObj = new PacketModel(template, packet, 0);
+				var testObj = new PacketModel(template, packet, Date.now(), 0);
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
@@ -249,7 +245,7 @@ describe("parser-01-02-parser-test", async function() {
 				let template = packetTemplate.incomingCommTemplate[3];
 				//aaaa 10 03 0001 2130 - 4020 4240 4350  -63ff;
 				let packet = "aaaa10030001213040204240435063ff";
-				var testObj = new PacketModel(template, packet, 0);
+				var testObj = new PacketModel(template, packet, Date.now(), 0);
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 

@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2017/01/03.
- */
-
 const expect = require("expect.js");
 
 describe("parser-ib651-parser-test", function() {
@@ -241,7 +237,7 @@ describe("parser-ib651-parser-test", function() {
 			try {
 				await timer(3500);
 				await step1();
-				await timer(4000);
+				await timer(6000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {

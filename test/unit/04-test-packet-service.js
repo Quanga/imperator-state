@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/06/23.
- */
-
 describe("packet-service-test", function() {
 	var PacketService = require("../../lib/services/packet_service");
 	var packetService = null;

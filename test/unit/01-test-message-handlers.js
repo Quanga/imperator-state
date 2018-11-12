@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/07/20.
- */
-
 describe("serial-port-service-test", function() {
 	const MessageHandler = require("../../lib/handlers/message_handlers");
 	let messageHandler = null;

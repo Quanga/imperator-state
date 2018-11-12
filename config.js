@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const fs = require("fs");
-require("dotenv").load();
+require("dotenv").config();
 
 /***********************************************************
  ensure that the queue directories exist
@@ -11,6 +11,9 @@ if (!fs.existsSync(process.env["ROUTER_INCOMING_QUEUE_DIR"]))
 
 if (!fs.existsSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]))
 	fs.mkdirSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]);
+
+if (!fs.existsSync(process.env["ROUTER_ENDPOINT_QUEUE_DIR"]))
+	fs.mkdirSync(process.env["ROUTER_ENDPOINT_QUEUE_DIR"]);
 
 /***********************************************************
  HAPPNER configuration
@@ -41,20 +44,7 @@ module.exports = {
 		persist: false,
 		secure: false
 	},
-	// endpoints:
-	// 	process.env.REPLICATION_ENABLED == "true"
-	// 		? {
-	// 			awsEdge: {
-	// 				// remote mesh node
-	// 				config: {
-	// 					host: process.env.REPLICATION_ENDPOINT,
-	// 					port: process.env.REPLICATION_PORT
-	// 					// username: process.env.HAPPNER_EDGE_USERNAME,
-	// 					// password: process.env.HAPPNER_EDGE_PASSWORD
-	// 				}
-	// 			}
-	// 		  }
-	// 		: null,
+
 	modules: {
 		app: {
 			path: `${__dirname}/app.js`
@@ -86,7 +76,7 @@ module.exports = {
 			path: `${__dirname}/lib/services/packet_service.js`
 		},
 		messageHandler: {
-			path: `${__dirname}/lib/handlers/message_handlers`
+			path: `${__dirname}/lib/handlers/message_handlers.js`
 		},
 		incomingFileQueue: {
 			path: "file-queue",
@@ -122,6 +112,30 @@ module.exports = {
 						name: "options",
 						required: true,
 						value: process.env.ROUTER_OUTGOING_QUEUE_DIR
+					},
+					{
+						name: "cb",
+						required: true,
+						value: function(err) {
+							if (err) {
+								console.log(err);
+								throw err;
+							}
+						}
+					}
+				]
+			}
+		},
+		endpointFileQueue: {
+			path: "file-queue",
+			construct: {
+				type: "async",
+				name: "Queue",
+				parameters: [
+					{
+						name: "options",
+						required: true,
+						value: process.env.ROUTER_ENDPOINT_QUEUE_DIR
 					},
 					{
 						name: "cb",
@@ -199,7 +213,10 @@ module.exports = {
 			}
 		},
 		app: {
-			startMethod: "start"
+			startMethod: "start",
+			$configure: function(appConfig) {
+				return appConfig;
+			}
 		},
 		parserFactory: {},
 		portService: {},
@@ -211,12 +228,19 @@ module.exports = {
 
 		incomingFileQueue: {},
 		outgoingFileQueue: {},
+		endpointFileQueue: {},
 		transmissionService: {
 			$configure: function(transmissionServiceConfig) {
 				return transmissionServiceConfig;
 			}
 		},
-		messageHandler: {},
+		messageHandler: {
+			name: "MessageHandler",
+			version: "^0.0.1",
+			config: {
+				useEndpoint: true
+			}
+		},
 		packetService: {},
 		dataService: {
 			$configure: function(dataServiceConfig) {

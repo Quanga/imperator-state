@@ -5,7 +5,6 @@ module.exports = {
 	PortUtil: require("./lib/utils/port_util"),
 	QueueService: require("./lib/services/queue_service"),
 	ServerService: require("./lib/services/server_service"),
-
 	DataService: require("./lib/services/data_service"),
 	EventService: require("./lib/services/event_service"),
 	PacketRepository: require("./lib/repositories/packet_repository"),

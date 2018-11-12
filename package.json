@@ -1,5 +1,5 @@
 {
-	"name": "aece-router_v2",
+	"name": "aece-router_v23",
 	"version": "0.0.1",
 	"description": "Command router for Raspberry Pi",
 	"main": "server.js",
@@ -15,7 +15,7 @@
 	"homepage": "https://github.com/team-tenacious/aece-rpi-router#readme",
 	"devDependencies": {
 		"dotenv": "^6.1.0",
-		"eslint": "^5.8.0",
+		"eslint": "^5.9.0",
 		"expect.js": "^0.3.1",
 		"gulp": "^3.9.1",
 		"istanbul": "0.4.5",

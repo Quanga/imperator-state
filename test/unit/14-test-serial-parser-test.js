@@ -186,4 +186,112 @@ describe("pipe-serialiport-pipe-tests", async () => {
 			return Promise.reject(err);
 		}
 	});
+
+	it.only("can handle single byte buffer", async () => {
+		const spy = sinon.spy();
+		const parser = new AeceParser({ delimiter: Buffer.from("AAAA", "hex") });
+
+		try {
+			parser.on("data", data => {
+				console.log("receiving back data - " + data.toString("hex"));
+				spy(data);
+			});
+
+			parser.write(Buffer.from("aa", "hex"));
+
+			parser.write(Buffer.from("aa", "hex"));
+
+			parser.write(Buffer.from("48", "hex"));
+			parser.write(Buffer.from("05", "hex"));
+
+			parser.write(
+				Buffer.from(
+					"004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+
+			await timer(1);
+
+			assert.deepEqual(
+				spy.getCall(0).args[0],
+				Buffer.from(
+					"aaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+			assert(spy.called);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	});
+
+	it.only("can handle single byte buffer and dump data before delimiter", async () => {
+		const spy = sinon.spy();
+		const parser = new AeceParser({ delimiter: Buffer.from("AAAA", "hex") });
+
+		try {
+			parser.on("data", data => {
+				console.log("receiving back data - " + data.toString("hex"));
+				spy(data);
+			});
+
+			parser.write(Buffer.from("26", "hex"));
+			parser.write(Buffer.from("aa", "hex"));
+			parser.write(Buffer.from("aa", "hex"));
+			parser.write(Buffer.from("48", "hex"));
+			parser.write(Buffer.from("05", "hex"));
+
+			parser.write(
+				Buffer.from(
+					"004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+
+			await timer(1);
+
+			assert.deepEqual(
+				spy.getCall(0).args[0],
+				Buffer.from(
+					"aaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+			assert(spy.called);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	});
+
+	it.only("can handle a in crc collision with aaaa delimiter - not complete", async () => {
+		const spy = sinon.spy();
+		const parser = new AeceParser({ delimiter: Buffer.from("AAAA", "hex") });
+
+		try {
+			parser.on("data", data => {
+				console.log("receiving back data - " + data.toString("hex"));
+				spy(data);
+			});
+
+			parser.write(Buffer.from("26", "hex"));
+			parser.write(Buffer.from("aa", "hex"));
+			parser.write(Buffer.from("aa", "hex"));
+			parser.write(Buffer.from("48", "hex"));
+			parser.write(Buffer.from("05", "hex"));
+
+			await timer(1);
+
+			assert.deepEqual(
+				spy.getCall(0).args[0],
+				Buffer.from(
+					"aaaa4805004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
+			assert(spy.called);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	});
 });

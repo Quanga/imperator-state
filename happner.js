@@ -1,10 +1,20 @@
 module.exports.configs = {
+	appConfig: {
+		component: {
+			config: {
+				routerMode: process.env.ROUTER_SYSTEM_MODE,
+				routerType: process.env.ROUTER_SYSTEM_TYPE,
+				useEndpoint: process.env.ROUTER_USE_ENDPOINT
+			}
+		}
+	},
 	queueServiceConfig: {
 		component: {
 			name: "QueueService",
 			config: {
 				incomingQueueDir: process.env.ROUTER_INCOMING_QUEUE_DIR,
 				outgoingQueueDir: process.env.ROUTER_OUTGOING_QUEUE_DIR,
+				endpointQueueDir: process.env.ROUTER_ENDPOINT_QUEUE_DIR,
 				queueFetchInterval: process.env.ROUTER_QUEUE_FETCH_INTERVAL
 			}
 		}
@@ -50,7 +60,7 @@ module.exports.configs = {
 		component: {
 			name: "PacketRepository",
 			config: {
-				mySqlHost: process.env.MYSQL_HOST,
+				mySqlHost: process.env.ROUTER_MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
 				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
 				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
@@ -61,7 +71,7 @@ module.exports.configs = {
 		component: {
 			name: "NodeRepository",
 			config: {
-				mySqlHost: process.env.MYSQL_HOST,
+				mySqlHost: process.env.ROUTER_MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
 				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
 				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
@@ -72,7 +82,7 @@ module.exports.configs = {
 		component: {
 			name: "LogsRepository",
 			config: {
-				mySqlHost: process.env.MYSQL_HOST,
+				mySqlHost: process.env.ROUTER_MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
 				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
 				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
@@ -83,7 +93,7 @@ module.exports.configs = {
 		component: {
 			name: "WarningsRepository",
 			config: {
-				mySqlHost: process.env.MYSQL_HOST,
+				mySqlHost: process.env.ROUTER_MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,
 				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
 				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
@@ -95,6 +105,14 @@ module.exports.configs = {
 			name: "TransmissionService",
 			config: {
 				transmissionSendInterval: process.env.ROUTER_TRANSMISSION_SEND_INTERVAL
+			}
+		}
+	},
+
+	messageHandlerConfig: {
+		component: {
+			config: {
+				useEndpoint: process.env.ROUTER_USE_ENDPOINT
 			}
 		}
 	}

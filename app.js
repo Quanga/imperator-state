@@ -12,32 +12,45 @@ App.prototype.start = function($happn) {
 		logsRepository,
 		warningsRepository,
 		queueService,
-		serverService
+		serverService,
+		// eslint-disable-next-line no-unused-vars
+		dataService,
+		transmissionService
 	} = $happn.exchange;
+
+	const { routerMode, routerType } = $happn.config;
 
 	const { error: logError } = $happn.log;
 
 	let startup = async () => {
 		try {
-			await portService.initialise();
-			await packetRepository.initialise();
+			//Do not start the serialport if routerMode is SERVER
+			if (routerMode === "ROUTER") {
+				await portService.initialise();
+				await serverService.initialise();
+			}
+
 			await nodeRepository.initialise();
+			await packetRepository.initialise();
+			//await dataService.initialise();
+
 			await logsRepository.initialise();
 			await warningsRepository.initialise();
 
 			await queueService.initialise();
 			await queueService.watchIncomingQueue();
-			await queueService.watchOutgoingQueue();
 
-			await serverService.initialise();
+			//Do not start the OUTGOING QUEUE or the TRANSMISSION SERVICE
+			//if the mode is AXXIS
+			if (routerType === "IBS") {
+				await queueService.watchOutgoingQueue();
+				transmissionService.initialise();
+			}
 
-			//$happn.exchange.transmissionService.initialise();
-			$happn.log.info(
-				"------------------- STARTUP COMPLETE -------------------"
-			);
+			$happn.log.info("::::: STARTUP COMPLETE ::::::");
 		} catch (err) {
 			logError("start error", err);
-			//process.exit(err.code || 1);
+			process.exit(err.code || 1);
 		}
 	};
 

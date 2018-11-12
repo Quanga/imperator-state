@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/11/29.
- */
-
 const expect = require("expect.js");
 
 describe("ISC-ping-request-test", function() {

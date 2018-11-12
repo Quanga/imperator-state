@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/06/17.
- */
-
 var assert = require("assert");
 
 describe("parser-control-unit-parser-test", async function() {
@@ -26,7 +22,7 @@ describe("parser-control-unit-parser-test", async function() {
 		let template = packetTemplate.incomingCommTemplate[8];
 
 		let packet = "AAAA0A08000100C0CA96";
-		var testObj = new PacketModel(template, packet, 0);
+		var testObj = new PacketModel(template, packet, Date.now(), 0);
 
 		var expected = [
 			{

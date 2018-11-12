@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/06/17.
- */
-
 var assert = require("assert");
 
 describe("parser-CBB_LIST-parser-test", async function() {
@@ -107,7 +103,7 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				let template = packetTemplate.incomingCommTemplate[4];
 
 				let packet = "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac";
-				var testObj = new PacketModel(template, packet, 0);
+				var testObj = new PacketModel(template, packet, Date.now(), 0);
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 

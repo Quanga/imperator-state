@@ -1,7 +1,3 @@
-/**
- * Created by grant on 2016/11/29.
- */
-
 var expect = require("expect.js");
 
 describe("IB651-ping-request-test", function() {
