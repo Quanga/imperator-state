@@ -1,10 +1,13 @@
 .idea
 db
 node_modules
+aws
 rpi_router.log
 outgoing_queue_data
-coverage
 incoming_queue_data
+endpoint_queue_data
+coverage
+
 router_log.txt
 .env-test
 package-lock.json

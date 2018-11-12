@@ -40,11 +40,9 @@ DatabaseHelper.prototype.clearDatabase = function() {
 };
 
 DatabaseHelper.prototype.getNodeData = function() {
-	var self = this;
-
-	return new Promise(function(resolve, reject) {
-		self.__nodeRepository
-			.getNodeData(self.__mockHappn)
+	return new Promise((resolve, reject) => {
+		this.__nodeRepository
+			.getNodeData(this.__mockHappn)
 			.then(result => resolve(result))
 			.catch(err => {
 				reject(err);
@@ -53,31 +51,29 @@ DatabaseHelper.prototype.getNodeData = function() {
 };
 
 DatabaseHelper.prototype.getNodeTreeData = function(serial, typeId) {
-	var self = this;
-
-	return new Promise(function(resolve, reject) {
-		self.__nodeRepository
-			.findNodeTreeData(self.__mockHappn, serial, typeId)
+	return new Promise((resolve, reject) => {
+		this.__nodeRepository
+			.findNodeTreeData(this.__mockHappn, serial, typeId)
 			.then(result => resolve(result))
 			.catch(err => {
-				console.log("err" + err);
 				reject(err);
 			});
 	});
 };
 
 DatabaseHelper.prototype.getLogData = function(nodeSerial) {
-	var self = this;
+	return new Promise((resolve, reject) => {
+		this.__nodeRepository.getLogData(
+			this.__mockHappn,
+			nodeSerial,
+			(err, result) => {
+				if (err) {
+					return reject(err);
+				}
 
-	return new Promise(function(resolve, reject) {
-		self.__nodeRepository.getLogData(self.__mockHappn, nodeSerial, function(
-			err,
-			result
-		) {
-			if (err) return reject(err);
-
-			resolve(result);
-		});
+				resolve(result);
+			}
+		);
 	});
 };
 

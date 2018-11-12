@@ -13,8 +13,6 @@ App.prototype.start = function($happn) {
 		warningsRepository,
 		queueService,
 		serverService,
-		// eslint-disable-next-line no-unused-vars
-		dataService,
 		transmissionService
 	} = $happn.exchange;
 
@@ -32,8 +30,6 @@ App.prototype.start = function($happn) {
 
 			await nodeRepository.initialise();
 			await packetRepository.initialise();
-			//await dataService.initialise();
-
 			await logsRepository.initialise();
 			await warningsRepository.initialise();
 

@@ -32,7 +32,7 @@ module.exports = {
 		logLayout: null,
 		logFile: "router_log.txt",
 		logFileMaxSize: 1048576, // 1mb
-		logFileBackups: 10,
+		logFileBackups: 5,
 		logFileNameAbsolute: true,
 		logger: null
 	},
@@ -237,9 +237,7 @@ module.exports = {
 		messageHandler: {
 			name: "MessageHandler",
 			version: "^0.0.1",
-			config: {
-				useEndpoint: true
-			}
+			useEndpoint: process.env.REPLICATION_ENABLED
 		},
 		packetService: {},
 		dataService: {
