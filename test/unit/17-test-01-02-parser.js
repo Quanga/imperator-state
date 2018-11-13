@@ -74,6 +74,12 @@ describe("parser-01-02-parser-test", async function() {
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				result.forEach(item => {
+					delete item.storedPacketDate;
+					delete item.modified;
+					delete item.created;
+				});
 				await assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);
@@ -162,6 +168,13 @@ describe("parser-01-02-parser-test", async function() {
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				result.forEach(item => {
+					delete item.storedPacketDate;
+					delete item.modified;
+					delete item.created;
+				});
+
 				await assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);
@@ -250,6 +263,13 @@ describe("parser-01-02-parser-test", async function() {
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				result.forEach(item => {
+					delete item.storedPacketDate;
+					delete item.modified;
+					delete item.created;
+				});
+
 				await assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);

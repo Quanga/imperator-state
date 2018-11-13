@@ -298,6 +298,14 @@ describe("parser-CBB_DATA-parser-test", async function() {
 				var testObj = new PacketModel(template, packet, Date.now(), 0);
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				result.forEach(item => {
+					delete item.storedPacketDate;
+					delete item.modified;
+					delete item.created;
+					delete item.led_state;
+				});
+
 				await assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);
@@ -366,6 +374,13 @@ describe("parser-CBB_DATA-parser-test", async function() {
 				let testObj = new PacketModel(template, packet, Date.now(), 0);
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				result.forEach(item => {
+					delete item.storedPacketDate;
+					delete item.modified;
+					delete item.created;
+					delete item.led_state;
+				});
 
 				await assert.deepEqual(result, expected);
 			} catch (err) {
