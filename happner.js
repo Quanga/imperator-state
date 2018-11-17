@@ -15,7 +15,8 @@ module.exports.configs = {
 				incomingQueueDir: process.env.ROUTER_INCOMING_QUEUE_DIR,
 				outgoingQueueDir: process.env.ROUTER_OUTGOING_QUEUE_DIR,
 				endpointQueueDir: process.env.ROUTER_ENDPOINT_QUEUE_DIR,
-				queueFetchInterval: process.env.ROUTER_QUEUE_FETCH_INTERVAL
+				queueFetchInterval: process.env.ROUTER_QUEUE_FETCH_INTERVAL,
+				showQueueDebug: process.env.ROUTER_SHOW_QUEUE_DEBUG
 			}
 		}
 	},
@@ -31,9 +32,7 @@ module.exports.configs = {
 	dataServiceConfig: {
 		component: {
 			name: "DataService",
-			config: {
-				// nodeEnv: process.env.NODE_ENV,
-			}
+			config: {}
 		}
 	},
 	serverServiceConfig: {
@@ -49,49 +48,39 @@ module.exports.configs = {
 	eventServiceConfig: {
 		component: {
 			name: "EventService",
-			config: {
-				// nodeEnv: process.env.NODE_ENV,
-				// edgeIP: process.env.EDGE_IP,
-				// edgePort: process.env.HAPPNER_EDGE_PORT,
+			config: {},
+			routes: {
+				//'model/*': 'persist',
+				"model/*": "mem"
 			}
 		}
 	},
 	packetRepositoryConfig: {
 		component: {
 			name: "PacketRepository",
-			config: {
-				mySqlHost: process.env.ROUTER_MYSQL_HOST,
-				mySqlUser: process.env.ROUTER_MYSQL_USER,
-				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
-			}
+			config: {}
 		}
 	},
 	nodeRepositoryConfig: {
 		component: {
-			name: "NodeRepository",
-			config: {
-				mySqlHost: process.env.ROUTER_MYSQL_HOST,
-				mySqlUser: process.env.ROUTER_MYSQL_USER,
-				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
-			}
+			name: "NodeRepository"
 		}
 	},
 	logsRepositoryConfig: {
 		component: {
 			name: "LogsRepository",
-			config: {
-				mySqlHost: process.env.ROUTER_MYSQL_HOST,
-				mySqlUser: process.env.ROUTER_MYSQL_USER,
-				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
-			}
+			config: {}
 		}
 	},
 	warningsRepositoryConfig: {
 		component: {
 			name: "WarningsRepository",
+			config: {}
+		}
+	},
+	dbConnectionConfig: {
+		component: {
+			name: "DbConnectionService",
 			config: {
 				mySqlHost: process.env.ROUTER_MYSQL_HOST,
 				mySqlUser: process.env.ROUTER_MYSQL_USER,

@@ -2,6 +2,9 @@ function DatabaseHelper() {
 	const MockHappn = require("../mocks/mock_happn");
 	this.__mockHappn = new MockHappn();
 
+	const DbConnectionService = require("../../lib/services/db_connection_service");
+	this.__dbConnectionService = new DbConnectionService();
+
 	const NodeRepository = require("../../lib/repositories/node_repository");
 	this.__nodeRepository = new NodeRepository();
 
@@ -10,20 +13,28 @@ function DatabaseHelper() {
 
 	const WarningsRepository = require("../../lib/repositories/warnings_repository");
 	this.__warningsRepository = new WarningsRepository();
-
-	this.__nodeRepository
-		.initialise(this.__mockHappn)
-		.then(() => {
-			this.__logsRepository.initialise(this.__mockHappn);
-		})
-		.then(() => this.__warningsRepository.initialise(this.__mockHappn))
-		.then(() => {
-			console.log("### DATABASEHELPER INITIALISE PASS!");
-		})
-		.catch(err => {
-			console.log("### DATABASEHELPER INITIALISE ERROR!: " + err);
-		});
 }
+
+DatabaseHelper.prototype.initialise = function() {
+	let processAsync = async () => {
+		this.__mockHappn.dbInst = this.__dbConnectionService;
+
+		try {
+			await this.__dbConnectionService.initialise(this.__mockHappn);
+			console.log("### __DB INITIALISE PASS!");
+
+			await this.__nodeRepository.initialise(this.__mockHappn);
+			await this.__logsRepository.initialise(this.__mockHappn);
+			await this.__warningsRepository.initialise(this.__mockHappn);
+			console.log("### DATABASEHELPER INITIALISE PASS!");
+		} catch (err) {
+			console.log("### DATABASEHELPER INITIALISE ERROR!: " + err);
+			return Promise.reject(err);
+		}
+	};
+
+	return processAsync();
+};
 
 DatabaseHelper.prototype.clearDatabase = function() {
 	let clearDatabaseAsync = async () => {

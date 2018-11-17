@@ -42,7 +42,8 @@ module.exports = {
 			timeout: 15000
 		},
 		persist: false,
-		secure: false
+		secure: false,
+		adminPassword: "root"
 	},
 
 	modules: {
@@ -60,6 +61,12 @@ module.exports = {
 			path: `${__dirname}/server.js`,
 			construct: {
 				name: "ServerService"
+			}
+		},
+		dbConnectionService: {
+			path: `${__dirname}/server.js`,
+			construct: {
+				name: "DbConnectionService"
 			}
 		},
 		portService: {
@@ -175,6 +182,7 @@ module.exports = {
 				type: "async"
 			}
 		},
+
 		nodeRepository: {
 			path: `${__dirname}/server.js`,
 			construct: {
@@ -247,6 +255,11 @@ module.exports = {
 		},
 		eventService: {},
 		dataMapper: {},
+		dbConnectionService: {
+			$configure: function(dbConnectionConfig) {
+				return dbConnectionConfig;
+			}
+		},
 		packetRepository: {
 			$configure: function(packetRepositoryConfig) {
 				return packetRepositoryConfig;

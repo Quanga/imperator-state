@@ -24,13 +24,14 @@ describe("0x08-IBC-data-request-test", async function() {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("start test server", async function() {
-		let server = await serverHelper.startServer();
-		return server;
-	});
-
 	before("cleaning up db", async function() {
-		await databaseHelper.clearDatabase();
+		try {
+			await databaseHelper.initialise();
+			await databaseHelper.clearDatabase();
+			await serverHelper.startServer();
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	});
 
 	after("stop test server", async function() {

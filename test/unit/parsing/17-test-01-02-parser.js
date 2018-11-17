@@ -1,12 +1,12 @@
 var assert = require("assert");
 
 describe("parser-01-02-parser-test", async function() {
-	const MockHappn = require("../mocks/mock_happn");
-	var DataListParser = require("../../lib/parsers/deviceListParser");
-	var DeviceDataParser = require("../../lib/parsers/deviceDataParser");
+	const MockHappn = require("../../mocks/mock_happn");
+	var DataListParser = require("../../../lib/parsers/deviceListParser");
+	var DeviceDataParser = require("../../../lib/parsers/deviceDataParser");
 
-	const PacketTemplate = require("../../lib/constants/packetTemplates");
-	const PacketModel = require("../../lib/models/packetModel");
+	const PacketTemplate = require("../../../lib/constants/packetTemplates");
+	const PacketModel = require("../../../lib/models/packetModel");
 
 	let mockHappn = new MockHappn();
 
@@ -79,6 +79,7 @@ describe("parser-01-02-parser-test", async function() {
 					delete item.storedPacketDate;
 					delete item.modified;
 					delete item.created;
+					delete item.id;
 				});
 				await assert.deepEqual(result, expected);
 			} catch (err) {
@@ -173,6 +174,7 @@ describe("parser-01-02-parser-test", async function() {
 					delete item.storedPacketDate;
 					delete item.modified;
 					delete item.created;
+					delete item.id;
 				});
 
 				await assert.deepEqual(result, expected);
@@ -268,6 +270,7 @@ describe("parser-01-02-parser-test", async function() {
 					delete item.storedPacketDate;
 					delete item.modified;
 					delete item.created;
+					delete item.id;
 				});
 
 				await assert.deepEqual(result, expected);

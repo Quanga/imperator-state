@@ -1,4 +1,5 @@
 const expect = require("expect.js");
+const DatabaseHelper = require("../helpers/database_helper");
 
 describe("ISC-ping-request-test", function() {
 	const PacketBuilder = require("../../lib/builders/packet_builder");
@@ -6,11 +7,10 @@ describe("ISC-ping-request-test", function() {
 	const ServerHelper = require("../helpers/server_helper");
 	const serverHelper = new ServerHelper();
 
-	const DatabaseHelper = require("../helpers/database_helper");
-	const databaseHelper = new DatabaseHelper();
-
 	const FileHelper = require("../helpers/file_helper");
 	const fileHelper = new FileHelper();
+
+	const databaseHelper = new DatabaseHelper();
 
 	const SerialPortHelper = require("../helpers/serial_port_helper");
 	const serialPortHelper = new SerialPortHelper();
@@ -21,13 +21,11 @@ describe("ISC-ping-request-test", function() {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("start test server", async function() {
-		await serverHelper.startServer();
-	});
-
-	beforeEach("cleaning up db", async function() {
+	before("cleaning up db", async function() {
 		try {
+			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
@@ -215,8 +213,6 @@ describe("ISC-ping-request-test", function() {
 				.withSerial(1)
 				.withSerialData(4)
 				.build();
-
-			//console.log("## INITIAL: " + initial);
 
 			await serialPortHelper.sendMessage(initial);
 

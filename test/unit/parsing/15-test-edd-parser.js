@@ -1,7 +1,7 @@
 var assert = require("assert");
 
 describe("parser-CBB_DATA-parser-test", async function() {
-	const MockHappn = require("../mocks/mock_happn");
+	const MockHappn = require("../../mocks/mock_happn");
 	let mockHappn = new MockHappn();
 
 	this.timeout(30000);
@@ -277,9 +277,9 @@ describe("parser-CBB_DATA-parser-test", async function() {
 
 		let test = async () => {
 			try {
-				const DataParser = require("../../lib/parsers/deviceDataParser");
-				const PacketModel = require("../../lib/models/packetModel");
-				const PacketTemplate = require("../../lib/constants/packetTemplates");
+				const DataParser = require("../../../lib/parsers/deviceDataParser");
+				const PacketModel = require("../../../lib/models/packetModel");
+				const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
 				const parser = new DataParser();
 				const packetTemplate = new PacketTemplate();
@@ -304,6 +304,7 @@ describe("parser-CBB_DATA-parser-test", async function() {
 					delete item.modified;
 					delete item.created;
 					delete item.led_state;
+					delete item.id;
 				});
 
 				await assert.deepEqual(result, expected);
@@ -362,9 +363,9 @@ describe("parser-CBB_DATA-parser-test", async function() {
 
 		let test = async () => {
 			try {
-				const DataListParser = require("../../lib/parsers/deviceListParser");
-				const PacketModel = require("../../lib/models/packetModel");
-				const PacketTemplate = require("../../lib/constants/packetTemplates");
+				const DataListParser = require("../../../lib/parsers/deviceListParser");
+				const PacketModel = require("../../../lib/models/packetModel");
+				const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
 				const parser = new DataListParser();
 				const packetTemplate = new PacketTemplate();
@@ -380,6 +381,7 @@ describe("parser-CBB_DATA-parser-test", async function() {
 					delete item.modified;
 					delete item.created;
 					delete item.led_state;
+					delete item.id;
 				});
 
 				await assert.deepEqual(result, expected);

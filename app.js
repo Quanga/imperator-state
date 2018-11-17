@@ -13,7 +13,10 @@ App.prototype.start = function($happn) {
 		warningsRepository,
 		queueService,
 		serverService,
-		transmissionService
+		transmissionService,
+		dbConnectionService,
+		security,
+		eventService
 	} = $happn.exchange;
 
 	const { routerMode, routerType } = $happn.config;
@@ -23,15 +26,24 @@ App.prototype.start = function($happn) {
 	let startup = async () => {
 		try {
 			//Do not start the serialport if routerMode is SERVER
+
+			security.listUsers("*").then(function(users) {
+				console.log(users);
+			});
 			if (routerMode === "ROUTER") {
 				await portService.initialise();
 				await serverService.initialise();
 			}
 
+			await dbConnectionService.initialise();
+
 			await nodeRepository.initialise();
 			await packetRepository.initialise();
 			await logsRepository.initialise();
 			await warningsRepository.initialise();
+
+			//initialized after the repos as it will do the checks
+			await eventService.initialise();
 
 			await queueService.initialise();
 			await queueService.watchIncomingQueue();

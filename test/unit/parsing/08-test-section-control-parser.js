@@ -1,8 +1,8 @@
 var assert = require("assert");
 
 describe("parser-section-control-parser-test", async function() {
-	var MockHappn = require("../mocks/mock_happn");
-	var DataListParser = require("../../lib/parsers/deviceListParser");
+	var MockHappn = require("../../mocks/mock_happn");
+	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const commTemplate = require("../../lib/constants/comm_templates");
 	var mockHappn = new MockHappn();
 	var parser = null;
@@ -25,7 +25,7 @@ describe("parser-section-control-parser-test", async function() {
          */
 		const packetTemplate = new commTemplate();
 		let template = packetTemplate.incomingCommTemplate[1];
-		const PacketModel = require("../../lib/models/packetModel");
+		const PacketModel = require("../../../lib/models/packetModel");
 		var packet = "AAAA1601000800250026002E0032002A0012002C7BCA";
 		var testObj = new PacketModel(template, packet, Date.now, 0);
 

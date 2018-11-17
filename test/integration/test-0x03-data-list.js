@@ -22,16 +22,18 @@ describe("parser-ib651-parser-test", function() {
 
 	this.timeout(30000);
 
-	beforeEach("start test server", async function() {
-		await serverHelper.startServer();
-	});
-
-	beforeEach("cleaning up queues", async function() {
+	before("cleaning up queues", async function() {
 		await fileHelper.clearQueueFiles();
 	});
 
-	beforeEach("cleaning up db", async function() {
-		await databaseHelper.clearDatabase();
+	before("cleaning up db", async function() {
+		try {
+			await databaseHelper.initialise();
+			await databaseHelper.clearDatabase();
+			await serverHelper.startServer();
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	});
 
 	after("stop test server", async function() {

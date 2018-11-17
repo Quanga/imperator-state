@@ -1,8 +1,8 @@
 var assert = require("assert");
 
 describe("parser-i651-data-test", async function() {
-	const MockHappn = require("../mocks/mock_happn");
-	const Utils = require("../../lib/utils/packet_utils");
+	const MockHappn = require("../../mocks/mock_happn");
+	const Utils = require("../../../lib/utils/packet_utils");
 	const DataListParser = require("../../lib/parsers/data_list_parser");
 	const Constants = require("../../lib/constants/command_constants");
 

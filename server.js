@@ -11,7 +11,8 @@ module.exports = {
 	NodeRepository: require("./lib/repositories/node_repository"),
 	LogsRepository: require("./lib/repositories/logs_repository"),
 	WarningsRepository: require("./lib/repositories/warnings_repository"),
-	TransmissionService: require("./lib/services/transmission_service")
+	TransmissionService: require("./lib/services/transmission_service"),
+	DbConnectionService: require("./lib/services/db_connection_service")
 };
 
 Happner.create(Config)

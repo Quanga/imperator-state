@@ -99,8 +99,10 @@ Object.defineProperty(MockHappn.prototype, "exchange", {
 			},
 			portUtil: {
 				getInstance: function() {
+					// eslint-disable-next-line no-unused-vars
 					return new Promise(function(resolve, reject) {
 						resolve({
+							// eslint-disable-next-line no-unused-vars
 							on: function(eventType, handler) {
 								return true;
 							}
@@ -110,11 +112,26 @@ Object.defineProperty(MockHappn.prototype, "exchange", {
 			},
 			messageHandler: {
 				MessageReceiveHandler: function() {
+					// eslint-disable-next-line no-unused-vars
 					return new Promise(function(resolve, reject) {
 						resolve(function() {
 							return true;
 						});
 					});
+				}
+			},
+			parserFactory: {
+				getParser: function(packet) {
+					const parserFactory = require("../../lib/parsers/parser_factory");
+					let newMock = new MockHappn();
+					return new parserFactory().getParser(newMock, packet);
+				}
+			},
+
+			dbConnectionService: {
+				getConnection: function() {
+					let newMock = new MockHappn();
+					return self.dbInst.getConnection(newMock);
 				}
 			}
 		};
