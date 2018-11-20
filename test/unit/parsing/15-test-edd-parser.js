@@ -305,6 +305,7 @@ describe("parser-CBB_DATA-parser-test", async function() {
 					delete item.created;
 					delete item.led_state;
 					delete item.id;
+					delete item._lastCommunication;
 				});
 
 				await assert.deepEqual(result, expected);
@@ -382,6 +383,7 @@ describe("parser-CBB_DATA-parser-test", async function() {
 					delete item.created;
 					delete item.led_state;
 					delete item.id;
+					delete item._lastCommunication;
 				});
 
 				await assert.deepEqual(result, expected);

@@ -32,7 +32,9 @@ module.exports.configs = {
 	dataServiceConfig: {
 		component: {
 			name: "DataService",
-			config: {}
+			config: {
+				commCheckInterval: process.env.COMMUNICATION_CHECK_INTERVAL
+			}
 		}
 	},
 	serverServiceConfig: {

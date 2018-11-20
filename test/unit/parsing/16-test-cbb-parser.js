@@ -115,6 +115,7 @@ describe("parser-CBB_LIST-parser-test", async function() {
 					delete item.created;
 					delete item.led_state;
 					delete item.id;
+					delete item._lastCommunication;
 				});
 				await assert.deepEqual(result, expected);
 			} catch (err) {

@@ -42,7 +42,6 @@ describe("parser-ib651-parser-test", function() {
 
 	it.only("can send a data list request containing one ISC with IB651s 1, 2 & 3", async function() {
 		// AAAA100300014030212022402310(CRC)
-		// start - AAAA
 		// length - 10
 		// command - 03
 		// serial - 0001
@@ -55,7 +54,6 @@ describe("parser-ib651-parser-test", function() {
 		let step1 = async () => {
 			// set up the initial IBC with a single ISC via ping request (0x01)
 			let initial = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -69,7 +67,6 @@ describe("parser-ib651-parser-test", function() {
 			//now set up the IB651's via ping request (0x02)
 
 			let initial2 = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -83,7 +80,6 @@ describe("parser-ib651-parser-test", function() {
 			packetBuilder.reset();
 
 			/* TEST: AAAA100300014030212022402310(CRC)
-		 start - AAAA
 		 length - 10
 		 command - 03
 		 serial - 0001
@@ -95,7 +91,6 @@ describe("parser-ib651-parser-test", function() {
 			let iscDeviceId = packetBuilder.createDeviceIdData(1);
 			let iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
 			let iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
-			//let iscRawData = packetBuilder.createRawData([1, 1, 1, 1, 1, 1, 1, 1]); // 30 hex = 00001100 bin (little endian)
 
 			let iscDeviceData = stringBuilder
 				.append(iscDeviceType)
@@ -169,7 +164,6 @@ describe("parser-ib651-parser-test", function() {
 
 			//complete packet
 			let finalmessage = packetBuilder
-				.withStart("AAAA")
 				.withCommand(3)
 				.withSerial(1)
 				.withDeviceData(iscDeviceData)
@@ -252,7 +246,6 @@ describe("parser-ib651-parser-test", function() {
 
 	it.only("will ignore a data list with no data", async function() {
 		// aaaa080300011ae3
-		// start - AAAA
 		// length - 08
 		// command - 03
 		// serial - 0001

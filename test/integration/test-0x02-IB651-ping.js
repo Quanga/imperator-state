@@ -51,7 +51,6 @@ describe("IB651-ping-request-test", function() {
 		let step1 = async () => {
 			var packetBuilder = new PacketBuilder();
 			var message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
@@ -65,7 +64,6 @@ describe("IB651-ping-request-test", function() {
 
 			// now send an ISC ping with 3 IB651's
 			let messageb = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -153,7 +151,6 @@ describe("IB651-ping-request-test", function() {
 			// set up the initial IBC and single ISC via an ISC ping
 
 			let messagea = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
@@ -164,7 +161,6 @@ describe("IB651-ping-request-test", function() {
 			packetBuilder.reset();
 
 			let initial = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -176,7 +172,6 @@ describe("IB651-ping-request-test", function() {
 			packetBuilder.reset();
 
 			let messageb = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -245,7 +240,6 @@ describe("IB651-ping-request-test", function() {
 
 			// set up the initial IBC and single ISC via an ISC ping
 			let message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
@@ -266,7 +260,6 @@ describe("IB651-ping-request-test", function() {
 			 */
 
 			let initial = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(1024)
@@ -287,7 +280,6 @@ describe("IB651-ping-request-test", function() {
 		 */
 
 			let messageb = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -368,7 +360,6 @@ describe("IB651-ping-request-test", function() {
 
 			// set up the initial IBC and single ISC via an ISC ping
 			let message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
@@ -387,7 +378,6 @@ describe("IB651-ping-request-test", function() {
 						 */
 
 			let initial = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(256)
@@ -408,7 +398,6 @@ describe("IB651-ping-request-test", function() {
                  */
 
 			let messageb = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(1)
 				.withSerialData(512)

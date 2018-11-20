@@ -22,7 +22,7 @@ describe("parser-01-02-parser-test", async function() {
 				type_id: 0,
 				parent_type: null,
 				parent_id: null,
-				window_id: 0,
+				window_id: null,
 				communication_status: 1,
 				key_switch_status: null,
 				fire_button: null,

@@ -51,7 +51,6 @@ describe("ISC-ping-request-test", function() {
 		let step1 = async function() {
 			let packetBuilder = new PacketBuilder();
 			let message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
@@ -130,7 +129,6 @@ describe("ISC-ping-request-test", function() {
 
 		let step1 = async function() {
 			let initial = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)
@@ -208,7 +206,6 @@ describe("ISC-ping-request-test", function() {
 			 */
 
 			let initial = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(4)
@@ -228,7 +225,6 @@ describe("ISC-ping-request-test", function() {
                  crc - ?
                  */
 			let message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(1)
 				.withSerialData(1)

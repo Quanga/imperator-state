@@ -1,5 +1,4 @@
 const expect = require("expect.js");
-//const async = require("async");
 
 describe("0x08-IBC-data-request-test", async function() {
 	require("dotenv").config({
@@ -113,7 +112,6 @@ describe("0x08-IBC-data-request-test", async function() {
 		let stringBuilder = new StringBuilder();
 
 		/* TEST: AAAA 0A 08 0008 08C0 (CRC)
-			 start - AAAA
 			 length - 0A
 			 command - 08
 			 serial - 0008
@@ -136,7 +134,6 @@ describe("0x08-IBC-data-request-test", async function() {
 
 			//complete packet
 			let message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(8) // the command we're testing - 0x08
 				.withSerial(8) // IBC serial 8
 				.withDeviceData(deviceData)
@@ -160,7 +157,6 @@ describe("0x08-IBC-data-request-test", async function() {
 			packetBuilder.reset();
 
 			var message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(1)
 				.withSerial(12)
 				.withSerialData(22)
@@ -170,7 +166,6 @@ describe("0x08-IBC-data-request-test", async function() {
 			packetBuilder.reset();
 
 			let messageb = packetBuilder
-				.withStart("AAAA")
 				.withCommand(2)
 				.withSerial(22)
 				.withSerialData(256)
@@ -182,7 +177,6 @@ describe("0x08-IBC-data-request-test", async function() {
 			// INITIAL STATE - DISARMED
 
 			/* TEST: AAAA 0A 08 0008 0840 (CRC)
-		 start - AAAA
 		 length - 0A
 		 command - 08
 		 serial - 0008
@@ -205,7 +199,6 @@ describe("0x08-IBC-data-request-test", async function() {
 
 			//complete packet
 			var messagee = packetBuilder
-				.withStart("AAAA")
 				.withCommand(8) // the command we're testing - 0x08
 				.withSerial(12) // IBC serial 8
 				.withDeviceData(deviceData)
@@ -218,7 +211,6 @@ describe("0x08-IBC-data-request-test", async function() {
 			// TEST STATE - ARMED
 
 			/* TEST: AAAA 0A 08 0008 08C0 (CRC)
-		 start - AAAA
 		 length - 0A
 		 command - 08
 		 serial - 0008
@@ -241,7 +233,6 @@ describe("0x08-IBC-data-request-test", async function() {
 
 			//complete packet
 			var message = packetBuilder
-				.withStart("AAAA")
 				.withCommand(8) // the command we're testing - 0x08
 				.withSerial(12) // IBC serial 8
 				.withDeviceData(deviceData)
@@ -290,49 +281,4 @@ describe("0x08-IBC-data-request-test", async function() {
 
 		return test();
 	});
-
-	// it.only("can send an unknown 08 command", function(done) {
-	// 	async.waterfall(
-	// 		[
-	// 			function(cb) {
-	// 				var message = "aaaa0a08000d05428447";
-
-	// 				serialPortHelper
-	// 					.sendMessage(message)
-	// 					.then(() => {
-	// 						cb();
-	// 					})
-	// 					.catch(err => {
-	// 						cb(err);
-	// 					});
-	// 			},
-	// 			function(cb) {
-	// 				setTimeout(function() {
-	// 					databaseHelper
-	// 						.getNodeTreeData(8, 0)
-	// 						.then(function(result) {
-	// 							if (result == null || result.length == 0)
-	// 								return cb(new Error("Empty result!"));
-
-	// 							return cb(result);
-	// 						})
-	// 						.catch(function(err) {
-	// 							cb(err);
-	// 						});
-	// 				}, 5000);
-	// 			}
-	// 		],
-	// 		function(err, result) {
-	// 			if (err) return done(err);
-
-	// 			try {
-	// 				console.log(result);
-
-	// 				done();
-	// 			} catch (err) {
-	// 				done(err);
-	// 			}
-	// 		}
-	// 	);
-	// });
 });
