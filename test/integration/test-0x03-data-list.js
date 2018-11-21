@@ -56,26 +56,26 @@ describe("parser-ib651-parser-test", function() {
 			let initial = packetBuilder
 				.withCommand(2)
 				.withSerial(1)
-				.withSerialData(256)
+				.withSerialData(1, true)
 				.build();
 
 			await serialPortHelper.sendMessage(initial);
 
 			packetBuilder.reset();
 
-			await timer(3000);
+			//await timer(100);
 			//now set up the IB651's via ping request (0x02)
 
 			let initial2 = packetBuilder
 				.withCommand(2)
 				.withSerial(1)
-				.withSerialData(256)
-				.withSerialData(512)
-				.withSerialData(768)
+				.withSerialData(1, true)
+				.withSerialData(2, true)
+				.withSerialData(3, true)
 				.build();
 
 			await serialPortHelper.sendMessage(initial2);
-			await timer(1000);
+			//await timer(300);
 
 			packetBuilder.reset();
 
@@ -171,7 +171,7 @@ describe("parser-ib651-parser-test", function() {
 				.withDeviceData(ib651_2_DeviceData)
 				.withDeviceData(ib651_3_DeviceData)
 				.build();
-			await timer(2000);
+			//await timer(1000);
 
 			await serialPortHelper.sendMessage(finalmessage);
 		};
@@ -233,7 +233,7 @@ describe("parser-ib651-parser-test", function() {
 			try {
 				await timer(3500);
 				await step1();
-				await timer(6000);
+				await timer(600);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {

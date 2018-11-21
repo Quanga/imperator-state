@@ -88,7 +88,7 @@ describe("IB651-ping-request-test", function() {
 				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
 				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
 			});
-			//console.log(result);
+			console.log(result);
 			return {
 				ib651_1: ib651_1,
 				ib651_2: ib651_2,
@@ -114,9 +114,9 @@ describe("IB651-ping-request-test", function() {
 
 		let test = async () => {
 			try {
-				await timer(7500);
+				await timer(4500);
 				await step1();
-				await timer(3000);
+				await timer(4000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {

@@ -100,7 +100,7 @@ describe("ISC-ping-request-test", function() {
 				let result = await step2();
 				await step3(result);
 			} catch (err) {
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 
