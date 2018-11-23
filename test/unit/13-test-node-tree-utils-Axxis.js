@@ -6,59 +6,75 @@ describe("node-tree-utils-Axxis-test", function() {
 
 	var treeNodes = [
 		{
-			name: "CCB",
-			type_id: 0,
-			id: 1,
-			serial: "123"
+			data: {
+				name: "CCB",
+				type_id: 0,
+				id: 1,
+				serial: "123"
+			}
 		},
 		{
-			name: "CBB 1",
-			type_id: 3,
-			id: 10,
-			parent_id: 1,
-			serial: "32"
+			data: {
+				name: "CBB 1",
+				type_id: 3,
+				id: 10,
+				parent_id: 1,
+				serial: "32"
+			}
 		},
 		{
-			name: "CBB 2",
-			type_id: 3,
-			id: 13,
-			parent_id: 1,
-			serial: "33"
+			data: {
+				name: "CBB 2",
+				type_id: 3,
+				id: 13,
+				parent_id: 1,
+				serial: "33"
+			}
 		},
 		{
-			name: "EDD 1",
-			type_id: 4,
-			id: 101,
-			parent_id: 10,
-			serial: "811"
+			data: {
+				name: "EDD 1",
+				type_id: 4,
+				id: 101,
+				parent_id: 10,
+				serial: "811"
+			}
 		},
 		{
-			name: "EDD 2",
-			type_id: 4,
-			id: 102,
-			parent_id: 10,
-			serial: "812"
+			data: {
+				name: "EDD 2",
+				type_id: 4,
+				id: 102,
+				parent_id: 10,
+				serial: "812"
+			}
 		},
 		{
-			name: "EDD 3",
-			type_id: 4,
-			id: 103,
-			parent_id: 10,
-			serial: "813"
+			data: {
+				name: "EDD 3",
+				type_id: 4,
+				id: 103,
+				parent_id: 10,
+				serial: "813"
+			}
 		},
 		{
-			name: "EDD 4",
-			type_id: 2,
-			id: 104,
-			parent_id: 13,
-			serial: "814"
+			data: {
+				name: "EDD 4",
+				type_id: 2,
+				id: 104,
+				parent_id: 13,
+				serial: "814"
+			}
 		},
 		{
-			name: "EDD 5",
-			type_id: 2,
-			id: 105,
-			parent_id: 13,
-			serial: "815"
+			data: {
+				name: "EDD 5",
+				type_id: 2,
+				id: 105,
+				parent_id: 13,
+				serial: "815"
+			}
 		}
 	];
 
@@ -72,32 +88,40 @@ describe("node-tree-utils-Axxis-test", function() {
 	it("successfully finds sub-tree", function(callback) {
 		var expected = [
 			{
-				name: "CBB 1",
-				type_id: 3,
-				id: 10,
-				parent_id: 1,
-				serial: "32"
+				data: {
+					name: "CBB 1",
+					type_id: 3,
+					id: 10,
+					parent_id: 1,
+					serial: "32"
+				}
 			},
 			{
-				name: "EDD 1",
-				type_id: 4,
-				id: 101,
-				parent_id: 10,
-				serial: "811"
+				data: {
+					name: "EDD 1",
+					type_id: 4,
+					id: 101,
+					parent_id: 10,
+					serial: "811"
+				}
 			},
 			{
-				name: "EDD 2",
-				type_id: 4,
-				id: 102,
-				parent_id: 10,
-				serial: "812"
+				data: {
+					name: "EDD 2",
+					type_id: 4,
+					id: 102,
+					parent_id: 10,
+					serial: "812"
+				}
 			},
 			{
-				name: "EDD 3",
-				type_id: 4,
-				id: 103,
-				parent_id: 10,
-				serial: "813"
+				data: {
+					name: "EDD 3",
+					type_id: 4,
+					id: 103,
+					parent_id: 10,
+					serial: "813"
+				}
 			}
 		];
 
@@ -114,11 +138,13 @@ describe("node-tree-utils-Axxis-test", function() {
 
 	it("successfully finds EDD parent", function(callback) {
 		var expected = {
-			name: "CBB 2",
-			type_id: 3,
-			id: 13,
-			parent_id: 1,
-			serial: "33"
+			data: {
+				name: "CBB 2",
+				type_id: 3,
+				id: 13,
+				parent_id: 1,
+				serial: "33"
+			}
 		};
 
 		try {
@@ -144,14 +170,16 @@ describe("node-tree-utils-Axxis-test", function() {
 
 	it("successfully finds CBB parent", function(callback) {
 		var expected = {
-			name: "CCB",
-			type_id: 0,
-			id: 1,
-			serial: "123"
+			data: {
+				name: "CCB",
+				type_id: 0,
+				id: 1,
+				serial: "123"
+			}
 		};
 
 		try {
-			var result = nodeTreeUtils.findParent(treeNodes, 1);
+			var result = nodeTreeUtils.findParent(treeNodes, 3);
 
 			assert.deepEqual(result, expected);
 

@@ -85,7 +85,7 @@ describe("node-tree-utils-test", function() {
 		callback();
 	});
 
-	it("successfully finds sub-tree", async function() {
+	it("successfully finds sub-tree AXXIS", async function() {
 		var expected = [
 			{
 				data: {

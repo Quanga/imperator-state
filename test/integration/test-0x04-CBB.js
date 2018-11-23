@@ -1,7 +1,7 @@
 const expect = require("expect.js");
 const DatabaseHelper = require("../helpers/database_helper");
 
-describe("IBS - ISC list test", function() {
+describe("AXXIS - CBB list test", function() {
 	const ServerHelper = require("../helpers/server_helper");
 	const serverHelper = new ServerHelper();
 
@@ -39,41 +39,41 @@ describe("IBS - ISC list test", function() {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function() {
+	it.only("can process a packet with CBBs 1 where no CBBs currently in database", async function() {
 		let step1 = async function() {
-			const data = {
-				data: [1, 2, 3]
+			const data1 = {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			};
 
-			const message = new PacketConstructor(1, 1, data);
+			let initial = new PacketConstructor(8, 8, data1);
+			await serialPortHelper.sendMessage(initial.packet);
+
+			await timer(3000);
+			const data2 = { data: [] };
+
+			const message = new PacketConstructor(4, 12, data2);
 			await serialPortHelper.sendMessage(message.packet);
 		};
 
 		let step2 = async function() {
-			let result = await databaseHelper.getNodeTreeData(1, 0);
+			let result = await databaseHelper.getNodeTreeData(8, 0);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
 
-			let isc1 = null,
-				isc2 = null,
-				isc3 = null;
+			let cbb = null;
 
 			result.forEach(x => {
-				if (parseInt(x["c.serial"]) === 1 && x["c.type_id"] == 1) isc1 = x;
-				if (parseInt(x["c.serial"]) === 2 && x["c.type_id"] == 1) isc2 = x;
-				if (parseInt(x["c.serial"]) === 3 && x["c.type_id"] == 1) isc3 = x;
+				if (parseInt(x["c.serial"]) === 12 && x["c.type_id"] === 3) cbb = x;
 			});
 
-			return { isc1: isc1, isc2: isc2, isc3: isc3 };
+			return { cbb: cbb };
 		};
 
 		let step3 = async function(result) {
 			try {
-				expect(result.isc1["c.communication_status"]).to.equal(1); // communication status
-				expect(result.isc2["c.communication_status"]).to.equal(1);
-				expect(result.isc3["c.communication_status"]).to.equal(1);
+				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
 			} catch (err) {
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 
@@ -92,45 +92,53 @@ describe("IBS - ISC list test", function() {
 		return startTest();
 	});
 
-	it.only("can process a packet containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function() {
+	it.only("can process a packet with CBBs 1 and 2 EDDs where no CBBs currently in database", async function() {
 		let step1 = async function() {
-			const data = {
-				data: [1, 2]
+			const data1 = {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			};
 
-			const initial = new PacketConstructor(1, 1, data);
+			let initial = new PacketConstructor(8, 8, data1);
 			await serialPortHelper.sendMessage(initial.packet);
 
+			await timer(3000);
 			const data2 = {
-				data: [1, 2, 3]
+				data: [
+					{ serial: 4423423, window_id: 33 },
+					{ serial: 4523434, window_id: 34 }
+				]
 			};
-			let message = new PacketConstructor(1, 1, data2);
+
+			const message = new PacketConstructor(4, 12, data2);
 			await serialPortHelper.sendMessage(message.packet);
 		};
 
 		let step2 = async function() {
-			let dbresult = await databaseHelper.getNodeTreeData(1, 0);
+			let result = await databaseHelper.getNodeTreeData(8, 0);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
 
-			if (dbresult == null || dbresult.length == 0)
-				return new Error("Empty dbresult!");
+			let cbb = null,
+				edd1 = null,
+				edd2 = null;
 
-			let isc1 = null,
-				isc2 = null,
-				isc3 = null;
-
-			dbresult.forEach(x => {
-				if (x["c.serial"] == 1 && x["c.type_id"] == 1) isc1 = x;
-				if (x["c.serial"] == 2 && x["c.type_id"] == 1) isc2 = x;
-				if (x["c.serial"] == 3 && x["c.type_id"] == 1) isc3 = x;
+			result.forEach(x => {
+				if (parseInt(x["c.serial"]) === 12 && x["c.type_id"] === 3) cbb = x;
+				if (parseInt(x["g.serial"]) === 4423423 && x["g.type_id"] === 4)
+					edd1 = x;
+				if (parseInt(x["g.serial"]) === 4523434 && x["g.type_id"] === 4)
+					edd2 = x;
 			});
-			return { isc1: isc1, isc2: isc2, isc3: isc3 };
+			//console.log(result);
+
+			return { cbb: cbb, edd1: edd1, edd2: edd2 };
 		};
 
-		let step4 = async function(result) {
+		let step3 = async function(result) {
 			try {
-				expect(result.isc1["c.communication_status"]).to.equal(1);
-				expect(result.isc2["c.communication_status"]).to.equal(1);
-				expect(result.isc3["c.communication_status"]).to.equal(1);
+				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
+				expect(result.edd1["g.detonator_status"]).to.equal(null); // det status
+				expect(result.edd2["g.detonator_status"]).to.equal(null); // det status
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -142,7 +150,7 @@ describe("IBS - ISC list test", function() {
 				await step1();
 				await timer(2000);
 				let result = await step2();
-				await step4(result);
+				await step3(result);
 			} catch (err) {
 				return Promise.reject(err);
 			}

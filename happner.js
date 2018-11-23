@@ -50,7 +50,9 @@ module.exports.configs = {
 	eventServiceConfig: {
 		component: {
 			name: "EventService",
-			config: {},
+			config: {
+				systemType: process.env.ROUTER_SYSYEM_TYPE
+			},
 			routes: {
 				//'model/*': 'persist',
 				"model/*": "mem"
@@ -65,7 +67,10 @@ module.exports.configs = {
 	},
 	nodeRepositoryConfig: {
 		component: {
-			name: "NodeRepository"
+			name: "NodeRepository",
+			config: {
+				systemType: process.env.ROUTER_SYSYEM_TYPE
+			}
 		}
 	},
 	logsRepositoryConfig: {

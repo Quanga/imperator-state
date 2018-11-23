@@ -1,6 +1,8 @@
 const expect = require("expect.js");
 
-describe("parser-ib651-parser-test", function() {
+describe("IBS - 651 data test", function() {
+	this.timeout(10000);
+
 	const ServerHelper = require("../helpers/server_helper");
 	let serverHelper = new ServerHelper();
 
@@ -13,14 +15,11 @@ describe("parser-ib651-parser-test", function() {
 	const SerialPortHelper = require("../helpers/serial_port_helper");
 	let serialPortHelper = new SerialPortHelper();
 
-	var PacketBuilder = require("../../lib/builders/packet_builder");
-	var StringBuilder = require("../../lib/builders/string_builder");
+	const PacketConstructor = require("../../lib/builders/packetConstructor");
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
-
-	this.timeout(30000);
 
 	before("cleaning up queues", async function() {
 		await fileHelper.clearQueueFiles();
@@ -40,140 +39,40 @@ describe("parser-ib651-parser-test", function() {
 		serverHelper.stopServer();
 	});
 
-	it.only("can send a data list request containing one ISC with IB651s 1, 2 & 3", async function() {
-		// AAAA100300014030212022402310(CRC)
-		// length - 10
-		// command - 03
-		// serial - 0001
-		// data - 4030 2120 2240 2310 (data for IB651s)
-		// crc - ?
-
-		let packetBuilder = new PacketBuilder();
-		let stringBuilder = new StringBuilder();
-
+	it.only("can process a data packet containing one ISC with IB651s 1, 2 & 3", async function() {
 		let step1 = async () => {
-			// set up the initial IBC with a single ISC via ping request (0x01)
-			let initial = packetBuilder
-				.withCommand(2)
-				.withSerial(1)
-				.withSerialData(1, true)
-				.build();
+			let data = { data: [0, 0, 0, 0, 0, 0, 0, 0] };
+			let startMessage = new PacketConstructor(8, 12, data);
+			await serialPortHelper.sendMessage(startMessage.packet);
 
-			await serialPortHelper.sendMessage(initial);
+			let data2 = {
+				data: [1]
+			};
+			let pingMessage = new PacketConstructor(1, 12, data2);
+			await serialPortHelper.sendMessage(pingMessage.packet);
 
-			packetBuilder.reset();
+			const data3 = {
+				data: [1]
+			};
+			let initial = new PacketConstructor(2, 1, data3);
+			await serialPortHelper.sendMessage(initial.packet);
 
-			//await timer(100);
-			//now set up the IB651's via ping request (0x02)
+			const data4 = {
+				data: [1, 2, 3]
+			};
+			let initial2 = new PacketConstructor(2, 1, data4);
+			await serialPortHelper.sendMessage(initial2.packet);
 
-			let initial2 = packetBuilder
-				.withCommand(2)
-				.withSerial(1)
-				.withSerialData(1, true)
-				.withSerialData(2, true)
-				.withSerialData(3, true)
-				.build();
-
-			await serialPortHelper.sendMessage(initial2);
-			//await timer(300);
-
-			packetBuilder.reset();
-
-			/* TEST: AAAA100300014030212022402310(CRC)
-		 length - 10
-		 command - 03
-		 serial - 0001
-		 data - 4030 2120 2240 2310 (data for ISC serial 1 and IB651s serials 1, 2, 3)
-		 crc - ?
-		 */
-
-			//ISC data
-			let iscDeviceId = packetBuilder.createDeviceIdData(1);
-			let iscDeviceType = packetBuilder.createDeviceTypeData(1); // ISC is type id 1
-			let iscRawData = packetBuilder.createRawData([0, 0, 0, 0, 0, 1, 0, 0]); // 30 hex = 00001100 bin (little endian)
-
-			let iscDeviceData = stringBuilder
-				.append(iscDeviceType)
-				.to(iscRawData)
-				.and(iscDeviceId)
-				.complete();
-
-			//IB651 # 1 data
-			let ib651_1_Id = packetBuilder.createDeviceIdData(0);
-			let ib651_1_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			let ib651_1_RawData = packetBuilder.createRawData([
-				1,
-				1,
-				1,
-				1,
-				1,
-				1,
-				1,
-				1
-			]); //20 hex = 00000100 binary (little endian)
-
-			let stringBuilder2 = new StringBuilder();
-
-			let ib651_1_DeviceData = stringBuilder2
-				.append(ib651_1_Type)
-				.to(ib651_1_RawData)
-				.and(ib651_1_Id)
-				.complete();
-
-			//IB651 # 2 data
-			let ib651_2_Id = packetBuilder.createDeviceIdData(2);
-			let ib651_2_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			let ib651_2_RawData = packetBuilder.createRawData([
-				0,
-				0,
-				0,
-				0,
-				0,
-				0,
-				1,
-				0
-			]); //40 hex = 00000010 binary (little endian)
-
-			let stringBuilder3 = new StringBuilder();
-
-			let ib651_2_DeviceData = stringBuilder3
-				.append(ib651_2_Type)
-				.to(ib651_2_RawData)
-				.and(ib651_2_Id)
-				.complete();
-
-			//IB651 # 3 data
-			let ib651_3_Id = packetBuilder.createDeviceIdData(3);
-			let ib651_3_Type = packetBuilder.createDeviceTypeData(2); // IB651 is type id 2
-			let ib651_3_RawData = packetBuilder.createRawData([
-				1,
-				1,
-				1,
-				1,
-				1,
-				1,
-				1,
-				1
-			]); // 10 hex = 00001000 binary (little endian)
-
-			let ib651_3_DeviceData = stringBuilder
-				.append(ib651_3_Type)
-				.to(ib651_3_RawData)
-				.and(ib651_3_Id)
-				.complete();
-
-			//complete packet
-			let finalmessage = packetBuilder
-				.withCommand(3)
-				.withSerial(1)
-				.withDeviceData(iscDeviceData)
-				.withDeviceData(ib651_1_DeviceData)
-				.withDeviceData(ib651_2_DeviceData)
-				.withDeviceData(ib651_3_DeviceData)
-				.build();
-			//await timer(1000);
-
-			await serialPortHelper.sendMessage(finalmessage);
+			const data5 = {
+				data: [
+					[0, 0, 0, 0, 0, 1, 0, 0],
+					[0, 0, 0, 0, 0, 0, 1, 0],
+					[0, 1, 0, 0, 0, 0, 0, 0],
+					[1, 1, 1, 1, 1, 1, 1, 1]
+				]
+			};
+			const finalmessage = new PacketConstructor(3, 1, data5);
+			await serialPortHelper.sendMessage(finalmessage.packet);
 		};
 
 		let step2 = async () => {
@@ -209,21 +108,17 @@ describe("parser-ib651-parser-test", function() {
 		let step3 = async result => {
 			try {
 				//check communication status on each
-
 				expect(result.isc["p.communication_status"]).to.equal(1);
 				expect(result.ib651_1["c.communication_status"]).to.equal(1);
-				expect(result.ib651_1["c.communication_status"]).to.equal(1);
 
-				//TODO: check this:
-				// expect(result.ib651_1["c.window_id"]).to.equal(1);
+				expect(result.ib651_1["c.window_id"]).to.equal(1);
 				expect(result.ib651_2["c.communication_status"]).to.equal(1);
 
-				//TODO: check this:
-				//expect(result.ib651_2["c.window_id"]).to.equal(2);
+				expect(result.ib651_2["c.window_id"]).to.equal(2);
 				expect(result.ib651_3["c.communication_status"]).to.equal(1);
 
-				//TODO: check this:
-				//expect(result.ib651_3["c.window_id"]).to.equal(3);
+				expect(result.ib651_3["c.window_id"]).to.equal(3);
+				expect(result.ib651_3["c.communication_status"]).to.equal(1);
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -245,12 +140,6 @@ describe("parser-ib651-parser-test", function() {
 	});
 
 	it.only("will ignore a data list with no data", async function() {
-		// aaaa080300011ae3
-		// length - 08
-		// command - 03
-		// serial - 0001
-		// data - (empty)
-		// crc - 1ae3
 		let step1 = async () => {
 			var initial = "aaaa080300011ae3";
 
@@ -267,7 +156,7 @@ describe("parser-ib651-parser-test", function() {
 				await timer(3500);
 
 				await step1();
-				await timer(3500);
+				await timer(1500);
 
 				let result = await step2();
 				expect(result.length).to.equal(0);

@@ -253,7 +253,11 @@ module.exports = {
 				return dataServiceConfig;
 			}
 		},
-		eventService: {},
+		eventService: {
+			$configure: function(eventServiceConfig) {
+				return eventServiceConfig;
+			}
+		},
 		dataMapper: {},
 		dbConnectionService: {
 			$configure: function(dbConnectionConfig) {
