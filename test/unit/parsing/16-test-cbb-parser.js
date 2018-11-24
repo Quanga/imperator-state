@@ -12,7 +12,7 @@ describe("parser-CBB_LIST-parser-test", async function() {
 
 	before("it sets up the dependencies", async function() {});
 
-	it("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
+	it.only("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
 		var expected = [
 			{
 				serial: 67,
@@ -31,7 +31,8 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				DC_supply_voltage_status: null,
 				shaft_fault: null,
 				cable_fault: null,
-				earth_leakage: null
+				earth_leakage: null,
+				led_state: null
 			},
 			{
 				serial: 457435452,
@@ -46,7 +47,8 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				program: null,
 				booster_fired_lfs: null,
 				tagged: null,
-				logged: null
+				logged: null,
+				delay: null
 			},
 			{
 				serial: 457435453,
@@ -61,7 +63,8 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				program: null,
 				booster_fired_lfs: null,
 				tagged: null,
-				logged: null
+				logged: null,
+				delay: null
 			},
 			{
 				serial: 457435454,
@@ -76,7 +79,8 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				program: null,
 				booster_fired_lfs: null,
 				tagged: null,
-				logged: null
+				logged: null,
+				delay: null
 			},
 			{
 				serial: 457435455,
@@ -91,7 +95,8 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				program: null,
 				booster_fired_lfs: null,
 				tagged: null,
-				logged: null
+				logged: null,
+				delay: null
 			}
 		];
 
@@ -115,9 +120,89 @@ describe("parser-CBB_LIST-parser-test", async function() {
 				res.forEach(item => {
 					delete item.modified;
 					delete item.created;
-					delete item.led_state;
 					delete item.id;
 				});
+				await assert.deepEqual(res, expected);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return test();
+	});
+
+	it.only("can process an edd delete command", async function() {
+		/*
+		aaaa0d040043ffffffffff8a44
+
+         start  length  command   CBB serial    Data                    CRC
+         AAAA   1C      05        0043          00001828ff00ff00        bf80
+         */
+
+		var expected = [
+			{
+				serial: 67,
+				parent_serial: null,
+				type_id: 3,
+				parent_type: 0,
+				parent_id: null,
+				window_id: 1,
+				communication_status: 1,
+				blast_armed: null,
+				key_switch_status: null,
+				isolation_relay: null,
+				mains: null,
+				low_bat: null,
+				too_low_bat: null,
+				DC_supply_voltage_status: null,
+				shaft_fault: null,
+				cable_fault: null,
+				earth_leakage: null,
+				led_state: null
+			},
+			{
+				serial: 4294967295,
+				parent_serial: 67,
+				type_id: 4,
+				parent_type: 3,
+				parent_id: null,
+				window_id: 255,
+				detonator_status: null,
+				bridge_wire: null,
+				calibration: null,
+				program: null,
+				booster_fired_lfs: null,
+				tagged: null,
+				logged: null,
+				delay: null
+			}
+		];
+
+		let test = async () => {
+			try {
+				const DataListParser = require("../../../lib/parsers/deviceListParser");
+				const PacketModel = require("../../../lib/models/packetModel");
+				const PacketTemplate = require("../../../lib/constants/packetTemplates");
+
+				const parser = new DataListParser();
+				const packetTemplate = new PacketTemplate();
+				let template = packetTemplate.incomingCommTemplate[4];
+
+				let packet = "aaaa0d040043ffffffffff8a44";
+				let testObj = new PacketModel(template, packet, Date.now(), 0);
+				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				let res = result.map(item => {
+					return item.data;
+				});
+
+				res.forEach(item => {
+					delete item.modified;
+					delete item.created;
+					delete item.id;
+				});
+
 				await assert.deepEqual(res, expected);
 			} catch (err) {
 				return Promise.reject(err);

@@ -374,7 +374,7 @@ describe("001 PacketConstructor tests", async () => {
 		};
 		let test = async () => {
 			try {
-				var expected = [
+				const expected = [
 					{
 						serial: 34,
 						parent_serial: null,
@@ -408,7 +408,8 @@ describe("001 PacketConstructor tests", async () => {
 						program: null,
 						booster_fired_lfs: null,
 						tagged: null,
-						logged: null
+						logged: null,
+						delay: null
 					},
 					{
 						serial: 4523434,
@@ -423,7 +424,8 @@ describe("001 PacketConstructor tests", async () => {
 						program: null,
 						booster_fired_lfs: null,
 						tagged: null,
-						logged: null
+						logged: null,
+						delay: null
 					}
 				];
 
@@ -480,7 +482,7 @@ describe("001 PacketConstructor tests", async () => {
 		};
 		let test = async () => {
 			try {
-				var expected = [
+				let expected = [
 					{
 						serial: 43,
 						parent_serial: null,
@@ -516,6 +518,76 @@ describe("001 PacketConstructor tests", async () => {
 						tagged: 0,
 						logged: 1,
 						delay: 2000
+					}
+				];
+
+				const packetConstructor = new PacketConstructor(5, 43, data);
+				console.log(packetConstructor);
+
+				const parser = new DeviceDataParser();
+				const packetTemplate = new PacketTemplate();
+
+				let template = packetTemplate.incomingCommTemplate[5];
+
+				let packet = packetConstructor.packet;
+				var testObj = new PacketModel(template, packet, Date.now(), 0);
+
+				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+
+				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+				let res = result.map(item => {
+					return item.data;
+				});
+
+				res.forEach(item => {
+					delete item.modified;
+					delete item.created;
+					delete item.id;
+				});
+
+				await assert.deepEqual(res, expected);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return test();
+	});
+
+	it("can construct a data packet with command 05 with only CBB data", async () => {
+		const data = {
+			data: [
+				{
+					serial: 13,
+					window_id: 33,
+					ledState: 6,
+					rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+				}
+			]
+		};
+		let test = async () => {
+			try {
+				var expected = [
+					{
+						serial: 43,
+						parent_serial: null,
+						type_id: 3,
+						parent_type: 0,
+						parent_id: null,
+						window_id: 33,
+						communication_status: 1,
+						blast_armed: 0,
+						key_switch_status: 1,
+						isolation_relay: 0,
+						mains: 0,
+						low_bat: 1,
+						too_low_bat: 0,
+						DC_supply_voltage_status: 0,
+						shaft_fault: 0,
+						cable_fault: 0,
+						earth_leakage: 0,
+						led_state: null
 					}
 				];
 

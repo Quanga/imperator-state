@@ -137,7 +137,7 @@ describe("CONTROL UNIT data tests", function() {
 
 		let test = async () => {
 			try {
-				await timer(6500);
+				await timer(3500);
 
 				await step1();
 				await timer(2000);
