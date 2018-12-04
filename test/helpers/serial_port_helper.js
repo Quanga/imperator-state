@@ -53,11 +53,6 @@ SerialPortHelper.prototype.sendMessage = function(message) {
 			autoOpen: false
 		});
 
-		//serialPort.on('data', function (data) {
-		//    console.log('Data >>>>> :', data);
-		//});
-		//
-
 		serialPort.on("error", function(err) {
 			console.log("port error:", err);
 		});
@@ -72,8 +67,6 @@ SerialPortHelper.prototype.sendMessage = function(message) {
 
 		serialPort.open(function(err) {
 			if (err) return reject(err);
-
-			console.log("## SENDING MESSAGE: " + message);
 			var buffer = new Buffer(message, "hex");
 
 			serialPort.write(buffer, function(err) {

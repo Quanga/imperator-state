@@ -1,5 +1,6 @@
 const expect = require("expect.js");
 const DatabaseHelper = require("../helpers/database_helper");
+const RequestHelper = require("../helpers/request_helper");
 
 describe("AXXIS - CBB list test", function() {
 	const ServerHelper = require("../helpers/server_helper");
@@ -151,6 +152,128 @@ describe("AXXIS - CBB list test", function() {
 				await timer(2000);
 				let result = await step2();
 				await step3(result);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return startTest();
+	});
+
+	it.only("can clear the list of edds from the database for a CBB", async function() {
+		let step1 = async function() {
+			const data1 = {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
+			};
+
+			let initial = new PacketConstructor(8, 8, data1);
+			await serialPortHelper.sendMessage(initial.packet);
+
+			const data2 = {
+				data: [
+					{ serial: 4423423, window_id: 1 },
+					{ serial: 4523434, window_id: 2 }
+				]
+			};
+
+			const initial2 = new PacketConstructor(4, 13, data2);
+			await serialPortHelper.sendMessage(initial2.packet);
+
+			const data3 = {
+				data: [
+					{
+						serial: 13,
+						window_id: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+					},
+					{
+						window_id: 2,
+						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+						delay: 2000
+					}
+				]
+			};
+
+			const message = new PacketConstructor(5, 13, data3);
+			await serialPortHelper.sendMessage(message.packet);
+
+			const message2 = new PacketConstructor(5, 13, {
+				data: [
+					{
+						serial: 13,
+						window_id: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+					},
+					{
+						window_id: 2,
+						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+						delay: 3000
+					}
+				]
+			});
+			await serialPortHelper.sendMessage(message2.packet);
+
+			await timer(2000);
+			const data5 = {
+				data: [{ serial: 4294967295, window_id: 1 }]
+			};
+
+			const clearPacket = new PacketConstructor(4, 13, data5);
+			await serialPortHelper.sendMessage(clearPacket.packet);
+		};
+
+		let step2a = async function() {
+			try {
+				let requestHelper = new RequestHelper();
+				let result = await requestHelper.getAll();
+
+				return result;
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		let step2b = async function() {
+			let result = await databaseHelper.getNodeTreeData(8, 0);
+			if (result == null || result.length == 0)
+				return new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null;
+
+			result.forEach(x => {
+				if (parseInt(x["c.serial"]) === 13 && x["c.type_id"] === 3) cbb = x;
+				if (parseInt(x["g.serial"]) === 4523434 && x["g.type_id"] === 4)
+					edd1 = x;
+			});
+
+			return { cbb: cbb, edd1: edd1 };
+		};
+
+		let step3 = async function(resulta, resultb) {
+			try {
+				expect(resulta.cbb["c.communication_status"]).to.equal(1); // communication status
+				expect(resulta.edd1).to.equal(null);
+
+				let cbba = resultb.find(x => x.type_id === 3);
+				expect(cbba.communication_status).to.equal(1);
+				let edds = resultb.filter(x => x.type_id === 4);
+				expect(edds.length).to.equal(0); // communication status
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		let startTest = async function() {
+			try {
+				await timer(3500);
+				await step1();
+				await timer(4000);
+				let resulta = await step2b();
+				let resultb = await step2a();
+				await step3(resulta, resultb);
 			} catch (err) {
 				return Promise.reject(err);
 			}

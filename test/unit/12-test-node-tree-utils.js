@@ -127,7 +127,7 @@ describe("node-tree-utils-test", function() {
 
 		let test = async () => {
 			try {
-				let result = await nodeTreeUtils.findSubTree(treeNodes, 32, 1);
+				let result = await nodeTreeUtils.findBranch(treeNodes, 32, 1);
 				assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);
@@ -141,7 +141,7 @@ describe("node-tree-utils-test", function() {
 
 		let test = async () => {
 			try {
-				let result = await nodeTreeUtils.findSubTree(treeNodes, 1, 0);
+				let result = await nodeTreeUtils.findBranch(treeNodes, 1, 0);
 				assert.deepEqual(result, expected);
 			} catch (err) {
 				return Promise.reject(err);
@@ -163,7 +163,7 @@ describe("node-tree-utils-test", function() {
 
 		let test = async () => {
 			try {
-				let subTree = await nodeTreeUtils.findSubTree(treeNodes, 33, 1);
+				let subTree = await nodeTreeUtils.findBranch(treeNodes, 33, 1);
 				let result = await nodeTreeUtils.findParent(subTree, 2);
 				//console.log(subTree);
 				assert.deepEqual(result, expected);

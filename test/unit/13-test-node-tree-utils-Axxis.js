@@ -126,7 +126,7 @@ describe("node-tree-utils-Axxis-test", function() {
 		];
 
 		try {
-			nodeTreeUtils.findSubTree(treeNodes, 32, 3).then(result => {
+			nodeTreeUtils.findBranch(treeNodes, 32, 3).then(result => {
 				assert.deepEqual(result, expected);
 
 				callback();
@@ -149,7 +149,7 @@ describe("node-tree-utils-Axxis-test", function() {
 
 		try {
 			nodeTreeUtils
-				.findSubTree(treeNodes, 33, 3)
+				.findBranch(treeNodes, 33, 3)
 				.then(subTree => {
 					nodeTreeUtils.findParent(subTree, 2);
 					console.log(subTree);

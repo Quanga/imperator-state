@@ -41,12 +41,10 @@ describe("IBS - ISC list test", function() {
 
 	it.only("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function() {
 		let step1 = async function() {
-			const data = {
+			const message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
-			};
-
-			const message = new PacketConstructor(1, 1, data);
-			await serialPortHelper.sendMessage(message.packet);
+			}).packet;
+			await serialPortHelper.sendMessage(message);
 		};
 
 		let step2 = async function() {
@@ -94,18 +92,15 @@ describe("IBS - ISC list test", function() {
 
 	it.only("can process a packet containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function() {
 		let step1 = async function() {
-			const data = {
+			const initial = new PacketConstructor(1, 1, {
 				data: [1, 2]
-			};
+			}).packet;
+			await serialPortHelper.sendMessage(initial);
 
-			const initial = new PacketConstructor(1, 1, data);
-			await serialPortHelper.sendMessage(initial.packet);
-
-			const data2 = {
+			let message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
-			};
-			let message = new PacketConstructor(1, 1, data2);
-			await serialPortHelper.sendMessage(message.packet);
+			}).packet;
+			await serialPortHelper.sendMessage(message);
 		};
 
 		let step2 = async function() {
@@ -153,19 +148,15 @@ describe("IBS - ISC list test", function() {
 
 	it.only("can process a packet containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", async function() {
 		let step1 = async () => {
-			const data = {
+			const initial = new PacketConstructor(1, 1, {
 				data: [4]
-			};
+			}).packet;
+			await serialPortHelper.sendMessage(initial);
 
-			const initial = new PacketConstructor(1, 1, data);
-			await serialPortHelper.sendMessage(initial.packet);
-
-			const data2 = {
+			const message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
-			};
-
-			const message = new PacketConstructor(1, 1, data2);
-			await serialPortHelper.sendMessage(message.packet);
+			}).packet;
+			await serialPortHelper.sendMessage(message);
 		};
 
 		let step2 = async () => {

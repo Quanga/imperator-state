@@ -46,17 +46,15 @@ describe("CONTROL UNIT data tests", function() {
 		let startTest = async () => {
 			try {
 				await timer(4500);
-				const data = {
+				let initial = new PacketConstructor(8, 12, {
 					data: [0, 0, 0, 0, 0, 0, 0, 0]
-				};
-				let initial = new PacketConstructor(8, 12, data);
-				await serialPortHelper.sendMessage(initial.packet);
+				}).packet;
+				await serialPortHelper.sendMessage(initial);
 
-				const data2 = {
+				let message = new PacketConstructor(8, 12, {
 					data: [0, 0, 0, 0, 0, 0, 1, 1]
-				};
-				let message = new PacketConstructor(8, 12, data2);
-				await serialPortHelper.sendMessage(message.packet);
+				}).packet;
+				await serialPortHelper.sendMessage(message);
 
 				await timer(2000);
 				let results = await checkDatabase();
@@ -100,17 +98,15 @@ describe("CONTROL UNIT data tests", function() {
 
 	it.only("can process a key switch disarmed on IBC 8 where previous state armed", async function() {
 		let step1 = async () => {
-			const data = {
+			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 1, 1]
-			};
-			let initial = new PacketConstructor(8, 8, data);
-			await serialPortHelper.sendMessage(initial.packet);
+			}).packet;
+			await serialPortHelper.sendMessage(initial);
 
-			const data2 = {
+			let message2 = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 1, 0]
-			};
-			let message2 = new PacketConstructor(8, 8, data2);
-			await serialPortHelper.sendMessage(message2.packet);
+			}).packet;
+			await serialPortHelper.sendMessage(message2);
 		};
 
 		let step2 = async () => {

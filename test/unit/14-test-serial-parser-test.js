@@ -279,6 +279,12 @@ describe("pipe-serialiport-pipe-tests", async () => {
 			parser.write(Buffer.from("aa", "hex"));
 			parser.write(Buffer.from("48", "hex"));
 			parser.write(Buffer.from("05", "hex"));
+			parser.write(
+				Buffer.from(
+					"004364000a293d0170173e01d4173f01381840019c1841010019420164194301c81944012c1a4501901a4601f41a4701581b4801bc1b4901201c4a01841c4b01e81cc563",
+					"hex"
+				)
+			);
 
 			await timer(1);
 

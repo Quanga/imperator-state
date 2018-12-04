@@ -2,14 +2,16 @@ require("dotenv").config();
 
 var MockHappn = function() {
 	this.__queueLength = 1;
+	this.nodes = [];
 };
 
 Object.defineProperty(MockHappn.prototype, "log", {
 	get: function() {
 		return {
+			// eslint-disable-next-line no-unused-vars
 			error: function(message, err) {
 				console.log(message);
-				throw err;
+				//throw err;
 			},
 			info: function(message) {
 				console.log(message);
@@ -36,7 +38,8 @@ Object.defineProperty(MockHappn.prototype, "config", {
 			mySqlHost: process.env.MYSQL_HOST,
 			mySqlUser: process.env.ROUTER_MYSQL_USER,
 			mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-			mySqlDb: process.env.ROUTER_MYSQL_DATABASE
+			mySqlDb: process.env.ROUTER_MYSQL_DATABASE,
+			systemType: process.env.ROUTER_SYSYEM_TYPE
 		};
 	}
 });
@@ -132,6 +135,14 @@ Object.defineProperty(MockHappn.prototype, "exchange", {
 				getConnection: function() {
 					let newMock = new MockHappn();
 					return self.dbInst.getConnection(newMock);
+				}
+			},
+			nodeRepository: {
+				getAllNodes: function() {
+					// eslint-disable-next-line no-unused-vars
+					return new Promise(function(resolve, reject) {
+						resolve(self.nodes);
+					});
 				}
 			}
 		};

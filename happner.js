@@ -33,7 +33,8 @@ module.exports.configs = {
 		component: {
 			name: "DataService",
 			config: {
-				commCheckInterval: process.env.COMMUNICATION_CHECK_INTERVAL
+				commCheckInterval: process.env.COMMUNICATION_CHECK_INTERVAL,
+				systemType: process.env.ROUTER_SYSYEM_TYPE
 			}
 		}
 	},
@@ -51,7 +52,8 @@ module.exports.configs = {
 		component: {
 			name: "EventService",
 			config: {
-				systemType: process.env.ROUTER_SYSYEM_TYPE
+				systemType: process.env.ROUTER_SYSYEM_TYPE,
+				systemFiringTime: process.env.SYSTEM_FIRING_TIME
 			},
 			routes: {
 				//'model/*': 'persist',

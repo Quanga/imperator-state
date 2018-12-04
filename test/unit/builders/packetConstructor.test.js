@@ -501,7 +501,7 @@ describe("001 PacketConstructor tests", async () => {
 						shaft_fault: 0,
 						cable_fault: 0,
 						earth_leakage: 0,
-						led_state: null
+						led_state: 6
 					},
 					{
 						serial: null,
@@ -587,7 +587,7 @@ describe("001 PacketConstructor tests", async () => {
 						shaft_fault: 0,
 						cable_fault: 0,
 						earth_leakage: 0,
-						led_state: null
+						led_state: 6
 					}
 				];
 

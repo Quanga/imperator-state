@@ -1,7 +1,8 @@
 const expect = require("expect.js");
+const RequestHelper = require("../helpers/request_helper");
 
-describe("IBS - 651 data test", function() {
-	this.timeout(10000);
+describe("IBS - 651 data test", async function() {
+	this.timeout(20000);
 
 	const ServerHelper = require("../helpers/server_helper");
 	let serverHelper = new ServerHelper();
@@ -41,43 +42,51 @@ describe("IBS - 651 data test", function() {
 
 	it.only("can process a data packet containing one ISC with IB651s 1, 2 & 3", async function() {
 		let step1 = async () => {
-			let data = { data: [0, 0, 0, 0, 0, 0, 0, 0] };
-			let startMessage = new PacketConstructor(8, 12, data);
-			await serialPortHelper.sendMessage(startMessage.packet);
+			let startMessage = new PacketConstructor(8, 12, {
+				data: [0, 0, 0, 0, 0, 0, 0, 0]
+			}).packet;
+			await serialPortHelper.sendMessage(startMessage);
 
-			let data2 = {
-				data: [1]
-			};
-			let pingMessage = new PacketConstructor(1, 12, data2);
-			await serialPortHelper.sendMessage(pingMessage.packet);
+			let pingMessage = new PacketConstructor(1, 12, {
+				data: [27]
+			}).packet;
+			await serialPortHelper.sendMessage(pingMessage);
 
-			const data3 = {
-				data: [1]
-			};
-			let initial = new PacketConstructor(2, 1, data3);
-			await serialPortHelper.sendMessage(initial.packet);
+			await timer(2000);
 
-			const data4 = {
-				data: [1, 2, 3]
-			};
-			let initial2 = new PacketConstructor(2, 1, data4);
-			await serialPortHelper.sendMessage(initial2.packet);
+			let initial = new PacketConstructor(2, 27, {
+				data: [33]
+			}).packet;
+			await serialPortHelper.sendMessage(initial);
 
-			const data5 = {
+			await timer(2000);
+
+			let initial2 = new PacketConstructor(2, 27, {
+				data: [33, 34, 35]
+			}).packet;
+			await serialPortHelper.sendMessage(initial2);
+
+			await timer(3000);
+			const finalmessage = new PacketConstructor(3, 27, {
 				data: [
 					[0, 0, 0, 0, 0, 1, 0, 0],
 					[0, 0, 0, 0, 0, 0, 1, 0],
 					[0, 1, 0, 0, 0, 0, 0, 0],
 					[1, 1, 1, 1, 1, 1, 1, 1]
 				]
-			};
-			const finalmessage = new PacketConstructor(3, 1, data5);
-			await serialPortHelper.sendMessage(finalmessage.packet);
+			}).packet;
+			await serialPortHelper.sendMessage(finalmessage);
+
+			await timer(1000);
+			let blast = new PacketConstructor(8, 12, {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
+			}).packet;
+			await serialPortHelper.sendMessage(blast);
 		};
 
 		let step2 = async () => {
 			try {
-				let result = await databaseHelper.getNodeTreeData(1, 1);
+				let result = await databaseHelper.getNodeTreeData(27, 1);
 
 				if (result == null || result.length == 0)
 					return new Error("Empty result!");
@@ -88,10 +97,10 @@ describe("IBS - 651 data test", function() {
 					ib651_3 = null;
 
 				result.forEach(x => {
-					if (parseInt(x["p.serial"]) == 1 && x["p.type_id"] == 1) isc = x;
-					if (parseInt(x["c.serial"]) == 1 && x["c.type_id"] == 2) ib651_1 = x;
-					if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
-					if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
+					if (parseInt(x["p.serial"]) == 27 && x["p.type_id"] == 1) isc = x;
+					if (parseInt(x["c.serial"]) == 33 && x["c.type_id"] == 2) ib651_1 = x;
+					if (parseInt(x["c.serial"]) == 34 && x["c.type_id"] == 2) ib651_2 = x;
+					if (parseInt(x["c.serial"]) == 35 && x["c.type_id"] == 2) ib651_3 = x;
 				});
 
 				return {
@@ -123,13 +132,36 @@ describe("IBS - 651 data test", function() {
 				return Promise.reject(err);
 			}
 		};
+		let step2a = async function() {
+			try {
+				let requestHelper = new RequestHelper();
+				let result = await requestHelper.getAll();
+				return result;
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		let step2b = async function() {
+			try {
+				let requestHelper = new RequestHelper();
+				let result = await requestHelper.getBlastModel();
+
+				return result;
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
 
 		let test = async () => {
 			try {
 				await timer(3500);
 				await step1();
-				await timer(600);
+				await timer(3000);
 				let result = await step2();
+				console.log(JSON.stringify(await step2a()));
+				console.log(JSON.stringify(await step2b()));
+
 				await step3(result);
 			} catch (err) {
 				return Promise.reject(err);
