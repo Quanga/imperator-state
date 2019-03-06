@@ -7,11 +7,11 @@ class RequestHelper {
 
 	async getAll() {
 		try {
-			let req = await request("http://localhost:55000");
+			console.log("calling getall");
+			let req = await request(`http://localhost:${process.env.HAPPNER_LOCAL_PORT}`);
 			await req
 				.get("/rest/method/eventService/getModelStructureFlat")
 				.then(res => {
-					//response = res.body.data;
 					let body = res.body.data;
 					this.response = body.map(item => {
 						return item.data;
@@ -25,7 +25,7 @@ class RequestHelper {
 
 	async getBlastModel() {
 		try {
-			let req = await request("http://localhost:55000");
+			let req = await request(`http://localhost:${process.env.HAPPNER_LOCAL_PORT}`);
 			await req.get("/rest/method/eventService/getBlastModel").then(res => {
 				//response = res.body.data;
 				let body = res.body.data;

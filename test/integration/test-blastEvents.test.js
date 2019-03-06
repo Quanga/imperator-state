@@ -7,7 +7,7 @@ const SerialPortHelper = require("../helpers/serial_port_helper");
 const PacketConstructor = require("../../lib/builders/packetConstructor");
 const request = require("supertest");
 
-describe("Integrated Blast Event Tests", async function() {
+describe("Integrated Blast Event Tests", async function () {
 	const serverHelper = new ServerHelper();
 	const fileHelper = new FileHelper();
 	const databaseHelper = new DatabaseHelper();
@@ -15,11 +15,11 @@ describe("Integrated Blast Event Tests", async function() {
 
 	this.timeout(30000);
 
-	before("cleaning up queues", async function() {
+	before("cleaning up queues", async function () {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("cleaning up db", async function() {
+	before("cleaning up db", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
@@ -27,9 +27,10 @@ describe("Integrated Blast Event Tests", async function() {
 		} catch (err) {
 			return Promise.reject(err);
 		}
+		serialPortHelper.initialise();
 	});
 
-	after("stop test server", async function() {
+	after("stop test server", async function () {
 		await serverHelper.stopServer();
 	});
 
@@ -37,9 +38,9 @@ describe("Integrated Blast Event Tests", async function() {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can start a blast event", async function() {
+	it.only("can start a blast event", async function () {
 		//start the blast event
-		let setupControlUnit = async function() {
+		let setupControlUnit = async function () {
 			const data1 = {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			};
@@ -70,7 +71,7 @@ describe("Integrated Blast Event Tests", async function() {
 
 		let checkDataModel = async () => {
 			try {
-				request("http://localhost:55000")
+				request(`http://localhost:${process.env.HAPPNER_LOCAL_PORT}`)
 					.get("/rest/method/eventService/getModelStructure")
 					.then(res => {
 						//response = res.body.data;
@@ -88,7 +89,7 @@ describe("Integrated Blast Event Tests", async function() {
 
 		let checkBlastModel = async () => {
 			try {
-				request("http://localhost:55000")
+				request(`http://localhost:${process.env.HAPPNER_LOCAL_PORT}`)
 					.get("/rest/method/eventService/getBlastModel")
 					.then(res => {
 						blastModel = res.body.data;

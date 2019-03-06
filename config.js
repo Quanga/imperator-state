@@ -1,19 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-const fs = require("fs");
 require("dotenv").config();
-
-/***********************************************************
- ensure that the queue directories exist
- ***********************************************************/
-
-if (!fs.existsSync(process.env["ROUTER_INCOMING_QUEUE_DIR"]))
-	fs.mkdirSync(process.env["ROUTER_INCOMING_QUEUE_DIR"]);
-
-if (!fs.existsSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]))
-	fs.mkdirSync(process.env["ROUTER_OUTGOING_QUEUE_DIR"]);
-
-if (!fs.existsSync(process.env["ROUTER_ENDPOINT_QUEUE_DIR"]))
-	fs.mkdirSync(process.env["ROUTER_ENDPOINT_QUEUE_DIR"]);
+var serveStatic = require('serve-static');
 
 /***********************************************************
  HAPPNER configuration
@@ -36,14 +23,42 @@ module.exports = {
 		logFileNameAbsolute: true,
 		logger: null
 	},
+
 	happn: {
 		host: process.env.HAPPNER_LOCAL_IP,
+		port: parseInt(process.env.HAPPNER_LOCAL_PORT),
 		setOptions: {
-			timeout: 15000
+			timeout: 15000,
 		},
 		persist: false,
 		secure: false,
-		adminPassword: "root"
+		adminPassword: "root",
+		services: {
+
+			data: {
+				config: {
+					filename: "data"
+				}
+			},
+			connect: {
+				config: {
+					middleware: {
+						security: {
+							// cookieName: 'custom_token',
+							exclusions: [
+								'/index.html'
+							]
+						}
+					}
+				}
+			}
+		}
+	},
+	web: {
+		routes: {
+			// To serve static at '/'
+			'/': serveStatic("./build")
+		}
 	},
 
 	modules: {
@@ -86,76 +101,13 @@ module.exports = {
 			path: `${__dirname}/lib/handlers/message_handlers.js`
 		},
 		incomingFileQueue: {
-			path: "file-queue",
-			construct: {
-				type: "async",
-				name: "Queue",
-				parameters: [
-					{
-						name: "options",
-						required: true,
-						value: process.env.ROUTER_INCOMING_QUEUE_DIR
-					},
-					{
-						name: "cb",
-						required: true,
-						value: function(err) {
-							if (err) {
-								console.log(err);
-								throw err;
-							}
-						}
-					}
-				]
-			}
+			path: `${__dirname}/lib/services/cache_service.js`
 		},
 		outgoingFileQueue: {
-			path: "file-queue",
-			construct: {
-				type: "async",
-				name: "Queue",
-				parameters: [
-					{
-						name: "options",
-						required: true,
-						value: process.env.ROUTER_OUTGOING_QUEUE_DIR
-					},
-					{
-						name: "cb",
-						required: true,
-						value: function(err) {
-							if (err) {
-								console.log(err);
-								throw err;
-							}
-						}
-					}
-				]
-			}
+			path: `${__dirname}/lib/services/cache_service.js`
 		},
 		endpointFileQueue: {
-			path: "file-queue",
-			construct: {
-				type: "async",
-				name: "Queue",
-				parameters: [
-					{
-						name: "options",
-						required: true,
-						value: process.env.ROUTER_ENDPOINT_QUEUE_DIR
-					},
-					{
-						name: "cb",
-						required: true,
-						value: function(err) {
-							if (err) {
-								console.log(err);
-								throw err;
-							}
-						}
-					}
-				]
-			}
+			path: `${__dirname}/lib/services/cache_service.js`
 		},
 		parserFactory: {
 			path: `${__dirname}/lib/parsers/parser_factory.js`
@@ -211,34 +163,43 @@ module.exports = {
 	},
 	components: {
 		queueService: {
-			$configure: function(queueServiceConfig) {
+			$configure: function (queueServiceConfig) {
 				return queueServiceConfig;
 			}
 		},
 		serverService: {
-			$configure: function(serverServiceConfig) {
+			$configure: function (serverServiceConfig) {
 				return serverServiceConfig;
 			}
 		},
 		app: {
 			startMethod: "start",
-			$configure: function(appConfig) {
+
+
+			$configure: function (appConfig) {
 				return appConfig;
 			}
 		},
 		parserFactory: {},
 		portService: {},
 		portUtil: {
-			$configure: function(portUtilConfig) {
+			$configure: function (portUtilConfig) {
 				return portUtilConfig;
 			}
 		},
 
-		incomingFileQueue: {},
+		incomingFileQueue: {
+			data: {
+				routes: {
+					"persist/*": "persist",
+					"mem/*": "mem"
+				}
+			}
+		},
 		outgoingFileQueue: {},
 		endpointFileQueue: {},
 		transmissionService: {
-			$configure: function(transmissionServiceConfig) {
+			$configure: function (transmissionServiceConfig) {
 				return transmissionServiceConfig;
 			}
 		},
@@ -249,40 +210,41 @@ module.exports = {
 		},
 		packetService: {},
 		dataService: {
-			$configure: function(dataServiceConfig) {
+			$configure: function (dataServiceConfig) {
 				return dataServiceConfig;
 			}
 		},
 		eventService: {
-			$configure: function(eventServiceConfig) {
+			$configure: function (eventServiceConfig) {
 				return eventServiceConfig;
 			}
 		},
 		dataMapper: {},
 		dbConnectionService: {
-			$configure: function(dbConnectionConfig) {
+			$configure: function (dbConnectionConfig) {
 				return dbConnectionConfig;
 			}
 		},
 		packetRepository: {
-			$configure: function(packetRepositoryConfig) {
+			$configure: function (packetRepositoryConfig) {
 				return packetRepositoryConfig;
 			}
 		},
 		nodeRepository: {
-			$configure: function(nodeRepositoryConfig) {
+			$configure: function (nodeRepositoryConfig) {
 				return nodeRepositoryConfig;
 			}
 		},
 		logsRepository: {
-			$configure: function(logsRepositoryConfig) {
+			$configure: function (logsRepositoryConfig) {
 				return logsRepositoryConfig;
 			}
 		},
 		warningsRepository: {
-			$configure: function(warningsRepositoryConfig) {
+			$configure: function (warningsRepositoryConfig) {
 				return warningsRepositoryConfig;
 			}
 		}
 	}
 };
+

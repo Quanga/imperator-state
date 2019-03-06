@@ -1,9 +1,9 @@
 const expect = require("expect.js");
 const RequestHelper = require("../helpers/request_helper");
 
-describe("AXXIS - CBB data test", function() {
+describe("AXXIS - CBB data test", function () {
 	const ServerHelper = require("../helpers/server_helper");
-	const serverHelper = new ServerHelper();
+	let serverHelper = new ServerHelper();
 
 	const FileHelper = require("../helpers/file_helper");
 	const fileHelper = new FileHelper();
@@ -18,30 +18,34 @@ describe("AXXIS - CBB data test", function() {
 
 	this.timeout(30000);
 
-	before("cleaning up queues", async function() {
+	before("cleaning up queues", async function () {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("cleaning up db", async function() {
+	beforeEach("cleaning up db", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			serverHelper = new ServerHelper();
+
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	after("stop test server", async function() {
+	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
+		await timer(2000);
+
 	});
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can process a packet with CBBs Data 1 where no CBBs currently in database", async function() {
-		let step1 = async function() {
+	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function () {
+		let step1 = async function () {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
@@ -60,7 +64,7 @@ describe("AXXIS - CBB data test", function() {
 			await serialPortHelper.sendMessage(message);
 		};
 
-		let step2 = async function() {
+		let step2 = async function () {
 			let result = await databaseHelper.getNodeTreeData(8, 0);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
@@ -74,7 +78,7 @@ describe("AXXIS - CBB data test", function() {
 			return { cbb: cbb };
 		};
 
-		let step3 = async function(result) {
+		let step3 = async function (result) {
 			try {
 				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
 			} catch (err) {
@@ -82,9 +86,8 @@ describe("AXXIS - CBB data test", function() {
 			}
 		};
 
-		let startTest = async function() {
+		let startTest = async function () {
 			try {
-				await timer(3500);
 				await step1();
 				await timer(2000);
 				let result = await step2();
@@ -97,8 +100,8 @@ describe("AXXIS - CBB data test", function() {
 		return startTest();
 	});
 
-	it.only("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async function() {
-		let step1 = async function() {
+	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async function () {
+		let step1 = async function () {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
@@ -130,7 +133,7 @@ describe("AXXIS - CBB data test", function() {
 			await serialPortHelper.sendMessage(message);
 		};
 
-		let step2 = async function() {
+		let step2 = async function () {
 			let result = await databaseHelper.getNodeTreeData(8, 0);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
@@ -147,7 +150,7 @@ describe("AXXIS - CBB data test", function() {
 			return { cbb: cbb, edd1: edd1 };
 		};
 
-		let step3 = async function(result) {
+		let step3 = async function (result) {
 			try {
 				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
 				expect(result.edd1["g.window_id"]).to.equal(2); // communication status
@@ -157,9 +160,8 @@ describe("AXXIS - CBB data test", function() {
 			}
 		};
 
-		let startTest = async function() {
+		let startTest = async function () {
 			try {
-				await timer(3500);
 				await step1();
 				await timer(2000);
 				let result = await step2();
@@ -172,8 +174,8 @@ describe("AXXIS - CBB data test", function() {
 		return startTest();
 	});
 
-	it.only("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function() {
-		let step1 = async function() {
+	it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function () {
+		let step1 = async function () {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
@@ -222,7 +224,7 @@ describe("AXXIS - CBB data test", function() {
 			await serialPortHelper.sendMessage(message2);
 		};
 
-		let step2 = async function() {
+		let step2 = async function () {
 			let result = await databaseHelper.getNodeTreeData(8, 0);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
@@ -239,7 +241,7 @@ describe("AXXIS - CBB data test", function() {
 			return { cbb: cbb, edd1: edd1 };
 		};
 
-		let step3 = async function(result) {
+		let step3 = async function (result) {
 			try {
 				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
 				expect(result.edd1["g.window_id"]).to.equal(2); // communication status
@@ -249,11 +251,10 @@ describe("AXXIS - CBB data test", function() {
 			}
 		};
 
-		let startTest = async function() {
+		let startTest = async function () {
 			try {
-				await timer(3500);
 				await step1();
-				await timer(1000);
+				await timer(2000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {
@@ -264,8 +265,8 @@ describe("AXXIS - CBB data test", function() {
 		return startTest();
 	});
 
-	it.only("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
-		let step1 = async function() {
+	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function () {
+		let step1 = async function () {
 			const data1 = {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			};
@@ -343,7 +344,7 @@ describe("AXXIS - CBB data test", function() {
 			await serialPortHelper.sendMessage(message4.packet);
 		};
 
-		let step2a = async function() {
+		let step2a = async function () {
 			try {
 				let requestHelper = new RequestHelper();
 				let result = await requestHelper.getBlastModel();
@@ -354,7 +355,7 @@ describe("AXXIS - CBB data test", function() {
 			}
 		};
 
-		let step2 = async function() {
+		let step2 = async function () {
 			let result = await databaseHelper.getNodeTreeData(8, 0);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
@@ -371,22 +372,25 @@ describe("AXXIS - CBB data test", function() {
 			return { cbb: cbb, edd1: edd1 };
 		};
 
-		let step3 = async function(resulta, requestb) {
+		let step3 = async function (resulta, requestb) {
 			try {
 				expect(resulta.cbb["c.communication_status"]).to.equal(1); // communication status
 				expect(resulta.edd1["g.window_id"]).to.equal(2); // communication status
 				expect(resulta.edd1["g.delay"]).to.equal(3000); // communication status
+
+
 				console.log(JSON.stringify(requestb, null, 2));
+				let edds = requestb.find(x => x.type_id === 4);
+				expect(edds).to.be.equal(null);
 			} catch (err) {
 				return Promise.reject(err);
 			}
 		};
 
-		let startTest = async function() {
+		let startTest = async function () {
 			try {
-				await timer(3500);
 				await step1();
-				await timer(3000);
+				await timer(4000);
 				let result = await step2();
 				let resultb = await step2a();
 
@@ -399,3 +403,46 @@ describe("AXXIS - CBB data test", function() {
 		return startTest();
 	});
 });
+
+
+// :::: RESULT::: [{
+// 	id: 15106,
+// 	serial: 8,
+// 	parent_serial: null,
+// 	type_id: 0,
+// 	parent_type: null,
+// 	parent_id: null,
+// 	window_id: null,
+// 	created: '2019-03-05 11:31:01',
+// 	modified: '2019-03-05 11:31:01',
+// 	communication_status: 1,
+// 	key_switch_status: 1,
+// 	fire_button: 0,
+// 	cable_fault: 0,
+// 	isolation_relay: 0,
+// 	earth_leakage: 0,
+// 	blast_armed: 0
+// },
+// {
+// 	id: 15107,
+// 	serial: 13,
+// 	parent_serial: null,
+// 	type_id: 3,
+// 	parent_type: 0,
+// 	parent_id: 15106,
+// 	window_id: 1,
+// 	created: '2019-03-05 11:31:01',
+// 	modified: '2019-03-05T11:31:04',
+// 	communication_status: 1,
+// 	blast_armed: 0,
+// 	key_switch_status: 1,
+// 	isolation_relay: 0,
+// 	mains: 0,
+// 	low_bat: 1,
+// 	too_low_bat: 0,
+// 	DC_supply_voltage_status: 0,
+// 	shaft_fault: 0,
+// 	cable_fault: 1,
+// 	earth_leakage: 1,
+// 	led_state: 6
+// }]

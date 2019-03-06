@@ -1,61 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Router</title>
+        <script src="/api/client"></script>
+        <link rel="stylesheet" type="text/css" href="index.css">.
 
-    <!-- includes Happner.HappnerClient -->
-    <script src="/api/client"></script>
+    </head>
 
-</head>
+    <body>
+        <nav>
+            <div class="logo">logo</div>
+            <div class="top_menu">
+                <ul>
+                    <li>item 1</li>
+                    <li>item 2</li>
+                    <li>item 3</li>
 
-<body>
-
-    <script>
-        var client = new Happner.HappnerClient({
-            requestTimeout: 10 * 1000,
-            responseTimeout: 20 * 1000
-        });
-
-        var model = {
-            'component': {
-                version: '^2.0.0',
-                methods: {
-                    method1: {}
-                }
-            }
-        };
-
-        var api = client.construct(model);
-
-        client.connect()
-
-            .then(function () {
-                // subscribe to events (requires connected)
-                api.event.component.on('test/event', function (data, meta) {
-                    console.log('EVENT', meta.path);
-                });
-            })
-
-            .catch(function (error) {
-                console.error('connection error', error);
-            });
-
-        // repeat call on exchange
-        setInterval(function () {
-
-            api.exchange.component.method1()
-                .then(function (reply) {
-                    console.log('REPLY', reply);
-                })
-                .catch(function (error) {
-                    console.error('ERROR', error);
-                });
-
-        }, 1000);
-    </script>
-
-</body>
+                </ul>
+            </div>
+        </nav>
+        <script src="index.js"></script>
+        working
+    </body>
 
 </html>

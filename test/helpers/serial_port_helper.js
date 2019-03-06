@@ -9,7 +9,7 @@ function SerialPortHelper() {
 	//process.env.ROUTER_SERIAL_PORT = rslv("./ttyV1");
 }
 
-SerialPortHelper.prototype.initialise = function() {
+SerialPortHelper.prototype.initialise = function () {
 	var self = this;
 
 	return new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ SerialPortHelper.prototype.initialise = function() {
 
 		self.__socat.on("open", result => {
 			console.log("socat opened: " + result);
-			//resolve();
+			resolve();
 		});
 
 		self.__socat.on("close", code => {
@@ -46,39 +46,41 @@ SerialPortHelper.prototype.initialise = function() {
 	});
 };
 
-SerialPortHelper.prototype.sendMessage = function(message) {
-	return new Promise(function(resolve, reject) {
+SerialPortHelper.prototype.sendMessage = function (message) {
+	return new Promise(function (resolve, reject) {
 		let serialPort = new SerialPort(process.env.TEST_OUTGOING_PORT, {
 			baudRate: parseInt(process.env.ROUTER_BAUD_RATE),
 			autoOpen: false
 		});
 
-		serialPort.on("error", function(err) {
+		serialPort.on("error", function (err) {
 			console.log("port error:", err);
 		});
 
-		serialPort.on("close", function() {
-			//console.log("port closed!");
+		serialPort.on("close", function () {
+			console.log("port closed!");
 		});
 
-		serialPort.on("open", function() {
-			//console.log("port open!");
+		serialPort.on("open", function () {
+			console.log("port open!");
 		});
 
-		serialPort.open(function(err) {
+		serialPort.open(function (err) {
 			if (err) return reject(err);
 			var buffer = new Buffer(message, "hex");
 
-			serialPort.write(buffer, function(err) {
+			serialPort.write(buffer, function (err) {
 				if (err) {
 					console.log("write error: ", err);
 					return reject(err);
 				}
 
-				serialPort.drain(function(err) {
+				console.log("sending", buffer.toString("hex"));
+
+				serialPort.drain(function (err) {
 					if (err) return reject(err);
 
-					serialPort.close(function(err) {
+					serialPort.close(function (err) {
 						if (err) return reject(err);
 
 						setTimeout(() => {

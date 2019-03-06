@@ -3,11 +3,11 @@ require("dotenv").config({
 	path: "./.env"
 });
 
-describe("CONTROL UNIT data tests", function() {
+describe("CONTROL UNIT data tests", function () {
 	this.timeout(20000);
 
 	const ServerHelper = require("../helpers/server_helper");
-	const serverHelper = new ServerHelper();
+	let serverHelper = new ServerHelper();
 
 	const DatabaseHelper = require("../helpers/database_helper");
 	const databaseHelper = new DatabaseHelper();
@@ -24,10 +24,12 @@ describe("CONTROL UNIT data tests", function() {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("cleaning up db", async () => {
+	beforeEach("cleaning up db", async () => {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			serverHelper = new ServerHelper();
+
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
@@ -42,7 +44,7 @@ describe("CONTROL UNIT data tests", function() {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can process key switch armed on IBC 8 where previous state was disarmed", async function() {
+	it.only("can process key switch armed on IBC 8 where previous state was disarmed", async function () {
 		let startTest = async () => {
 			try {
 				await timer(4500);
@@ -96,7 +98,7 @@ describe("CONTROL UNIT data tests", function() {
 		await startTest();
 	});
 
-	it.only("can process a key switch disarmed on IBC 8 where previous state armed", async function() {
+	it.only("can process a key switch disarmed on IBC 8 where previous state armed", async function () {
 		let step1 = async () => {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 1, 1]

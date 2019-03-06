@@ -1,7 +1,7 @@
 var expect = require("expect.js");
 const RequestHelper = require("../helpers/request_helper");
 
-describe("IBS - 651 list test", function() {
+describe("IBS - 651 list test", function () {
 	this.timeout(10000);
 
 	var ServerHelper = require("../helpers/server_helper");
@@ -18,11 +18,11 @@ describe("IBS - 651 list test", function() {
 
 	const PacketConstructor = require("../../lib/builders/packetConstructor");
 
-	before("cleaning up queues", async function() {
+	before("cleaning up queues", async function () {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("cleaning up db", async function() {
+	before("cleaning up db", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
@@ -30,9 +30,10 @@ describe("IBS - 651 list test", function() {
 		} catch (err) {
 			return Promise.reject(err);
 		}
+		serialPortHelper.initialise();
 	});
 
-	after("stop test server", async function() {
+	after("stop test server", async function () {
 		await serverHelper.stopServer();
 	});
 
@@ -40,7 +41,7 @@ describe("IBS - 651 list test", function() {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can process a packet containing IB651s 1, 2 & 3, where no IB651s currently in database", async function() {
+	it("can process a packet containing IB651s 1, 2 & 3, where no IB651s currently in database", async function () {
 		let step1 = async () => {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
@@ -55,6 +56,7 @@ describe("IBS - 651 list test", function() {
 
 		let step2 = async () => {
 			let result = await databaseHelper.getNodeTreeData(1, 1);
+			//console.log(result);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
 
@@ -67,6 +69,8 @@ describe("IBS - 651 list test", function() {
 				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
 				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
 			});
+
+
 
 			return {
 				ib651_1: ib651_1,
@@ -112,7 +116,7 @@ describe("IBS - 651 list test", function() {
 		return test();
 	});
 
-	it.only("can process a packet containing IB651s 1, 2 & 3, where IB651s 1 & 2 are currently in database", async function() {
+	it("can process a packet containing IB651s 1, 2 & 3, where IB651s 1 & 2 are currently in database", async function () {
 		let step1 = async () => {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
@@ -144,6 +148,8 @@ describe("IBS - 651 list test", function() {
 				if (parseInt(x["c.serial"]) == 2 && x["c.type_id"] == 2) ib651_2 = x;
 				if (parseInt(x["c.serial"]) == 3 && x["c.type_id"] == 2) ib651_3 = x;
 			});
+
+
 
 			return {
 				ib651_1: ib651_1,
@@ -190,7 +196,7 @@ describe("IBS - 651 list test", function() {
 		return test();
 	});
 
-	it.only("can process a packet containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", async function() {
+	it("can process a packet containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", async function () {
 		let step1 = async () => {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
@@ -269,7 +275,7 @@ describe("IBS - 651 list test", function() {
 		return test();
 	});
 
-	it.only("can process a packet that changes the ordering of window ids of existing IB651s in database", async function() {
+	it("can process a packet that changes the ordering of window ids of existing IB651s in database", async function () {
 		let step1 = async () => {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]

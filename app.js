@@ -1,10 +1,10 @@
-function App() {}
+function App() { }
 
 /***
  * @summary Main Startup file for the App
  * @param $happn
  */
-App.prototype.start = function($happn) {
+App.prototype.start = function ($happn) {
 	const {
 		portService,
 		packetRepository,
@@ -15,21 +15,16 @@ App.prototype.start = function($happn) {
 		serverService,
 		transmissionService,
 		dbConnectionService,
-		security,
 		eventService
 	} = $happn.exchange;
 
 	const { routerMode, routerType } = $happn.config;
-
 	const { error: logError } = $happn.log;
 
 	let startup = async () => {
 		try {
 			//Do not start the serialport if routerMode is SERVER
 
-			security.listUsers("*").then(function(users) {
-				console.log(users);
-			});
 			if (routerMode === "ROUTER") {
 				await portService.initialise();
 				await serverService.initialise();
@@ -54,6 +49,7 @@ App.prototype.start = function($happn) {
 				await queueService.watchOutgoingQueue();
 				transmissionService.initialise();
 			}
+
 
 			$happn.log.info("::::: STARTUP COMPLETE ::::::");
 		} catch (err) {

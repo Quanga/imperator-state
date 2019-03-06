@@ -4,26 +4,19 @@ const PacketService = require("../../../lib/services/packet_service");
 const packetService = new PacketService();
 
 const MockHappn = require("../../mocks/mock_happn");
-this.__mockHappn = new MockHappn();
+const mockHappn = new MockHappn();
 
 describe("Standalone Parser Tests", () => {
 	it("should handle a 01 command", async () => {
-		let packet = "aaaa0d040043ffffffffff8a44";
 
 		let messageObj = {
 			created: Date.now(),
-			message: packet
+			message: "aaaa0d040043ffffffffff8a44"
 		};
 
 		try {
-			let packetResult = await packetService.extractData(
-				this.__mockHappn,
-				messageObj
-			);
-			let nodeResult = await packetService.buildNodeData(
-				this.__mockHappn,
-				packetResult
-			);
+			let packetResult = await packetService.extractData(mockHappn, messageObj);
+			let nodeResult = await packetService.buildNodeData(mockHappn, packetResult);
 			console.log(nodeResult);
 		} catch (err) {
 			return Promise.reject(err);

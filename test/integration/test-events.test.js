@@ -1,9 +1,9 @@
 const expect = require("expect.js");
 const RequestHelper = require("../helpers/request_helper");
 
-describe("EVENT SERVICE tests for AXXIS", async function() {
+describe("EVENT SERVICE tests for AXXIS", async function () {
 	const ServerHelper = require("../helpers/server_helper");
-	const serverHelper = new ServerHelper();
+	let serverHelper = new ServerHelper();
 
 	const FileHelper = require("../helpers/file_helper");
 	const fileHelper = new FileHelper();
@@ -17,29 +17,31 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 	const PacketConstructor = require("../../lib/builders/packetConstructor");
 	this.timeout(60000);
 
-	before("cleaning up queues", async function() {
+	before("cleaning up queues", async function () {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("cleaning up db", async function() {
+	beforeEach("cleaning up db", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			serverHelper = new ServerHelper();
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	after("stop test server", async function() {
+	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
+		await timer(2000);
 	});
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can open and close a blast event using only Control Unit fire switch", async function() {
+	it("can open and close a blast event using only Control Unit fire switch", async function () {
 		let requ = async () => {
 			let requestHelper = new RequestHelper();
 			let result = await requestHelper.getBlastModel();
@@ -60,7 +62,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 
 				await serialPortHelper.sendMessage(initial);
 
-				await timer(2000);
+				await timer(3000);
 				result = await requ();
 				expect(result.blastNodes[0].data.key_switch_status).to.equal(0);
 
@@ -70,7 +72,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 				}).packet;
 				await serialPortHelper.sendMessage(ksOn);
 
-				await timer(1000);
+				await timer(2000);
 				result = await requ();
 				expect(result.blastNodes[0].data.key_switch_status).to.equal(1);
 			} catch (err) {
@@ -81,7 +83,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 		let step2 = async () => {
 			try {
 				let result;
-				await timer(2000);
+				await timer(3000);
 
 				//press the fire button
 				let fb = new PacketConstructor(8, 8, {
@@ -94,7 +96,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 				expect(result.blastNodes[0].data.fire_button).to.equal(1);
 				expect(result.systemState.firingState).to.equal("FIRING");
 
-				await timer(3000);
+				await timer(4000);
 				result = await requ();
 				expect(result.systemState.firingState).to.equal("FIRED");
 				expect(result.systemState.armedState).to.equal("ARMED");
@@ -106,7 +108,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 				}).packet;
 				await serialPortHelper.sendMessage(fbOff);
 
-				await timer(2000);
+				await timer(3000);
 				result = await requ();
 				expect(result.blastNodes[0].data.fire_button).to.equal(0);
 				expect(result.blastNodes[0].data.key_switch_status).to.equal(1);
@@ -117,9 +119,9 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 				}).packet;
 				await serialPortHelper.sendMessage(ksOff);
 
-				await timer(1000);
+				await timer(4000);
 				result = await requ();
-				console.log(result.blastNodesHistory);
+				console.log(result);
 
 				expect(
 					result.blastNodesHistory[0].state.snapshots.end.fire_button
@@ -136,7 +138,6 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 
 		let test = async () => {
 			try {
-				await timer(4000);
 				await step1();
 				await step2();
 			} catch (err) {
@@ -147,7 +148,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 		return test();
 	});
 
-	it.only("can add a cbb with 2 EDDs to the blast event", async function() {
+	it("can add a cbb with 2 EDDs to the blast event", async function () {
 		let requ = async () => {
 			let requestHelper = new RequestHelper();
 			let result = await requestHelper.getBlastModel();
@@ -315,7 +316,7 @@ describe("EVENT SERVICE tests for AXXIS", async function() {
 		return test();
 	});
 
-	it.only("can add a cbb with 2 EDDs to the blast event twice", async function() {
+	it("can add a cbb with 2 EDDs to the blast event twice", async function () {
 		let requ = async () => {
 			let requestHelper = new RequestHelper();
 			let result = await requestHelper.getBlastModel();

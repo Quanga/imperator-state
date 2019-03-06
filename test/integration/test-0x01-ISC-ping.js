@@ -1,7 +1,7 @@
 const expect = require("expect.js");
 const DatabaseHelper = require("../helpers/database_helper");
 
-describe("IBS - ISC list test", function() {
+describe("IBS - ISC list test", function () {
 	const ServerHelper = require("../helpers/server_helper");
 	const serverHelper = new ServerHelper();
 
@@ -17,11 +17,11 @@ describe("IBS - ISC list test", function() {
 
 	this.timeout(30000);
 
-	before("cleaning up queues", async function() {
+	before("cleaning up queues", async function () {
 		await fileHelper.clearQueueFiles();
 	});
 
-	before("cleaning up db", async function() {
+	before("cleaning up db", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
@@ -31,7 +31,7 @@ describe("IBS - ISC list test", function() {
 		}
 	});
 
-	after("stop test server", async function() {
+	after("stop test server", async function () {
 		await serverHelper.stopServer();
 	});
 
@@ -39,15 +39,15 @@ describe("IBS - ISC list test", function() {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function() {
-		let step1 = async function() {
+	it.only("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function () {
+		let step1 = async function () {
 			const message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
 			}).packet;
 			await serialPortHelper.sendMessage(message);
 		};
 
-		let step2 = async function() {
+		let step2 = async function () {
 			let result = await databaseHelper.getNodeTreeData(1, 0);
 			if (result == null || result.length == 0)
 				return new Error("Empty result!");
@@ -65,17 +65,17 @@ describe("IBS - ISC list test", function() {
 			return { isc1: isc1, isc2: isc2, isc3: isc3 };
 		};
 
-		let step3 = async function(result) {
+		let step3 = async function (result) {
 			try {
 				expect(result.isc1["c.communication_status"]).to.equal(1); // communication status
 				expect(result.isc2["c.communication_status"]).to.equal(1);
 				expect(result.isc3["c.communication_status"]).to.equal(1);
 			} catch (err) {
-				return Promise.reject();
+				return Promise.reject(err);
 			}
 		};
 
-		let startTest = async function() {
+		let startTest = async function () {
 			try {
 				await timer(3500);
 				await step1();
@@ -90,8 +90,8 @@ describe("IBS - ISC list test", function() {
 		return startTest();
 	});
 
-	it.only("can process a packet containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function() {
-		let step1 = async function() {
+	it.only("can process a packet containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function () {
+		let step1 = async function () {
 			const initial = new PacketConstructor(1, 1, {
 				data: [1, 2]
 			}).packet;
@@ -103,7 +103,7 @@ describe("IBS - ISC list test", function() {
 			await serialPortHelper.sendMessage(message);
 		};
 
-		let step2 = async function() {
+		let step2 = async function () {
 			let dbresult = await databaseHelper.getNodeTreeData(1, 0);
 
 			if (dbresult == null || dbresult.length == 0)
@@ -121,7 +121,7 @@ describe("IBS - ISC list test", function() {
 			return { isc1: isc1, isc2: isc2, isc3: isc3 };
 		};
 
-		let step4 = async function(result) {
+		let step4 = async function (result) {
 			try {
 				expect(result.isc1["c.communication_status"]).to.equal(1);
 				expect(result.isc2["c.communication_status"]).to.equal(1);
@@ -131,7 +131,7 @@ describe("IBS - ISC list test", function() {
 			}
 		};
 
-		let startTest = async function() {
+		let startTest = async function () {
 			try {
 				await timer(3500);
 				await step1();
@@ -146,7 +146,7 @@ describe("IBS - ISC list test", function() {
 		return startTest();
 	});
 
-	it.only("can process a packet containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", async function() {
+	it.only("can process a packet containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", async function () {
 		let step1 = async () => {
 			const initial = new PacketConstructor(1, 1, {
 				data: [4]
