@@ -1,5 +1,7 @@
 const expect = require("expect.js");
 const RequestHelper = require("../../helpers/request_helper");
+require('dotenv').config();
+
 
 describe("AXXIS - CBB data test", function () {
 	const ServerHelper = require("../../helpers/server_helper");

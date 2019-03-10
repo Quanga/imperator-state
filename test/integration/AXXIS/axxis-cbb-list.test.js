@@ -15,7 +15,6 @@ const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 describe("AXXIS - CBB list test", function () {
 
-
 	this.timeout(20000);
 
 	let timer = ms => {

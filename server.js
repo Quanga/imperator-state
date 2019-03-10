@@ -1,6 +1,8 @@
 const Happner = require("happner-2");
 const Config = require("./config.js");
 
+
+
 module.exports = {
 	PortUtil: require("./lib/utils/port_util"),
 	QueueService: require("./lib/services/queue_service"),
@@ -17,10 +19,10 @@ module.exports = {
 
 Happner.create(Config)
 	// eslint-disable-next-line no-unused-vars
-	.then(function(mesh) {
+	.then(function (mesh) {
 		//console.log("Mesh Running", mesh);
 	})
-	.catch(function(error) {
+	.catch(function (error) {
 		console.error(error.stack || error.toString());
 		process.exit(1);
 	});

@@ -1,5 +1,4 @@
 const expect = require("expect.js");
-require('dotenv').config({ path: "../../../.env" });
 
 describe("CONTROL UNIT data tests", function () {
 	this.timeout(20000);

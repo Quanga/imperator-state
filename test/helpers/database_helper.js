@@ -19,7 +19,7 @@ function DatabaseHelper() {
 DatabaseHelper.prototype.initialise = function () {
 	let processAsync = async () => {
 		this.__mockHappn.dbInst = this.__dbConnectionService;
-		console.log(this.__mockHappn.config);
+		//console.log(this.__mockHappn.config);
 		try {
 			await this.__dbConnectionService.initialise(this.__mockHappn);
 			console.log("### __DB INITIALISE PASS!");

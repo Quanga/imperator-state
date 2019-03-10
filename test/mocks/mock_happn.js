@@ -1,3 +1,4 @@
+require('dotenv').config({ path: "../../.env" });
 
 var MockHappn = function () {
 	this.__queueLength = 1;

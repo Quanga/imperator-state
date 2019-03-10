@@ -1,5 +1,4 @@
 const expect = require("expect.js");
-require('dotenv').config({ path: "../../../.env" });
 
 
 describe("IBS - ISC list test", function () {

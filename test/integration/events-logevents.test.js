@@ -1,6 +1,6 @@
 const expect = require("expect.js");
 const RequestHelper = require("../helpers/request_helper");
-require('dotenv').config({ path: "../../.env" });
+//require('dotenv').config({ path: "../../.env" });
 
 
 describe("EVENT SERVICE tests for AXXIS", async function () {

@@ -1,6 +1,9 @@
 const { spawn } = require("child_process");
 var path = require('path');
 var libFolder = path.resolve(__dirname, '../../');
+require('dotenv').config();
+
+
 
 
 
@@ -8,8 +11,8 @@ function ServerHelper() {
 	this.__serverProc = null;
 }
 const defaults = {
-	cwd: "../../",
-	env: process.env
+	//cwd: "../../",
+	//env: process.env
 };
 
 ServerHelper.prototype.startServer = function () {

@@ -5,7 +5,9 @@ const ServerHelper = require("../helpers/server_helper");
 const SerialPortHelper = require("../helpers/serial_port_helper");
 const PacketConstructor = require("../../lib/builders/packetConstructor");
 const request = require("supertest");
-require('dotenv').config({ path: "../../.env" });
+
+require('dotenv').config();
+
 
 
 describe("Integrated Blast Event Tests", async function () {

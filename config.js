@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-require('dotenv').config({ path: "./.env" });
 var serveStatic = require('serve-static');
+require('dotenv').config();
+
 
 /***********************************************************
  HAPPNER configuration
