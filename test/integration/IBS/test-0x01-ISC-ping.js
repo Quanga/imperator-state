@@ -1,45 +1,43 @@
 const expect = require("expect.js");
-const DatabaseHelper = require("../helpers/database_helper");
+require('dotenv').config({ path: "../../../.env" });
+
 
 describe("IBS - ISC list test", function () {
-	const ServerHelper = require("../helpers/server_helper");
-	const serverHelper = new ServerHelper();
+	const ServerHelper = require("../../helpers/server_helper");
+	let serverHelper = new ServerHelper();
 
-	const FileHelper = require("../helpers/file_helper");
-	const fileHelper = new FileHelper();
-
+	const DatabaseHelper = require("../../helpers/database_helper");
 	const databaseHelper = new DatabaseHelper();
 
-	const SerialPortHelper = require("../helpers/serial_port_helper");
+	const SerialPortHelper = require("../../helpers/serial_port_helper");
 	const serialPortHelper = new SerialPortHelper();
 
-	const PacketConstructor = require("../../lib/builders/packetConstructor");
+	const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-	this.timeout(30000);
+	this.timeout(20000);
 
-	before("cleaning up queues", async function () {
-		await fileHelper.clearQueueFiles();
-	});
+	let timer = ms => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	};
 
-	before("cleaning up db", async function () {
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			await serialPortHelper.initialise();
+			serverHelper = new ServerHelper();
+
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	after("stop test server", async function () {
+	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
 	});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
-
-	it.only("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function () {
+	it("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function () {
 		let step1 = async function () {
 			const message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
@@ -77,9 +75,9 @@ describe("IBS - ISC list test", function () {
 
 		let startTest = async function () {
 			try {
-				await timer(3500);
+				await timer(4500);
 				await step1();
-				await timer(2000);
+				await timer(3000);
 				let result = await step2();
 				await step3(result);
 			} catch (err) {
@@ -90,7 +88,7 @@ describe("IBS - ISC list test", function () {
 		return startTest();
 	});
 
-	it.only("can process a packet containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function () {
+	it("can process a packet containing ISCs 1, 2 & 3, where ISCs 1 & 2 are currently in database", async function () {
 		let step1 = async function () {
 			const initial = new PacketConstructor(1, 1, {
 				data: [1, 2]
@@ -135,7 +133,7 @@ describe("IBS - ISC list test", function () {
 			try {
 				await timer(3500);
 				await step1();
-				await timer(2000);
+				await timer(5000);
 				let result = await step2();
 				await step4(result);
 			} catch (err) {
@@ -146,7 +144,7 @@ describe("IBS - ISC list test", function () {
 		return startTest();
 	});
 
-	it.only("can process a packet containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", async function () {
+	it("can process a packet containing ISCs 1, 2 & 3, where only ISC 4 is currently in database", async function () {
 		let step1 = async () => {
 			const initial = new PacketConstructor(1, 1, {
 				data: [4]

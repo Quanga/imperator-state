@@ -12,9 +12,6 @@ module.exports.configs = {
 		component: {
 			name: "QueueService",
 			config: {
-				incomingQueueDir: process.env.ROUTER_INCOMING_QUEUE_DIR,
-				outgoingQueueDir: process.env.ROUTER_OUTGOING_QUEUE_DIR,
-				endpointQueueDir: process.env.ROUTER_ENDPOINT_QUEUE_DIR,
 				queueFetchInterval: process.env.ROUTER_QUEUE_FETCH_INTERVAL,
 				showQueueDebug: process.env.ROUTER_SHOW_QUEUE_DEBUG
 			}

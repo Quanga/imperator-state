@@ -1,27 +1,32 @@
 const expect = require("expect.js");
-const DatabaseHelper = require("../helpers/database_helper");
-const RequestHelper = require("../helpers/request_helper");
 
+const ServerHelper = require("../../helpers/server_helper");
+let serverHelper = new ServerHelper();
+
+
+const DatabaseHelper = require("../../helpers/database_helper");
+const databaseHelper = new DatabaseHelper();
+
+const SerialPortHelper = require("../../helpers/serial_port_helper");
+const serialPortHelper = new SerialPortHelper();
+
+const RequestHelper = require("../../helpers/request_helper");
+const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 describe("AXXIS - CBB list test", function () {
-	const ServerHelper = require("../helpers/server_helper");
 
-
-	const databaseHelper = new DatabaseHelper();
-	let serverHelper = new ServerHelper();
-
-	const SerialPortHelper = require("../helpers/serial_port_helper");
-	const serialPortHelper = new SerialPortHelper();
-
-	const PacketConstructor = require("../../lib/builders/packetConstructor");
 
 	this.timeout(20000);
 
-	beforeEach("cleaning up db", async function () {
+	let timer = ms => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	};
+
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
-
+			await serialPortHelper.initialise();
 			serverHelper = new ServerHelper();
 			await serverHelper.startServer();
 		} catch (err) {
@@ -30,15 +35,10 @@ describe("AXXIS - CBB list test", function () {
 	});
 
 	afterEach("stop test server", async function () {
-
 		await serverHelper.stopServer();
-		await timer(2000);
-
+		await timer(3000);
 	});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
 
 	it("can process a packet with CBBs 1 where no CBBs currently in database", async function () {
 		let step1 = async function () {
@@ -130,7 +130,6 @@ describe("AXXIS - CBB list test", function () {
 				if (parseInt(x["g.serial"]) === 4523434 && x["g.type_id"] === 4)
 					edd2 = x;
 			});
-			//console.log(result);
 
 			return { cbb: cbb, edd1: edd1, edd2: edd2 };
 		};

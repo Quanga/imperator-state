@@ -30,6 +30,7 @@ App.prototype.start = function ($happn) {
 				await serverService.initialise();
 			}
 
+
 			await dbConnectionService.initialise();
 
 			await nodeRepository.initialise();
@@ -41,7 +42,6 @@ App.prototype.start = function ($happn) {
 			await eventService.initialise();
 
 			await queueService.initialise();
-			await queueService.watchIncomingQueue();
 
 			//Do not start the OUTGOING QUEUE or the TRANSMISSION SERVICE
 			//if the mode is AXXIS

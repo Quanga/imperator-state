@@ -2,36 +2,36 @@
 const expect = require("expect.js");
 const DatabaseHelper = require("../helpers/database_helper");
 const ServerHelper = require("../helpers/server_helper");
-const FileHelper = require("../helpers/file_helper");
 const SerialPortHelper = require("../helpers/serial_port_helper");
 const PacketConstructor = require("../../lib/builders/packetConstructor");
 const request = require("supertest");
+require('dotenv').config({ path: "../../.env" });
+
 
 describe("Integrated Blast Event Tests", async function () {
-	const serverHelper = new ServerHelper();
-	const fileHelper = new FileHelper();
+	let serverHelper = new ServerHelper();
 	const databaseHelper = new DatabaseHelper();
 	const serialPortHelper = new SerialPortHelper();
 
 	this.timeout(30000);
 
-	before("cleaning up queues", async function () {
-		await fileHelper.clearQueueFiles();
-	});
 
-	before("cleaning up db", async function () {
+
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			await serialPortHelper.initialise();
+			serverHelper = new ServerHelper();
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
-		serialPortHelper.initialise();
 	});
 
-	after("stop test server", async function () {
+	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
+		await timer(3000);
 	});
 
 	let timer = ms => {

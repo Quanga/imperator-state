@@ -8,10 +8,14 @@ incoming_queue_data
 endpoint_queue_data
 coverage
 
-router_log.txt
+router_log.txt*
 .env-test
 package-lock.json
 .nyc_output
 .vscode
 .env
+
+ttyV0
+ttyV1
+data
 

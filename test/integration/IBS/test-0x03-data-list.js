@@ -1,46 +1,46 @@
-const expect = require("expect.js");
-const RequestHelper = require("../helpers/request_helper");
 
-describe("IBS - 651 data test", async function() {
+
+describe("IBS - 651 data test", async function () {
 	this.timeout(20000);
 
-	const ServerHelper = require("../helpers/server_helper");
+	const expect = require("expect.js");
+	const RequestHelper = require("../../helpers/request_helper");
+
+	const ServerHelper = require("../../helpers/server_helper");
 	let serverHelper = new ServerHelper();
 
-	const DatabaseHelper = require("../helpers/database_helper");
+	const DatabaseHelper = require("../../helpers/database_helper");
 	let databaseHelper = new DatabaseHelper();
 
-	const FileHelper = require("../helpers/file_helper");
-	let fileHelper = new FileHelper();
-
-	const SerialPortHelper = require("../helpers/serial_port_helper");
+	const SerialPortHelper = require("../../helpers/serial_port_helper");
 	let serialPortHelper = new SerialPortHelper();
 
-	const PacketConstructor = require("../../lib/builders/packetConstructor");
+	const PacketConstructor = require("../../../lib/builders/packetConstructor");
+
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	before("cleaning up queues", async function() {
-		await fileHelper.clearQueueFiles();
-	});
-
-	before("cleaning up db", async function() {
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			console.log("DATA CLEARD");
+			await serialPortHelper.initialise();
+
+			serverHelper = new ServerHelper();
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	after("stop test server", async function() {
-		serverHelper.stopServer();
+	afterEach("stop test server", async function () {
+		await serverHelper.stopServer();
 	});
 
-	it.only("can process a data packet containing one ISC with IB651s 1, 2 & 3", async function() {
+	it.only("can process a data packet containing one ISC with IB651s 1, 2 & 3", async function () {
 		let step1 = async () => {
 			let startMessage = new PacketConstructor(8, 12, {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
@@ -132,7 +132,7 @@ describe("IBS - 651 data test", async function() {
 				return Promise.reject(err);
 			}
 		};
-		let step2a = async function() {
+		let step2a = async function () {
 			try {
 				let requestHelper = new RequestHelper();
 				let result = await requestHelper.getAll();
@@ -142,7 +142,7 @@ describe("IBS - 651 data test", async function() {
 			}
 		};
 
-		let step2b = async function() {
+		let step2b = async function () {
 			try {
 				let requestHelper = new RequestHelper();
 				let result = await requestHelper.getBlastModel();
@@ -171,7 +171,7 @@ describe("IBS - 651 data test", async function() {
 		return test();
 	});
 
-	it.only("will ignore a data list with no data", async function() {
+	it.only("will ignore a data list with no data", async function () {
 		let step1 = async () => {
 			var initial = "aaaa080300011ae3";
 

@@ -1,36 +1,34 @@
 var expect = require("expect.js");
-const RequestHelper = require("../helpers/request_helper");
 
 describe("IBS - 651 list test", function () {
-	this.timeout(10000);
+	this.timeout(30000);
 
-	var ServerHelper = require("../helpers/server_helper");
-	var serverHelper = new ServerHelper();
+	const ServerHelper = require("../../helpers/server_helper");
+	let serverHelper = new ServerHelper();
 
-	var DatabaseHelper = require("../helpers/database_helper");
-	var databaseHelper = new DatabaseHelper();
+	const DatabaseHelper = require("../../helpers/database_helper");
+	const databaseHelper = new DatabaseHelper();
 
-	var FileHelper = require("../helpers/file_helper");
-	var fileHelper = new FileHelper();
+	const SerialPortHelper = require("../../helpers/serial_port_helper");
+	const serialPortHelper = new SerialPortHelper();
 
-	var SerialPortHelper = require("../helpers/serial_port_helper");
-	var serialPortHelper = new SerialPortHelper();
+	const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-	const PacketConstructor = require("../../lib/builders/packetConstructor");
+	const RequestHelper = require("../../helpers/request_helper");
 
-	before("cleaning up queues", async function () {
-		await fileHelper.clearQueueFiles();
-	});
 
-	before("cleaning up db", async function () {
+
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			await serialPortHelper.initialise();
+			serverHelper = new ServerHelper();
+
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
-		serialPortHelper.initialise();
 	});
 
 	after("stop test server", async function () {
@@ -96,9 +94,9 @@ describe("IBS - 651 list test", function () {
 
 		let test = async () => {
 			try {
-				await timer(4500);
+				await timer(3500);
 				await step1();
-				await timer(2000);
+				await timer(3000);
 				let result = await step2();
 				await step3(result);
 

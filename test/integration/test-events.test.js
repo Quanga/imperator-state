@@ -1,12 +1,11 @@
 const expect = require("expect.js");
 const RequestHelper = require("../helpers/request_helper");
+require('dotenv').config({ path: "../../.env" });
+
 
 describe("EVENT SERVICE tests for AXXIS", async function () {
 	const ServerHelper = require("../helpers/server_helper");
 	let serverHelper = new ServerHelper();
-
-	const FileHelper = require("../helpers/file_helper");
-	const fileHelper = new FileHelper();
 
 	const DatabaseHelper = require("../helpers/database_helper");
 	const databaseHelper = new DatabaseHelper();
@@ -17,14 +16,11 @@ describe("EVENT SERVICE tests for AXXIS", async function () {
 	const PacketConstructor = require("../../lib/builders/packetConstructor");
 	this.timeout(60000);
 
-	before("cleaning up queues", async function () {
-		await fileHelper.clearQueueFiles();
-	});
-
-	beforeEach("cleaning up db", async function () {
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			await serialPortHelper.initialise();
 			serverHelper = new ServerHelper();
 			await serverHelper.startServer();
 		} catch (err) {
@@ -34,7 +30,7 @@ describe("EVENT SERVICE tests for AXXIS", async function () {
 
 	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
-		await timer(2000);
+		await timer(3000);
 	});
 
 	let timer = ms => {

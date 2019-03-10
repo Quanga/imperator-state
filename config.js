@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-require("dotenv").config();
+require('dotenv').config({ path: "./.env" });
 var serveStatic = require('serve-static');
 
 /***********************************************************
@@ -60,6 +60,11 @@ module.exports = {
 			'/': serveStatic("./build")
 		}
 	},
+	data: {
+		routes: {
+			'test/*': 'persist',
+		}
+	},
 
 	modules: {
 		app: {
@@ -100,13 +105,13 @@ module.exports = {
 		messageHandler: {
 			path: `${__dirname}/lib/handlers/message_handlers.js`
 		},
-		incomingFileQueue: {
+		RxQueue: {
 			path: `${__dirname}/lib/services/cache_service.js`
 		},
-		outgoingFileQueue: {
+		TxQueue: {
 			path: `${__dirname}/lib/services/cache_service.js`
 		},
-		endpointFileQueue: {
+		EpQueue: {
 			path: `${__dirname}/lib/services/cache_service.js`
 		},
 		parserFactory: {
@@ -188,16 +193,30 @@ module.exports = {
 			}
 		},
 
-		incomingFileQueue: {
+		RxQueue: {
+			startMethod: 'start',
 			data: {
 				routes: {
-					"persist/*": "persist",
-					"mem/*": "mem"
+					"cache/*": "persist"
 				}
 			}
 		},
-		outgoingFileQueue: {},
-		endpointFileQueue: {},
+		TxQueue: {
+			startMethod: 'start',
+			data: {
+				routes: {
+					"cache/*": "persist"
+				}
+			}
+		},
+		EpQueue: {
+			startMethod: 'start',
+			data: {
+				routes: {
+					"cache/*": "persist"
+				}
+			}
+		},
 		transmissionService: {
 			$configure: function (transmissionServiceConfig) {
 				return transmissionServiceConfig;

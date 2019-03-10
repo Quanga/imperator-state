@@ -1,48 +1,41 @@
 const expect = require("expect.js");
-require("dotenv").config({
-	path: "./.env"
-});
+require('dotenv').config({ path: "../../../.env" });
 
 describe("CONTROL UNIT data tests", function () {
 	this.timeout(20000);
 
-	const ServerHelper = require("../helpers/server_helper");
+	const ServerHelper = require("../../helpers/server_helper");
 	let serverHelper = new ServerHelper();
 
-	const DatabaseHelper = require("../helpers/database_helper");
+	const DatabaseHelper = require("../../helpers/database_helper");
 	const databaseHelper = new DatabaseHelper();
 
-	const FileHelper = require("../helpers/file_helper");
-	const fileHelper = new FileHelper();
-
-	const SerialPortHelper = require("../helpers/serial_port_helper");
+	const SerialPortHelper = require("../../helpers/serial_port_helper");
 	const serialPortHelper = new SerialPortHelper();
 
-	const PacketConstructor = require("../../lib/builders/packetConstructor");
+	const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-	before("cleaning up queues", async () => {
-		await fileHelper.clearQueueFiles();
-	});
+	let timer = ms => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	};
 
-	beforeEach("cleaning up db", async () => {
+	beforeEach("cleaning up db and start server", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
+			await serialPortHelper.initialise();
 			serverHelper = new ServerHelper();
-
 			await serverHelper.startServer();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	after("stop test server", async () => {
+	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
+		await timer(3000);
 	});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
 
 	it.only("can process key switch armed on IBC 8 where previous state was disarmed", async function () {
 		let startTest = async () => {

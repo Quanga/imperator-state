@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 var MockHappn = function () {
 	this.__queueLength = 1;

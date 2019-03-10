@@ -1,3 +1,4 @@
+
 function DatabaseHelper() {
 	const MockHappn = require("../mocks/mock_happn");
 	this.__mockHappn = new MockHappn();
@@ -15,10 +16,10 @@ function DatabaseHelper() {
 	this.__warningsRepository = new WarningsRepository();
 }
 
-DatabaseHelper.prototype.initialise = function() {
+DatabaseHelper.prototype.initialise = function () {
 	let processAsync = async () => {
 		this.__mockHappn.dbInst = this.__dbConnectionService;
-
+		console.log(this.__mockHappn.config);
 		try {
 			await this.__dbConnectionService.initialise(this.__mockHappn);
 			console.log("### __DB INITIALISE PASS!");
@@ -36,11 +37,12 @@ DatabaseHelper.prototype.initialise = function() {
 	return processAsync();
 };
 
-DatabaseHelper.prototype.clearDatabase = function() {
+DatabaseHelper.prototype.clearDatabase = function () {
 	let clearDatabaseAsync = async () => {
 		console.log(":: CLEARING DATABASE....");
 		try {
 			await this.__nodeRepository.deleteAll(this.__mockHappn);
+			console.log("cleared");
 			await this.__logsRepository.deleteAll(this.__mockHappn);
 			await this.__warningsRepository.deleteAll(this.__mockHappn);
 		} catch (err) {
@@ -50,7 +52,7 @@ DatabaseHelper.prototype.clearDatabase = function() {
 	return clearDatabaseAsync();
 };
 
-DatabaseHelper.prototype.getNodeData = function() {
+DatabaseHelper.prototype.getNodeData = function () {
 	return new Promise((resolve, reject) => {
 		this.__nodeRepository
 			.getNodeData(this.__mockHappn)
@@ -61,7 +63,7 @@ DatabaseHelper.prototype.getNodeData = function() {
 	});
 };
 
-DatabaseHelper.prototype.getNodeTreeData = function(serial, typeId) {
+DatabaseHelper.prototype.getNodeTreeData = function (serial, typeId) {
 	return new Promise((resolve, reject) => {
 		this.__nodeRepository
 			.findNodeTreeData(this.__mockHappn, serial, typeId)
@@ -72,7 +74,7 @@ DatabaseHelper.prototype.getNodeTreeData = function(serial, typeId) {
 	});
 };
 
-DatabaseHelper.prototype.getLogData = function(nodeSerial) {
+DatabaseHelper.prototype.getLogData = function (nodeSerial) {
 	return new Promise((resolve, reject) => {
 		this.__nodeRepository.getLogData(
 			this.__mockHappn,

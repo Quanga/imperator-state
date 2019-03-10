@@ -1,32 +1,30 @@
 const expect = require("expect.js");
-const RequestHelper = require("../helpers/request_helper");
+const RequestHelper = require("../../helpers/request_helper");
 
 describe("AXXIS - CBB data test", function () {
-	const ServerHelper = require("../helpers/server_helper");
+	const ServerHelper = require("../../helpers/server_helper");
 	let serverHelper = new ServerHelper();
 
-	const FileHelper = require("../helpers/file_helper");
-	const fileHelper = new FileHelper();
-
-	const DatabaseHelper = require("../helpers/database_helper");
+	const DatabaseHelper = require("../../helpers/database_helper");
 	const databaseHelper = new DatabaseHelper();
 
-	const SerialPortHelper = require("../helpers/serial_port_helper");
+	const SerialPortHelper = require("../../helpers/serial_port_helper");
 	const serialPortHelper = new SerialPortHelper();
 
-	const PacketConstructor = require("../../lib/builders/packetConstructor");
+	const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-	this.timeout(30000);
+	this.timeout(15000);
 
-	before("cleaning up queues", async function () {
-		await fileHelper.clearQueueFiles();
-	});
+	let timer = ms => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	};
 
 	beforeEach("cleaning up db", async function () {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
-			serverHelper = new ServerHelper();
+			await serialPortHelper.initialise();
+
 
 			await serverHelper.startServer();
 		} catch (err) {
@@ -37,12 +35,9 @@ describe("AXXIS - CBB data test", function () {
 	afterEach("stop test server", async function () {
 		await serverHelper.stopServer();
 		await timer(2000);
-
 	});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
+
 
 	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function () {
 		let step1 = async function () {
@@ -405,44 +400,3 @@ describe("AXXIS - CBB data test", function () {
 });
 
 
-// :::: RESULT::: [{
-// 	id: 15106,
-// 	serial: 8,
-// 	parent_serial: null,
-// 	type_id: 0,
-// 	parent_type: null,
-// 	parent_id: null,
-// 	window_id: null,
-// 	created: '2019-03-05 11:31:01',
-// 	modified: '2019-03-05 11:31:01',
-// 	communication_status: 1,
-// 	key_switch_status: 1,
-// 	fire_button: 0,
-// 	cable_fault: 0,
-// 	isolation_relay: 0,
-// 	earth_leakage: 0,
-// 	blast_armed: 0
-// },
-// {
-// 	id: 15107,
-// 	serial: 13,
-// 	parent_serial: null,
-// 	type_id: 3,
-// 	parent_type: 0,
-// 	parent_id: 15106,
-// 	window_id: 1,
-// 	created: '2019-03-05 11:31:01',
-// 	modified: '2019-03-05T11:31:04',
-// 	communication_status: 1,
-// 	blast_armed: 0,
-// 	key_switch_status: 1,
-// 	isolation_relay: 0,
-// 	mains: 0,
-// 	low_bat: 1,
-// 	too_low_bat: 0,
-// 	DC_supply_voltage_status: 0,
-// 	shaft_fault: 0,
-// 	cable_fault: 1,
-// 	earth_leakage: 1,
-// 	led_state: 6
-// }]

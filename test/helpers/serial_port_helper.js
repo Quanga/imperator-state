@@ -1,48 +1,55 @@
-var SerialPort = require("serialport");
-var spawn = require("child_process").spawn;
+var SerialPort = require('serialport');
+const rslv = require('path').resolve;
+var spawn = require('child_process').spawn;
+const os = require('os');
+
 
 function SerialPortHelper() {
-	require("dotenv").config({ path: "./.env" });
 
 	// rewrite the ports to match the virtual ports
-	//process.env.TEST_OUTGOING_PORT = rslv("./ttyV0");
-	//process.env.ROUTER_SERIAL_PORT = rslv("./ttyV1");
+	process.env.TEST_OUTGOING_PORT = rslv('../../ttyV0');
+	process.env.ROUTER_SERIAL_PORT = rslv('../../ttyV1');
 }
 
 SerialPortHelper.prototype.initialise = function () {
+
 	var self = this;
 
 	return new Promise((resolve, reject) => {
-		console.log(":: CREATING SERIAL CONNECTION....");
 
-		self.__socat = spawn(
-			"socat",
-			[
-				"-d",
-				"-d",
-				"pty,raw,echo=0,link=" + process.env.TEST_OUTGOING_PORT,
-				"pty,raw,echo=0,link=" + process.env.ROUTER_SERIAL_PORT
-			],
-			{ detached: true, stdio: "ignore" }
-		);
+		console.log(':: CREATING SERIAL CONNECTION....');
 
-		self.__socat.on("open", result => {
-			console.log("socat opened: " + result);
-			resolve();
+		self.__socat = spawn('socat', ['-d',
+			'-d',
+			'pty,raw,echo=0,link=' + process.env.TEST_OUTGOING_PORT,
+			'pty,raw,echo=0,link=' + process.env.ROUTER_SERIAL_PORT
+		],
+		{ detached: true, stdio: 'ignore' });
+
+		if (!self.__socat) {
+			console.warn("`socat` is not installed, skipping serial client tests...");
+			const installCmd = os.type() === 'Darwin' ? 'brew install socat' : 'sudo apt-get install socat';
+			console.warn(`Please run \`${installCmd}\` to enable these tests!`);
+			return;
+		}
+
+		self.__socat.on('open', result => {
+			console.log('socat opened: ' + result);
+			//resolve();
 		});
 
-		self.__socat.on("close", code => {
-			console.log("socat exited with code", code);
+		self.__socat.on('close', code => {
+			console.log('socat exited with code', code);
 		});
 
-		self.__socat.on("error", err => {
+		self.__socat.on('error', err => {
 			console.log(err);
 			reject(err);
 		});
 
 		setTimeout(() => {
 			resolve();
-		}, 1000);
+		}, 2000);
 	});
 };
 
