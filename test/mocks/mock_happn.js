@@ -1,19 +1,19 @@
-require('dotenv').config({ path: "../../.env" });
+require("dotenv").config({ path: "../../.env" });
 
-var MockHappn = function () {
+var MockHappn = function() {
 	this.__queueLength = 1;
 	this.nodes = [];
 };
 
 Object.defineProperty(MockHappn.prototype, "log", {
-	get: function () {
+	get: function() {
 		return {
 			// eslint-disable-next-line no-unused-vars
-			error: function (message, err) {
+			error: function(message, err) {
 				console.log(message);
 				//throw err;
 			},
-			info: function (message) {
+			info: function(message) {
 				console.log(message);
 			}
 		};
@@ -21,7 +21,7 @@ Object.defineProperty(MockHappn.prototype, "log", {
 });
 
 Object.defineProperty(MockHappn.prototype, "config", {
-	get: function () {
+	get: function() {
 		return {
 			nodeEnv: process.env.NODE_ENV,
 			edgeIP: process.env.EDGE_IP,
@@ -45,68 +45,68 @@ Object.defineProperty(MockHappn.prototype, "config", {
 });
 
 Object.defineProperty(MockHappn.prototype, "exchange", {
-	get: function () {
+	get: function() {
 		var self = this;
 
 		return {
 			incomingFileQueue: {
-				length: function () {
-					return new Promise(function (resolve) {
+				length: function() {
+					return new Promise(function(resolve) {
 						resolve(self.__queueLength);
 						self.__queueLength -= 1;
 					});
 				},
-				pop: function () {
-					return new Promise(function (resolve) {
+				pop: function() {
+					return new Promise(function(resolve) {
 						resolve("my incoming message");
 					});
 				},
-				push: function () {
-					return new Promise(function (resolve) {
+				push: function() {
+					return new Promise(function(resolve) {
 						resolve("my incoming message");
 					});
 				}
 			},
 			outgoingFileQueue: {
-				length: function (callback) {
+				length: function(callback) {
 					callback(null, self.__queueLength);
 					self.__queueLength -= 1;
 				},
-				pop: function (callback) {
+				pop: function(callback) {
 					callback(null, "my outgoing message");
 				},
-				push: function () {
-					return new Promise(function (resolve) {
+				push: function() {
+					return new Promise(function(resolve) {
 						resolve();
 					});
 				}
 			},
 			dataService: {
-				insertPacketArr: function () {
-					return new Promise(function (resolve) {
+				insertPacketArr: function() {
+					return new Promise(function(resolve) {
 						resolve(1);
 					});
 				},
-				upsertNodeDataArr: function () {
-					return new Promise(function (resolve) {
+				upsertNodeDataArr: function() {
+					return new Promise(function(resolve) {
 						resolve();
 					});
 				}
 			},
 			packetService: {
-				extractData: function (message) {
-					return new Promise(function (resolve) {
+				extractData: function(message) {
+					return new Promise(function(resolve) {
 						resolve({ message: message });
 					});
 				}
 			},
 			portUtil: {
-				getInstance: function () {
+				getInstance: function() {
 					// eslint-disable-next-line no-unused-vars
-					return new Promise(function (resolve, reject) {
+					return new Promise(function(resolve, reject) {
 						resolve({
 							// eslint-disable-next-line no-unused-vars
-							on: function (eventType, handler) {
+							on: function(eventType, handler) {
 								return true;
 							}
 						});
@@ -114,17 +114,17 @@ Object.defineProperty(MockHappn.prototype, "exchange", {
 				}
 			},
 			messageHandler: {
-				MessageReceiveHandler: function () {
+				MessageReceiveHandler: function() {
 					// eslint-disable-next-line no-unused-vars
-					return new Promise(function (resolve, reject) {
-						resolve(function () {
+					return new Promise(function(resolve, reject) {
+						resolve(function() {
 							return true;
 						});
 					});
 				}
 			},
 			parserFactory: {
-				getParser: function (packet) {
+				getParser: function(packet) {
 					const parserFactory = require("../../lib/parsers/parser_factory");
 					let newMock = new MockHappn();
 					return new parserFactory().getParser(newMock, packet);
@@ -132,25 +132,26 @@ Object.defineProperty(MockHappn.prototype, "exchange", {
 			},
 
 			dbConnectionService: {
-				getConnection: function () {
+				getConnection: function() {
 					let newMock = new MockHappn();
 					return self.dbInst.getConnection(newMock);
 				}
 			},
 			nodeRepository: {
-				getAllNodes: function () {
+				getAllNodes: function() {
 					// eslint-disable-next-line no-unused-vars
-					return new Promise(function (resolve, reject) {
+					return new Promise(function(resolve, reject) {
 						resolve(self.nodes);
 					});
 				}
 			},
 			dataMapper: {
-				mapInsertPacket: function (packet) {
+				mapInsertPacket: function(packet) {
 					const mapper = require("../../lib/mappers/data_mapper");
 					return new mapper().mapInsertPacket(packet);
 				}
-			}
+			},
+			data: {}
 		};
 	}
 });

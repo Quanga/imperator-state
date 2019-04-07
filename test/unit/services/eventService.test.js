@@ -20,7 +20,7 @@ describe("EventService Tests", async () => {
 			process.env.ROUTER_SYSYEM_TYPE = "IBS";
 			let activeBooster = () => {
 				let booster = new BoosterModel(33, 22);
-				booster.data.key_switch_status = 1;
+				booster.data.keySwitchStatus = 1;
 				return booster;
 			};
 			mockHappn.nodes = [
@@ -50,7 +50,7 @@ describe("EventService Tests", async () => {
 			process.env.ROUTER_SYSYEM_TYPE = "AXXIS";
 			let activeBooster = () => {
 				let cbooster = new CBoosterModel(33, 12);
-				cbooster.data.key_switch_status = 1;
+				cbooster.data.keySwitchStatus = 1;
 				return cbooster;
 			};
 			mockHappn.nodes = [

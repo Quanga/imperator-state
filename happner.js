@@ -2,7 +2,7 @@ module.exports.configs = {
 	appConfig: {
 		component: {
 			config: {
-				routerMode: process.env.ROUTER_SYSTEM_MODE,
+				deviceType: process.env.ROUTER_SYSTEM_MODE,
 				routerType: process.env.ROUTER_SYSTEM_TYPE,
 				useEndpoint: process.env.ROUTER_USE_ENDPOINT
 			}
@@ -69,29 +69,6 @@ module.exports.configs = {
 			name: "NodeRepository",
 			config: {
 				systemType: process.env.ROUTER_SYSYEM_TYPE
-			}
-		}
-	},
-	logsRepositoryConfig: {
-		component: {
-			name: "LogsRepository",
-			config: {}
-		}
-	},
-	warningsRepositoryConfig: {
-		component: {
-			name: "WarningsRepository",
-			config: {}
-		}
-	},
-	dbConnectionConfig: {
-		component: {
-			name: "DbConnectionService",
-			config: {
-				mySqlHost: process.env.ROUTER_MYSQL_HOST,
-				mySqlUser: process.env.ROUTER_MYSQL_USER,
-				mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-				mySqlDb: process.env.ROUTER_MYSQL_DATABASE
 			}
 		}
 	},

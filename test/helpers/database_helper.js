@@ -1,4 +1,3 @@
-
 function DatabaseHelper() {
 	const MockHappn = require("../mocks/mock_happn");
 	this.__mockHappn = new MockHappn();
@@ -6,17 +5,24 @@ function DatabaseHelper() {
 	const DbConnectionService = require("../../lib/services/db_connection_service");
 	this.__dbConnectionService = new DbConnectionService();
 
-	const NodeRepository = require("../../lib/repositories/node_repository");
-	this.__nodeRepository = new NodeRepository();
+	const NodeRepository = require("../../lib/repositories/nodeRepository");
+	//this.__nodeRepository = null;
+	new NodeRepository("happn", (err, instance) => {
+		this.__nodeRepository = instance;
+	});
 
-	const LogsRepository = require("../../lib/repositories/logs_repository");
-	this.__logsRepository = new LogsRepository();
+	const LogsRepository = require("../../lib/repositories/logsRepository");
+	new LogsRepository("happn", (err, instance) => {
+		this.__logsRepository = instance;
+	});
 
-	const WarningsRepository = require("../../lib/repositories/warnings_repository");
-	this.__warningsRepository = new WarningsRepository();
+	const WarningsRepository = require("../../lib/repositories/warningsRepository");
+	new WarningsRepository("happn", (err, instance) => {
+		this.__warningsRepository = instance;
+	});
 }
 
-DatabaseHelper.prototype.initialise = function () {
+DatabaseHelper.prototype.initialise = function() {
 	let processAsync = async () => {
 		this.__mockHappn.dbInst = this.__dbConnectionService;
 		//console.log(this.__mockHappn.config);
@@ -37,7 +43,7 @@ DatabaseHelper.prototype.initialise = function () {
 	return processAsync();
 };
 
-DatabaseHelper.prototype.clearDatabase = function () {
+DatabaseHelper.prototype.clearDatabase = function() {
 	let clearDatabaseAsync = async () => {
 		console.log(":: CLEARING DATABASE....");
 		try {
@@ -52,7 +58,7 @@ DatabaseHelper.prototype.clearDatabase = function () {
 	return clearDatabaseAsync();
 };
 
-DatabaseHelper.prototype.getNodeData = function () {
+DatabaseHelper.prototype.getNodeData = function() {
 	return new Promise((resolve, reject) => {
 		this.__nodeRepository
 			.getNodeData(this.__mockHappn)
@@ -63,7 +69,7 @@ DatabaseHelper.prototype.getNodeData = function () {
 	});
 };
 
-DatabaseHelper.prototype.getNodeTreeData = function (serial, typeId) {
+DatabaseHelper.prototype.getNodeTreeData = function(serial, typeId) {
 	return new Promise((resolve, reject) => {
 		this.__nodeRepository
 			.findNodeTreeData(this.__mockHappn, serial, typeId)
@@ -74,7 +80,7 @@ DatabaseHelper.prototype.getNodeTreeData = function (serial, typeId) {
 	});
 };
 
-DatabaseHelper.prototype.getLogData = function (nodeSerial) {
+DatabaseHelper.prototype.getLogData = function(nodeSerial) {
 	return new Promise((resolve, reject) => {
 		this.__nodeRepository.getLogData(
 			this.__mockHappn,

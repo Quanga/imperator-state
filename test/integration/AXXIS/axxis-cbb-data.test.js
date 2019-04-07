@@ -1,48 +1,70 @@
 const expect = require("expect.js");
-const RequestHelper = require("../../helpers/request_helper");
-require('dotenv').config();
+const ServerHelper = require("../../helpers/server_helper");
+const SerialPortHelper = require("../../helpers/serial_port_helper");
+const PacketConstructor = require("../../../lib/builders/packetConstructor");
+var Mesh = require("happner-2");
 
+require("dotenv").config();
 
-describe("AXXIS - CBB data test", function () {
-	const ServerHelper = require("../../helpers/server_helper");
+describe("AXXIS - CBB data test", function() {
 	let serverHelper = new ServerHelper();
-
-	const DatabaseHelper = require("../../helpers/database_helper");
-	const databaseHelper = new DatabaseHelper();
-
-	const SerialPortHelper = require("../../helpers/serial_port_helper");
 	const serialPortHelper = new SerialPortHelper();
 
-	const PacketConstructor = require("../../../lib/builders/packetConstructor");
+	var client;
 
-	this.timeout(15000);
+	this.timeout(25000);
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	beforeEach("cleaning up db", async function () {
+	const AsyncLogin = () =>
+		new Promise((resolve, reject) => {
+			client.on("login/allow", () => resolve());
+
+			client.on("login/deny", () => reject());
+			client.on("login/error", () => reject());
+			client.login({
+				username: "_ADMIN",
+				password: "happn"
+			});
+		});
+
+	before("cleaning up db", async function() {
 		try {
-			await databaseHelper.initialise();
-			await databaseHelper.clearDatabase();
 			await serialPortHelper.initialise();
-
-
 			await serverHelper.startServer();
+
+			client = await new Mesh.MeshClient({
+				secure: true,
+				port: 55000
+			});
+
+			await AsyncLogin();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	afterEach("stop test server", async function () {
+	beforeEach(
+		"delete all current nodes, logs, warnings and packets",
+		async function() {
+			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.logsRepository.deleteAll();
+			await client.exchange.warningsRepository.deleteAll();
+			await client.exchange.packetRepository.deleteAll();
+		}
+	);
+
+	after("stop test server", async function() {
+		client.disconnect();
 		await serverHelper.stopServer();
+		await serialPortHelper.destroy();
 		await timer(2000);
 	});
 
-
-
-	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function () {
-		let step1 = async function () {
+	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function() {
+		let sendMessages = async () => {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
@@ -52,7 +74,7 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					}
@@ -61,34 +83,29 @@ describe("AXXIS - CBB data test", function () {
 			await serialPortHelper.sendMessage(message);
 		};
 
-		let step2 = async function () {
-			let result = await databaseHelper.getNodeTreeData(8, 0);
-			if (result == null || result.length == 0)
-				return new Error("Empty result!");
-
-			let cbb = null;
-
-			result.forEach(x => {
-				if (parseInt(x["c.serial"]) === 13 && x["c.type_id"] === 3) cbb = x;
-			});
-
-			return { cbb: cbb };
-		};
-
-		let step3 = async function (result) {
+		let getResults = async () => {
 			try {
-				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
+				let result = await client.exchange.nodeRepository.getAllNodes();
+
+				if (result == null || result.length === 0)
+					throw new Error("Empty result!");
+
+				let cbb = await result.find(
+					unit => parseInt(unit.data.serial) === 13 && unit.data.typeId === 3
+				);
+
+				expect(cbb.data.communicationStatus).to.equal(1); // communication status
 			} catch (err) {
+				console.log(err);
 				return Promise.reject(err);
 			}
 		};
 
-		let startTest = async function () {
+		let startTest = async () => {
 			try {
-				await step1();
-				await timer(2000);
-				let result = await step2();
-				await step3(result);
+				await sendMessages();
+				await timer(200);
+				await getResults();
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -97,8 +114,10 @@ describe("AXXIS - CBB data test", function () {
 		return startTest();
 	});
 
-	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async function () {
-		let step1 = async function () {
+	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
+		client.exchange.dataService.deleteAllTestData();
+
+		let sendMessages = async () => {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
@@ -106,8 +125,8 @@ describe("AXXIS - CBB data test", function () {
 
 			const initial2 = new PacketConstructor(4, 13, {
 				data: [
-					{ serial: 4423423, window_id: 1 },
-					{ serial: 4523434, window_id: 2 }
+					{ serial: 4423423, windowId: 1 },
+					{ serial: 4523434, windowId: 2 }
 				]
 			}).packet;
 			await serialPortHelper.sendMessage(initial2);
@@ -116,12 +135,12 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
 					{
-						window_id: 2,
+						windowId: 2,
 						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 						delay: 2000
 					}
@@ -130,39 +149,33 @@ describe("AXXIS - CBB data test", function () {
 			await serialPortHelper.sendMessage(message);
 		};
 
-		let step2 = async function () {
-			let result = await databaseHelper.getNodeTreeData(8, 0);
-			if (result == null || result.length == 0)
-				return new Error("Empty result!");
+		let getResults2 = async () => {
+			let result2 = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result2 === null || result2.length === 0)
+				throw new Error("Empty result!");
 
 			let cbb = null,
 				edd1 = null;
 
-			result.forEach(x => {
-				if (parseInt(x["c.serial"]) === 13 && x["c.type_id"] === 3) cbb = x;
-				if (parseInt(x["g.serial"]) === 4523434 && x["g.type_id"] === 4)
+			await result2.forEach(x => {
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
 					edd1 = x;
 			});
 
-			return { cbb: cbb, edd1: edd1 };
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(edd1.data.windowId).to.equal(2); // communication status
+			expect(edd1.data.delay).to.equal(2000); // communication status
 		};
 
-		let step3 = async function (result) {
+		let startTest = async () => {
 			try {
-				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
-				expect(result.edd1["g.window_id"]).to.equal(2); // communication status
-				expect(result.edd1["g.delay"]).to.equal(2000); // communication status
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		let startTest = async function () {
-			try {
-				await step1();
-				await timer(2000);
-				let result = await step2();
-				await step3(result);
+				await sendMessages();
+				await timer(1000);
+				await getResults2();
+				let tests = await client.exchange.dataService.getTests();
+				console.log("TESTS", JSON.stringify(tests, null, 2));
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -171,8 +184,8 @@ describe("AXXIS - CBB data test", function () {
 		return startTest();
 	});
 
-	it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function () {
-		let step1 = async function () {
+	it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function() {
+		let sendMessages = async function() {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
@@ -180,8 +193,8 @@ describe("AXXIS - CBB data test", function () {
 
 			const initial2 = new PacketConstructor(4, 13, {
 				data: [
-					{ serial: 4423423, window_id: 1 },
-					{ serial: 4523434, window_id: 2 }
+					{ serial: 4423423, windowId: 1 },
+					{ serial: 4523434, windowId: 2 }
 				]
 			}).packet;
 			await serialPortHelper.sendMessage(initial2);
@@ -190,12 +203,12 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
 					{
-						window_id: 2,
+						windowId: 2,
 						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 						delay: 2000
 					}
@@ -207,12 +220,12 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
 					},
 					{
-						window_id: 2,
+						windowId: 2,
 						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 						delay: 3000
 					}
@@ -221,39 +234,32 @@ describe("AXXIS - CBB data test", function () {
 			await serialPortHelper.sendMessage(message2);
 		};
 
-		let step2 = async function () {
-			let result = await databaseHelper.getNodeTreeData(8, 0);
-			if (result == null || result.length == 0)
-				return new Error("Empty result!");
+		let getResults3 = async function() {
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length === 0)
+				throw new Error("Empty result!");
 
 			let cbb = null,
 				edd1 = null;
 
 			result.forEach(x => {
-				if (parseInt(x["c.serial"]) === 13 && x["c.type_id"] === 3) cbb = x;
-				if (parseInt(x["g.serial"]) === 4523434 && x["g.type_id"] === 4)
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
 					edd1 = x;
 			});
 
-			return { cbb: cbb, edd1: edd1 };
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(edd1.data.windowId).to.equal(2); // communication status
+			expect(edd1.data.delay).to.equal(3000); // communication status
 		};
 
-		let step3 = async function (result) {
+		let startTest = async function() {
 			try {
-				expect(result.cbb["c.communication_status"]).to.equal(1); // communication status
-				expect(result.edd1["g.window_id"]).to.equal(2); // communication status
-				expect(result.edd1["g.delay"]).to.equal(3000); // communication status
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		let startTest = async function () {
-			try {
-				await step1();
+				await sendMessages();
 				await timer(2000);
-				let result = await step2();
-				await step3(result);
+
+				await getResults3();
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -262,8 +268,8 @@ describe("AXXIS - CBB data test", function () {
 		return startTest();
 	});
 
-	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function () {
-		let step1 = async function () {
+	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
+		let sendMessages = async function() {
 			const data1 = {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			};
@@ -273,8 +279,8 @@ describe("AXXIS - CBB data test", function () {
 
 			const data2 = {
 				data: [
-					{ serial: 4423423, window_id: 1 },
-					{ serial: 4523434, window_id: 2 }
+					{ serial: 4423423, windowId: 1 },
+					{ serial: 4523434, windowId: 2 }
 				]
 			};
 
@@ -287,12 +293,12 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
 					{
-						window_id: 2,
+						windowId: 2,
 						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 						delay: 2000
 					}
@@ -306,12 +312,12 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
 					},
 					{
-						window_id: 2,
+						windowId: 2,
 						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 						delay: 3000
 					}
@@ -325,12 +331,12 @@ describe("AXXIS - CBB data test", function () {
 				data: [
 					{
 						serial: 13,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
 					},
 					{
-						window_id: 2,
+						windowId: 2,
 						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 						delay: 3000
 					}
@@ -341,57 +347,46 @@ describe("AXXIS - CBB data test", function () {
 			await serialPortHelper.sendMessage(message4.packet);
 		};
 
-		let step2a = async function () {
-			try {
-				let requestHelper = new RequestHelper();
-				let result = await requestHelper.getBlastModel();
+		// let getResults4 = async function() {
+		// 	try {
+		// 		let requestHelper = new RequestHelper();
+		// 		let result = await requestHelper.getBlastModel();
 
-				return result;
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
+		// 		return result;
+		// 	} catch (err) {
+		// 		return Promise.reject(err);
+		// 	}
+		// };
 
-		let step2 = async function () {
-			let result = await databaseHelper.getNodeTreeData(8, 0);
+		let getResults = async function() {
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
 			if (result == null || result.length == 0)
-				return new Error("Empty result!");
+				throw new Error("Empty result!");
 
 			let cbb = null,
 				edd1 = null;
 
 			result.forEach(x => {
-				if (parseInt(x["c.serial"]) === 13 && x["c.type_id"] === 3) cbb = x;
-				if (parseInt(x["g.serial"]) === 4523434 && x["g.type_id"] === 4)
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
 					edd1 = x;
 			});
 
-			return { cbb: cbb, edd1: edd1 };
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(edd1.data.windowId).to.equal(2); // communication status
+			expect(edd1.data.delay).to.equal(3000); // communication status
+
+			// let edds = requestb.find(x => x.typeId === 4);
+			// expect(edds).to.be.equal(null);
 		};
 
-		let step3 = async function (resulta, requestb) {
+		let startTest = async function() {
 			try {
-				expect(resulta.cbb["c.communication_status"]).to.equal(1); // communication status
-				expect(resulta.edd1["g.window_id"]).to.equal(2); // communication status
-				expect(resulta.edd1["g.delay"]).to.equal(3000); // communication status
+				await sendMessages();
+				await timer(1000);
 
-
-				console.log(JSON.stringify(requestb, null, 2));
-				let edds = requestb.find(x => x.type_id === 4);
-				expect(edds).to.be.equal(null);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		let startTest = async function () {
-			try {
-				await step1();
-				await timer(4000);
-				let result = await step2();
-				let resultb = await step2a();
-
-				await step3(result, resultb);
+				await getResults();
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -400,5 +395,3 @@ describe("AXXIS - CBB data test", function () {
 		return startTest();
 	});
 });
-
-

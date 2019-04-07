@@ -6,20 +6,16 @@ const SerialPortHelper = require("../helpers/serial_port_helper");
 const PacketConstructor = require("../../lib/builders/packetConstructor");
 const request = require("supertest");
 
-require('dotenv').config();
+require("dotenv").config();
 
-
-
-describe("Integrated Blast Event Tests", async function () {
+describe("Integrated Blast Event Tests", async function() {
 	let serverHelper = new ServerHelper();
 	const databaseHelper = new DatabaseHelper();
 	const serialPortHelper = new SerialPortHelper();
 
 	this.timeout(30000);
 
-
-
-	beforeEach("cleaning up db and start server", async function () {
+	beforeEach("cleaning up db and start server", async function() {
 		try {
 			await databaseHelper.initialise();
 			await databaseHelper.clearDatabase();
@@ -31,7 +27,7 @@ describe("Integrated Blast Event Tests", async function () {
 		}
 	});
 
-	afterEach("stop test server", async function () {
+	afterEach("stop test server", async function() {
 		await serverHelper.stopServer();
 		await timer(3000);
 	});
@@ -40,9 +36,9 @@ describe("Integrated Blast Event Tests", async function () {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	it.only("can start a blast event", async function () {
+	it.only("can start a blast event", async function() {
 		//start the blast event
-		let setupControlUnit = async function () {
+		let setupControlUnit = async function() {
 			const data1 = {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			};
@@ -60,7 +56,7 @@ describe("Integrated Blast Event Tests", async function () {
 				data: [
 					{
 						serial: 12,
-						window_id: 2,
+						windowId: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					}

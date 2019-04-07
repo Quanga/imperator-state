@@ -1,7 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-var serveStatic = require('serve-static');
-require('dotenv').config();
-
+var serveStatic = require("serve-static");
+require("dotenv").config();
 
 /***********************************************************
  HAPPNER configuration
@@ -29,16 +28,21 @@ module.exports = {
 		host: process.env.HAPPNER_LOCAL_IP,
 		port: parseInt(process.env.HAPPNER_LOCAL_PORT),
 		setOptions: {
-			timeout: 15000,
+			timeout: 15000
 		},
 		persist: false,
-		secure: false,
-		adminPassword: "root",
+		secure: true,
+		adminPassword: "happn",
+		filename: "./aece.nedb",
 		services: {
-
 			data: {
 				config: {
-					filename: "data"
+					filename: `${__dirname}/data2`
+				},
+				stats: {
+					config: {
+						interval: 10 * 1000 // the default
+					}
 				}
 			},
 			connect: {
@@ -46,9 +50,7 @@ module.exports = {
 					middleware: {
 						security: {
 							// cookieName: 'custom_token',
-							exclusions: [
-								'/index.html'
-							]
+							exclusions: ["/index.html"]
 						}
 					}
 				}
@@ -58,20 +60,23 @@ module.exports = {
 	web: {
 		routes: {
 			// To serve static at '/'
-			'/': serveStatic("./build")
+			"/": serveStatic("./build")
 		}
-	},
-	data: {
-		routes: {
-			'test/*': 'persist',
-		}
+
+		// },
+		// data: {
+		// 	routes: {
+		// 		"test/*": "persist"
+		// 	}
 	},
 
 	modules: {
 		app: {
 			path: `${__dirname}/app.js`
 		},
-
+		auth: {
+			path: `${__dirname}/auth.js`
+		},
 		queueService: {
 			path: `${__dirname}/server.js`,
 			construct: {
@@ -82,12 +87,6 @@ module.exports = {
 			path: `${__dirname}/server.js`,
 			construct: {
 				name: "ServerService"
-			}
-		},
-		dbConnectionService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "DbConnectionService"
 			}
 		},
 		portService: {
@@ -124,40 +123,74 @@ module.exports = {
 				name: "DataService"
 			}
 		},
-		eventService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "EventService"
-			}
-		},
+
 		dataMapper: {
 			path: `${__dirname}/lib/mappers/data_mapper.js`
 		},
 		packetRepository: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "PacketRepository",
-				type: "async"
+			path: `${__dirname}/lib/repositories/packetRepository.js`,
+			create: {
+				type: "async",
+				parameters: [{ name: "provider", value: "happn" }],
+				callback: {
+					parameters: [
+						{ name: "err", parameterType: "error" },
+						{ name: "res", parameterType: "instance" }
+					]
+				}
 			}
 		},
-
 		nodeRepository: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "NodeRepository"
+			path: `${__dirname}/lib/repositories/nodeRepository.js`,
+			create: {
+				type: "async",
+				parameters: [{ name: "provider", value: "happn" }],
+				callback: {
+					parameters: [
+						{ name: "err", parameterType: "error" },
+						{ name: "res", parameterType: "instance" }
+					]
+				}
 			}
 		},
-
 		logsRepository: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "LogsRepository"
+			path: `${__dirname}/lib/repositories/logsRepository.js`,
+			create: {
+				type: "async",
+				parameters: [{ name: "provider", value: "happn" }],
+				callback: {
+					parameters: [
+						{ name: "err", parameterType: "error" },
+						{ name: "res", parameterType: "instance" }
+					]
+				}
 			}
 		},
 		warningsRepository: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "WarningsRepository"
+			path: `${__dirname}/lib/repositories/warningsRepository.js`,
+			create: {
+				type: "async",
+				parameters: [{ name: "provider", value: "happn" }],
+				callback: {
+					parameters: [
+						{ name: "err", parameterType: "error" },
+						{ name: "res", parameterType: "instance" }
+					]
+				}
+			}
+		},
+
+		archiveRepository: {
+			path: `${__dirname}/lib/repositories/archiveRepository.js`,
+			create: {
+				type: "async",
+				parameters: [{ name: "provider", value: "happn" }],
+				callback: {
+					parameters: [
+						{ name: "err", parameterType: "error" },
+						{ name: "res", parameterType: "instance" }
+					]
+				}
 			}
 		},
 		transmissionService: {
@@ -165,37 +198,52 @@ module.exports = {
 			construct: {
 				name: "TransmissionService"
 			}
+		},
+		eventService: {
+			path: `${__dirname}/lib/services/event_service.js`
 		}
 	},
 	components: {
+		auth: {
+			startMethod: "startAuth",
+			stopMethod: "stopAuth"
+		},
+		data: {
+			data: {
+				routes: {
+					"persist/*": "persist",
+					"state/*": "mem"
+				}
+			}
+		},
 		queueService: {
-			$configure: function (queueServiceConfig) {
+			$configure: function(queueServiceConfig) {
 				return queueServiceConfig;
 			}
 		},
 		serverService: {
-			$configure: function (serverServiceConfig) {
+			$configure: function(serverServiceConfig) {
 				return serverServiceConfig;
 			}
 		},
 		app: {
-			startMethod: "start",
+			startMethod: "startApp",
+			stopMethod: "stopApp",
 
-
-			$configure: function (appConfig) {
+			$configure: function(appConfig) {
 				return appConfig;
 			}
 		},
 		parserFactory: {},
 		portService: {},
 		portUtil: {
-			$configure: function (portUtilConfig) {
+			$configure: function(portUtilConfig) {
 				return portUtilConfig;
 			}
 		},
 
 		RxQueue: {
-			startMethod: 'start',
+			startMethod: "start",
 			data: {
 				routes: {
 					"cache/*": "persist"
@@ -203,7 +251,7 @@ module.exports = {
 			}
 		},
 		TxQueue: {
-			startMethod: 'start',
+			startMethod: "start",
 			data: {
 				routes: {
 					"cache/*": "persist"
@@ -211,7 +259,7 @@ module.exports = {
 			}
 		},
 		EpQueue: {
-			startMethod: 'start',
+			startMethod: "start",
 			data: {
 				routes: {
 					"cache/*": "persist"
@@ -219,7 +267,7 @@ module.exports = {
 			}
 		},
 		transmissionService: {
-			$configure: function (transmissionServiceConfig) {
+			$configure: function(transmissionServiceConfig) {
 				return transmissionServiceConfig;
 			}
 		},
@@ -230,41 +278,28 @@ module.exports = {
 		},
 		packetService: {},
 		dataService: {
-			$configure: function (dataServiceConfig) {
+			$configure: function(dataServiceConfig) {
 				return dataServiceConfig;
 			}
 		},
-		eventService: {
-			$configure: function (eventServiceConfig) {
-				return eventServiceConfig;
-			}
-		},
+
 		dataMapper: {},
-		dbConnectionService: {
-			$configure: function (dbConnectionConfig) {
-				return dbConnectionConfig;
-			}
-		},
-		packetRepository: {
-			$configure: function (packetRepositoryConfig) {
-				return packetRepositoryConfig;
-			}
-		},
-		nodeRepository: {
-			$configure: function (nodeRepositoryConfig) {
-				return nodeRepositoryConfig;
-			}
-		},
-		logsRepository: {
-			$configure: function (logsRepositoryConfig) {
-				return logsRepositoryConfig;
-			}
-		},
-		warningsRepository: {
-			$configure: function (warningsRepositoryConfig) {
-				return warningsRepositoryConfig;
+		packetRepository: {},
+		nodeRepository: {},
+		logsRepository: {},
+		warningsRepository: {},
+		archiveRepository: {},
+		eventService: {
+			startMethod: "startAsync",
+			stopMethod: "stopAsync",
+			methods: {
+				startAsync: {
+					type: "async"
+				},
+				stopAsync: {
+					type: "async"
+				}
 			}
 		}
 	}
 };
-

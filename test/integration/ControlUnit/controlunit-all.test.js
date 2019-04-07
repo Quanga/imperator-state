@@ -1,45 +1,66 @@
 const expect = require("expect.js");
+var Mesh = require("happner-2");
+const ServerHelper = require("../../helpers/server_helper");
+const SerialPortHelper = require("../../helpers/serial_port_helper");
+const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-describe("CONTROL UNIT data tests", function () {
-	this.timeout(20000);
+describe("CONTROL UNIT data tests", function() {
+	this.timeout(10000);
 
-	const ServerHelper = require("../../helpers/server_helper");
 	let serverHelper = new ServerHelper();
-
-	const DatabaseHelper = require("../../helpers/database_helper");
-	const databaseHelper = new DatabaseHelper();
-
-	const SerialPortHelper = require("../../helpers/serial_port_helper");
 	const serialPortHelper = new SerialPortHelper();
-
-	const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
 
-	beforeEach("cleaning up db and start server", async function () {
+	let client = null;
+
+	const AsyncLogin = () =>
+		new Promise((resolve, reject) => {
+			client = new Mesh.MeshClient({
+				secure: true,
+				port: 55000
+			});
+
+			client.on("login/allow", () => resolve());
+			client.on("login/deny", () => reject());
+			client.on("login/error", () => reject());
+			client.login({
+				username: "_ADMIN",
+				password: "happn"
+			});
+		});
+
+	before("cleaning up db", async function() {
 		try {
-			await databaseHelper.initialise();
-			await databaseHelper.clearDatabase();
 			await serialPortHelper.initialise();
-			serverHelper = new ServerHelper();
 			await serverHelper.startServer();
+			await AsyncLogin();
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	afterEach("stop test server", async function () {
+	beforeEach(
+		"delete all current nodes, logs, warnings and packets",
+		async function() {
+			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.logsRepository.deleteAll();
+			await client.exchange.warningsRepository.deleteAll();
+			await client.exchange.packetRepository.deleteAll();
+		}
+	);
+
+	after("stop test server", async function() {
+		client.disconnect();
 		await serverHelper.stopServer();
-		await timer(3000);
+		await serialPortHelper.destroy();
 	});
 
-
-	it.only("can process key switch armed on IBC 8 where previous state was disarmed", async function () {
-		let startTest = async () => {
+	it("can process key switch armed on IBC 8 where previous state was disarmed", async function() {
+		let sendMessage = async () => {
 			try {
-				await timer(4500);
 				let initial = new PacketConstructor(8, 12, {
 					data: [0, 0, 0, 0, 0, 0, 0, 0]
 				}).packet;
@@ -50,10 +71,7 @@ describe("CONTROL UNIT data tests", function () {
 				}).packet;
 				await serialPortHelper.sendMessage(message);
 
-				await timer(2000);
-				let results = await checkDatabase();
-				let ass = await checkResults(results);
-				return ass;
+				await checkDatabase();
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -61,37 +79,29 @@ describe("CONTROL UNIT data tests", function () {
 
 		let checkDatabase = async () => {
 			try {
-				let result = await databaseHelper.getNodeTreeData(12, 0);
+				await timer(1000);
+				let result = await client.exchange.nodeRepository.getAllNodes();
 
 				if (result == null || result.length == 0) {
-					return new Error("Empty result!");
+					throw new Error("Empty result!");
 				}
 
 				let ibc = result[0];
-				return {
-					ibc: ibc
-				};
+
+				expect(ibc.data.communication_status).to.equal(1);
+				expect(ibc.data.fire_button).to.equal(0);
+				expect(ibc.data.key_switch_status).to.equal(1);
+				expect(ibc.data.isolation_relay).to.equal(1);
 			} catch (err) {
 				return Promise.reject(err);
 			}
 		};
 
-		let checkResults = async result => {
-			try {
-				expect(result.ibc["p.communication_status"]).to.equal(1);
-				expect(result.ibc["p.fire_button"]).to.equal(0);
-				expect(result.ibc["p.key_switch_status"]).to.equal(1);
-				expect(result.ibc["p.isolation_relay"]).to.equal(1);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		await startTest();
+		await sendMessage();
 	});
 
-	it.only("can process a key switch disarmed on IBC 8 where previous state armed", async function () {
-		let step1 = async () => {
+	it("can process a key switch disarmed on IBC 8 where previous state armed", async function() {
+		let sendMessages = async () => {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 1, 1]
 			}).packet;
@@ -103,36 +113,29 @@ describe("CONTROL UNIT data tests", function () {
 			await serialPortHelper.sendMessage(message2);
 		};
 
-		let step2 = async () => {
+		let getResults = async () => {
 			try {
-				let result = await databaseHelper.getNodeTreeData(8, 0);
+				let result = await client.exchange.nodeRepository.getAllNodes();
 
 				if (result == null || result.length == 0) {
-					return new Error("Empty result!");
+					throw new Error("Empty result!");
 				}
 
 				let ibc = result[0];
-				return { ibc: ibc };
+
+				expect(ibc.data.communication_status).to.equal(1);
+				expect(ibc.data.fire_button).to.equal(0);
+				expect(ibc.data.key_switch_status).to.equal(0);
+				expect(ibc.data.isolation_relay).to.equal(1);
 			} catch (err) {
 				return Promise.reject(err);
 			}
 		};
 
-		let step3 = async result => {
-			expect(result.ibc["p.communication_status"]).to.equal(1);
-			expect(result.ibc["p.fire_button"]).to.equal(0);
-			expect(result.ibc["p.key_switch_status"]).to.equal(0);
-			expect(result.ibc["p.isolation_relay"]).to.equal(1);
-		};
-
 		let test = async () => {
 			try {
-				await timer(3500);
-
-				await step1();
-				await timer(2000);
-				let result = await step2();
-				await step3(result);
+				await sendMessages();
+				await getResults();
 			} catch (err) {
 				return Promise.reject(err);
 			}

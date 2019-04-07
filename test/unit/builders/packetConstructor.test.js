@@ -9,7 +9,6 @@ describe("001 PacketConstructor tests", async () => {
 	var DeviceDataParser = require("../../../lib/parsers/deviceDataParser");
 
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
-	const PacketModel = require("../../../lib/models/packetModel");
 
 	let mockHappn = new MockHappn();
 
@@ -18,46 +17,47 @@ describe("001 PacketConstructor tests", async () => {
 			try {
 				var expected = [
 					{
-						blast_armed: 0,
-						cable_fault: 0,
-						communication_status: 1,
-						earth_leakage: 0,
-						fire_button: 0,
-						isolation_relay: 0,
-						key_switch_status: 0,
-						parent_id: null,
-						parent_serial: null,
-						parent_type: null,
-						serial: 12,
-						type_id: 0,
-						window_id: null
+						item: "ControlUnitModel",
+						data: {
+							serial: 12,
+							parentSerial: null,
+							typeId: 0,
+							parentType: null,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: 0,
+							fireButton: 0,
+							cableFault: 0,
+							isolationRelay: 0,
+							earthLeakage: 0,
+							blastArmed: 0
+						}
 					}
 				];
-				const data = {
+
+				const packetConstructor = new PacketConstructor(8, 12, {
 					data: [0, 0, 0, 0, 0, 0, 0, 0]
-				};
-				const packetConstructor = new PacketConstructor(8, 12, data);
+				}).packet;
 
-				const parser = new DeviceDataParser();
 				const packetTemplate = new PacketTemplate();
+				const parser = new DeviceDataParser(
+					packetTemplate.incomingCommTemplate[8]
+				);
 
-				let template = packetTemplate.incomingCommTemplate[8];
+				const testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[8],
+					packet: packetConstructor,
+					created: Date.now(),
+					pos: 0
+				};
 
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				const parsedPacketArr = await parser.parse(mockHappn, testObj);
+				const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
-
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-
-				let res = result.map(item => {
-					return item.data;
-				});
-
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
 
 				await assert.deepEqual(res, expected);
@@ -74,92 +74,102 @@ describe("001 PacketConstructor tests", async () => {
 			try {
 				var expected = [
 					{
-						serial: 12,
-						parent_serial: null,
-						type_id: 0,
-						parent_type: null,
-						parent_id: null,
-						window_id: null,
-						communication_status: 1,
-						key_switch_status: null,
-						fire_button: null,
-						cable_fault: null,
-						isolation_relay: null,
-						earth_leakage: null,
-						blast_armed: null
+						item: "ControlUnitModel",
+						data: {
+							serial: 12,
+							parentSerial: null,
+							typeId: 0,
+							parentType: null,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							fireButton: null,
+							cableFault: null,
+							isolationRelay: null,
+							earthLeakage: null,
+							blastArmed: null
+						}
 					},
 					{
-						serial: 22,
-						parent_serial: 12,
-						type_id: 1,
-						parent_type: 0,
-						parent_id: null,
-						window_id: null,
-						communication_status: 1,
-						key_switch_status: null,
-						cable_fault: null,
-						isolation_relay: null,
-						earth_leakage: null,
-						blast_armed: null
+						item: "SectionControlModel",
+						data: {
+							serial: 22,
+							parentSerial: 12,
+							typeId: 1,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							cableFault: null,
+							isolationRelay: null,
+							earthLeakage: null,
+							blastArmed: null
+						}
 					},
 					{
-						serial: 16,
-						parent_serial: 12,
-						type_id: 1,
-						parent_type: 0,
-						parent_id: null,
-						window_id: null,
-						communication_status: 1,
-						key_switch_status: null,
-						cable_fault: null,
-						isolation_relay: null,
-						earth_leakage: null,
-						blast_armed: null
+						item: "SectionControlModel",
+						data: {
+							serial: 16,
+							parentSerial: 12,
+							typeId: 1,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							cableFault: null,
+							isolationRelay: null,
+							earthLeakage: null,
+							blastArmed: null
+						}
 					},
 					{
-						serial: 56,
-						parent_serial: 12,
-						type_id: 1,
-						parent_type: 0,
-						parent_id: null,
-						window_id: null,
-						communication_status: 1,
-						key_switch_status: null,
-						cable_fault: null,
-						isolation_relay: null,
-						earth_leakage: null,
-						blast_armed: null
+						item: "SectionControlModel",
+						data: {
+							serial: 56,
+							parentSerial: 12,
+							typeId: 1,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							cableFault: null,
+							isolationRelay: null,
+							earthLeakage: null,
+							blastArmed: null
+						}
 					}
 				];
 
-				const data = {
+				const packetConstructor = new PacketConstructor(1, 12, {
 					data: [22, 16, 56]
+				});
+
+				const packetTemplate = new PacketTemplate();
+				const parser = new DataListParser(
+					packetTemplate.incomingCommTemplate[1]
+				);
+
+				const testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[1],
+					packet: packetConstructor.packet,
+					created: Date.now(),
+					pos: 0
 				};
 
-				const packetConstructor = new PacketConstructor(1, 12, data);
+				const parsedPacketArr = await parser.parse(mockHappn, testObj);
+				const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				const parser = new DataListParser();
-				const packetTemplate = new PacketTemplate();
-
-				let template = packetTemplate.incomingCommTemplate[1];
-
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
-
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
-
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-
-				let res = result.map(item => {
-					return item.data;
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
-
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
-				});
-				//console.log(res);
 
 				await assert.deepEqual(res, expected);
 			} catch (err) {
@@ -175,94 +185,105 @@ describe("001 PacketConstructor tests", async () => {
 			try {
 				var expected = [
 					{
-						serial: 34,
-						parent_serial: null,
-						type_id: 1,
-						parent_type: 0,
-						parent_id: null,
-						window_id: 3,
-						communication_status: 1,
-						key_switch_status: null,
-						cable_fault: null,
-						isolation_relay: null,
-						earth_leakage: null,
-						blast_armed: null
+						item: "SectionControlModel",
+						data: {
+							serial: 34,
+							parentSerial: null,
+							typeId: 1,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							cableFault: null,
+							isolationRelay: null,
+							earthLeakage: null,
+							blastArmed: null
+						}
 					},
 					{
-						serial: 12,
-						parent_serial: 34,
-						type_id: 2,
-						parent_type: 1,
-						parent_id: null,
-						window_id: 1,
-						communication_status: 1,
-						key_switch_status: null,
-						detonator_status: null,
-						booster_fired_lfs: null,
-						partial_blast_lfs: null,
-						missing_pulse_detected_lfs: null,
-						DC_supply_voltage: null,
-						mains: null
+						item: "BoosterModel",
+						data: {
+							serial: null,
+							parentSerial: 34,
+							typeId: 2,
+							parentType: 1,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							detonatorStatus: null,
+							boosterFired: null,
+							partialBlast: null,
+							missingPulseDetected: null,
+							dcSupplyVoltage: null,
+							mains: null
+						}
 					},
 					{
-						serial: 56,
-						parent_serial: 34,
-						type_id: 2,
-						parent_type: 1,
-						parent_id: null,
-						window_id: 2,
-						communication_status: 1,
-						key_switch_status: null,
-						detonator_status: null,
-						booster_fired_lfs: null,
-						partial_blast_lfs: null,
-						missing_pulse_detected_lfs: null,
-						DC_supply_voltage: null,
-						mains: null
+						item: "BoosterModel",
+						data: {
+							serial: null,
+							parentSerial: 34,
+							typeId: 2,
+							parentType: 1,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							detonatorStatus: null,
+							boosterFired: null,
+							partialBlast: null,
+							missingPulseDetected: null,
+							dcSupplyVoltage: null,
+							mains: null
+						}
 					},
 					{
-						serial: 89,
-						parent_serial: 34,
-						type_id: 2,
-						parent_type: 1,
-						parent_id: null,
-						window_id: 3,
-						communication_status: 1,
-						key_switch_status: null,
-						detonator_status: null,
-						booster_fired_lfs: null,
-						partial_blast_lfs: null,
-						missing_pulse_detected_lfs: null,
-						DC_supply_voltage: null,
-						mains: null
+						item: "BoosterModel",
+						data: {
+							serial: null,
+							parentSerial: 34,
+							typeId: 2,
+							parentType: 1,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: null,
+							detonatorStatus: null,
+							boosterFired: null,
+							partialBlast: null,
+							missingPulseDetected: null,
+							dcSupplyVoltage: null,
+							mains: null
+						}
 					}
 				];
 
-				const data = {
+				const packetConstructor = new PacketConstructor(2, 34, {
 					data: [12, 56, 89]
-				};
-				const packetConstructor = new PacketConstructor(2, 34, data);
-
-				const parser = new DataListParser();
-				const packetTemplate = new PacketTemplate();
-
-				let template = packetTemplate.incomingCommTemplate[2];
-
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
-
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
-
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-
-				let res = result.map(item => {
-					return item.data;
 				});
 
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
+				const packetTemplate = new PacketTemplate();
+				const parser = new DataListParser(
+					packetTemplate.incomingCommTemplate[2]
+				);
+
+				const testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[2],
+					packet: packetConstructor.packet,
+					created: Date.now(),
+					pos: 0
+				};
+
+				const parsedPacketArr = await parser.parse(mockHappn, testObj);
+				const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
 
 				await assert.deepEqual(res, expected);
@@ -279,50 +300,62 @@ describe("001 PacketConstructor tests", async () => {
 			try {
 				var expected = [
 					{
-						serial: 34,
-						parent_serial: null,
-						type_id: 1,
-						parent_type: 0,
-						parent_id: null,
-						window_id: null,
-						communication_status: 1,
-						key_switch_status: 1,
-						cable_fault: 0,
-						isolation_relay: 0,
-						earth_leakage: 0,
-						blast_armed: 0
+						item: "SectionControlModel",
+						data: {
+							serial: 34,
+							parentSerial: null,
+							typeId: 1,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: 1,
+							cableFault: 0,
+							isolationRelay: 0,
+							earthLeakage: 0,
+							blastArmed: 0
+						}
 					},
 					{
-						serial: null,
-						parent_serial: 34,
-						type_id: 2,
-						parent_type: 1,
-						parent_id: null,
-						window_id: 1,
-						communication_status: 1,
-						key_switch_status: 1,
-						detonator_status: 0,
-						booster_fired_lfs: 0,
-						partial_blast_lfs: 0,
-						missing_pulse_detected_lfs: 0,
-						DC_supply_voltage: 0,
-						mains: 0
+						item: "BoosterModel",
+						data: {
+							serial: null,
+							parentSerial: 34,
+							typeId: 2,
+							parentType: 1,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: 1,
+							detonatorStatus: 0,
+							boosterFired: 0,
+							partialBlast: 0,
+							missingPulseDetected: 0,
+							dcSupplyVoltage: 0,
+							mains: 0
+						}
 					},
 					{
-						serial: null,
-						parent_serial: 34,
-						type_id: 2,
-						parent_type: 1,
-						parent_id: null,
-						window_id: 2,
-						communication_status: 1,
-						key_switch_status: 1,
-						detonator_status: 0,
-						booster_fired_lfs: 0,
-						partial_blast_lfs: 0,
-						missing_pulse_detected_lfs: 0,
-						DC_supply_voltage: 0,
-						mains: 0
+						item: "BoosterModel",
+						data: {
+							serial: null,
+							parentSerial: 34,
+							typeId: 2,
+							parentType: 1,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							keySwitchStatus: 1,
+							detonatorStatus: 0,
+							boosterFired: 0,
+							partialBlast: 0,
+							missingPulseDetected: 0,
+							dcSupplyVoltage: 0,
+							mains: 0
+						}
 					}
 				];
 
@@ -334,26 +367,23 @@ describe("001 PacketConstructor tests", async () => {
 					]
 				};
 				const packetConstructor = new PacketConstructor(3, 34, data);
-				const parser = new DeviceDataParser();
 				const packetTemplate = new PacketTemplate();
+				const parser = new DeviceDataParser(
+					packetTemplate.incomingCommTemplate[3]
+				);
 
-				let template = packetTemplate.incomingCommTemplate[3];
+				var testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[3],
+					packet: packetConstructor.packet,
+					created: Date.now(),
+					pos: 0
+				};
 
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				const parsedPacketArr = await parser.parse(mockHappn, testObj);
+				const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
-
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-
-				let res = result.map(item => {
-					return item.data;
-				});
-
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
 
 				await assert.deepEqual(res, expected);
@@ -368,92 +398,103 @@ describe("001 PacketConstructor tests", async () => {
 	it("can construct a data packet with command 04", async () => {
 		const data = {
 			data: [
-				{ serial: 4423423, window_id: 33 },
-				{ serial: 4523434, window_id: 34 }
+				{ serial: 4423423, windowId: 33 },
+				{ serial: 4523434, windowId: 34 }
 			]
 		};
 		let test = async () => {
 			try {
 				const expected = [
 					{
-						serial: 34,
-						parent_serial: null,
-						type_id: 3,
-						parent_type: 0,
-						parent_id: null,
-						window_id: 2,
-						communication_status: 1,
-						blast_armed: null,
-						key_switch_status: null,
-						isolation_relay: null,
-						mains: null,
-						low_bat: null,
-						too_low_bat: null,
-						DC_supply_voltage_status: null,
-						shaft_fault: null,
-						cable_fault: null,
-						earth_leakage: null,
-						led_state: null
+						item: "CBoosterModel",
+						data: {
+							serial: 34,
+							parentSerial: null,
+							typeId: 3,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							blastArmed: null,
+							keySwitchStatus: null,
+							isolationRelay: null,
+							mains: null,
+							lowBat: null,
+							tooLowBat: null,
+							dcSupplyVoltage: null,
+							shaftFault: null,
+							cableFault: null,
+							earthLeakage: null,
+							ledState: null,
+							childCount: 2
+						}
 					},
 					{
-						serial: 4423423,
-						parent_serial: 34,
-						type_id: 4,
-						parent_type: 3,
-						parent_id: null,
-						window_id: 33,
-						detonator_status: null,
-						bridge_wire: null,
-						calibration: null,
-						program: null,
-						booster_fired_lfs: null,
-						tagged: null,
-						logged: null,
-						delay: null
+						item: "EDDModel",
+						data: {
+							serial: 4423423,
+							parentSerial: 34,
+							typeId: 4,
+							parentType: 3,
+							created: null,
+							modified: null,
+							path: "",
+							detonatorStatus: null,
+							bridgeWire: null,
+							calibration: null,
+							program: null,
+							boosterFired: null,
+							tagged: null,
+							logged: null,
+							delay: null,
+							windowId: 33
+						}
 					},
 					{
-						serial: 4523434,
-						parent_serial: 34,
-						type_id: 4,
-						parent_type: 3,
-						parent_id: null,
-						window_id: 34,
-						detonator_status: null,
-						bridge_wire: null,
-						calibration: null,
-						program: null,
-						booster_fired_lfs: null,
-						tagged: null,
-						logged: null,
-						delay: null
+						item: "EDDModel",
+						data: {
+							serial: 4523434,
+							parentSerial: 34,
+							typeId: 4,
+							parentType: 3,
+							created: null,
+							modified: null,
+							path: "",
+							detonatorStatus: null,
+							bridgeWire: null,
+							calibration: null,
+							program: null,
+							boosterFired: null,
+							tagged: null,
+							logged: null,
+							delay: null,
+							windowId: 34
+						}
 					}
 				];
 
 				const packetConstructor = new PacketConstructor(4, 34, data);
-				console.log(packetConstructor);
 
-				const parser = new DataListParser();
 				const packetTemplate = new PacketTemplate();
+				const parser = new DataListParser(
+					packetTemplate.incomingCommTemplate[4]
+				);
 
-				let template = packetTemplate.incomingCommTemplate[4];
-
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				const testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[4],
+					packet: packetConstructor.packet,
+					created: Date.now(),
+					pos: 0
+				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let res = result.map(item => {
-					return item.data;
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
-
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
-				});
-				//console.log(res);
 
 				await assert.deepEqual(res, expected);
 			} catch (err) {
@@ -465,85 +506,92 @@ describe("001 PacketConstructor tests", async () => {
 	});
 
 	it("can construct a data packet with command 05", async () => {
-		const data = {
-			data: [
-				{
-					serial: 13,
-					window_id: 33,
-					ledState: 6,
-					rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-				},
-				{
-					window_id: 34,
-					rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-					delay: 2000
-				}
-			]
-		};
 		let test = async () => {
 			try {
 				let expected = [
 					{
-						serial: 43,
-						parent_serial: null,
-						type_id: 3,
-						parent_type: 0,
-						parent_id: null,
-						window_id: 33,
-						communication_status: 1,
-						blast_armed: 0,
-						key_switch_status: 1,
-						isolation_relay: 0,
-						mains: 0,
-						low_bat: 1,
-						too_low_bat: 0,
-						DC_supply_voltage_status: 0,
-						shaft_fault: 0,
-						cable_fault: 0,
-						earth_leakage: 0,
-						led_state: 6
+						item: "CBoosterModel",
+						data: {
+							serial: 43,
+							parentSerial: null,
+							typeId: 3,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							blastArmed: 0,
+							keySwitchStatus: 1,
+							isolationRelay: 0,
+							mains: 0,
+							lowBat: 1,
+							tooLowBat: 0,
+							dcSupplyVoltage: 0,
+							shaftFault: 0,
+							cableFault: 0,
+							earthLeakage: 0,
+							ledState: 6,
+							childCount: 33
+						}
 					},
 					{
-						serial: null,
-						parent_serial: 43,
-						type_id: 4,
-						parent_type: 3,
-						parent_id: null,
-						window_id: 34,
-						detonator_status: 0,
-						bridge_wire: 0,
-						calibration: 0,
-						program: 0,
-						booster_fired_lfs: 0,
-						tagged: 0,
-						logged: 1,
-						delay: 2000
+						item: "EDDModel",
+						data: {
+							serial: null,
+							parentSerial: 43,
+							typeId: 4,
+							parentType: 3,
+							created: null,
+							modified: null,
+							path: "",
+							detonatorStatus: 0,
+							bridgeWire: 0,
+							calibration: 0,
+							program: 0,
+							boosterFired: 0,
+							tagged: 0,
+							logged: 1,
+							delay: 2000,
+							windowId: 34
+						}
 					}
 				];
 
+				const data = {
+					data: [
+						{
+							serial: 13,
+							windowId: 33,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 34,
+							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+							delay: 2000
+						}
+					]
+				};
 				const packetConstructor = new PacketConstructor(5, 43, data);
-				console.log(packetConstructor);
-
-				const parser = new DeviceDataParser();
 				const packetTemplate = new PacketTemplate();
 
-				let template = packetTemplate.incomingCommTemplate[5];
+				const parser = new DeviceDataParser(
+					packetTemplate.incomingCommTemplate[5]
+				);
 
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				var testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[5],
+					packet: packetConstructor.packet,
+					created: Date.now(),
+					pos: 0
+				};
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+				const parsedPacketArr = await parser.parse(mockHappn, testObj);
 
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+				const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let res = result.map(item => {
-					return item.data;
-				});
-
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
 
 				await assert.deepEqual(res, expected);
@@ -560,7 +608,7 @@ describe("001 PacketConstructor tests", async () => {
 			data: [
 				{
 					serial: 13,
-					window_id: 33,
+					windowId: 33,
 					ledState: 6,
 					rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 				}
@@ -570,51 +618,54 @@ describe("001 PacketConstructor tests", async () => {
 			try {
 				var expected = [
 					{
-						serial: 43,
-						parent_serial: null,
-						type_id: 3,
-						parent_type: 0,
-						parent_id: null,
-						window_id: 33,
-						communication_status: 1,
-						blast_armed: 0,
-						key_switch_status: 1,
-						isolation_relay: 0,
-						mains: 0,
-						low_bat: 1,
-						too_low_bat: 0,
-						DC_supply_voltage_status: 0,
-						shaft_fault: 0,
-						cable_fault: 0,
-						earth_leakage: 0,
-						led_state: 6
+						item: "CBoosterModel",
+						data: {
+							serial: 43,
+							parentSerial: null,
+							typeId: 3,
+							parentType: 0,
+							created: null,
+							modified: null,
+							path: "",
+							communicationStatus: 1,
+							blastArmed: 0,
+							keySwitchStatus: 1,
+							isolationRelay: 0,
+							mains: 0,
+							lowBat: 1,
+							tooLowBat: 0,
+							dcSupplyVoltage: 0,
+							shaftFault: 0,
+							cableFault: 0,
+							earthLeakage: 0,
+							ledState: 6,
+							childCount: 33
+						}
 					}
 				];
 
 				const packetConstructor = new PacketConstructor(5, 43, data);
-				console.log(packetConstructor);
-
-				const parser = new DeviceDataParser();
 				const packetTemplate = new PacketTemplate();
 
-				let template = packetTemplate.incomingCommTemplate[5];
+				const parser = new DeviceDataParser(
+					packetTemplate.incomingCommTemplate[5]
+				);
 
-				let packet = packetConstructor.packet;
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				var testObj = {
+					packetTemplate: packetTemplate.incomingCommTemplate[5],
+					packet: packetConstructor.packet,
+					created: Date.now(),
+					pos: 0
+				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
 				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let res = result.map(item => {
-					return item.data;
+				const res = result.map(item => {
+					return { item: item.constructor.name, data: item.data };
 				});
-
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-					delete item.id;
-				});
+				console.log(res);
 
 				await assert.deepEqual(res, expected);
 			} catch (err) {

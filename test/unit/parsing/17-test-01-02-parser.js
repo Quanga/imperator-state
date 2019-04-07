@@ -19,10 +19,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 1,
 				parent_serial: null,
-				type_id: 0,
+				typeId: 0,
 				parent_type: null,
-				parent_id: null,
-				window_id: null,
+				windowId: null,
 				communication_status: 1,
 				key_switch_status: null,
 				fire_button: null,
@@ -34,10 +33,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 1,
 				parent_serial: 1,
-				type_id: 1,
+				typeId: 1,
 				parent_type: 0,
-				parent_id: null,
-				window_id: null,
+				windowId: null,
 				communication_status: 1,
 				key_switch_status: null,
 				cable_fault: null,
@@ -48,10 +46,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 2,
 				parent_serial: 1,
-				type_id: 1,
+				typeId: 1,
 				parent_type: 0,
-				parent_id: null,
-				window_id: null,
+				windowId: null,
 				communication_status: 1,
 				key_switch_status: null,
 				cable_fault: null,
@@ -66,10 +63,12 @@ describe("parser-01-02-parser-test", async function() {
 				const parser = new DataListParser();
 				const packetTemplate = new PacketTemplate();
 
-				let template = packetTemplate.incomingCommTemplate[1];
-
-				let packet = "aaaa0c01000100010002bf5d";
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				var testObj = new PacketModel({
+					packetTemplate: packetTemplate.incomingCommTemplate[1],
+					packet: "aaaa0c01000100010002bf5d",
+					created: Date.now(),
+					pos: 0
+				});
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
@@ -82,7 +81,6 @@ describe("parser-01-02-parser-test", async function() {
 				res.forEach(item => {
 					delete item.modified;
 					delete item.created;
-					delete item.id;
 				});
 
 				await assert.deepEqual(res, expected);
@@ -99,10 +97,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 1,
 				parent_serial: null,
-				type_id: 1,
+				typeId: 1,
 				parent_type: 0,
-				parent_id: null,
-				window_id: 3,
+				windowId: 3,
 				communication_status: 1,
 				key_switch_status: null,
 				cable_fault: null,
@@ -113,10 +110,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 1,
 				parent_serial: 1,
-				type_id: 2,
+				typeId: 2,
 				parent_type: 1,
-				parent_id: null,
-				window_id: 1,
+				windowId: 1,
 				communication_status: 1,
 				key_switch_status: null,
 				detonator_status: null,
@@ -129,10 +125,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 2,
 				parent_serial: 1,
-				type_id: 2,
+				typeId: 2,
 				parent_type: 1,
-				parent_id: null,
-				window_id: 2,
+				windowId: 2,
 				communication_status: 1,
 				key_switch_status: null,
 				detonator_status: null,
@@ -145,10 +140,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 3,
 				parent_serial: 1,
-				type_id: 2,
+				typeId: 2,
 				parent_type: 1,
-				parent_id: null,
-				window_id: 3,
+				windowId: 3,
 				communication_status: 1,
 				key_switch_status: null,
 				detonator_status: null,
@@ -165,10 +159,12 @@ describe("parser-01-02-parser-test", async function() {
 				const parser = new DataListParser();
 				const packetTemplate = new PacketTemplate();
 
-				let template = packetTemplate.incomingCommTemplate[2];
-
-				let packet = "aaaa0e0200010100020003000118";
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				var testObj = new PacketModel({
+					packetTemplate: packetTemplate.incomingCommTemplate[2],
+					packet: "aaaa0e0200010100020003000118",
+					created: Date.now(),
+					pos: 0
+				});
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
@@ -181,7 +177,6 @@ describe("parser-01-02-parser-test", async function() {
 				res.forEach(item => {
 					delete item.modified;
 					delete item.created;
-					delete item.id;
 				});
 
 				await assert.deepEqual(res, expected);
@@ -198,10 +193,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: 1,
 				parent_serial: null,
-				type_id: 1,
+				typeId: 1,
 				parent_type: 0,
-				parent_id: null,
-				window_id: null,
+				windowId: null,
 				communication_status: 1,
 				key_switch_status: 0,
 				isolation_relay: 0,
@@ -212,10 +206,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: null,
 				parent_serial: 1,
-				type_id: 2,
+				typeId: 2,
 				parent_type: 1,
-				parent_id: null,
-				window_id: 1,
+				windowId: 1,
 				communication_status: 1,
 				key_switch_status: 1,
 				detonator_status: 0,
@@ -228,10 +221,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: null,
 				parent_serial: 1,
-				type_id: 2,
+				typeId: 2,
 				parent_type: 1,
-				parent_id: null,
-				window_id: 2,
+				windowId: 2,
 				communication_status: 1,
 				key_switch_status: 1,
 				detonator_status: 0,
@@ -244,10 +236,9 @@ describe("parser-01-02-parser-test", async function() {
 			{
 				serial: null,
 				parent_serial: 1,
-				type_id: 2,
+				typeId: 2,
 				parent_type: 1,
-				parent_id: null,
-				window_id: 3,
+				windowId: 3,
 				communication_status: 1,
 				key_switch_status: 1,
 				detonator_status: 0,
@@ -264,10 +255,13 @@ describe("parser-01-02-parser-test", async function() {
 				const parser = new DeviceDataParser();
 				const packetTemplate = new PacketTemplate();
 
-				let template = packetTemplate.incomingCommTemplate[3];
 				//aaaa 10 03 0001 2130 - 4020 4240 4350  -63ff;
-				let packet = "aaaa10030001213040204240435063ff";
-				var testObj = new PacketModel(template, packet, Date.now(), 0);
+				var testObj = new PacketModel({
+					packetTemplate: packetTemplate.incomingCommTemplate[3],
+					packet: "aaaa10030001213040204240435063ff",
+					created: Date.now(),
+					pos: 0
+				});
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
@@ -280,7 +274,6 @@ describe("parser-01-02-parser-test", async function() {
 				res.forEach(item => {
 					delete item.modified;
 					delete item.created;
-					delete item.id;
 				});
 
 				await assert.deepEqual(res, expected);
