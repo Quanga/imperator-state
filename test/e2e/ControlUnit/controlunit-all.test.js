@@ -4,7 +4,7 @@ const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-describe("CONTROL UNIT data tests", function() {
+describe("E2E - CONTROL UNIT data tests", function() {
 	this.timeout(10000);
 
 	let serverHelper = new ServerHelper();

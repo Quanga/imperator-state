@@ -1,13 +1,11 @@
 var assert = require("assert");
 
-describe("parser-section-control-parser-test", async function() {
+describe("PARSER-section-control-parser-test", async function() {
 	const MockHappn = require("../../mocks/mock_happn");
 	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
 	let mockHappn = new MockHappn();
-
-	this.timeout(30000);
 
 	this.timeout(2000);
 

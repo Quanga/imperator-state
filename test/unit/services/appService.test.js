@@ -44,7 +44,6 @@ describe("App Startup Tests", async function() {
 		//await meshInstance.start();
 		let info = await meshInstance.exchange.app.getAppInfo();
 
-		console.log(info);
 		//assert(info.status, "STOPPED");
 		expect(info.name).to.eql("");
 	});

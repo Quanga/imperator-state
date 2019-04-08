@@ -1,7 +1,4 @@
-
-
-describe("Queue Service Tests", function () {
-
+describe("SERVICE-QueueService-tests", function() {
 	//var assert = require("assert");
 	const QueueService = require("../../../lib/services/queue_service");
 	const queueService = new QueueService();
@@ -11,14 +8,13 @@ describe("Queue Service Tests", function () {
 
 	this.timeout(10000);
 
-
-	after("clean up", function (callback) {
-		queueService.stop(mockHappn, function (err) {
+	after("clean up", function(callback) {
+		queueService.stop(mockHappn, function(err) {
 			callback(err);
 		});
 	});
 
-	it("successfully initialises the file queue service", async function () {
+	it("successfully initialises the file queue service", async function() {
 		try {
 			await queueService.initialise(mockHappn);
 		} catch (error) {
@@ -26,17 +22,12 @@ describe("Queue Service Tests", function () {
 		}
 	});
 
-	it("successfully starts watching the file queue", function () {
+	it("successfully starts watching the file queue", function() {
 		queueService.initialise(mockHappn);
 	});
 
-	it("successfully adds an item to the file queue", function () {
+	it("successfully adds an item to the file queue", function() {
 		let mockMessage = "My mock message";
 		queueService.addToIncomingQueue(mockHappn, mockMessage);
 	});
-
-
-
-
-
 });

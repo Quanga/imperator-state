@@ -50,7 +50,7 @@ module.exports = {
 					middleware: {
 						security: {
 							// cookieName: 'custom_token',
-							exclusions: ["/index.html"]
+							exclusions: ["/", "/system/*", "/system/index.html"]
 						}
 					}
 				}
@@ -60,7 +60,9 @@ module.exports = {
 	web: {
 		routes: {
 			// To serve static at '/'
-			"/": serveStatic("./build")
+			"/system/": serveStatic("./build/", {
+				index: ["index.html", "index.htm"]
+			})
 		}
 
 		// },

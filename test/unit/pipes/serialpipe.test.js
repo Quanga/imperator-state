@@ -8,7 +8,7 @@ const AeceParser = require("../../../lib/pipes/aece_readline");
 let timer = ms => {
 	return new Promise(resolve => setTimeout(resolve, ms));
 };
-describe("pipe-serialiport-pipe-tests", async () => {
+describe("PIPE-serialiport-pipe-tests", async () => {
 	it("emits data received after the ready data", async () => {
 		const spy = sinon.spy();
 		const parser = new AeceParser({ delimiter: Buffer.from("AAAA", "hex") });

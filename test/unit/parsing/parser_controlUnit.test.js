@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("parser-control-unit-parser-test", async function() {
+describe("PARSER-control-unit-parser-test", async function() {
 	const MockHappn = require("../../mocks/mock_happn");
 	let mockHappn = new MockHappn();
 

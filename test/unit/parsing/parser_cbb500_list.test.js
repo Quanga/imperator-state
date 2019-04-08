@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("parser-CBB500_LIST-parser-test", async function() {
+describe("PARSER-CBB500_LIST-parser-test", async function() {
 	const MockHappn = require("../../mocks/mock_happn");
 	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");

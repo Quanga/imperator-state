@@ -6,7 +6,7 @@ var Mesh = require("happner-2");
 
 require("dotenv").config();
 
-describe("AXXIS - CBB data test", function() {
+describe("E2E - AXXIS - CBB data test", function() {
 	let serverHelper = new ServerHelper();
 	const serialPortHelper = new SerialPortHelper();
 

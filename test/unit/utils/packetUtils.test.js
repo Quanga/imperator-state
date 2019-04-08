@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("packet-utils-test", function () {
+describe("UTILS-packetUtils-test", function() {
 	var Utils = require("../../../lib/utils/packet_utils");
 	var utils = null;
 
@@ -9,12 +9,12 @@ describe("packet-utils-test", function () {
 
 	this.timeout(10000);
 
-	before("it sets up the dependencies", function (callback) {
+	before("it sets up the dependencies", function(callback) {
 		utils = new Utils();
 		callback();
 	});
 
-	it("can calculate the correct packet length", async function () {
+	it("can calculate the correct packet length", async function() {
 		/*
          AAAA 0A 03 0001 4040 07BE
          */
@@ -27,7 +27,7 @@ describe("packet-utils-test", function () {
 		}
 	});
 
-	it("can calculate the CRC of a packet with event on IBC-1 serial 0001 and key switch disarmed on IBC", async function () {
+	it("can calculate the CRC of a packet with event on IBC-1 serial 0001 and key switch disarmed on IBC", async function() {
 		// AAAA 0A 08 0001 5540 C212 (event on IBC-1 id 0001 - key switch disarmed on IBC)
 
 		try {
@@ -39,7 +39,7 @@ describe("packet-utils-test", function () {
 		}
 	});
 
-	it("can calculate the CRC of a packet with event on IBC-1 serial 0001 and key switch armed on IBC", function (callback) {
+	it("can calculate the CRC of a packet with event on IBC-1 serial 0001 and key switch armed on IBC", function(callback) {
 		// AAAA 0A 08 0001 55C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
 
 		var expected = 0xca96;
@@ -48,7 +48,7 @@ describe("packet-utils-test", function () {
 		callback();
 	});
 
-	it("can calculate the CRC of a packet with event on IBC-1 serial 0001 and key switch armed on IBC with buffer", function (callback) {
+	it("can calculate the CRC of a packet with event on IBC-1 serial 0001 and key switch armed on IBC with buffer", function(callback) {
 		// AAAA 0A 08 0001 55C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
 		let hexval = [170, 170, 10, 8, 0, 1, 85, 192];
 		var expected = 0xca96;
@@ -57,7 +57,7 @@ describe("packet-utils-test", function () {
 		callback();
 	});
 
-	it("can calculate the CRC of a packet where the CRC starts with a 0", function (callback) {
+	it("can calculate the CRC of a packet where the CRC starts with a 0", function(callback) {
 		// AAAA 0A 03 0001 4040 07BE
 
 		var expected = 0x07be;
@@ -66,7 +66,7 @@ describe("packet-utils-test", function () {
 		callback();
 	});
 
-	it("can create an outgoing packet requesting ISC serial list with a valid CRC", function (callback) {
+	it("can create an outgoing packet requesting ISC serial list with a valid CRC", function(callback) {
 		// AAAA 01 0001 DD5C
 
 		var expected = "AAAA010001DD5C".match(/.{1,2}/g).map(x => {
@@ -82,7 +82,7 @@ describe("packet-utils-test", function () {
 		callback();
 	});
 
-	it("can create an outgoing packet requesting ISC and IB651 general info with a valid CRC", function (callback) {
+	it("can create an outgoing packet requesting ISC and IB651 general info with a valid CRC", function(callback) {
 		// AAAA 03 0007 538C
 
 		var expected = "AAAA030007538C".match(/.{1,2}/g).map(x => {
@@ -98,7 +98,7 @@ describe("packet-utils-test", function () {
 		callback();
 	});
 
-	it("can check for duplicates in list", async function () {
+	it("can check for duplicates in list", async function() {
 		let list1 = [{ serial: 1 }, { serial: 2 }, { serial: 3 }];
 
 		try {
@@ -110,13 +110,12 @@ describe("packet-utils-test", function () {
 			current = { serial: 1 };
 			result = await utils.checkForNoDuplicate(list1, current);
 			assert.equal(result, 1);
-
 		} catch (err) {
 			return Promise.reject(err);
 		}
 	});
 
-	it('can reverse serial bytes', async function () {
+	it("can reverse serial bytes", async function() {
 		try {
 			let result = utils.reverseSerialBytes(123);
 			assert.equal(result, 31488);
@@ -128,7 +127,7 @@ describe("packet-utils-test", function () {
 		}
 	});
 
-	it('can pad an item', async function () {
+	it("can pad an item", async function() {
 		try {
 			let result = utils.pad("93", 16);
 			assert.equal(result, "0000000000000093");
@@ -137,7 +136,7 @@ describe("packet-utils-test", function () {
 		}
 	});
 
-	it("can convert Binary to hex string", async function () {
+	it("can convert Binary to hex string", async function() {
 		try {
 			let result = utils.binaryToHexString("01001010", 16);
 			assert.equal(result, "000000000000004a");
@@ -146,7 +145,7 @@ describe("packet-utils-test", function () {
 		}
 	});
 
-	it("can convert Hex to binary", async function () {
+	it("can convert Hex to binary", async function() {
 		try {
 			let result = utils.hexToBinaryString("AAAA", 16);
 			assert.equal(result, "1010101010101010");

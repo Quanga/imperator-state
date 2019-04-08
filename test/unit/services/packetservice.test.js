@@ -1,4 +1,4 @@
-describe("packet-service-test", function () {
+describe("SERVICE-packetService-test", function() {
 	var PacketService = require("../../../lib/services/packet_service");
 	var packetService = null;
 
@@ -7,13 +7,13 @@ describe("packet-service-test", function () {
 
 	this.timeout(30000);
 
-	before("it sets up the dependencies", function (callback) {
+	before("it sets up the dependencies", function(callback) {
 		packetService = new PacketService();
 		mockHappn = new MockHappn();
 		callback();
 	});
 
-	it("can parse a key switch DISARMED message and check crc", async function () {
+	it("can parse a key switch DISARMED message and check crc", async function() {
 		//  FRAGMENT:  [start]  [length]    [command]    [serial] [data]  [CRC]
 		//  HEX:       [AAAA]   [0A]        [08]         [0001]   [5540]  [C212]
 
@@ -25,7 +25,7 @@ describe("packet-service-test", function () {
 		}
 	});
 
-	it("can parse a key switch ARMED message and check crc", async function () {
+	it("can parse a key switch ARMED message and check crc", async function() {
 		//  FRAGMENT:  [start]  [length]    [command]    [serial] [data]  [CRC]
 		//  HEX:       [AAAA]   [0A]        [08]         [0001]   [55C0]  [CA96]
 		try {
@@ -41,7 +41,7 @@ describe("packet-service-test", function () {
 		}
 	});
 
-	it("can parse an IBC response packet and check crc", async function () {
+	it("can parse an IBC response packet and check crc", async function() {
 		//  FRAGMENT:  [start]  [length]    [command]    [serial] [data]    [CRC]
 		//  HEX:       [AAAA]   [0A]        [01]         [0007]   [-]       [52D8]
 		try {

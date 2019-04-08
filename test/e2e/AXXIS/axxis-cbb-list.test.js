@@ -4,7 +4,7 @@ const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-describe("AXXIS - CBB list test", function() {
+describe("E2E - AXXIS - CBB list test", function() {
 	const serialPortHelper = new SerialPortHelper();
 	let serverHelper = new ServerHelper();
 
@@ -239,7 +239,7 @@ describe("AXXIS - CBB list test", function() {
 			const archives = await archiveRepository.getAll();
 
 			//console.log("ARCHIVES", JSON.stringify(archives, null, 2));
-			console.log("ARCHIVES", archives[0].value);
+			//console.log("ARCHIVES", archives[0].value);
 
 			expect(archives[0].value.length).to.eql(2);
 		};

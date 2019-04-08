@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("node-tree-utils-test", function() {
+describe("UTILS-nodetreeUtils-test", function() {
 	var NodeTreeUtils = require("../../../lib/utils/node_tree_utils");
 	var nodeTreeUtils = null;
 

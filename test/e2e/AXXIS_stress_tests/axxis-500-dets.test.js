@@ -4,7 +4,7 @@ const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 var Mesh = require("happner-2");
 
-describe("can handle 500 detonators", function() {
+describe("E2E - can handle 500 detonators", function() {
 	let serverHelper = new ServerHelper();
 	const serialPortHelper = new SerialPortHelper();
 

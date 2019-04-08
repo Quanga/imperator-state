@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("parser-CBB_DATA-parser-test", async function() {
+describe("PARSER-CBB_DATA-parser-test", async function() {
 	const MockHappn = require("../../mocks/mock_happn");
 	let mockHappn = new MockHappn();
 

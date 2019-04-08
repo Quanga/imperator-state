@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("node-tree-utils-Axxis-test", function() {
+describe("UTILS-nodetreeUtils-Axxis-test", function() {
 	var NodeTreeUtils = require("../../../lib/utils/node_tree_utils");
 	var nodeTreeUtils = null;
 
