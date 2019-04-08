@@ -4,6 +4,7 @@
   "description": "Command router for Raspberry Pi",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test-unit": "nyc mocha  test/unit/*.test.js --recursive",
     "test-integration": "nyc mocha test/integration/test-*.js --recursive;",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
