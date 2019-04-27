@@ -29,9 +29,9 @@ SerialPortHelper.prototype.initialise = function() {
 		if (!self.__socat) {
 			console.warn("`socat` is not installed, skipping serial client tests...");
 			const installCmd =
-        os.type() === "Darwin"
-        	? "brew install socat"
-        	: "sudo apt-get install socat";
+				os.type() === "Darwin"
+					? "brew install socat"
+					: "sudo apt-get install socat";
 			console.warn(`Please run \`${installCmd}\` to enable these tests!`);
 			return;
 		}
@@ -72,11 +72,11 @@ SerialPortHelper.prototype.sendMessage = function(message) {
 		});
 
 		serialPort.on("close", function() {
-			//console.log("port closed!");
+			console.log("port closed!");
 		});
 
 		serialPort.on("open", function() {
-			//console.log("port open!");
+			console.log("port open!");
 		});
 
 		serialPort.open(function(err) {

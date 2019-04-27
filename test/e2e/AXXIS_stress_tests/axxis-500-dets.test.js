@@ -20,8 +20,14 @@ describe("E2E - can handle 500 detonators", function() {
 		new Promise((resolve, reject) => {
 			client.on("login/allow", () => resolve());
 
-			client.on("login/deny", () => reject());
-			client.on("login/error", () => reject());
+			client.on("login/deny", e => {
+				console.log(e);
+				return reject(e);
+			});
+			client.on("login/error", e => {
+				console.log(e);
+				return reject(e);
+			});
 			client.login({
 				username: "_ADMIN",
 				password: "happn"

@@ -20,10 +20,17 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	const AsyncLogin = () =>
 		new Promise((resolve, reject) => {
-			client.on("login/allow", () => resolve());
+			client.on("login/allow", () => {
+				console.log("CLIENT CONNECTED:::::::::::::::::::::::::");
+				resolve();
+			});
 
 			client.on("login/deny", () => reject());
-			client.on("login/error", () => reject());
+
+			client.on("login/error", () => {
+				console.log("CLIENT ISSUE::::::");
+			});
+
 			client.login({
 				username: "_ADMIN",
 				password: "happn"
@@ -107,6 +114,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				await timer(200);
 				await getResults();
 			} catch (err) {
+				console.log(err);
 				return Promise.reject(err);
 			}
 		};
@@ -115,7 +123,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
-		client.exchange.dataService.deleteAllTestData();
+		client.exchange.queueService.deletetTests();
+		client.exchange.dataService.deletetTests();
 
 		let sendMessages = async () => {
 			let initial = new PacketConstructor(8, 8, {
@@ -175,7 +184,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				await timer(1000);
 				await getResults2();
 				let tests = await client.exchange.dataService.getTests();
-				console.log("TESTS", JSON.stringify(tests, null, 2));
+				//console.log("TESTS", JSON.stringify(tests, null, 2));
 			} catch (err) {
 				return Promise.reject(err);
 			}

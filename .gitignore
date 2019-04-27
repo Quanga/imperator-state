@@ -14,6 +14,7 @@ package-lock.json
 .nyc_output
 .vscode
 .env
+.clinic
 
 ttyV0
 ttyV1

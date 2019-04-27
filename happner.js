@@ -8,30 +8,12 @@ module.exports.configs = {
 			}
 		}
 	},
-	queueServiceConfig: {
-		component: {
-			name: "QueueService",
-			config: {
-				queueFetchInterval: process.env.ROUTER_QUEUE_FETCH_INTERVAL,
-				showQueueDebug: process.env.ROUTER_SHOW_QUEUE_DEBUG
-			}
-		}
-	},
 	portUtilConfig: {
 		component: {
 			name: "PortUtil",
 			config: {
 				port: process.env.ROUTER_SERIAL_PORT,
 				baudRate: process.env.ROUTER_BAUD_RATE
-			}
-		}
-	},
-	dataServiceConfig: {
-		component: {
-			name: "DataService",
-			config: {
-				commCheckInterval: process.env.COMMUNICATION_CHECK_INTERVAL,
-				systemType: process.env.ROUTER_SYSYEM_TYPE
 			}
 		}
 	},

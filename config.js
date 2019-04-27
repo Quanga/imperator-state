@@ -23,14 +23,13 @@ module.exports = {
 		logFileNameAbsolute: true,
 		logger: null
 	},
-
 	happn: {
 		host: process.env.HAPPNER_LOCAL_IP,
 		port: parseInt(process.env.HAPPNER_LOCAL_PORT),
 		setOptions: {
 			timeout: 15000
 		},
-		persist: false,
+		persist: true,
 		secure: true,
 		adminPassword: "happn",
 		filename: "./aece.nedb",
@@ -50,7 +49,7 @@ module.exports = {
 					middleware: {
 						security: {
 							// cookieName: 'custom_token',
-							exclusions: ["/", "/system/*", "/system/index.html"]
+							exclusions: ["/*", "/system/*", "/system/index.html"]
 						}
 					}
 				}
@@ -59,31 +58,23 @@ module.exports = {
 	},
 	web: {
 		routes: {
-			// To serve static at '/'
-			"/system/": serveStatic("./build/", {
+			"/": serveStatic("/www/", {
 				index: ["index.html", "index.htm"]
 			})
 		}
-
-		// },
-		// data: {
-		// 	routes: {
-		// 		"test/*": "persist"
-		// 	}
 	},
-
 	modules: {
 		app: {
 			path: `${__dirname}/app.js`
+		},
+		statsService: {
+			path: `${__dirname}/lib/services/statsService.js`
 		},
 		auth: {
 			path: `${__dirname}/auth.js`
 		},
 		queueService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "QueueService"
-			}
+			path: `${__dirname}/lib/services/queue_service.js`
 		},
 		serverService: {
 			path: `${__dirname}/server.js`,
@@ -120,10 +111,7 @@ module.exports = {
 			path: `${__dirname}/lib/parsers/parser_factory.js`
 		},
 		dataService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "DataService"
-			}
+			path: `${__dirname}/lib/services/data_service.js`
 		},
 
 		dataMapper: {
@@ -206,10 +194,7 @@ module.exports = {
 		}
 	},
 	components: {
-		auth: {
-			startMethod: "startAuth",
-			stopMethod: "stopAuth"
-		},
+		statsService: {},
 		data: {
 			data: {
 				routes: {
@@ -219,8 +204,11 @@ module.exports = {
 			}
 		},
 		queueService: {
-			$configure: function(queueServiceConfig) {
-				return queueServiceConfig;
+			data: {
+				routes: {
+					"persist/*": "persist",
+					"state/*": "mem"
+				}
 			}
 		},
 		serverService: {
@@ -229,15 +217,14 @@ module.exports = {
 			}
 		},
 		app: {
-			startMethod: "startApp",
-			stopMethod: "stopApp",
-
-			$configure: function(appConfig) {
-				return appConfig;
-			}
+			startMethod: "start",
+			stopMethod: "stop"
 		},
 		parserFactory: {},
-		portService: {},
+		portService: {
+			startMethod: "start",
+			stopMethod: "stopService"
+		},
 		portUtil: {
 			$configure: function(portUtilConfig) {
 				return portUtilConfig;
@@ -246,6 +233,7 @@ module.exports = {
 
 		RxQueue: {
 			startMethod: "start",
+			stopMethod: "stop",
 			data: {
 				routes: {
 					"cache/*": "persist"
@@ -254,6 +242,7 @@ module.exports = {
 		},
 		TxQueue: {
 			startMethod: "start",
+			stopMethod: "stop",
 			data: {
 				routes: {
 					"cache/*": "persist"
@@ -262,46 +251,46 @@ module.exports = {
 		},
 		EpQueue: {
 			startMethod: "start",
+			stopMethod: "stop",
 			data: {
 				routes: {
 					"cache/*": "persist"
 				}
 			}
 		},
-		transmissionService: {
-			$configure: function(transmissionServiceConfig) {
-				return transmissionServiceConfig;
-			}
-		},
+		// transmissionService: {
+		// 	$configure: function(transmissionServiceConfig) {
+		// 		return transmissionServiceConfig;
+		// 	}
+		// },
 		messageHandler: {
 			name: "MessageHandler",
 			version: "^0.0.1",
-			useEndpoint: process.env.REPLICATION_ENABLED
+			useEndpoint: process.env.REPLICATION_ENABLED,
+			stopMethod: "stop"
 		},
-		packetService: {},
+		packetService: {
+			name: "packetService",
+			startMethod: "start",
+			stopMethod: "stop"
+		},
 		dataService: {
-			$configure: function(dataServiceConfig) {
-				return dataServiceConfig;
-			}
+			name: "dataService",
+			startMethod: "start",
+			stopMethod: "stop"
 		},
 
 		dataMapper: {},
 		packetRepository: {},
-		nodeRepository: {},
+		nodeRepository: {
+			stopMethod: "stop"
+		},
 		logsRepository: {},
 		warningsRepository: {},
 		archiveRepository: {},
 		eventService: {
 			startMethod: "startAsync",
-			stopMethod: "stopAsync",
-			methods: {
-				startAsync: {
-					type: "async"
-				},
-				stopAsync: {
-					type: "async"
-				}
-			}
+			stopMethod: "stopAsync"
 		}
 	}
 };
