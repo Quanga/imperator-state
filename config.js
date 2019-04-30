@@ -70,9 +70,6 @@ module.exports = {
 		statsService: {
 			path: `${__dirname}/lib/services/statsService.js`
 		},
-		auth: {
-			path: `${__dirname}/auth.js`
-		},
 		queueService: {
 			path: `${__dirname}/lib/services/queue_service.js`
 		},
@@ -98,96 +95,29 @@ module.exports = {
 		messageHandler: {
 			path: `${__dirname}/lib/handlers/message_handlers.js`
 		},
-		RxQueue: {
-			path: `${__dirname}/lib/services/cache_service.js`
-		},
-		TxQueue: {
-			path: `${__dirname}/lib/services/cache_service.js`
-		},
-		EpQueue: {
-			path: `${__dirname}/lib/services/cache_service.js`
-		},
 		parserFactory: {
 			path: `${__dirname}/lib/parsers/parser_factory.js`
 		},
 		dataService: {
 			path: `${__dirname}/lib/services/data_service.js`
 		},
-
 		dataMapper: {
 			path: `${__dirname}/lib/mappers/data_mapper.js`
 		},
 		packetRepository: {
-			path: `${__dirname}/lib/repositories/packetRepository.js`,
-			create: {
-				type: "async",
-				parameters: [{ name: "provider", value: "happn" }],
-				callback: {
-					parameters: [
-						{ name: "err", parameterType: "error" },
-						{ name: "res", parameterType: "instance" }
-					]
-				}
-			}
+			path: `${__dirname}/lib/repositories/packetRepository.js`
 		},
 		nodeRepository: {
-			path: `${__dirname}/lib/repositories/nodeRepository.js`,
-			create: {
-				type: "async",
-				parameters: [{ name: "provider", value: "happn" }],
-				callback: {
-					parameters: [
-						{ name: "err", parameterType: "error" },
-						{ name: "res", parameterType: "instance" }
-					]
-				}
-			}
+			path: `${__dirname}/lib/repositories/nodeRepository.js`
 		},
 		logsRepository: {
-			path: `${__dirname}/lib/repositories/logsRepository.js`,
-			create: {
-				type: "async",
-				parameters: [{ name: "provider", value: "happn" }],
-				callback: {
-					parameters: [
-						{ name: "err", parameterType: "error" },
-						{ name: "res", parameterType: "instance" }
-					]
-				}
-			}
+			path: `${__dirname}/lib/repositories/logsRepository.js`
 		},
 		warningsRepository: {
-			path: `${__dirname}/lib/repositories/warningsRepository.js`,
-			create: {
-				type: "async",
-				parameters: [{ name: "provider", value: "happn" }],
-				callback: {
-					parameters: [
-						{ name: "err", parameterType: "error" },
-						{ name: "res", parameterType: "instance" }
-					]
-				}
-			}
+			path: `${__dirname}/lib/repositories/warningsRepository.js`
 		},
-
 		archiveRepository: {
-			path: `${__dirname}/lib/repositories/archiveRepository.js`,
-			create: {
-				type: "async",
-				parameters: [{ name: "provider", value: "happn" }],
-				callback: {
-					parameters: [
-						{ name: "err", parameterType: "error" },
-						{ name: "res", parameterType: "instance" }
-					]
-				}
-			}
-		},
-		transmissionService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "TransmissionService"
-			}
+			path: `${__dirname}/lib/repositories/archiveRepository.js`
 		},
 		eventService: {
 			path: `${__dirname}/lib/services/event_service.js`
@@ -199,7 +129,7 @@ module.exports = {
 			data: {
 				routes: {
 					"persist/*": "persist",
-					"state/*": "mem"
+					"mem/*": "mem"
 				}
 			}
 		},
@@ -230,39 +160,6 @@ module.exports = {
 				return portUtilConfig;
 			}
 		},
-
-		RxQueue: {
-			startMethod: "start",
-			stopMethod: "stop",
-			data: {
-				routes: {
-					"cache/*": "persist"
-				}
-			}
-		},
-		TxQueue: {
-			startMethod: "start",
-			stopMethod: "stop",
-			data: {
-				routes: {
-					"cache/*": "persist"
-				}
-			}
-		},
-		EpQueue: {
-			startMethod: "start",
-			stopMethod: "stop",
-			data: {
-				routes: {
-					"cache/*": "persist"
-				}
-			}
-		},
-		// transmissionService: {
-		// 	$configure: function(transmissionServiceConfig) {
-		// 		return transmissionServiceConfig;
-		// 	}
-		// },
 		messageHandler: {
 			name: "MessageHandler",
 			version: "^0.0.1",
@@ -279,7 +176,6 @@ module.exports = {
 			startMethod: "start",
 			stopMethod: "stop"
 		},
-
 		dataMapper: {},
 		packetRepository: {},
 		nodeRepository: {

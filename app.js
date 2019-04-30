@@ -41,16 +41,6 @@ App.prototype.start = function($happn) {
 	logInfo("STARTING ROUTER MODULES");
 
 	let startupCheckAsync = async () => {
-		try {
-			SerialPort.list((err, ports) => {
-				if (err) return console.log("ERR", err);
-
-				console.log("PORTS:::::::::::::::", ports);
-			});
-		} catch (error) {
-			console.log("ERRRRRR", error);
-		}
-
 		await app.getDepth();
 
 		if (process.argv[2] === "reset") {
@@ -182,16 +172,7 @@ App.prototype.resetApp = function($happn) {
 	const { data } = $happn.exchange;
 
 	return new Promise((resolve, reject) => {
-		data.remove("persist/appData", {}, (error, response) => {
-			if (error) return reject(error);
-			resolve(response);
-		});
-		data.remove("service/*", {}, (error, response) => {
-			if (error) return reject(error);
-			resolve(response);
-		});
-
-		data.remove("persist/history", {}, (error, response) => {
+		data.remove("*", {}, (error, response) => {
 			if (error) return reject(error);
 			resolve(response);
 		});

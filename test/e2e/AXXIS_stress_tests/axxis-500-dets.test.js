@@ -1,4 +1,3 @@
-const expect = require("expect.js");
 const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
@@ -77,25 +76,15 @@ describe("E2E - can handle 500 detonators", function() {
 			}).packet;
 			await serialPortHelper.sendMessage(initial);
 
-			// const message = new PacketConstructor(5, 13, {
-			// 	data: [
-			// 		{
-			// 			serial: 65535,
-			// 			window_id: 2,
-			// 			ledState: 6,
-			// 			rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-			// 		}
-			// 	]
-			// }).packet;
-			// await serialPortHelper.sendMessage(message);
-
 			for (let index = 0; index < data.length; index++) {
+				await timer(50);
 				await serialPortHelper.sendMessage(data[index]);
 			}
 
-			for (let index = 0; index < data.length; index++) {
-				await serialPortHelper.sendMessage(data[index]);
-			}
+			let final = new PacketConstructor(8, 8, {
+				data: [0, 0, 0, 0, 0, 1, 1, 1]
+			}).packet;
+			await serialPortHelper.sendMessage(final);
 		};
 
 		let testAsync = async () => {

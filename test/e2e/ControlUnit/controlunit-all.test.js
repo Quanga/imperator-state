@@ -88,10 +88,10 @@ describe("E2E - CONTROL UNIT data tests", function() {
 
 				let ibc = result[0];
 
-				expect(ibc.data.communication_status).to.equal(1);
-				expect(ibc.data.fire_button).to.equal(0);
-				expect(ibc.data.key_switch_status).to.equal(1);
-				expect(ibc.data.isolation_relay).to.equal(1);
+				expect(ibc.data.communicationStatus).to.equal(1);
+				expect(ibc.data.fireButton).to.equal(0);
+				expect(ibc.data.keySwitchStatus).to.equal(1);
+				expect(ibc.data.isolationRelay).to.equal(1);
 			} catch (err) {
 				return Promise.reject(err);
 			}
@@ -115,6 +115,7 @@ describe("E2E - CONTROL UNIT data tests", function() {
 
 		let getResults = async () => {
 			try {
+				await timer(500);
 				let result = await client.exchange.nodeRepository.getAllNodes();
 
 				if (result == null || result.length == 0) {
@@ -123,10 +124,10 @@ describe("E2E - CONTROL UNIT data tests", function() {
 
 				let ibc = result[0];
 
-				expect(ibc.data.communication_status).to.equal(1);
-				expect(ibc.data.fire_button).to.equal(0);
-				expect(ibc.data.key_switch_status).to.equal(0);
-				expect(ibc.data.isolation_relay).to.equal(1);
+				expect(ibc.data.communicationStatus).to.equal(1);
+				expect(ibc.data.fireButton).to.equal(0);
+				expect(ibc.data.keySwitchStatus).to.equal(0);
+				expect(ibc.data.isolationRelay).to.equal(1);
 			} catch (err) {
 				return Promise.reject(err);
 			}

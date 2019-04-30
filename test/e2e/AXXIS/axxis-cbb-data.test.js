@@ -123,8 +123,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
-		client.exchange.queueService.deletetTests();
-		client.exchange.dataService.deletetTests();
+		//client.exchange.queueService.deletetTests();
+		//client.exchange.dataService.deletetTests();
 
 		let sendMessages = async () => {
 			let initial = new PacketConstructor(8, 8, {
@@ -139,7 +139,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				]
 			}).packet;
 			await serialPortHelper.sendMessage(initial2);
-
+			await timer(500);
 			const message = new PacketConstructor(5, 13, {
 				data: [
 					{
