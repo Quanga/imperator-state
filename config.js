@@ -67,6 +67,9 @@ module.exports = {
 		app: {
 			path: `${__dirname}/app.js`
 		},
+		uiService: {
+			path: `${__dirname}/lib/services/ui_service.js`
+		},
 		statsService: {
 			path: `${__dirname}/lib/services/statsService.js`
 		},
@@ -147,6 +150,10 @@ module.exports = {
 			}
 		},
 		app: {
+			startMethod: "start",
+			stopMethod: "stop"
+		},
+		uiService: {
 			startMethod: "start",
 			stopMethod: "stop"
 		},
