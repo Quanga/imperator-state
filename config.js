@@ -32,6 +32,7 @@ module.exports = {
 		persist: true,
 		secure: true,
 		adminPassword: "happn",
+		//defaultVariableDepth: 1,
 		filename: "./aece.nedb",
 		services: {
 			data: {
