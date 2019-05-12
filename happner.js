@@ -8,15 +8,6 @@ module.exports.configs = {
 			}
 		}
 	},
-	portUtilConfig: {
-		component: {
-			name: "PortUtil",
-			config: {
-				port: process.env.ROUTER_SERIAL_PORT,
-				baudRate: process.env.ROUTER_BAUD_RATE
-			}
-		}
-	},
 	serverServiceConfig: {
 		component: {
 			name: "ServerService",

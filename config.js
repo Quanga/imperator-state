@@ -164,9 +164,7 @@ module.exports = {
 			stopMethod: "stopService"
 		},
 		portUtil: {
-			$configure: function(portUtilConfig) {
-				return portUtilConfig;
-			}
+			startMethod: "start"
 		},
 		messageHandler: {
 			name: "MessageHandler",
