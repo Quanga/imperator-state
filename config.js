@@ -150,10 +150,7 @@ module.exports = {
 				return serverServiceConfig;
 			}
 		},
-		app: {
-			startMethod: "start",
-			stopMethod: "stop"
-		},
+
 		uiService: {
 			startMethod: "start",
 			stopMethod: "stop"
@@ -193,6 +190,10 @@ module.exports = {
 		eventService: {
 			startMethod: "startAsync",
 			stopMethod: "stopAsync"
+		},
+		app: {
+			startMethod: "start",
+			stopMethod: "stop"
 		}
 	}
 };
