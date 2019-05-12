@@ -37,7 +37,7 @@ module.exports = {
 		services: {
 			data: {
 				config: {
-					filename: `${__dirname}/data2`
+					filename: `${__dirname}/data.db`
 				},
 				stats: {
 					config: {
