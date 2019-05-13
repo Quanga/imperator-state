@@ -7,6 +7,7 @@ function SerialPortHelper() {
 	// rewrite the ports to match the virtual ports
 	process.env.TEST_OUTGOING_PORT = rslv("../../ttyV0");
 	process.env.ROUTER_SERIAL_PORT = rslv("../../ttyV1");
+	console.log(process.env.ROUTER_SERIAL_PORT);
 }
 
 SerialPortHelper.prototype.initialise = function() {
