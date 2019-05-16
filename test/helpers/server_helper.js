@@ -20,6 +20,8 @@ const find = require("find-process");
 
 ServerHelper.prototype.startServer = function() {
 	return new Promise((resolve, reject) => {
+		this.nodeEnv = process.env.NODE_ENV;
+		process.env.NODE_ENV = "test";
 		find("port", 55000)
 			.then(function(list) {
 				if (!list.length) {
@@ -67,7 +69,7 @@ ServerHelper.prototype.stopServer = function() {
 		console.log(":: STOPPING TEST SERVER....");
 
 		try {
-			//this.__serverProc.kill();
+			process.env.NODE_ENV = this.nodeEnv;
 			this.__serverProc.kill("SIGKILL");
 			resolve();
 		} catch (err) {
