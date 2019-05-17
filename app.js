@@ -1,33 +1,15 @@
 /* eslint-disable no-unused-vars */
 const defaultConstant = require("./lib/constants/defaultAppConstants")
 	.DefaultConstants;
-const Serialport = require("serialport");
 
 var os = require("os");
 
 function App() {
-	this.service = "App";
-	this.serviceStatus = "STOPPED";
-
 	this.historyObj = {
 		started: [],
 		stopped: []
 	};
 }
-
-/**
- * payload: {service: "App", serviceStatus: "STOPPED"};
- */
-App.prototype.setAppServiceState = function($happn, payload) {
-	const { app } = $happn.exchange;
-	const setAppStateAsync = async () => {
-		const serviceState = await app.getServiceState(payload.service);
-		const update = { ...serviceState, ...payload };
-		app.setServiceState(update);
-	};
-
-	return setAppStateAsync();
-};
 
 /**************************************
  * SERVICE AND APP STARTUP
@@ -72,30 +54,17 @@ App.prototype.stop = function($happn) {
  * @param $happn
  */
 App.prototype.restartRouter = function($happn) {
-	const { app } = $happn.exchange;
+	const { app, stateService } = $happn.exchange;
 	const { warn: logWarning } = $happn.log;
 
 	const restartAsync = async () => {
-		let services = await app.getAllServiceStates();
-		let allStopped = services.map(x => ({ ...x, serviceStatus: "STOPPED" }));
+		stateService.updateState({ service: $happn.name, state: "PENDING" });
 
-		allStopped.forEach(async x => await app.setAppServiceState(x));
-
-		await app.setAppServiceState({
-			service: this.service,
-			serviceStatus: "STARTING"
-		});
 		await app.writeHistory({ started: Date.now() });
-		//await app.setComponentStatus({ serviceStatus: "STARTING" });
-
 		await app.checkConfiguration(); //check for configuration
 
 		if (!this.configuration.setupComplete) {
-			//if complete start all
-			app.setAppServiceState({
-				service: this.service,
-				serviceStatus: "INCOMPLETE"
-			});
+			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
 			logWarning("SETUP INCOMPLETE - RUN UI TO COMPLETE");
 		} else {
 			this.startRouter($happn);
@@ -106,7 +75,7 @@ App.prototype.restartRouter = function($happn) {
 };
 
 App.prototype.checkConfiguration = function($happn) {
-	const { app, security } = $happn.exchange;
+	const { app, security, portService } = $happn.exchange;
 	const { warn, error: logError } = $happn.log;
 
 	const checkConfigAsync = async () => {
@@ -135,20 +104,12 @@ App.prototype.checkConfiguration = function($happn) {
 			});
 		});
 
-		const localPorts = await Serialport.list();
-
-		this.configuration.localPorts = localPorts.map(x => {
-			return x.comName;
-		});
-
-		const setPort = this.configuration.localPorts.find(
-			x => x === this.configuration.inputSource.comPort
-		);
-		/**
-		 * { comName: '/dev/tty.Bluetooth-Incoming-Port',
-		 */
 		const { setupIssues } = this.configuration;
 		setupIssues.length = 0;
+
+		const setPort = portService.checkPort(
+			this.configuration.inputSource.comPort
+		);
 
 		if (!setPort) {
 			setupIssues.push("Comm Port not set!");
@@ -170,7 +131,7 @@ App.prototype.checkConfiguration = function($happn) {
 
 App.prototype.startRouter = function($happn) {
 	const {
-		app,
+		stateService,
 		portService,
 		packetRepository,
 		nodeRepository,
@@ -223,10 +184,7 @@ App.prototype.startRouter = function($happn) {
 				await serverService.initialise();
 			}
 
-			app.setAppServiceState({
-				service: this.service,
-				serviceStatus: "STARTED"
-			});
+			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
 			logInfo("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			logError("start error", err);
@@ -274,52 +232,6 @@ App.prototype.resetRouterData = function($happn) {
 			if (error) return reject(error);
 			resolve(true);
 		});
-	});
-};
-
-/* **********************************
-GETTERS AND SETTERS FOR DATA - SERVICE STATE
-************************************* */
-
-App.prototype.getAllServiceStates = function($happn) {
-	const { data } = $happn.exchange;
-
-	return new Promise((resolve, reject) => {
-		data.get(`persist/service/*`, null, (error, response) => {
-			if (error) return reject(error);
-
-			if (!response) return resolve([]);
-			return resolve(response);
-		});
-	});
-};
-
-App.prototype.getServiceState = function($happn, service) {
-	const { data } = $happn.exchange;
-
-	return new Promise((resolve, reject) => {
-		data.get(`persist/service/${service}`, null, (error, response) => {
-			if (error) return reject(error);
-
-			return resolve(response);
-		});
-	});
-};
-
-App.prototype.setServiceState = function($happn, payload) {
-	const { data } = $happn.exchange;
-
-	return new Promise((resolve, reject) => {
-		data.set(
-			`persist/service/${payload.service}`,
-			payload,
-			{},
-			(error, response) => {
-				if (error) return reject(error);
-
-				return resolve(response);
-			}
-		);
 	});
 };
 

@@ -65,27 +65,19 @@ module.exports = {
 		}
 	},
 	modules: {
-		app: {
-			path: `${__dirname}/app.js`
-		},
-		uiService: {
-			path: `${__dirname}/lib/services/ui_service.js`
-		},
-		statsService: {
-			path: `${__dirname}/lib/services/statsService.js`
-		},
-		queueService: {
-			path: `${__dirname}/lib/services/queue_service.js`
-		},
+		app: { path: `${__dirname}/app.js` },
+		messageHandler: { path: `${__dirname}/lib/handlers/message_handlers.js` },
+		stateService: { path: `${__dirname}/lib/services/stateService.js` },
+		uiService: { path: `${__dirname}/lib/services/ui_service.js` },
+		statsService: { path: `${__dirname}/lib/services/statsService.js` },
+		queueService: { path: `${__dirname}/lib/services/queue_service.js` },
 		serverService: {
 			path: `${__dirname}/server.js`,
 			construct: {
 				name: "ServerService"
 			}
 		},
-		portService: {
-			path: `${__dirname}/lib/services/serial_port_service.js`
-		},
+		portService: { path: `${__dirname}/lib/services/serial_port_service.js` },
 		portUtil: {
 			path: `${__dirname}/server.js`,
 			construct: {
@@ -93,21 +85,10 @@ module.exports = {
 				type: "async"
 			}
 		},
-		packetService: {
-			path: `${__dirname}/lib/services/packet_service.js`
-		},
-		messageHandler: {
-			path: `${__dirname}/lib/handlers/message_handlers.js`
-		},
-		parserFactory: {
-			path: `${__dirname}/lib/parsers/parser_factory.js`
-		},
-		dataService: {
-			path: `${__dirname}/lib/services/data_service.js`
-		},
-		dataMapper: {
-			path: `${__dirname}/lib/mappers/data_mapper.js`
-		},
+		packetService: { path: `${__dirname}/lib/services/packet_service.js` },
+		parserFactory: { path: `${__dirname}/lib/parsers/parser_factory.js` },
+		dataService: { path: `${__dirname}/lib/services/data_service.js` },
+		dataMapper: { path: `${__dirname}/lib/mappers/data_mapper.js` },
 		packetRepository: {
 			path: `${__dirname}/lib/repositories/packetRepository.js`
 		},
@@ -129,6 +110,7 @@ module.exports = {
 	},
 	components: {
 		statsService: {},
+		stateService: {},
 		data: {
 			data: {
 				routes: {
@@ -160,13 +142,9 @@ module.exports = {
 			startMethod: "start",
 			stopMethod: "stopService"
 		},
-		portUtil: {
-			startMethod: "start"
-		},
+		portUtil: {},
 		messageHandler: {
-			name: "MessageHandler",
-			version: "^0.0.1",
-			useEndpoint: process.env.REPLICATION_ENABLED,
+			//name: "MessageHandler",
 			stopMethod: "stop"
 		},
 		packetService: {

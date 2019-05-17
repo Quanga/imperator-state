@@ -52,13 +52,5 @@ module.exports.configs = {
 				transmissionSendInterval: process.env.ROUTER_TRANSMISSION_SEND_INTERVAL
 			}
 		}
-	},
-
-	messageHandlerConfig: {
-		component: {
-			config: {
-				useEndpoint: process.env.ROUTER_USE_ENDPOINT
-			}
-		}
 	}
 };

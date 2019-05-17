@@ -18,5 +18,7 @@ RUN npm install
 
 RUN npm install serialport --build-from-source=serialport
 
+COPY . .
+
 CMD ["node", "server"]
 
