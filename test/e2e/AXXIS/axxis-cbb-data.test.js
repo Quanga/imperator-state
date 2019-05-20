@@ -183,8 +183,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 				await sendMessages();
 				await timer(1000);
 				await getResults2();
-				let tests = await client.exchange.dataService.getTests();
-				//console.log("TESTS", JSON.stringify(tests, null, 2));
 			} catch (err) {
 				return Promise.reject(err);
 			}

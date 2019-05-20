@@ -184,7 +184,7 @@ App.prototype.startRouter = function($happn) {
 				await serverService.initialise();
 			}
 
-			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
+			stateService.updateState({ service: $happn.name, state: "STARTED" });
 			logInfo("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			logError("start error", err);
