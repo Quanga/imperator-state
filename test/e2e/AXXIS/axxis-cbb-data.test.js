@@ -210,7 +210,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
@@ -227,7 +227,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
 					},
@@ -300,7 +300,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 1,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
@@ -319,7 +319,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
 					},
@@ -338,7 +338,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
 					},
@@ -354,18 +354,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 			await serialPortHelper.sendMessage(message4.packet);
 		};
 
-		// let getResults4 = async function() {
-		// 	try {
-		// 		let requestHelper = new RequestHelper();
-		// 		let result = await requestHelper.getBlastModel();
-
-		// 		return result;
-		// 	} catch (err) {
-		// 		return Promise.reject(err);
-		// 	}
-		// };
-
 		let getResults = async function() {
+			await timer(3000);
 			let result = await client.exchange.nodeRepository.getAllNodes();
 
 			if (result == null || result.length == 0)
@@ -381,6 +371,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 			});
 
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.childCount).to.equal(2); // communication status
+
 			expect(edd1.data.windowId).to.equal(2); // communication status
 			expect(edd1.data.delay).to.equal(3000); // communication status
 

@@ -35,8 +35,8 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					shaftFault: null,
 					cableFault: null,
 					earthLeakage: null,
-					ledState: undefined,
-					childCount: undefined
+					ledState: null,
+					childCount: 7
 				}
 			},
 			{
@@ -222,7 +222,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 
 				const testObj = {
 					packet:
-            "aaaa3017ffffed0101f023ee01015424ef0101b824f001011c25f101018025f20101e425f301014826f40101ac262665",
+						"aaaa3017ffffed0101f023ee01015424ef0101b824f001011c25f101018025f20101e425f301014826f40101ac262665",
 					created: Date.now()
 				};
 

@@ -187,7 +187,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 1
+					childCount: 0
 				}
 			},
 			{

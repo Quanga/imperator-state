@@ -157,7 +157,7 @@ describe("E2E - AXXIS - CBB list test", function() {
 		const { nodeRepository, archiveRepository } = client.exchange;
 
 		let loadMessages = async function() {
-			const initial = new PacketConstructor(8, 8, {
+			const initial = new PacketConstructor(8, 12, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			});
 			await serialPortHelper.sendMessage(initial.packet);
@@ -169,14 +169,14 @@ describe("E2E - AXXIS - CBB list test", function() {
 				]
 			};
 
-			const initial2 = new PacketConstructor(4, 13, data2);
+			const initial2 = new PacketConstructor(4, 22, data2);
 			await serialPortHelper.sendMessage(initial2.packet);
 
 			const data3 = {
 				data: [
 					{
-						serial: 13,
-						windowId: 2,
+						serial: 22,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
@@ -188,14 +188,14 @@ describe("E2E - AXXIS - CBB list test", function() {
 				]
 			};
 
-			const message = new PacketConstructor(5, 13, data3);
+			const message = new PacketConstructor(5, 22, data3);
 			await serialPortHelper.sendMessage(message.packet);
 
-			const message2 = new PacketConstructor(5, 13, {
+			const message2 = new PacketConstructor(5, 22, {
 				data: [
 					{
-						serial: 13,
-						windowId: 2,
+						serial: 22,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
 					},
@@ -224,7 +224,7 @@ describe("E2E - AXXIS - CBB list test", function() {
 				data: [{ serial: 4294967295, windowId: 1 }]
 			};
 
-			const clearPacket = new PacketConstructor(4, 13, data5);
+			const clearPacket = new PacketConstructor(4, 22, data5);
 			await serialPortHelper.sendMessage(clearPacket.packet);
 		};
 
@@ -233,12 +233,12 @@ describe("E2E - AXXIS - CBB list test", function() {
 			const mappedNodes = allNodes.map(node => {
 				return { node: node.constructor.name, data: node.data };
 			});
-			//console.log("END NODES", mappedNodes);
-			expect(mappedNodes.length).to.eql(2);
+			const cbb = mappedNodes.find(x => x.data.typeId === 3);
 
+			expect(mappedNodes.length).to.eql(2);
+			expect(cbb.data.childCount).to.eql(0);
 			const archives = await archiveRepository.getAll();
 
-			//console.log("ARCHIVES", JSON.stringify(archives, null, 2));
 			//console.log("ARCHIVES", archives[0].value);
 
 			expect(archives[0].value.length).to.eql(2);

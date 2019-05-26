@@ -35,7 +35,7 @@ describe("PARSER-CBB500_LIST-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 10
+					childCount: 0
 				}
 			},
 			{
@@ -260,7 +260,7 @@ describe("PARSER-CBB500_LIST-parser-test", async function() {
 
 				var testObj = {
 					packet:
-            "aaaa4416ffff1b4a100e7d011b4a100d7e011b4a100c7f011b4a100b80011b4a100a81011b4a100982011b4a100883011b4a100784011b4a100685011b4a7a7f860186ce",
+						"aaaa4416ffff1b4a100e7d011b4a100d7e011b4a100c7f011b4a100b80011b4a100a81011b4a100982011b4a100883011b4a100784011b4a100685011b4a7a7f860186ce",
 					created: Date.now()
 				};
 
