@@ -282,9 +282,7 @@ describe("E2E - AXXIS - CBB list test", function() {
 
 			console.log(cbb);
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.loadCount[0]).to.equal(2); // det loaded
-			expect(cbb.data.loadCount[1]).to.equal(3); // det loaded
-			expect(cbb.data.loadCount[2]).to.equal(3); // det loaded
+			expect(cbb.data.loadCount).to.equal(8); // det loaded
 
 			expect(edd1.data.detonatorStatus).to.equal(null); // det status
 			expect(edd2.data.detonatorStatus).to.equal(null); // det status
@@ -386,7 +384,7 @@ describe("E2E - AXXIS - CBB list test", function() {
 			const cbb = mappedNodes.find(x => x.data.typeId === 3);
 			expect(mappedNodes.length).to.eql(2);
 			expect(cbb.data.childCount).to.eql(0);
-			expect(cbb.data.loadCount.length).to.eql(0);
+			expect(cbb.data.loadCount).to.eql(0);
 
 			const archives = await archiveRepository.getAll();
 
