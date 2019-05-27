@@ -275,6 +275,76 @@ describe("E2E - AXXIS - CBB data test", function() {
 		return startTest();
 	});
 
+	it("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
+		let sendMessages = async function() {
+			let initial = new PacketConstructor(8, 8, {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
+			}).packet;
+			await serialPortHelper.sendMessage(initial);
+
+			const message = new PacketConstructor(5, 13, {
+				data: [
+					{
+						serial: 13,
+						childCount: 1,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+					},
+					{
+						windowId: 2,
+						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+						delay: 2000
+					}
+				]
+			}).packet;
+			await serialPortHelper.sendMessage(message);
+
+			const message2 = new PacketConstructor(5, 13, {
+				data: [
+					{
+						serial: 13,
+						childCount: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+					},
+					{
+						windowId: 2,
+						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+						delay: 3000
+					}
+				]
+			}).packet;
+			await serialPortHelper.sendMessage(message2);
+		};
+
+		let getResults3 = async function() {
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length === 0)
+				throw new Error("Empty result!");
+
+			let cbb = result.filter(x => x.data.typeId === 3);
+			let edd = result.filter(x => x.data.typeId === 4);
+
+			expect(cbb[0].data.communicationStatus).to.equal(1); // communication status
+			expect(edd[0].data.windowId).to.equal(2); // communication status
+			expect(edd[0].data.delay).to.equal(3000); // communication status
+		};
+
+		let startTest = async function() {
+			try {
+				await sendMessages();
+				await timer(2000);
+
+				await getResults3();
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return startTest();
+	});
+
 	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
 		let sendMessages = async function() {
 			const data1 = {
