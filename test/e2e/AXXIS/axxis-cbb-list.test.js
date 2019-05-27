@@ -68,7 +68,6 @@ describe("E2E - AXXIS - CBB list test", function() {
 			await serialPortHelper.sendMessage(initial.packet);
 
 			const message = new PacketConstructor(4, 12, { data: [] });
-			console.log("SENDING ", message);
 			await serialPortHelper.sendMessage(message.packet);
 		};
 
@@ -136,6 +135,76 @@ describe("E2E - AXXIS - CBB list test", function() {
 			});
 
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.loadCount[0]).to.equal(2); // det status
+			expect(edd1.data.detonatorStatus).to.equal(null); // det status
+			expect(edd2.data.detonatorStatus).to.equal(null); // det status
+		};
+
+		let startTest = async function() {
+			try {
+				await sendMessages();
+				await timer(1000);
+				await getResults();
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return startTest();
+	});
+
+	it("can process a second packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
+		let sendMessages = async function() {
+			const initial = new PacketConstructor(8, 8, {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
+			});
+			await serialPortHelper.sendMessage(initial.packet);
+
+			const data2 = {
+				data: [
+					{ serial: 4423423, windowId: 33 },
+					{ serial: 4523434, windowId: 34 }
+				]
+			};
+
+			const message = new PacketConstructor(4, 12, data2);
+			await serialPortHelper.sendMessage(message.packet);
+
+			const data3 = {
+				data: [
+					{ serial: 4423425, windowId: 35 },
+					{ serial: 4523436, windowId: 36 },
+					{ serial: 4523437, windowId: 37 }
+				]
+			};
+
+			const message3 = new PacketConstructor(4, 12, data3);
+			await serialPortHelper.sendMessage(message3.packet);
+		};
+
+		let getResults = async function() {
+			await timer(2000);
+			let result = await client.exchange.nodeRepository.getAllNodes();
+			if (result == null || result.length == 0)
+				throw new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null,
+				edd2 = null;
+
+			await result.forEach(x => {
+				if (parseInt(x.data.serial) === 12 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4423423 && x.data.typeId === 4)
+					edd1 = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
+					edd2 = x;
+			});
+
+			console.log(cbb);
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.loadCount[0]).to.equal(2); // det loaded
+			expect(cbb.data.loadCount[1]).to.equal(3); // det loaded
+
 			expect(edd1.data.detonatorStatus).to.equal(null); // det status
 			expect(edd2.data.detonatorStatus).to.equal(null); // det status
 		};
