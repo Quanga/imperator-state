@@ -463,4 +463,36 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 		return startTest();
 	});
+
+	it("edge case - will ignore an 05 packet where the serial is 255 and the windowID is 255", async function() {
+		//this is an edge case where a packet comes in after and EDDSIG which has an EDD with
+		//a delay of 255 and a windowID of 255
+
+		//prior to new revision all 05 commands could write to db, so it was ignored.
+		
+		//item taken from cbb 115 - 27/05/2019
+		//aaaa1005007300001828ff00ff001288
+
+		//this fix is only applied in the data service after the EDDSIG
+		const sendMessage = async () => {
+			await serialPortHelper.sendMessage("aaaa1005007300001828ff00ff001288");
+		};
+
+		let checkResult = async () => {
+			let result = await client.exchange.nodeRepository.getAllNodes();
+			console.log(result);
+
+			expect(result.length).to.eql(1);
+			expect(result[0].data.childCount).to.eql(0);
+			
+		};
+
+		let startTest = async () => {
+			await sendMessage();
+			await timer(1000);
+			await checkResult();
+		};
+
+		return startTest();
+	});
 });
