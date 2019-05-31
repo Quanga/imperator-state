@@ -202,8 +202,7 @@ describe("E2E - AXXIS - CBB list test", function() {
 
 			console.log(cbb);
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.loadCount[0]).to.equal(2); // det loaded
-			expect(cbb.data.loadCount[1]).to.equal(3); // det loaded
+			expect(cbb.data.loadCount).to.equal(5); // det loaded
 
 			expect(edd1.data.detonatorStatus).to.equal(null); // det status
 			expect(edd2.data.detonatorStatus).to.equal(null); // det status

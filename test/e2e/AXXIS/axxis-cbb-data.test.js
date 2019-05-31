@@ -256,6 +256,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 					edd1 = x;
 			});
 
+			console.log(cbb);
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
 			expect(edd1.data.windowId).to.equal(2); // communication status
 			expect(edd1.data.delay).to.equal(3000); // communication status
@@ -469,7 +470,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 		//a delay of 255 and a windowID of 255
 
 		//prior to new revision all 05 commands could write to db, so it was ignored.
-		
+
 		//item taken from cbb 115 - 27/05/2019
 		//aaaa1005007300001828ff00ff001288
 
@@ -484,7 +485,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 			expect(result.length).to.eql(1);
 			expect(result[0].data.childCount).to.eql(0);
-			
 		};
 
 		let startTest = async () => {
