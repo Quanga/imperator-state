@@ -465,6 +465,121 @@ describe("E2E - AXXIS - CBB data test", function() {
 		return startTest();
 	});
 
+	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database3", async function() {
+		let sendMessages = async function() {
+			const data1 = {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
+			};
+
+			let initial = new PacketConstructor(8, 8, data1);
+			await serialPortHelper.sendMessage(initial.packet);
+
+			const data2 = {
+				data: [
+					{ serial: 4423423, windowId: 1 },
+					{ serial: 4523434, windowId: 2 }
+				]
+			};
+
+			await timer(2000);
+
+			const initial2 = new PacketConstructor(4, 13, data2);
+			await serialPortHelper.sendMessage(initial2.packet);
+
+			const data3 = {
+				data: [
+					{
+						serial: 13,
+						childCount: 1,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+					},
+					{
+						windowId: 2,
+						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+						delay: 2000
+					}
+				]
+			};
+
+			const message = new PacketConstructor(5, 13, data3);
+			await serialPortHelper.sendMessage(message.packet);
+
+			const data4 = {
+				data: [
+					{
+						serial: 13,
+						childCount: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+					},
+					{
+						windowId: 2,
+						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+						delay: 3000
+					}
+				]
+			};
+
+			const message2 = new PacketConstructor(5, 13, data4);
+			await serialPortHelper.sendMessage(message2.packet);
+
+			const data6 = {
+				data: [
+					{
+						serial: 13,
+						childCount: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
+					}
+				]
+			};
+
+			const message4 = new PacketConstructor(5, 13, data6);
+			await serialPortHelper.sendMessage(message4.packet);
+		};
+
+		let getResults = async function() {
+			await timer(3000);
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length == 0)
+				throw new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null;
+
+			result.forEach(x => {
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
+					edd1 = x;
+			});
+
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.childCount).to.equal(2); // communication status
+			expect(cbb.data.loadCount).to.equal(2); // communication status
+
+			expect(edd1.data.windowId).to.equal(2); // communication status
+			expect(edd1.data.delay).to.equal(3000); // communication status
+
+			// let edds = requestb.find(x => x.typeId === 4);
+			// expect(edds).to.be.equal(null);
+		};
+
+		let startTest = async function() {
+			try {
+				await sendMessages();
+				await timer(1000);
+
+				await getResults();
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return startTest();
+	});
+
 	it("edge case - will ignore an 05 packet where the serial is 255 and the windowID is 255", async function() {
 		//this is an edge case where a packet comes in after and EDDSIG which has an EDD with
 		//a delay of 255 and a windowID of 255
