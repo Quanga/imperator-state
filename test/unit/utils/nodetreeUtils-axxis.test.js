@@ -85,26 +85,4 @@ describe("UTILS-nodetreeUtils-Axxis-test", function() {
 		nodeTreeUtils = new NodeTreeUtils();
 		callback();
 	});
-
-	it("successfully finds CBB parent", function(callback) {
-		var expected = {
-			data: {
-				name: "CCB",
-				typeId: 0,
-				serial: "123",
-				parentType: null,
-				parentSerial: null
-			}
-		};
-
-		try {
-			var result = nodeTreeUtils.findParent(treeNodes, 3);
-
-			assert.deepEqual(result, expected);
-
-			callback();
-		} catch (err) {
-			callback(err);
-		}
-	});
 });

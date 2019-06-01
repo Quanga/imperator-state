@@ -81,7 +81,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					}
@@ -102,6 +102,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 				);
 
 				expect(cbb.data.communicationStatus).to.equal(1); // communication status
+				expect(cbb.data.childCount).to.equal(0);
+				expect(cbb.data.loadCount).to.equal(0);
 			} catch (err) {
 				console.log(err);
 				return Promise.reject(err);
@@ -123,9 +125,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
-		//client.exchange.queueService.deletetTests();
-		//client.exchange.dataService.deletetTests();
-
 		let sendMessages = async () => {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
@@ -144,7 +143,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				data: [
 					{
 						serial: 13,
-						windowId: 2,
+						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 					},
@@ -159,8 +158,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		};
 
 		let getResults2 = async () => {
+			await timer(2000);
 			let result2 = await client.exchange.nodeRepository.getAllNodes();
-
+			console.log(result2);
 			if (result2 === null || result2.length === 0)
 				throw new Error("Empty result!");
 
@@ -176,6 +176,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
 			expect(edd1.data.windowId).to.equal(2); // communication status
 			expect(edd1.data.delay).to.equal(2000); // communication status
+			expect(cbb.data.childCount).to.equal(2);
+			expect(cbb.data.loadCount).to.equal(2);
 		};
 
 		let startTest = async () => {
@@ -260,6 +262,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
 			expect(edd1.data.windowId).to.equal(2); // communication status
 			expect(edd1.data.delay).to.equal(3000); // communication status
+			expect(cbb.data.childCount).to.equal(2);
+			expect(cbb.data.loadCount).to.equal(2);
 		};
 
 		let startTest = async function() {
@@ -326,10 +330,10 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 			let cbb = result.filter(x => x.data.typeId === 3);
 			let edd = result.filter(x => x.data.typeId === 4);
-
 			expect(cbb[0].data.communicationStatus).to.equal(1); // communication status
 			expect(edd[0].data.windowId).to.equal(2); // communication status
 			expect(edd[0].data.delay).to.equal(3000); // communication status
+			expect(cbb[0].data.loadCount).to.equal(0); // communication status
 		};
 
 		let startTest = async function() {
@@ -580,6 +584,128 @@ describe("E2E - AXXIS - CBB data test", function() {
 		return startTest();
 	});
 
+	it("can turn off detonatorStatus in attached dets with a keyswitch off", async function() {
+		let sendMessages = async function() {
+			const data1 = {
+				data: [0, 0, 0, 0, 0, 0, 0, 1]
+			};
+
+			let initial = new PacketConstructor(8, 8, data1);
+			await serialPortHelper.sendMessage(initial.packet);
+
+			const data2 = {
+				data: [
+					{ serial: 4423423, windowId: 1 },
+					{ serial: 4523434, windowId: 2 }
+				]
+			};
+
+			await timer(2000);
+
+			const initial2 = new PacketConstructor(4, 13, data2);
+			await serialPortHelper.sendMessage(initial2.packet);
+
+			const data3 = {
+				data: [
+					{
+						serial: 13,
+						childCount: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+					},
+					{
+						windowId: 2,
+						rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+						delay: 2000
+					}
+				]
+			};
+
+			const message = new PacketConstructor(5, 13, data3);
+			await serialPortHelper.sendMessage(message.packet);
+		};
+
+		let sendMessages2 = async function() {
+			const data6a = {
+				data: [
+					{
+						serial: 13,
+						childCount: 2,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
+					}
+				]
+			};
+
+			const message4a = new PacketConstructor(5, 13, data6a);
+			await serialPortHelper.sendMessage(message4a.packet);
+		};
+
+		let getResults1 = async function() {
+			await timer(3000);
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length == 0)
+				throw new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null;
+
+			result.forEach(x => {
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
+					edd1 = x;
+			});
+
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.childCount).to.equal(2); // communication status
+			expect(cbb.data.loadCount).to.equal(2); // communication status
+			expect(edd1.data.detonatorStatus).to.equal(1); // communication status
+		};
+
+		let getResults = async function() {
+			await timer(3000);
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length == 0)
+				throw new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null;
+
+			result.forEach(x => {
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
+					edd1 = x;
+			});
+
+			console.log("RESULT", result);
+
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.childCount).to.equal(2); // communication status
+			expect(cbb.data.loadCount).to.equal(2); // communication status
+
+			expect(edd1.data.detonatorStatus).to.equal(0); // communication status
+		};
+
+		let startTest = async function() {
+			try {
+				await sendMessages();
+				await timer(1000);
+				await getResults1();
+
+				await sendMessages2();
+				await timer(1000);
+
+				await getResults();
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		};
+
+		return startTest();
+	});
+
 	it("edge case - will ignore an 05 packet where the serial is 255 and the windowID is 255", async function() {
 		//this is an edge case where a packet comes in after and EDDSIG which has an EDD with
 		//a delay of 255 and a windowID of 255
@@ -596,7 +722,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 		let checkResult = async () => {
 			let result = await client.exchange.nodeRepository.getAllNodes();
-			console.log(result);
 
 			expect(result.length).to.eql(1);
 			expect(result[0].data.childCount).to.eql(0);

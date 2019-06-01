@@ -451,8 +451,8 @@ describe("E2E - AXXIS - CBB list test", function() {
 			const mappedNodes = allNodes.map(node => {
 				return { node: node.constructor.name, data: node.data };
 			});
-
-			expect(mappedNodes.length).to.eql(4);
+			console.log("MAPPED NODES", mappedNodes);
+			expect(mappedNodes.length).to.eql(3);
 		};
 
 		const sendClearSignal = async () => {
@@ -469,8 +469,9 @@ describe("E2E - AXXIS - CBB list test", function() {
 			const mappedNodes = allNodes.map(node => {
 				return { node: node.constructor.name, data: node.data };
 			});
+
 			const cbb = mappedNodes.find(x => x.data.typeId === 3);
-			expect(mappedNodes.length).to.eql(2);
+			expect(mappedNodes.length).to.eql(1);
 			expect(cbb.data.childCount).to.eql(0);
 			expect(cbb.data.loadCount).to.eql(0);
 

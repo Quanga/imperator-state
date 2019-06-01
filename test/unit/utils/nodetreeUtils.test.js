@@ -85,28 +85,4 @@ describe("UTILS-nodetreeUtils-test", function() {
 		nodeTreeUtils = new NodeTreeUtils();
 		callback();
 	});
-
-	it("successfully finds ISC parent", async function() {
-		var expected = {
-			data: {
-				name: "IBC",
-				typeId: 0,
-				serial: "123",
-				parentType: null,
-				parentSerial: null
-			}
-		};
-
-		let test = async () => {
-			try {
-				var result = nodeTreeUtils.findParent(treeNodes, 1);
-
-				assert.deepEqual(result, expected);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
-	});
 });
