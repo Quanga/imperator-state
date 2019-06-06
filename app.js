@@ -136,6 +136,7 @@ App.prototype.startRouter = function($happn) {
 		packetRepository,
 		nodeRepository,
 		logsRepository,
+		blastRepository,
 		warningsRepository,
 		queueService,
 		serverService
@@ -166,6 +167,7 @@ App.prototype.startRouter = function($happn) {
 			await packetRepository.start();
 			await logsRepository.start();
 			await warningsRepository.start();
+			await blastRepository.start();
 
 			//initialized after the repos as it will do the checks
 			//await eventService.initialise();

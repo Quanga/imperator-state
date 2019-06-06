@@ -95,6 +95,9 @@ module.exports = {
 		nodeRepository: {
 			path: `${__dirname}/lib/repositories/nodeRepository.js`
 		},
+		blastRepository: {
+			path: `${__dirname}/lib/repositories/blastRepository.js`
+		},
 		logsRepository: {
 			path: `${__dirname}/lib/repositories/logsRepository.js`
 		},
@@ -106,6 +109,9 @@ module.exports = {
 		},
 		eventService: {
 			path: `${__dirname}/lib/services/event_service.js`
+		},
+		blastService: {
+			path: `${__dirname}/lib/services/blast_service.js`
 		}
 	},
 	components: {
@@ -162,12 +168,19 @@ module.exports = {
 		nodeRepository: {
 			stopMethod: "stop"
 		},
+		blastRepository: {
+			stopMethod: "stop"
+		},
 		logsRepository: {},
 		warningsRepository: {},
 		archiveRepository: {},
 		eventService: {
 			startMethod: "startAsync",
 			stopMethod: "stopAsync"
+		},
+		blastService: {
+			startMethod: "start",
+			stopMethod: "stop"
 		},
 		app: {
 			startMethod: "start",

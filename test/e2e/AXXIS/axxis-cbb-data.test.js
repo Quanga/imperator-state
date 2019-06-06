@@ -2,21 +2,35 @@ const expect = require("expect.js");
 const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
-var Mesh = require("happner-2");
+const Queue = require("better-queue");
+const Mesh = require("happner-2");
 
 require("dotenv").config();
 
 describe("E2E - AXXIS - CBB data test", function() {
+	this.timeout(25000);
 	let serverHelper = new ServerHelper();
 	const serialPortHelper = new SerialPortHelper();
 
+	const sendQueue = new Queue((task, cb) => {
+		setTimeout(() => {
+			serialPortHelper.sendMessage(task.message);
+			cb();
+		}, task.wait);
+	});
+
 	var client;
 
-	this.timeout(25000);
-
-	let timer = ms => {
+	const timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
+
+	const holdAsync = () =>
+		new Promise((resolve, reject) => {
+			sendQueue.on("drain", () => {
+				return resolve();
+			});
+		});
 
 	const AsyncLogin = () =>
 		new Promise((resolve, reject) => {
@@ -72,22 +86,28 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function() {
 		let sendMessages = async () => {
-			let initial = new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			sendQueue.push({
+				message: new PacketConstructor(8, 8, {
+					data: [0, 0, 0, 0, 0, 0, 0, 1]
+				}).packet,
+				wait: 300
+			});
 
-			const message = new PacketConstructor(5, 13, {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					}
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(message);
+			sendQueue.push({
+				message: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						}
+					]
+				}).packet,
+				wait: 300
+			});
+
+			await holdAsync();
 		};
 
 		let getResults = async () => {
@@ -113,7 +133,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 		let startTest = async () => {
 			try {
 				await sendMessages();
-				await timer(200);
+				await timer(2000);
 				await getResults();
 			} catch (err) {
 				console.log(err);
