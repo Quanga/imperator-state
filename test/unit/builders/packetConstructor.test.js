@@ -427,7 +427,8 @@ describe("001 PacketConstructor tests", async () => {
 							cableFault: null,
 							earthLeakage: null,
 							ledState: null,
-							childCount: 2
+							childCount: 0,
+							loadCount: 2
 						}
 					},
 					{
@@ -531,7 +532,8 @@ describe("001 PacketConstructor tests", async () => {
 							cableFault: 0,
 							earthLeakage: 0,
 							ledState: 6,
-							childCount: 33
+							childCount: 33,
+							loadCount: 0
 						}
 					},
 					{
@@ -561,7 +563,7 @@ describe("001 PacketConstructor tests", async () => {
 					data: [
 						{
 							serial: 13,
-							windowId: 33,
+							childCount: 33,
 							ledState: 6,
 							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 						},
@@ -608,7 +610,7 @@ describe("001 PacketConstructor tests", async () => {
 			data: [
 				{
 					serial: 13,
-					windowId: 33,
+					childCount: 33,
 					ledState: 6,
 					rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 				}
@@ -639,7 +641,8 @@ describe("001 PacketConstructor tests", async () => {
 							cableFault: 0,
 							earthLeakage: 0,
 							ledState: 6,
-							childCount: 33
+							childCount: 33,
+							loadCount: 0
 						}
 					}
 				];

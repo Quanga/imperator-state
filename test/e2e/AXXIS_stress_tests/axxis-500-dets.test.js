@@ -3,7 +3,7 @@ const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 var Mesh = require("happner-2");
 
-describe("E2E - can handle 500 detonators", function() {
+describe("E2E - can handle 500 detonators", async function() {
 	let serverHelper = new ServerHelper();
 	const serialPortHelper = new SerialPortHelper();
 
@@ -52,10 +52,10 @@ describe("E2E - can handle 500 detonators", function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.deleteAll();
+			await client.exchange.packetRepository.delete("*");
 		}
 	);
 

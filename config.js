@@ -183,6 +183,7 @@ module.exports = {
 			stopMethod: "stop"
 		},
 		app: {
+			more: "info",
 			startMethod: "start",
 			stopMethod: "stop"
 		}

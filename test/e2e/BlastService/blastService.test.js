@@ -58,10 +58,10 @@ describe("E2E - BLAST SERVICE tests", function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.deleteAll();
+			await client.exchange.packetRepository.delete("*");
 			await client.exchange.blastRepository.delete("*");
 		}
 	);
@@ -103,9 +103,9 @@ describe("E2E - BLAST SERVICE tests", function() {
 			let blastIds = Object.keys(result);
 			let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
 			delete firstBlastId._meta;
-			// console.log(result);
-			// console.log(JSON.stringify(firstBlastId));
-			// console.log("byte length", JSON.stringify(firstBlastId).length);
+			console.log(result);
+			console.log(JSON.stringify(firstBlastId));
+			console.log("byte length", JSON.stringify(firstBlastId).length);
 		};
 
 		let startTest = async () => {

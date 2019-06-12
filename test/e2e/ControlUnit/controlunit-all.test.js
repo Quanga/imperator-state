@@ -4,7 +4,7 @@ const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-describe("E2E - CONTROL UNIT data tests", function() {
+describe("E2E - CONTROL UNIT data tests", async function() {
 	this.timeout(10000);
 
 	let serverHelper = new ServerHelper();
@@ -45,10 +45,10 @@ describe("E2E - CONTROL UNIT data tests", function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.deleteAll();
+			await client.exchange.packetRepository.delete("*");
 		}
 	);
 

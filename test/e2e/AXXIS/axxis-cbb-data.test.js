@@ -70,10 +70,10 @@ describe("E2E - AXXIS - CBB data test", function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.deleteAll();
+			await client.exchange.packetRepository.delete("*");
 		}
 	);
 
@@ -122,7 +122,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 				);
 
 				expect(cbb.data.communicationStatus).to.equal(1); // communication status
-				expect(cbb.data.childCount).to.equal(0);
+				expect(cbb.data.childCount).to.equal(2);
 				expect(cbb.data.loadCount).to.equal(0);
 			} catch (err) {
 				console.log(err);

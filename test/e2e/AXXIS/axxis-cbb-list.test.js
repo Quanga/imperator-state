@@ -4,7 +4,7 @@ const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
-describe("E2E - AXXIS - CBB list test", function() {
+describe("E2E - AXXIS - CBB list test", async function() {
 	const serialPortHelper = new SerialPortHelper();
 	let serverHelper = new ServerHelper();
 
@@ -45,10 +45,10 @@ describe("E2E - AXXIS - CBB list test", function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.deleteAll();
+			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.deleteAll();
+			await client.exchange.packetRepository.delete("*");
 			await client.exchange.archiveRepository.deleteAll();
 		}
 	);
@@ -451,8 +451,7 @@ describe("E2E - AXXIS - CBB list test", function() {
 			const mappedNodes = allNodes.map(node => {
 				return { node: node.constructor.name, data: node.data };
 			});
-			console.log("MAPPED NODES", mappedNodes);
-			expect(mappedNodes.length).to.eql(3);
+			expect(mappedNodes.length).to.eql(4);
 		};
 
 		const sendClearSignal = async () => {
@@ -470,12 +469,13 @@ describe("E2E - AXXIS - CBB list test", function() {
 				return { node: node.constructor.name, data: node.data };
 			});
 
-			const cbb = mappedNodes.find(x => x.data.typeId === 3);
-			expect(mappedNodes.length).to.eql(1);
-			expect(cbb.data.childCount).to.eql(0);
-			expect(cbb.data.loadCount).to.eql(0);
+			const cbb = mappedNodes.filter(x => x.data.typeId === 3);
+			expect(cbb.length).to.eql(1);
+			expect(cbb[0].data.childCount).to.eql(0);
+			expect(cbb[0].data.loadCount).to.eql(0);
 
 			const archives = await archiveRepository.getAll();
+			console.log("ARCHIVES", JSON.stringify(archives, null, 2));
 
 			expect(archives[0].value.length).to.eql(2);
 		};

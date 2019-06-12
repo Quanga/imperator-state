@@ -9,7 +9,6 @@ var Mesh = require("happner-2");
 
 const ServerHelper = require("../../helpers/server_helper");
 const SerialPortHelper = require("../../helpers/serial_port_helper");
-const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 describe("Repositories - NodeRepository Tests", function() {
 	this.timeout(10000);
@@ -50,7 +49,11 @@ describe("Repositories - NodeRepository Tests", function() {
 	});
 
 	beforeEach("delete all current nodes", async function() {
-		client.exchange.nodeRepository.deleteAll();
+		await client.exchange.nodeRepository.delete("*");
+		await client.exchange.logsRepository.deleteAll();
+		await client.exchange.warningsRepository.deleteAll();
+		await client.exchange.packetRepository.delete("*");
+		await client.exchange.blastRepository.delete("*");
 	});
 
 	after("stop test server", async function() {
