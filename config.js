@@ -1,6 +1,4 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-var serveStatic = require("serve-static");
-require("dotenv").config();
 
 /***********************************************************
  HAPPNER configuration
@@ -57,41 +55,17 @@ module.exports = {
 			}
 		}
 	},
-	web: {
-		routes: {
-			"/": serveStatic("/www/", {
-				index: ["index.html", "index.htm"]
-			})
-		}
-	},
+
 	modules: {
 		app: { path: `${__dirname}/app.js` },
-		messageHandler: { path: `${__dirname}/lib/handlers/message_handlers.js` },
 		stateService: { path: `${__dirname}/lib/services/stateService.js` },
 		uiService: { path: `${__dirname}/lib/services/ui_service.js` },
 		statsService: { path: `${__dirname}/lib/services/statsService.js` },
 		queueService: { path: `${__dirname}/lib/services/queue_service.js` },
-		serverService: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "ServerService"
-			}
-		},
-		portService: { path: `${__dirname}/lib/services/serial_port_service.js` },
-		portUtil: {
-			path: `${__dirname}/server.js`,
-			construct: {
-				name: "PortUtil",
-				type: "async"
-			}
-		},
 		packetService: { path: `${__dirname}/lib/services/packet_service.js` },
 		parserFactory: { path: `${__dirname}/lib/parsers/parser_factory.js` },
 		dataService: { path: `${__dirname}/lib/services/data_service.js` },
 		dataMapper: { path: `${__dirname}/lib/mappers/data_mapper.js` },
-		packetRepository: {
-			path: `${__dirname}/lib/repositories/packetRepository.js`
-		},
 		nodeRepository: {
 			path: `${__dirname}/lib/repositories/nodeRepository.js`
 		},
@@ -133,26 +107,11 @@ module.exports = {
 				}
 			}
 		},
-		serverService: {
-			$configure: function(serverServiceConfig) {
-				return serverServiceConfig;
-			}
-		},
-
 		uiService: {
 			startMethod: "start",
 			stopMethod: "stop"
 		},
 		parserFactory: {},
-		portService: {
-			startMethod: "start",
-			stopMethod: "stopService"
-		},
-		portUtil: {},
-		messageHandler: {
-			//name: "MessageHandler",
-			stopMethod: "stop"
-		},
 		packetService: {
 			name: "packetService",
 			startMethod: "start",
@@ -164,7 +123,6 @@ module.exports = {
 			stopMethod: "stop"
 		},
 		dataMapper: {},
-		packetRepository: {},
 		nodeRepository: {
 			stopMethod: "stop"
 		},
@@ -183,7 +141,6 @@ module.exports = {
 			stopMethod: "stop"
 		},
 		app: {
-			more: "info",
 			startMethod: "start",
 			stopMethod: "stop"
 		}

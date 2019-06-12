@@ -27,7 +27,6 @@ App.prototype.start = function($happn) {
 	const { app } = $happn.exchange;
 
 	logInfo("STARTING ROUTER APP");
-	console.log($happn.config);
 
 	let startupCheckAsync = async () => {
 		//check for startup with RESET variable
@@ -112,14 +111,14 @@ App.prototype.checkConfiguration = function($happn) {
 		const { setupIssues } = this.configuration;
 		setupIssues.length = 0;
 
-		const setPort = portService.checkPort(
-			this.configuration.inputSource.comPort
-		);
+		// const setPort = portService.checkPort(
+		// 	this.configuration.inputSource.comPort
+		// );
 
-		if (!setPort) {
-			setupIssues.push("Comm Port not set!");
-			warn("CONFIG- COMM PORT NOT SET");
-		}
+		// if (!setPort) {
+		// 	setupIssues.push("Comm Port not set!");
+		// 	warn("CONFIG- COMM PORT NOT SET");
+		// }
 		if (this.configuration.identifier.name === "") {
 			setupIssues.push("Identifier Name not set!");
 			warn("CONFIG- ID NAME NOT SET");
@@ -137,39 +136,20 @@ App.prototype.checkConfiguration = function($happn) {
 App.prototype.startRouter = function($happn) {
 	const {
 		stateService,
-		portService,
-		packetRepository,
 		nodeRepository,
 		logsRepository,
 		blastRepository,
 		warningsRepository,
-		queueService,
-		serverService
+		queueService
 	} = $happn.exchange;
 
 	const { error: logError, info: logInfo } = $happn.log;
 
 	let startup = async () => {
 		try {
-			const { configuration, services } = this.configuration;
-
-			this.interval = setInterval(() => {
-				const host = os.hostname();
-				const metric = {
-					ts: Date.now(),
-					key: "cpu",
-					val: os.loadavg()[0]
-				};
-
-				this.reportMetric($happn, host, metric, (err, resp) => {
-					if (err) return console.log(err);
-
-					return resp;
-				});
-			}, 1000);
+			const { configuration } = this.configuration;
 
 			await nodeRepository.start();
-			await packetRepository.start();
 			await logsRepository.start();
 			await warningsRepository.start();
 			await blastRepository.start();
@@ -183,12 +163,6 @@ App.prototype.startRouter = function($happn) {
 			if (configuration.meshType === "IBS") {
 				//await queueService.watchOutgoingQueue();
 				//transmissionService.initialise();
-			}
-
-			if (configuration.deviceType === "EDGE") {
-				//Do not start the serialport if routerMode is SERVER
-				await portService.initialise();
-				await serverService.initialise();
 			}
 
 			stateService.updateState({ service: $happn.name, state: "STARTED" });
