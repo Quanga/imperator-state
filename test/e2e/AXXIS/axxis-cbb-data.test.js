@@ -26,7 +26,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 	};
 
 	const holdAsync = () =>
-		new Promise((resolve, reject) => {
+		new Promise(resolve => {
 			sendQueue.on("drain", () => {
 				return resolve();
 			});
@@ -70,7 +70,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
 			await client.exchange.packetRepository.delete("*");

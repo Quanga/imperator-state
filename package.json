@@ -39,11 +39,12 @@
     "deep-object-diff": "^1.1.0",
     "find-process": "^1.4.1",
     "graphite-client": "^1.0.1",
-    "happner-2": "^10.1.0",
     "happn-logger": "git+https://github.com/Quanga/happn-logger.git",
+    "happner-2": "^10.1.0",
     "kill-port": "^1.5.1",
     "memory": "0.0.3",
     "node-cache": "^4.2.0",
+    "serialport": "^7.1.5",
     "uuid": "^3.3.2"
   }
 }

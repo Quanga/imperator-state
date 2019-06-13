@@ -4,5 +4,5 @@ const Config = require("./config.js");
 
 Happner.create(Config).catch(function(error) {
 	console.error(error.stack || error.toString());
-	process.exit(1);
+	//process.exit(1);
 });

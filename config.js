@@ -5,32 +5,31 @@
  ***********************************************************/
 
 module.exports = {
-	name: process.env.ROUTER_INSTANCE_NAME,
+	name: process.env.EDGE_INSTANCE_NAME,
 	util: {
 		logCacheSize: 1000,
-		logLevel: "info",
+		logLevel: process.env.LOG_LEVEL || "info",
 		logTimeDelta: true,
 		logStackTraces: true, // if last arg to logger is instanceof Error
 		logComponents: [],
 		logMessageDelimiter: "\t",
 		logDateFormat: null,
 		logLayout: null,
-		logFile: "router_log.txt",
+		logFile: process.env.EDGE_LOCAL_LOG_FILE || "edge.log",
 		logFileMaxSize: 1048576, // 1mb
 		logFileBackups: 5,
 		logFileNameAbsolute: true,
 		logger: null
 	},
 	happn: {
-		host: process.env.HAPPNER_LOCAL_IP,
-		port: parseInt(process.env.HAPPNER_LOCAL_PORT),
+		host: process.env.EDGE_LOCAL_IP || "localhost",
+		port: parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 		setOptions: {
 			timeout: 15000
 		},
 		persist: true,
 		secure: true,
 		adminPassword: "happn",
-		//defaultVariableDepth: 1,
 		filename: "./aece.nedb",
 		services: {
 			data: {
@@ -55,7 +54,19 @@ module.exports = {
 			}
 		}
 	},
-
+	endpoints: {
+		[process.env.ENDPOINT_NAME]: {
+			reconnect: {
+				retries: 100 // default Infinity
+			},
+			config: {
+				port: parseInt(process.env.ENDPOINT_PORT) || 55004,
+				host: process.env.ENDPOINT_IP || "localhost",
+				username: "_ADMIN",
+				password: "happn"
+			}
+		}
+	},
 	modules: {
 		app: { path: `${__dirname}/app.js` },
 		stateService: { path: `${__dirname}/lib/services/stateService.js` },
@@ -100,6 +111,7 @@ module.exports = {
 			}
 		},
 		queueService: {
+			startMethod: "start",
 			data: {
 				routes: {
 					"persist/*": "persist",
