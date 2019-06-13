@@ -3,11 +3,8 @@ db
 node_modules
 aws
 rpi_router.log
-outgoing_queue_data
-incoming_queue_data
-endpoint_queue_data
 coverage
-
+edge.log*
 router_log.txt*
 .env-test
 package-lock.json
