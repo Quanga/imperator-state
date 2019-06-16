@@ -153,10 +153,10 @@ App.prototype.startRouter = function($happn) {
 			await logsRepository.start();
 			await warningsRepository.start();
 			await blastRepository.start();
+			await queueService.initialise();
 
 			//initialized after the repos as it will do the checks
 			//await eventService.initialise();
-			await queueService.initialise();
 
 			//Do not start the OUTGOING QUEUE or the TRANSMISSION SERVICE
 			//if the mode is AXXIS

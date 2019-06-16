@@ -100,27 +100,17 @@ let variables = {
 				}
 			}
 		},
-		queueService: {
-			startMethod: "start",
-			data: {
-				routes: {
-					"persist/*": "persist",
-					"state/*": "mem"
-				}
-			}
-		},
+
 		uiService: {
 			startMethod: "start",
 			stopMethod: "stop"
 		},
 		parserFactory: {},
 		packetService: {
-			name: "packetService",
 			startMethod: "start",
 			stopMethod: "stop"
 		},
 		dataService: {
-			name: "dataService",
 			startMethod: "start",
 			stopMethod: "stop"
 		},
@@ -141,6 +131,15 @@ let variables = {
 		blastService: {
 			startMethod: "start",
 			stopMethod: "stop"
+		},
+		queueService: {
+			startMethod: "start",
+			data: {
+				routes: {
+					"persist/*": "persist",
+					"state/*": "mem"
+				}
+			}
 		},
 		app: {
 			startMethod: "start",
