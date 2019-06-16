@@ -1,20 +1,24 @@
 const expect = require("expect.js");
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const Queue = require("better-queue");
 
 describe("E2E - CONTROL UNIT data tests", async function() {
-	this.timeout(10000);
-
+	this.timeout(25000);
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
+	var client;
+
+	const sendQueue = new Queue((task, cb) => {
+		setTimeout(() => {
+			client.exchange.queueService.addToQueue(task.message);
+			cb();
+		}, task.wait);
+	});
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
-
-	let client = null;
 
 	const AsyncLogin = () =>
 		new Promise((resolve, reject) => {
@@ -34,7 +38,6 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
 			await serverHelper.startServer();
 			await AsyncLogin();
 		} catch (err) {
@@ -45,31 +48,39 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 	beforeEach(
 		"delete all current nodes, logs, warnings and packets",
 		async function() {
-			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.delete("*");
+			await client.exchange.nodeRepository.delete("*");
 		}
 	);
 
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
 	});
 
 	it("can process key switch armed on IBC 8 where previous state was disarmed", async function() {
 		let sendMessage = async () => {
 			try {
-				let initial = new PacketConstructor(8, 12, {
-					data: [0, 0, 0, 0, 0, 0, 0, 0]
-				}).packet;
-				await serialPortHelper.sendMessage(initial);
+				sendQueue.push({
+					message: {
+						packet: new PacketConstructor(8, 12, {
+							data: [0, 0, 0, 0, 0, 0, 0, 0]
+						}).packet,
+						created: Date.now()
+					},
+					wait: 300
+				});
 
-				let message = new PacketConstructor(8, 12, {
-					data: [0, 0, 0, 0, 0, 0, 1, 1]
-				}).packet;
-				await serialPortHelper.sendMessage(message);
+				sendQueue.push({
+					message: {
+						packet: new PacketConstructor(8, 12, {
+							data: [0, 0, 0, 0, 0, 0, 1, 1]
+						}).packet,
+						created: Date.now()
+					},
+					wait: 300
+				});
 
 				await checkDatabase();
 			} catch (err) {
@@ -102,20 +113,30 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 
 	it("can process a key switch disarmed on IBC 8 where previous state armed", async function() {
 		let sendMessages = async () => {
-			let initial = new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 1, 1]
-			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(8, 12, {
+						data: [0, 0, 0, 0, 0, 0, 1, 1]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			let message2 = new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 1, 0]
-			}).packet;
-			await serialPortHelper.sendMessage(message2);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(8, 12, {
+						data: [0, 0, 0, 0, 0, 0, 1, 0]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults = async () => {
 			try {
-				await timer(500);
+				await timer(2000);
 				let result = await client.exchange.nodeRepository.getAllNodes();
 
 				if (result == null || result.length == 0) {

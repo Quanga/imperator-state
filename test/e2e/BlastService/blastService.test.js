@@ -1,6 +1,5 @@
 //const expect = require("expect.js");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const Mesh = require("happner-2");
 const SimData = require("./blastMessages");
 const Queue = require("better-queue");
@@ -8,17 +7,21 @@ const Queue = require("better-queue");
 require("dotenv").config();
 
 describe("E2E - BLAST SERVICE tests", function() {
+	this.timeout(25000);
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
-	const simData = new SimData();
-
 	var client;
 
-	this.timeout(20000);
+	const sendQueue = new Queue((task, cb) => {
+		setTimeout(() => {
+			client.exchange.queueService.addToQueue(task.message);
+			cb();
+		}, task.wait);
+	});
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	};
+	const simData = new SimData();
 
 	const AsyncLogin = () =>
 		new Promise((resolve, reject) => {
@@ -41,7 +44,6 @@ describe("E2E - BLAST SERVICE tests", function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
 			await serverHelper.startServer();
 
 			client = await new Mesh.MeshClient({
@@ -61,7 +63,6 @@ describe("E2E - BLAST SERVICE tests", function() {
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.delete("*");
 			await client.exchange.blastRepository.delete("*");
 		}
 	);
@@ -69,19 +70,10 @@ describe("E2E - BLAST SERVICE tests", function() {
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
-		await timer(2000);
 	});
 
 	it("can create a new blast model from a snapshot", async function() {
 		let sendMessages = async () => {
-			var sendQueue = new Queue((task, cb) => {
-				setTimeout(() => {
-					serialPortHelper.sendMessage(task.message);
-					cb();
-				}, task.wait);
-			});
-
 			const thisData = simData.createBlast1();
 			thisData.forEach(messageObj => sendQueue.push(messageObj));
 

@@ -4,7 +4,7 @@
  HAPPNER configuration
  ***********************************************************/
 
-module.exports = {
+let variables = {
 	name: process.env.EDGE_INSTANCE_NAME,
 	util: {
 		logCacheSize: 1000,
@@ -54,21 +54,10 @@ module.exports = {
 			}
 		}
 	},
-	endpoints: {
-		[process.env.ENDPOINT_NAME]: {
-			reconnect: {
-				retries: 100 // default Infinity
-			},
-			config: {
-				port: parseInt(process.env.ENDPOINT_PORT) || 55004,
-				host: process.env.ENDPOINT_IP || "localhost",
-				username: "_ADMIN",
-				password: "happn"
-			}
-		}
-	},
+
 	modules: {
 		app: { path: `${__dirname}/app.js` },
+		nodeTreeUtils: { path: `${__dirname}/lib/utils/node_tree_utils.js` },
 		stateService: { path: `${__dirname}/lib/services/stateService.js` },
 		uiService: { path: `${__dirname}/lib/services/ui_service.js` },
 		statsService: { path: `${__dirname}/lib/services/statsService.js` },
@@ -102,6 +91,7 @@ module.exports = {
 	components: {
 		statsService: {},
 		stateService: {},
+		nodeTreeUtils: {},
 		data: {
 			data: {
 				routes: {
@@ -158,3 +148,21 @@ module.exports = {
 		}
 	}
 };
+
+if (process.env.USE_ENDPOINT === "true") {
+	variables.endpoints = {
+		[process.env.ENDPOINT_NAME]: {
+			reconnect: {
+				retries: 100 // default Infinity
+			},
+			config: {
+				port: parseInt(process.env.ENDPOINT_PORT) || 55004,
+				host: process.env.ENDPOINT_IP || "localhost",
+				username: "_ADMIN",
+				password: "happn"
+			}
+		}
+	};
+}
+
+module.exports = variables;

@@ -1,6 +1,5 @@
 const expect = require("expect.js");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const Queue = require("better-queue");
 const Mesh = require("happner-2");
@@ -10,16 +9,14 @@ require("dotenv").config();
 describe("E2E - AXXIS - CBB data test", function() {
 	this.timeout(25000);
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
+	var client;
 
 	const sendQueue = new Queue((task, cb) => {
 		setTimeout(() => {
-			serialPortHelper.sendMessage(task.message);
+			client.exchange.queueService.addToQueue(task.message);
 			cb();
 		}, task.wait);
 	});
-
-	var client;
 
 	const timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
@@ -53,7 +50,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
 			await serverHelper.startServer();
 
 			client = await new Mesh.MeshClient({
@@ -67,42 +63,44 @@ describe("E2E - AXXIS - CBB data test", function() {
 		}
 	});
 
-	beforeEach(
-		"delete all current nodes, logs, warnings and packets",
-		async function() {
-			await client.exchange.logsRepository.deleteAll();
-			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.packetRepository.delete("*");
-		}
-	);
+	beforeEach("delete all current nodes, logs, warnings", async function() {
+		await client.exchange.logsRepository.deleteAll();
+		await client.exchange.warningsRepository.deleteAll();
+		await client.exchange.nodeRepository.delete("*");
+
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(8, 8, {
+					data: [0, 0, 0, 0, 0, 0, 0, 1]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
+	});
 
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
 		await timer(2000);
 	});
 
 	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function() {
 		let sendMessages = async () => {
 			sendQueue.push({
-				message: new PacketConstructor(8, 8, {
-					data: [0, 0, 0, 0, 0, 0, 0, 1]
-				}).packet,
-				wait: 300
-			});
-
-			sendQueue.push({
-				message: new PacketConstructor(5, 13, {
-					data: [
-						{
-							serial: 13,
-							childCount: 2,
-							ledState: 6,
-							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-						}
-					]
-				}).packet,
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
 				wait: 300
 			});
 
@@ -145,35 +143,40 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
 		let sendMessages = async () => {
-			let initial = new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(4, 13, {
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 }
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const initial2 = new PacketConstructor(4, 13, {
-				data: [
-					{ serial: 4423423, windowId: 1 },
-					{ serial: 4523434, windowId: 2 }
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(initial2);
-			await timer(500);
-			const message = new PacketConstructor(5, 13, {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-						delay: 2000
-					}
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(message);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults2 = async () => {
@@ -214,52 +217,62 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function() {
 		let sendMessages = async function() {
-			let initial = new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(4, 13, {
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 }
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const initial2 = new PacketConstructor(4, 13, {
-				data: [
-					{ serial: 4423423, windowId: 1 },
-					{ serial: 4523434, windowId: 2 }
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(initial2);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const message = new PacketConstructor(5, 13, {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-						delay: 2000
-					}
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(message);
-
-			const message2 = new PacketConstructor(5, 13, {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-						delay: 3000
-					}
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(message2);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								delay: 3000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults3 = async function() {
@@ -301,44 +314,49 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
 		let sendMessages = async function() {
-			let initial = new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 1,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const message = new PacketConstructor(5, 13, {
-				data: [
-					{
-						serial: 13,
-						childCount: 1,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-						delay: 2000
-					}
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(message);
-
-			const message2 = new PacketConstructor(5, 13, {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-						delay: 3000
-					}
-				]
-			}).packet;
-			await serialPortHelper.sendMessage(message2);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								delay: 3000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults3 = async function() {
@@ -371,81 +389,84 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
 		let sendMessages = async function() {
-			const data1 = {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			};
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(4, 13, {
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 }
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			let initial = new PacketConstructor(8, 8, data1);
-			await serialPortHelper.sendMessage(initial.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 1,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const data2 = {
-				data: [
-					{ serial: 4423423, windowId: 1 },
-					{ serial: 4523434, windowId: 2 }
-				]
-			};
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								delay: 3000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			await timer(2000);
-
-			const initial2 = new PacketConstructor(4, 13, data2);
-			await serialPortHelper.sendMessage(initial2.packet);
-
-			const data3 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 1,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-						delay: 2000
-					}
-				]
-			};
-
-			const message = new PacketConstructor(5, 13, data3);
-			await serialPortHelper.sendMessage(message.packet);
-
-			const data4 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-						delay: 3000
-					}
-				]
-			};
-
-			const message2 = new PacketConstructor(5, 13, data4);
-			await serialPortHelper.sendMessage(message2.packet);
-
-			const data6 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-						delay: 3000
-					}
-				]
-			};
-
-			const message4 = new PacketConstructor(5, 13, data6);
-			await serialPortHelper.sendMessage(message4.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								delay: 3000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults = async function() {
@@ -490,76 +511,79 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database3", async function() {
 		let sendMessages = async function() {
-			const data1 = {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			};
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(4, 13, {
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 }
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			let initial = new PacketConstructor(8, 8, data1);
-			await serialPortHelper.sendMessage(initial.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 1,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const data2 = {
-				data: [
-					{ serial: 4423423, windowId: 1 },
-					{ serial: 4523434, windowId: 2 }
-				]
-			};
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								delay: 3000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			await timer(2000);
-
-			const initial2 = new PacketConstructor(4, 13, data2);
-			await serialPortHelper.sendMessage(initial2.packet);
-
-			const data3 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 1,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-						delay: 2000
-					}
-				]
-			};
-
-			const message = new PacketConstructor(5, 13, data3);
-			await serialPortHelper.sendMessage(message.packet);
-
-			const data4 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-						delay: 3000
-					}
-				]
-			};
-
-			const message2 = new PacketConstructor(5, 13, data4);
-			await serialPortHelper.sendMessage(message2.packet);
-
-			const data6 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
-					}
-				]
-			};
-
-			const message4 = new PacketConstructor(5, 13, data6);
-			await serialPortHelper.sendMessage(message4.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults = async function() {
@@ -605,59 +629,81 @@ describe("E2E - AXXIS - CBB data test", function() {
 
 	it("can turn off detonatorStatus in attached dets with a keyswitch off", async function() {
 		let sendMessages = async function() {
-			const data1 = {
-				data: [0, 0, 0, 0, 0, 0, 0, 1]
-			};
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(4, 13, {
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 }
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			let initial = new PacketConstructor(8, 8, data1);
-			await serialPortHelper.sendMessage(initial.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-			const data2 = {
-				data: [
-					{ serial: 4423423, windowId: 1 },
-					{ serial: 4523434, windowId: 2 }
-				]
-			};
-
-			await timer(2000);
-
-			const initial2 = new PacketConstructor(4, 13, data2);
-			await serialPortHelper.sendMessage(initial2.packet);
-
-			const data3 = {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-					},
-					{
-						windowId: 2,
-						rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-						delay: 2000
-					}
-				]
-			};
-
-			const message = new PacketConstructor(5, 13, data3);
-			await serialPortHelper.sendMessage(message.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let sendMessages2 = async function() {
-			const data6a = {
-				data: [
-					{
-						serial: 13,
-						childCount: 2,
-						ledState: 6,
-						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
-					}
-				]
-			};
-
-			const message4a = new PacketConstructor(5, 13, data6a);
-			await serialPortHelper.sendMessage(message4a.packet);
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		};
 
 		let getResults1 = async function() {
@@ -698,8 +744,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 					edd1 = x;
 			});
 
-			console.log("RESULT", result);
-
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
 			expect(cbb.data.childCount).to.equal(2); // communication status
 			expect(cbb.data.loadCount).to.equal(2); // communication status
@@ -735,21 +779,20 @@ describe("E2E - AXXIS - CBB data test", function() {
 		//aaaa1005007300001828ff00ff001288
 
 		//this fix is only applied in the data service after the EDDSIG
-		const sendMessage = async () => {
-			await serialPortHelper.sendMessage("aaaa1005007300001828ff00ff001288");
-		};
+		const startTest = async () => {
+			sendQueue.push({
+				message: {
+					packet: "aaaa1005007300001828ff00ff001288",
+					created: Date.now()
+				},
+				wait: 300
+			});
 
-		let checkResult = async () => {
-			let result = await client.exchange.nodeRepository.getAllNodes();
-
-			expect(result.length).to.eql(1);
-			expect(result[0].data.childCount).to.eql(0);
-		};
-
-		let startTest = async () => {
-			await sendMessage();
 			await timer(1000);
-			await checkResult();
+
+			let result = await client.exchange.nodeRepository.getAllNodes();
+			expect(result.length).to.eql(2);
+			expect(result[1].data.childCount).to.eql(0);
 		};
 
 		return startTest();
