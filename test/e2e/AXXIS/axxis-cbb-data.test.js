@@ -33,6 +33,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		new Promise((resolve, reject) => {
 			client.on("login/allow", () => {
 				console.log("CLIENT CONNECTED:::::::::::::::::::::::::");
+				client.event.eventService.on("log", data => {
+					console.log("GETTING DATA", data);
+				});
 				resolve();
 			});
 
@@ -182,7 +185,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 		let getResults2 = async () => {
 			await timer(2000);
 			let result2 = await client.exchange.nodeRepository.getAllNodes();
-			console.log(result2);
 			if (result2 === null || result2.length === 0)
 				throw new Error("Empty result!");
 
