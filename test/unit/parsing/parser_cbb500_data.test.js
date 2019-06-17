@@ -36,7 +36,8 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 7
+					childCount: 7,
+					loadCountL: 0
 				}
 			},
 			{

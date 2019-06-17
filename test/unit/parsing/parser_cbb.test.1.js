@@ -35,7 +35,8 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 4
+					childCount: 0,
+					loadCount: 4
 				}
 			},
 			{
@@ -187,7 +188,8 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 0
+					childCount: 0,
+					loadCount: 1
 				}
 			},
 			{

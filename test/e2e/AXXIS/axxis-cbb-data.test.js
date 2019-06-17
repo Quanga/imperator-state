@@ -33,9 +33,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		new Promise((resolve, reject) => {
 			client.on("login/allow", () => {
 				console.log("CLIENT CONNECTED:::::::::::::::::::::::::");
-				client.event.eventService.on("log", data => {
-					console.log("GETTING DATA", data);
-				});
+				// client.event.eventService.on("log", data => {
+				// 	console.log("GETTING DATA", data);
+				// });
 				resolve();
 			});
 
@@ -292,7 +292,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 					edd1 = x;
 			});
 
-			console.log(cbb);
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
 			expect(edd1.data.windowId).to.equal(2); // communication status
 			expect(edd1.data.delay).to.equal(3000); // communication status
@@ -795,6 +794,148 @@ describe("E2E - AXXIS - CBB data test", function() {
 			let result = await client.exchange.nodeRepository.getAllNodes();
 			expect(result.length).to.eql(2);
 			expect(result[1].data.childCount).to.eql(0);
+		};
+
+		return startTest();
+	});
+
+	it("can turn off childCount", async function() {
+		let sendMessages = async function() {
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(4, 13, {
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 }
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
+
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
+
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 2,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+							},
+							{
+								windowId: 2,
+								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+								delay: 2000
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
+		};
+
+		let sendMessages2 = async function() {
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(5, 13, {
+						data: [
+							{
+								serial: 13,
+								childCount: 0,
+								ledState: 6,
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
+							}
+						]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
+		};
+
+		let getResults1 = async function() {
+			await timer(3000);
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length == 0)
+				throw new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null;
+
+			result.forEach(x => {
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
+					edd1 = x;
+			});
+
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.childCount).to.equal(2); // communication status
+			expect(cbb.data.loadCount).to.equal(2); // communication status
+			expect(edd1.data.detonatorStatus).to.equal(1); // communication status
+		};
+
+		let getResults = async function() {
+			await timer(3000);
+			let result = await client.exchange.nodeRepository.getAllNodes();
+
+			if (result == null || result.length == 0)
+				throw new Error("Empty result!");
+
+			let cbb = null,
+				edd1 = null;
+
+			result.forEach(x => {
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
+					edd1 = x;
+			});
+
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(cbb.data.childCount).to.equal(0); // communication status
+			//expect(cbb.data.loadCount).to.equal(0); // communication status
+
+			expect(edd1.data.detonatorStatus).to.equal(0); // communication status
+		};
+
+		let startTest = async function() {
+			try {
+				await sendMessages();
+				await timer(1000);
+				await getResults1();
+
+				await sendMessages2();
+				await timer(1000);
+
+				await getResults();
+			} catch (err) {
+				return Promise.reject(err);
+			}
 		};
 
 		return startTest();
