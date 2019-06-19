@@ -491,6 +491,7 @@ describe("E2E - AXXIS - CBB list test", async function() {
 
 		const checkFinalResults = async () => {
 			const allNodes = await nodeRepository.getAllNodes();
+
 			const mappedNodes = allNodes.map(node => {
 				return { node: node.constructor.name, data: node.data };
 			});
