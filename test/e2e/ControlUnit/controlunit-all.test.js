@@ -5,7 +5,7 @@ const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const Queue = require("better-queue");
 
 describe("E2E - CONTROL UNIT data tests", async function() {
-	this.timeout(25000);
+	this.timeout(15000);
 	let serverHelper = new ServerHelper();
 	var client;
 
@@ -22,14 +22,17 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 
 	const AsyncLogin = () =>
 		new Promise((resolve, reject) => {
-			client = new Mesh.MeshClient({
-				secure: true,
-				port: 55000
+			client.on("login/allow", () => {
+				console.log("CLIENT CONNECTED:::::::::::::::::::::::::");
+				resolve();
 			});
 
-			client.on("login/allow", () => resolve());
 			client.on("login/deny", () => reject());
-			client.on("login/error", () => reject());
+
+			client.on("login/error", () => {
+				console.log("CLIENT ISSUE::::::");
+			});
+
 			client.login({
 				username: "_ADMIN",
 				password: "happn"
@@ -39,6 +42,12 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 	before("cleaning up db", async function() {
 		try {
 			await serverHelper.startServer();
+
+			client = await new Mesh.MeshClient({
+				secure: true,
+				port: 55000
+			});
+
 			await AsyncLogin();
 		} catch (err) {
 			return Promise.reject(err);
@@ -51,6 +60,17 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 			await client.exchange.logsRepository.deleteAll();
 			await client.exchange.warningsRepository.deleteAll();
 			await client.exchange.nodeRepository.delete("*");
+			await client.exchange.dataService.clearDataModel();
+
+			sendQueue.push({
+				message: {
+					packet: new PacketConstructor(8, 8, {
+						data: [0, 0, 0, 0, 0, 0, 0, 1]
+					}).packet,
+					created: Date.now()
+				},
+				wait: 300
+			});
 		}
 	);
 

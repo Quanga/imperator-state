@@ -57,7 +57,6 @@ let variables = {
 
 	modules: {
 		app: { path: `${__dirname}/app.js` },
-		nodeTreeUtils: { path: `${__dirname}/lib/utils/node_tree_utils.js` },
 		stateService: { path: `${__dirname}/lib/services/stateService.js` },
 		uiService: { path: `${__dirname}/lib/services/ui_service.js` },
 		statsService: { path: `${__dirname}/lib/services/statsService.js` },
@@ -91,7 +90,6 @@ let variables = {
 	components: {
 		statsService: {},
 		stateService: {},
-		nodeTreeUtils: {},
 		data: {
 			data: {
 				routes: {
