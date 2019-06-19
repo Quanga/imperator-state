@@ -143,7 +143,6 @@ describe("E2E - AXXIS - CBB list test", async function() {
 			});
 
 			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.loadCount).to.equal(2); // det status
 			expect(edd1.data.detonatorStatus).to.equal(null); // det status
 			expect(edd2.data.detonatorStatus).to.equal(null); // det status
 		};

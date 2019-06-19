@@ -370,7 +370,6 @@ describe("E2E - AXXIS - CBB data test", function() {
 			expect(cbb[0].data.communicationStatus).to.equal(1); // communication status
 			expect(edd[0].data.windowId).to.equal(2); // communication status
 			expect(edd[0].data.delay).to.equal(3000); // communication status
-			expect(cbb[0].data.loadCount).to.equal(0); // communication status
 		};
 
 		let startTest = async function() {
