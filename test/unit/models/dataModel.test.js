@@ -37,7 +37,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		console.log("cures", cuRes);
 		console.log("cures2", cbb1Res);
 
-		expect(dataModel.controlUnit.units.connectedUnitsCount).to.eql(2);
+		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.units["101"].data.serial).to.eql(101);
 		expect(dataModel.units["102"].data.serial).to.eql(102);
 	});
@@ -59,7 +59,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 		//console.log("CHANGE", changeObj);
 
-		expect(dataModel.controlUnit.units.connectedUnitsCount).to.eql(2);
+		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.units["101"].data.serial).to.eql(101);
 		expect(dataModel.units["102"].data.serial).to.eql(102);
 	});
@@ -117,7 +117,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.units["101"].data.serial).to.eql(101);
 		expect(dataModel.units["102"].data.serial).to.eql(102);
 		expect(dataModel.units["101"].units.unitsCount).to.eql(2);
-		expect(dataModel.units["101"].units.programCount).to.eql(undefined);
+		expect(dataModel.units["101"].units.programCount).to.eql(0);
 		expect(dataModel.units["101"].units.loggedCount).to.eql(1);
 
 		const edd1Change = new EDDModel(null, 101, 1);
@@ -134,7 +134,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 		console.log("CHANGE", JSON.stringify(dataModel));
 		expect(dataModel.units["101"].units.loggedCount).to.eql(2);
-		expect(dataModel.units["101"].units.programmedCount).to.eql(0);
+		expect(dataModel.units["101"].units.programCount).to.eql(0);
 		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(2);
 
 		// ccb1Change.data.keySwitchStatus = 1;
