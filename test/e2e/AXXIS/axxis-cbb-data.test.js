@@ -748,6 +748,8 @@ describe("E2E - AXXIS - CBB data test", function() {
 			//expect(cbb.data.loadCount).to.equal(2); // communication status
 
 			expect(edd1.data.detonatorStatus).to.equal(0); // communication status
+
+			
 		};
 
 		let startTest = async function() {
@@ -790,6 +792,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 			await timer(1000);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
+
 			expect(result.length).to.eql(2);
 			expect(result[1].data.childCount).to.eql(0);
 		};
