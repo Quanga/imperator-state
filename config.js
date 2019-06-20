@@ -32,11 +32,6 @@ let variables = {
 		adminPassword: "happn",
 		filename: "./aece.nedb",
 		services: {
-			transport: {
-				config: {
-					mode: "https"
-				}
-			},
 			data: {
 				config: {
 					filename: `${__dirname}/data.db`
