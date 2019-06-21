@@ -40,7 +40,7 @@ module.exports = {
 			host: "192.168.1.5",
 			ref: "origin/new-dataModel",
 			repo: "https://github.com/Quanga/edge_state.git",
-			path: "/home/pi/edge",
+			path: "/home/pi/state",
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
 		}
