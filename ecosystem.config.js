@@ -14,7 +14,7 @@ module.exports = {
 				EDGE_LOCAL_PORT: "55000",
 				EDGE_LOCAL_LOG_FILE: "edge.log",
 				LOG_LEVEL: "info",
-				USE_ENDPOINT: "false",
+				USE_ENDPOINT: "true",
 				ENDPOINT_NAME: "edge_ssot",
 				ENDPOINT_IP: "192.168.1.5",
 				ENDPOINT_PORT: "55004",
