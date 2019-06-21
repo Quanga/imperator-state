@@ -54,7 +54,6 @@ let variables = {
 			}
 		}
 	},
-
 	modules: {
 		app: { path: `${__dirname}/app.js` },
 		stateService: { path: `${__dirname}/lib/services/stateService.js` },
@@ -98,7 +97,6 @@ let variables = {
 				}
 			}
 		},
-
 		uiService: {
 			startMethod: "start",
 			stopMethod: "stop"
