@@ -16,7 +16,7 @@ module.exports = {
 				LOG_LEVEL: "info",
 				USE_ENDPOINT: "true",
 				ENDPOINT_NAME: "edge_ssot",
-				ENDPOINT_IP: "192.168.1.5",
+				ENDPOINT_IP: "0.0.0.0",
 				ENDPOINT_PORT: "55004",
 				ROUTER_SHOW_QUEUE_DEBUG: "false",
 				ROUTER_QUEUE_FETCH_INTERVAL: "1200",
