@@ -16,6 +16,7 @@ describe("PARSER-section-control-parser-test", async function() {
          start  length  command serial  isc1    isc2    isc3    isc4    isc5    isc6    isc7    crc
          AAAA   16      01      0008    0025    0026    002E    0032    002A    0012    002C    7BCA
          */
+		let now = Date.now();
 
 		var expected = [
 			{
@@ -25,7 +26,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: null,
 					typeId: 0,
 					parentType: null,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -44,7 +45,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -62,7 +63,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -80,7 +81,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -98,7 +99,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -116,7 +117,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -134,7 +135,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -152,7 +153,7 @@ describe("PARSER-section-control-parser-test", async function() {
 					parentSerial: 8,
 					typeId: 1,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -175,7 +176,7 @@ describe("PARSER-section-control-parser-test", async function() {
 
 				var testObj = {
 					packet: "AAAA1601000800250026002E0032002A0012002C7BCA",
-					created: Date.now()
+					created: now
 				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);

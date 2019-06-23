@@ -12,6 +12,8 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 	before("it sets up the dependencies", async function() {});
 
 	it("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
+		let now = Date.now();
+
 		var expected = [
 			{
 				itemType: "CBoosterModel",
@@ -20,7 +22,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: null,
 					typeId: 3,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -35,8 +37,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 0,
-					loadCount: 4
+					childCount: null
 				}
 			},
 			{
@@ -46,7 +47,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: 67,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: null,
@@ -67,7 +68,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: 67,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: null,
@@ -88,7 +89,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: 67,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: null,
@@ -109,7 +110,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: 67,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: null,
@@ -135,7 +136,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 
 				var testObj = {
 					packet: "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac",
-					created: Date.now()
+					created: now
 				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
@@ -165,6 +166,8 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
          AAAA   1C      05        0043          00001828ff00ff00        bf80
          */
 
+		let now = Date.now();
+
 		var expected = [
 			{
 				itemType: "CBoosterModel",
@@ -173,7 +176,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: null,
 					typeId: 3,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -188,8 +191,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 0,
-					loadCount: 1
+					childCount: null
 				}
 			},
 			{
@@ -199,7 +201,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 					parentSerial: 67,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: null,
@@ -225,7 +227,7 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 
 				var testObj = {
 					packet: "aaaa0d040043ffffffffff8a44",
-					created: Date.now()
+					created: now
 				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);

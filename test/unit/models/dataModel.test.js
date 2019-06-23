@@ -100,18 +100,16 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		const cu = new ControlUnitModel(22, null);
 		const cbb1 = new CBoosterModel(101, 22);
 		const cbb2 = new CBoosterModel(102, 22);
-		const edd1 = new EDDModel(null, 101, 1);
-		edd1.meta.storedPacketDate = 76576576765;
+		const edd1 = new EDDModel(null, 101, 1, 3000);
 		edd1.data.logged = 1;
 
-		const edd2 = new EDDModel(null, 101, 2);
+		const edd2 = new EDDModel(null, 101, 2, 3000);
 
 		await dataModel.upsertUnit(cu);
 		await dataModel.upsertUnit(cbb1);
 		await dataModel.upsertUnit(cbb2);
 		await dataModel.upsertUnit(edd1);
 		await dataModel.upsertUnit(edd2);
-		//console.log("CHANGE", JSON.stringify(dataModel));
 
 		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.units["101"].data.serial).to.eql(101);
@@ -120,13 +118,12 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.units["101"].units.programCount).to.eql(0);
 		expect(dataModel.units["101"].units.loggedCount).to.eql(1);
 
-		const edd1Change = new EDDModel(null, 101, 1);
+		const edd1Change = new EDDModel(null, 101, 1, 2000);
 		edd1Change.data.detonatorStatus = 1;
 		edd1Change.data.serial = 2342342;
 		let changedEdd = await dataModel.upsertUnit(edd1Change);
-		//console.log("CHNGED EDD", JSON.stringify(changedEdd, null, 2));
 
-		const edd2Change = new EDDModel(null, 101, 2);
+		const edd2Change = new EDDModel(null, 101, 2, 5000);
 		edd2Change.data.detonatorStatus = 1;
 		edd2Change.data.logged = 1;
 		edd2Change.data.serial = 3424234;
@@ -193,10 +190,10 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 		await dataModel.upsertUnit(new ControlUnitModel(22, null));
 		await dataModel.upsertUnit(new CBoosterModel(101, 22));
-		await dataModel.upsertUnit(new EDDModel(null, 101, 1));
-		await dataModel.upsertUnit(new EDDModel(null, 101, 2));
-		await dataModel.upsertUnit(new EDDModel(null, 101, 3));
-		await dataModel.upsertUnit(new EDDModel(null, 101, 4));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 1, 1000));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 2, 2000));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 3, 3000));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 4, 4000));
 
 		//console.log("CHANGE", JSON.stringify(dataModel));
 		expect(dataModel.controlUnit.units.unitsCount).to.eql(1);

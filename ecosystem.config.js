@@ -37,7 +37,7 @@ module.exports = {
 	deploy: {
 		production: {
 			user: "pi",
-			host: "192.168.1.5",
+			host: "192.168.1.23",
 			ref: "origin/new-dataModel",
 			repo: "https://github.com/Quanga/edge_state.git",
 			path: "/home/pi/state",

@@ -87,687 +87,545 @@ describe("E2E - AXXIS - CBB data test", function() {
 	});
 
 	it("can process a packet with CBBs Data 1 where no CBBs currently in database", async function() {
-		let sendMessages = async () => {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			await holdAsync();
-		};
+		await holdAsync();
+		await timer(1000);
 
-		let getResults = async () => {
-			try {
-				let result = await client.exchange.nodeRepository.getAllNodes();
+		let resultPresist = await client.exchange.nodeRepository.getAllNodes();
+		let resultDataService = await client.exchange.dataService.getSnapShot();
+		if (resultPresist == null || resultPresist.length === 0)
+			throw new Error("Empty result!");
 
-				if (result == null || result.length === 0)
-					throw new Error("Empty result!");
+		let cbb = await resultPresist.find(
+			unit => parseInt(unit.serial) === 13 && unit.typeId === 3
+		);
 
-				let cbb = await result.find(
-					unit => parseInt(unit.data.serial) === 13 && unit.data.typeId === 3
-				);
-
-				expect(cbb.data.communicationStatus).to.equal(1); // communication status
-				expect(cbb.data.childCount).to.equal(2);
-				expect(cbb.data.loadCount).to.equal(0);
-			} catch (err) {
-				console.log(err);
-				return Promise.reject(err);
-			}
-		};
-
-		let startTest = async () => {
-			try {
-				await sendMessages();
-				await timer(2000);
-				await getResults();
-			} catch (err) {
-				console.log(err);
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1); // communication status
+		expect(cbb.childCount).to.equal(2);
+		expect(resultDataService.units["13"].data.communicationStatus).to.equal(1);
+		expect(resultDataService.units["13"].data.childCount).to.equal(2);
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
-		let sendMessages = async () => {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 }
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(4, 13, {
+					data: [
+						{ serial: 4423423, windowId: 1 },
+						{ serial: 4523434, windowId: 2 }
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let getResults2 = async () => {
-			await timer(2000);
-			let result2 = await client.exchange.nodeRepository.getAllNodes();
-			if (result2 === null || result2.length === 0)
-				throw new Error("Empty result!");
+		await holdAsync();
+		await timer(1000);
 
-			let cbb = null,
-				edd1 = null;
+		const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+		if (resultPersist === null || resultPersist.length === 0)
+			throw new Error("Empty result!");
 
-			await result2.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		let cbb = null,
+			edd1 = null;
 
-			console.log("CBB", cbb);
+		await resultPersist.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(edd1.data.windowId).to.equal(2); // communication status
-			expect(edd1.data.delay).to.equal(2000); // communication status
-			expect(cbb.data.childCount).to.equal(2);
-		};
-
-		let startTest = async () => {
-			try {
-				await sendMessages();
-				await timer(1000);
-				await getResults2();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1); // communication status
+		expect(edd1.windowId).to.equal(2); // communication status
+		expect(edd1.delay).to.equal(2000); // communication status
+		expect(cbb.childCount).to.equal(2);
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function() {
-		let sendMessages = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 }
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(4, 13, {
+					data: [
+						{ serial: 4423423, windowId: 1 },
+						{ serial: 4523434, windowId: 2 }
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+							delay: 3000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let getResults3 = async function() {
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		await holdAsync();
+		await timer(2000);
 
-			if (result == null || result.length === 0)
-				throw new Error("Empty result!");
+		const resPersist = await client.exchange.nodeRepository.getAllNodes();
 
-			let cbb = null,
-				edd1 = null;
+		if (resPersist == null || resPersist.length === 0)
+			throw new Error("Empty resPersist!");
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		let cbb = null,
+			edd1 = null;
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(edd1.data.windowId).to.equal(2); // communication status
-			expect(edd1.data.delay).to.equal(3000); // communication status
-			expect(cbb.data.childCount).to.equal(2);
-			//expect(cbb.data.loadCount).to.equal(2);
-		};
+		resPersist.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-		let startTest = async function() {
-			try {
-				await sendMessages();
-				await timer(2000);
-
-				await getResults3();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(edd1.windowId).to.equal(2);
+		expect(edd1.delay).to.equal(3000);
+		expect(cbb.childCount).to.equal(2);
 	});
 
 	it("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
-		let sendMessages = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 1,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 1,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+							delay: 3000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let getResults3 = async function() {
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		await holdAsync();
+		await timer(2000);
 
-			if (result == null || result.length === 0)
-				throw new Error("Empty result!");
+		let resPersist = await client.exchange.nodeRepository.getAllNodes();
 
-			let cbb = result.filter(x => x.data.typeId === 3);
-			let edd = result.filter(x => x.data.typeId === 4);
-			expect(cbb[0].data.communicationStatus).to.equal(1); // communication status
-			expect(edd[0].data.windowId).to.equal(2); // communication status
-			expect(edd[0].data.delay).to.equal(3000); // communication status
-		};
+		if (resPersist == null || resPersist.length === 0)
+			throw new Error("Empty resPersist!");
 
-		let startTest = async function() {
-			try {
-				await sendMessages();
-				await timer(2000);
-
-				await getResults3();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		let cbb = resPersist.filter(x => x.typeId === 3);
+		let edd = resPersist.filter(x => x.typeId === 4);
+		expect(cbb[0].communicationStatus).to.equal(1); // communication status
+		expect(edd[0].windowId).to.equal(2); // communication status
+		expect(edd[0].delay).to.equal(3000); // communication status
 	});
 
 	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
-		let sendMessages = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 }
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(4, 13, {
+					data: [
+						{ serial: 4423423, windowId: 1 },
+						{ serial: 4523434, windowId: 2 }
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 1,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 1,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+							delay: 3000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+							delay: 3000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let getResults = async function() {
-			await timer(3000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		await holdAsync();
+		await timer(3000);
+		let resPersist = await client.exchange.nodeRepository.getAllNodes();
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+		if (resPersist == null || resPersist.length == 0)
+			throw new Error("Empty resPersist!");
 
-			let cbb = null,
-				edd1 = null;
+		let cbb = null,
+			edd1 = null;
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		resPersist.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.childCount).to.equal(2); // communication status
-
-			expect(edd1.data.windowId).to.equal(2); // communication status
-			expect(edd1.data.delay).to.equal(3000); // communication status
-
-			// let edds = requestb.find(x => x.typeId === 4);
-			// expect(edds).to.be.equal(null);
-		};
-
-		let startTest = async function() {
-			try {
-				await sendMessages();
-				await timer(1000);
-
-				await getResults();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(cbb.childCount).to.equal(2);
+		expect(edd1.windowId).to.equal(2);
+		expect(edd1.delay).to.equal(3000);
 	});
 
 	it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database3", async function() {
-		let sendMessages = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 }
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(4, 13, {
+					data: [
+						{ serial: 4423423, windowId: 1 },
+						{ serial: 4523434, windowId: 2 }
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 1,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 1,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+							delay: 3000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let getResults = async function() {
-			await timer(3000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		await holdAsync();
+		await timer(1000);
+		let resPersist = await client.exchange.nodeRepository.getAllNodes();
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+		if (resPersist == null || resPersist.length == 0)
+			throw new Error("Empty resPersist!");
 
-			let cbb = null,
-				edd1 = null;
+		let cbb = null,
+			edd1 = null;
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		resPersist.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.childCount).to.equal(2); // communication status
-			//expect(cbb.data.loadCount).to.equal(2); // communication status
-
-			expect(edd1.data.windowId).to.equal(2); // communication status
-			expect(edd1.data.delay).to.equal(3000); // communication status
-
-			// let edds = requestb.find(x => x.typeId === 4);
-			// expect(edds).to.be.equal(null);
-		};
-
-		let startTest = async function() {
-			try {
-				await sendMessages();
-				await timer(1000);
-
-				await getResults();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(cbb.childCount).to.equal(2);
+		expect(edd1.windowId).to.equal(2);
+		expect(edd1.delay).to.equal(3000);
 	});
 
 	it("can turn off detonatorStatus in attached dets with a keyswitch off", async function() {
-		let sendMessages = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 }
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(4, 13, {
+					data: [
+						{ serial: 4423423, windowId: 1 },
+						{ serial: 4523434, windowId: 2 }
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let sendMessages2 = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		await holdAsync();
+		await timer(1000);
 
-		let getResults1 = async function() {
-			await timer(3000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		let resPersist = await client.exchange.nodeRepository.getAllNodes();
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+		if (resPersist == null || resPersist.length == 0)
+			throw new Error("Empty resPersist!");
 
-			let cbb = null,
-				edd1 = null;
+		let cbb = null,
+			edd1 = null;
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		resPersist.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.childCount).to.equal(2); // communication status
-			//expect(cbb.data.loadCount).to.equal(2); // communication status
-			expect(edd1.data.detonatorStatus).to.equal(1); // communication status
-		};
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(cbb.childCount).to.equal(2);
+		expect(edd1.detonatorStatus).to.equal(1);
 
-		let getResults = async function() {
-			await timer(3000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+		await holdAsync();
+		await timer(2000);
+		resPersist = await client.exchange.nodeRepository.getAllNodes();
 
-			let cbb = null,
-				edd1 = null;
+		if (resPersist == null || resPersist.length == 0)
+			throw new Error("Empty resPersist!");
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		resPersist.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.childCount).to.equal(2); // communication status
-			//expect(cbb.data.loadCount).to.equal(2); // communication status
-
-			expect(edd1.data.detonatorStatus).to.equal(0); // communication status
-
-			
-		};
-
-		let startTest = async function() {
-			try {
-				await sendMessages();
-				await timer(1000);
-				await getResults1();
-
-				await sendMessages2();
-				await timer(1000);
-
-				await getResults();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(cbb.childCount).to.equal(2);
+		expect(edd1.detonatorStatus).to.equal(0);
 	});
 
 	it("edge case - will ignore an 05 packet where the serial is 255 and the windowID is 255", async function() {
@@ -780,165 +638,129 @@ describe("E2E - AXXIS - CBB data test", function() {
 		//aaaa1005007300001828ff00ff001288
 
 		//this fix is only applied in the data service after the EDDSIG
-		const startTest = async () => {
-			sendQueue.push({
-				message: {
-					packet: "aaaa1005007300001828ff00ff001288",
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: "aaaa1005007300001828ff00ff001288",
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			await timer(1000);
+		await timer(2000);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		let result = await client.exchange.nodeRepository.getAllNodes();
 
-			expect(result.length).to.eql(2);
-			expect(result[1].data.childCount).to.eql(0);
-		};
-
-		return startTest();
+		expect(result.length).to.eql(2);
+		expect(result[1].childCount).to.eql(0);
 	});
 
 	it("can turn off childCount", async function() {
-		let sendMessages = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 }
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(4, 13, {
+					data: [
+						{ serial: 4423423, windowId: 1 },
+						{ serial: 4523434, windowId: 2 }
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							},
-							{
-								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 2,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+						},
+						{
+							windowId: 2,
+							rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+							delay: 2000
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-		let sendMessages2 = async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 0,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
-							}
-						]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 300
-			});
-		};
+		await holdAsync();
+		await timer(1000);
 
-		let getResults1 = async function() {
-			await timer(3000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		let result = await client.exchange.nodeRepository.getAllNodes();
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+		if (result == null || result.length == 0) throw new Error("Empty result!");
 
-			let cbb = null,
-				edd1 = null;
+		let cbb = null,
+			edd1 = null;
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		result.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.childCount).to.equal(2); // communication status
-			//expect(cbb.data.loadCount).to.equal(2); // communication status
-			expect(edd1.data.detonatorStatus).to.equal(1); // communication status
-		};
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(cbb.childCount).to.equal(2);
+		expect(edd1.detonatorStatus).to.equal(1);
 
-		let getResults = async function() {
-			await timer(3000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(5, 13, {
+					data: [
+						{
+							serial: 13,
+							childCount: 0,
+							ledState: 6,
+							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
+						}
+					]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 300
+		});
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+		await holdAsync();
+		await timer(3000);
+		result = await client.exchange.nodeRepository.getAllNodes();
 
-			let cbb = null,
-				edd1 = null;
+		if (result == null || result.length == 0) throw new Error("Empty result!");
 
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4)
-					edd1 = x;
-			});
+		result.forEach(x => {
+			if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
+			if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+		});
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(cbb.data.childCount).to.equal(0); // communication status
-			//expect(cbb.data.loadCount).to.equal(0); // communication status
-
-			expect(edd1.data.detonatorStatus).to.equal(0); // communication status
-		};
-
-		let startTest = async function() {
-			try {
-				await sendMessages();
-				await timer(1000);
-				await getResults1();
-
-				await sendMessages2();
-				await timer(1000);
-
-				await getResults();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return startTest();
+		expect(cbb.communicationStatus).to.equal(1);
+		expect(cbb.childCount).to.equal(0);
+		expect(edd1.detonatorStatus).to.equal(0);
 	});
 });

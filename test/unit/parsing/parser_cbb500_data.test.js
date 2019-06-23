@@ -12,8 +12,9 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
          start  length  command   CBB serial    Data                    CRC
          AAAA   1C      05        0043          00001828ff00ff00        bf80
          */
+		let now = Date.now();
 
-		var expected = [
+		const expected = [
 			{
 				itemType: "CBoosterModel",
 				itemData: {
@@ -21,7 +22,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: null,
 					typeId: 3,
 					parentType: 0,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -36,8 +37,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: 7,
-					loadCountL: 0
+					childCount: null
 				}
 			},
 			{
@@ -47,7 +47,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -68,7 +68,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -89,7 +89,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -110,7 +110,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -131,7 +131,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -152,7 +152,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -173,7 +173,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -194,7 +194,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					parentSerial: 65535,
 					typeId: 4,
 					parentType: 3,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					detonatorStatus: 0,
@@ -224,7 +224,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 				const testObj = {
 					packet:
 						"aaaa3017ffffed0101f023ee01015424ef0101b824f001011c25f101018025f20101e425f301014826f40101ac262665",
-					created: Date.now()
+					created: now
 				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);

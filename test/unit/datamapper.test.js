@@ -1,5 +1,4 @@
 const DataMapper = require("../../lib/mappers/data_mapper");
-const MockHappn = require("../mocks/mock_happn");
 const expect = require("expect.js");
 
 describe("DATA MAPPER TESTS", async function() {
@@ -61,11 +60,10 @@ describe("DATA MAPPER TESTS", async function() {
 			meta: { storedPacketDate: 231231231 }
 		};
 
-		let result = await datamapper.mapUpdateNode(next, previous);
+		let result = await datamapper.getUpdates(next, previous);
 
-		expect(result.meta.dirty.shaftFault).to.eql(1);
-		expect(result.meta.dirty.keySwitchStatus).to.eql(1);
-		//console.log(x);
+		expect(result.keySwitchStatus).to.eql(1);
+		expect(result.shaftFault).to.eql(1);
 	});
 
 	it("can remap nulls in previous ", async function() {
@@ -92,10 +90,8 @@ describe("DATA MAPPER TESTS", async function() {
 				cableFault: 0,
 				earthLeakage: 0,
 				ledState: 6,
-				childCount: 2,
-				loadCount: 2
-			},
-			meta: { storedPacketDate: 1312312312 }
+				childCount: 2
+			}
 		};
 
 		const next = {
@@ -119,17 +115,14 @@ describe("DATA MAPPER TESTS", async function() {
 				cableFault: 0,
 				earthLeakage: 0,
 				ledState: 6,
-				childCount: 2,
-				loadCount: 2
-			},
-			meta: { storedPacketDate: 231231231 }
+				childCount: 2
+			}
 		};
 
-		let result = await datamapper.mapUpdateNode(next, previous);
-
+		let result = await datamapper.getUpdates(next, previous);
 		console.log(result);
-		expect(result.meta.dirty.shaftFault).to.eql(1);
-		expect(result.meta.dirty.keySwitchStatus).to.eql(1);
+		expect(result.shaftFault).to.eql(1);
+		expect(result.keySwitchStatus).to.eql(1);
 	});
 
 	it("can remap null values against its previous node", async function() {
@@ -156,10 +149,8 @@ describe("DATA MAPPER TESTS", async function() {
 				cableFault: 0,
 				earthLeakage: 0,
 				ledState: 6,
-				childCount: 2,
-				loadCount: 2
-			},
-			meta: { storedPacketDate: 1312312312 }
+				childCount: 2
+			}
 		};
 
 		const next = {
@@ -183,16 +174,14 @@ describe("DATA MAPPER TESTS", async function() {
 				cableFault: 0,
 				earthLeakage: 0,
 				ledState: 6,
-				childCount: 2,
-				loadCount: 2
-			},
-			meta: { storedPacketDate: 231231231 }
+				childCount: 2
+			}
 		};
 
-		let result = await datamapper.mapUpdateNode(next, previous);
+		let result = await datamapper.getUpdates(next, previous);
 
 		console.log(result);
-		expect(result.data.mains).to.eql(0);
-		expect(result.data.path).to.eql("3/13");
+		expect(result.mains).to.eql(0);
+		expect(result.path).to.eql("3/13");
 	});
 });

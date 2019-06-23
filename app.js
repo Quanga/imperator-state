@@ -164,7 +164,6 @@ App.prototype.startRouter = function($happn) {
 				//await queueService.watchOutgoingQueue();
 				//transmissionService.initialise();
 			}
-
 			stateService.updateState({ service: $happn.name, state: "STARTED" });
 			logInfo("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {

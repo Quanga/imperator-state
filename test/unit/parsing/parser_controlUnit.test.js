@@ -10,6 +10,7 @@ describe("PARSER-control-unit-parser-test", async function() {
 		/*
          AAAA 0A 08 0001 00C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
          */
+		let now = Date.now();
 
 		const expected = [
 			{
@@ -19,7 +20,7 @@ describe("PARSER-control-unit-parser-test", async function() {
 					parentSerial: null,
 					typeId: 0,
 					parentType: null,
-					created: null,
+					created: now,
 					modified: null,
 					path: "",
 					communicationStatus: 1,
@@ -53,7 +54,7 @@ describe("PARSER-control-unit-parser-test", async function() {
 
 				const testObj = {
 					packet: "AAAA0A08000100C0CA96",
-					created: Date.now()
+					created: now
 				};
 
 				let parsedPacketArr = await parser.parse(mockHappn, testObj);
