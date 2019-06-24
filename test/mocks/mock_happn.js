@@ -1,14 +1,22 @@
+/* eslint-disable no-unused-vars */
 require("dotenv").config({ path: "../../.env" });
+var EventEmitter = require("events");
+var util = require("util");
 
 var MockHappn = function() {
 	this.__queueLength = 1;
 	this.nodes = [];
+	this.emitter = new EventEmitter.EventEmitter();
+	this.emit = function(message) {
+		this.emitter.emit(message);
+	};
 };
+
+//util.inherits(MockHappn, EventEmitter);
 
 Object.defineProperty(MockHappn.prototype, "log", {
 	get: function() {
 		return {
-			// eslint-disable-next-line no-unused-vars
 			error: function(message, err) {
 				console.log(message);
 				//throw err;
@@ -19,6 +27,16 @@ Object.defineProperty(MockHappn.prototype, "log", {
 		};
 	}
 });
+
+// Object.defineProperty(MockHappn.prototype, "emit", {
+// 	get: function(message) {
+// 		return {
+// 			function(message, err) {
+// 				this.emitter.emit(message);
+// 			}
+// 		};
+// 	}
+// });
 
 Object.defineProperty(MockHappn.prototype, "config", {
 	get: function() {
