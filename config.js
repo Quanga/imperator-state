@@ -56,6 +56,9 @@ let variables = {
 	},
 	modules: {
 		app: { path: `${__dirname}/app.js` },
+		transmissionService: {
+			path: `${__dirname}/lib/services/transmission_service.js`
+		},
 		stateService: { path: `${__dirname}/lib/services/stateService.js` },
 		uiService: { path: `${__dirname}/lib/services/ui_service.js` },
 		statsService: { path: `${__dirname}/lib/services/statsService.js` },
@@ -137,6 +140,7 @@ let variables = {
 				}
 			}
 		},
+		transmissionService: { startMethod: "start" },
 		app: {
 			startMethod: "start",
 			stopMethod: "stop"
