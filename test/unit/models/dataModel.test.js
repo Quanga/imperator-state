@@ -69,6 +69,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		const cu = new ControlUnitModel(22, null);
 		const cbb1 = new CBoosterModel(101, 22);
 		const cbb2 = new CBoosterModel(102, 22);
+		cbb1.data.created = 1010101;
 
 		await dataModel.upsertUnit(cu);
 		await dataModel.upsertUnit(cbb1);
@@ -76,13 +77,19 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.units["101"].data.serial).to.eql(101);
+		expect(dataModel.units["101"].data.created).to.eql(1010101);
+		expect(dataModel.units["101"].data.modified).to.eql(null);
 		expect(dataModel.units["102"].data.serial).to.eql(102);
 
 		const ccb1Change = new CBoosterModel(101, null);
+		ccb1Change.data.created = 2010101;
+
 		ccb1Change.data.keySwitchStatus = 1;
 		let changeObj = await dataModel.upsertUnit(ccb1Change);
 
 		expect(dataModel.units["101"].data.keySwitchStatus).to.eql(1);
+		expect(dataModel.units["101"].data.created).to.eql(1010101);
+		expect(dataModel.units["101"].data.modified).to.eql(2010101);
 		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(1);
 
 		const ccb1Change2 = new CBoosterModel(101, null);
