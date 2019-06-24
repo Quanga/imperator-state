@@ -24,8 +24,8 @@ module.exports = {
 				ROUTER_LOG_FILE: "./rpi_router.log",
 				ROUTER_SYSTEM_MODE: "EDGE",
 				ROUTER_SYSYEM_TYPE: "IBS",
-				SYSTEM_FIRING_TIME: "42000",
-				SYSTEM_REPORT_TIME: "60000",
+				SYSTEM_FIRING_TIME: "420000",
+				SYSTEM_REPORT_TIME: "600000",
 				COMMUNICATION_CHECK_INTERVAL: "3000"
 			},
 			env_production: {
