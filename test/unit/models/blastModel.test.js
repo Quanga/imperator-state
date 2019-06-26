@@ -60,7 +60,7 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 		).to.eql(156);
 
 		await timer(6000);
-		expect(blastModel.data.state).to.eql("BLAST_DATA_COMPLETE");
+		expect(blastModel.data.state).to.eql("BLAST_TIMER_COMPLETE");
 		//console.log(JSON.stringify(blastModel, null, 4));
 	});
 
@@ -181,7 +181,7 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 		//console.log(blastModel.emitter.emit);
 		const holdUntil = () =>
 			new Promise(resolve => {
-				blastModel.emitter.emitter.on("BLAST_DATA_COMPLETE", () => {
+				blastModel.emitter.emitter.on("BLAST_TIMER_COMPLETE", () => {
 					console.log("BLAST_DATA_COMPLETE");
 					resolve();
 				});
@@ -225,6 +225,6 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 
 		await holdUntil();
 		console.log(JSON.stringify(await blastModel.getBlastReport(), null, 4));
-		expect(blastModel.data.state).to.eql("BLAST_DATA_COMPLETE");
+		expect(blastModel.data.state).to.eql("BLAST_TIMER_COMPLETE");
 	});
 });

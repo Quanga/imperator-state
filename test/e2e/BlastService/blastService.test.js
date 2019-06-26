@@ -73,43 +73,36 @@ describe("E2E - BLAST SERVICE tests", function() {
 	});
 
 	it("can create a new blast model from a snapshot", async function() {
-		let sendMessages = async () => {
-			const thisData = simData.createBlast1();
-			thisData.forEach(messageObj => sendQueue.push(messageObj));
-
-			const holdAsync = () =>
-				new Promise(resolve => {
-					sendQueue.on("drain", () => {
-						return resolve();
-					});
-				});
-
-			await holdAsync();
-		};
-
-		let getResults = async () => {
-			await timer(6000);
-			let result = await client.exchange.blastRepository.get("index");
-			delete result._meta;
-
-			let blastIds = Object.keys(result);
-			let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
-			delete firstBlastId._meta;
-			console.log(result);
-			console.log(JSON.stringify(firstBlastId));
-			console.log("byte length", JSON.stringify(firstBlastId).length);
-		};
-
-		let startTest = async () => {
-			try {
-				await sendMessages();
-				await getResults();
-			} catch (err) {
-				console.log(err);
-				return Promise.reject(err);
+		const logs = [];
+		client.event.dataService.on("*", (data, meta) => {
+			if (data.changes && data.changes.hasOwnProperty("communicationStatus")) {
+				logs.push({ data, meta });
 			}
-		};
+		});
 
-		return startTest();
+		const thisData = simData.createBlast1();
+		thisData.forEach(messageObj => sendQueue.push(messageObj));
+
+		const holdAsync = () =>
+			new Promise(resolve => {
+				sendQueue.on("drain", () => {
+					return resolve();
+				});
+			});
+
+		await holdAsync();
+
+		await timer(6000);
+		let result = await client.exchange.blastRepository.get("index");
+		delete result._meta;
+
+		let blastIds = Object.keys(result);
+		let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
+		delete firstBlastId._meta;
+
+		console.log(JSON.stringify(logs, null, 2));
+		//console.log(result);
+		//console.log(JSON.stringify(firstBlastId));
+		//console.log("byte length", JSON.stringify(firstBlastId).length);
 	});
 });
