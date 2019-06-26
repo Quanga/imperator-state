@@ -12,11 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Quanga/edge_state.git"
+    "url": "https://github.com/aecelectronics/Happner3_State.git"
   },
   "author": "Tim Bewsey",
   "license": "",
-  "homepage": "https://github.com/Quanga/edge_state.git",
+  "homepage": "https://github.com/aecelectronics/Happner3_State.git",
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
