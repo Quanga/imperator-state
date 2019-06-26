@@ -39,7 +39,7 @@ module.exports = {
 			user: "pi",
 			host: "192.168.1.10",
 			ref: "origin/master",
-			repo: "https://github.com/aecelectronics/Happner3_State.git",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/pi/state",
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
