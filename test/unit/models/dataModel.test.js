@@ -8,6 +8,13 @@ const {
 } = require("../../../lib/models/unitModels");
 
 describe("UNIT - DATA MODEL TESTS", async function() {
+	const timer = duration =>
+		new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve();
+			}, duration);
+		});
+
 	it("can create a new empty dataModel", async function() {
 		const dataModel = new DataModel();
 
@@ -226,5 +233,57 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
 		expect(dataModel.units["101"].units.loggedCount).to.eql(0);
 		expect(dataModel.units["101"].units.taggedCount).to.eql(1);
+	});
+
+	it("can correctly handle program counts", async function() {
+		const dataModel = new DataModel();
+
+		await dataModel.upsertUnit(new ControlUnitModel(22, null));
+		await dataModel.upsertUnit(new CBoosterModel(101, 22));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 1, null));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 2, null));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 3, null));
+		await dataModel.upsertUnit(new EDDModel(null, 101, 4, null));
+
+		//console.log("CHANGE", JSON.stringify(dataModel));
+		expect(dataModel.controlUnit.units.unitsCount).to.eql(1);
+		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.unitsCount).to.eql(4);
+
+		let eddUpdate1 = new EDDModel(null, 101, 1);
+		eddUpdate1.data.program = 0;
+		eddUpdate1.data.logged = 1;
+
+		let eddUpdate2 = new EDDModel(null, 101, 2);
+		eddUpdate2.data.program = 1;
+		eddUpdate2.data.logged = 1;
+
+		await dataModel.upsertUnit(eddUpdate1);
+		await dataModel.upsertUnit(eddUpdate2);
+
+		await timer(200);
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(4);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(2);
+		expect(dataModel.units["101"].units.programCount).to.eql(1);
+
+		eddUpdate1 = new EDDModel(null, 101, 1);
+		eddUpdate1.data.program = 1;
+		eddUpdate1.data.logged = 1;
+
+		eddUpdate2 = new EDDModel(null, 101, 2);
+		eddUpdate2.data.program = 0;
+		eddUpdate2.data.logged = 1;
+
+		await dataModel.upsertUnit(eddUpdate1);
+		await dataModel.upsertUnit(eddUpdate2);
+
+		await timer(200);
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(4);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(2);
+		expect(dataModel.units["101"].units.programCount).to.eql(1);
 	});
 });

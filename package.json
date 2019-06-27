@@ -45,6 +45,7 @@
     "memory": "0.0.3",
     "node-cache": "^4.2.0",
     "serialport": "^7.1.5",
+    "tcp-port-used": "^1.0.1",
     "uuid": "^3.3.2"
   }
 }
