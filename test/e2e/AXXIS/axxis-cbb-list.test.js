@@ -57,7 +57,6 @@ describe("E2E - AXXIS - CBB list test", async function() {
 		await client.exchange.warningsRepository.deleteAll();
 		await client.exchange.nodeRepository.delete("*");
 		await client.exchange.dataService.clearDataModel();
-		await client.exchange.archiveRepository.delete("*");
 
 		sendQueue.push({
 			message: {
@@ -327,7 +326,7 @@ describe("E2E - AXXIS - CBB list test", async function() {
 	});
 
 	it("can clear the list of edds from the database for a CBB", async function() {
-		const { nodeRepository, archiveRepository, dataService } = client.exchange;
+		const { nodeRepository, dataService } = client.exchange;
 
 		sendQueue.push({
 			message: {
@@ -398,7 +397,7 @@ describe("E2E - AXXIS - CBB list test", async function() {
 
 		expect(resData.units["22"].units.unitsCount).to.eql(2);
 		expect(mappedNodes.length).to.eql(4);
-		
+
 		sendQueue.push({
 			message: {
 				packet: new PacketConstructor(4, 22, {
@@ -408,24 +407,21 @@ describe("E2E - AXXIS - CBB list test", async function() {
 			},
 			wait: 300
 		});
-		
+
 		await holdAsync();
 		await timer(1000);
-		
+
 		resPersisted = await nodeRepository.getAllNodes();
 		resData = await dataService.getSnapShot();
-		
-		
+
 		mappedNodes = resPersisted.map(node => {
 			return { node: node.constructor.name, data: node };
 		});
-		
+
 		const cbb = mappedNodes.filter(x => x.data.typeId === 3);
 		expect(cbb.length).to.eql(1);
 		expect(cbb[0].data.childCount).to.eql(0);
-		
-		const archives = await archiveRepository.getAll();
-		expect(archives[0].value.length).to.eql(2);
+
 		expect(resData.units["22"].units.unitsCount).to.eql(0);
 	});
 });

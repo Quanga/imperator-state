@@ -1,82 +1,70 @@
+require("dotenv").config();
 const { spawn } = require("child_process");
 var path = require("path");
 var libFolder = path.resolve(__dirname, "../../");
-require("dotenv").config();
 const killport = require("kill-port");
-
-function ServerHelper() {
-	this.__serverProc = null;
-}
-const defaults = {
-	//cwd: "../../",
-	//env: process.env
-};
-
-// if (data.toString().match(/STARTUP COMPLETE/)) {
-// 	resolve();
-// }
-
 const find = require("find-process");
 
-ServerHelper.prototype.startServer = function() {
-	return new Promise((resolve, reject) => {
+class ServerHelper {
+	constructor() {
+		this.__serverProc = null;
+		this.defaults = {};
 		this.nodeEnv = process.env.NODE_ENV;
+	}
+
+	async startServer() {
 		process.env.NODE_ENV = "test";
-		find("port", 55000)
-			.then(function(list) {
-				if (!list.length) {
-					console.log("port 55000 is free now");
-				} else {
-					killport(55000);
-					console.log("%s is listening port 55000", list[0].pid);
-				}
-			})
-			.then(() => {
-				console.log(":: STARTING SERVER............");
-				if (this.__serverProc === null) {
-					this.__serverProc = spawn(
-						"node",
-						[path.join(libFolder, "server.js")],
-						defaults
-					);
-					//this.__serverProc.on('data', (data) => { console.log(data); });
-					this.__serverProc.stdout.on("data", data => {
-						console.log(`${data}`);
-						if (data.toString().match(/STARTUP COMPLETE/)) {
-							resolve();
-						}
-					});
+		const portCheck = await find("port", 55000);
 
-					this.__serverProc.on("message", msg => {
-						console.log("server process message:", msg);
-					});
+		if (!portCheck.length) {
+			console.log("port 55000 is free now");
+			this.__serverProc;
+		} else {
+			console.log("%s is listening port 55000", portCheck[0].pid);
+			await killport(55000);
+		}
 
-					this.__serverProc.on("error", err => {
-						console.log(err);
-						reject(err);
-					});
+		await this.spawnServer();
+	}
 
-					this.__serverProc.on("exception", function(err) {
-						console.log(err);
-					});
+	async spawnServer() {
+		if (this.__serverProc !== null) return;
+
+		console.log(":: STARTING SERVER............");
+
+		this.__serverProc = await spawn(
+			"node",
+			[path.join(libFolder, "server.js")],
+			this.defaults
+		);
+
+		await new Promise((resolve, reject) => {
+			this.__serverProc.stdout.on("data", data => {
+				console.log(`${data}`);
+				if (data.toString().match(/STARTUP COMPLETE/)) {
+					resolve();
 				}
 			});
-	});
-};
 
-ServerHelper.prototype.stopServer = function() {
-	return new Promise((resolve, reject) => {
-		console.log(":: STOPPING TEST SERVER....");
+			this.__serverProc.on("error", err => {
+				console.log("SERVER ERROR", err);
+				reject(err);
+			});
 
-		try {
-			process.env.NODE_ENV = this.nodeEnv;
-			this.__serverProc.kill("SIGKILL");
-			resolve();
-		} catch (err) {
-			console.log(err);
-			reject(err);
-		}
-	});
-};
+			this.__serverProc.on("exception", function(err) {
+				console.log("SERVER EXCEPTION", err);
+				reject(err);
+			});
+		});
+	}
+
+	async stopServer() {
+		console.log("STOPPING SERVER");
+
+		process.env.NODE_ENV = this.nodeEnv;
+		//await this.__serverProc.kill("SIGKILL");
+		await this.__serverProc.kill("SIGTERM");
+	}
+}
 
 module.exports = ServerHelper;

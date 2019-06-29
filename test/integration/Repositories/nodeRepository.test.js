@@ -8,13 +8,12 @@ const should = chai.should();
 var Mesh = require("happner-2");
 
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 
 describe("Repositories - NodeRepository Tests", function() {
 	this.timeout(10000);
 
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
+	// // const serialPortHelper = new SerialPortHelper();
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
@@ -40,7 +39,7 @@ describe("Repositories - NodeRepository Tests", function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
+			// await serialPortHelper.initialise();
 			await serverHelper.startServer();
 			await AsyncLogin();
 		} catch (err) {
@@ -59,7 +58,7 @@ describe("Repositories - NodeRepository Tests", function() {
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
+		// await serialPortHelper.destroy();
 	});
 
 	it("can initialize the nodeRepository", async function() {

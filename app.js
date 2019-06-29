@@ -2,9 +2,6 @@
 const defaultConstant = require("./lib/constants/defaultAppConstants")
 	.DefaultConstants;
 
-var os = require("os");
-var ifaces = os.networkInterfaces();
-
 function App() {
 	this.systemInfo = { network: {} };
 	this.historyObj = {
@@ -60,8 +57,6 @@ App.prototype.restartRouter = function($happn) {
 	const { warn: logWarning } = $happn.log;
 
 	const restartAsync = async () => {
-		this.systemInfo.network.ips = await app.getNetworkInfo();
-
 		stateService.updateState({ service: $happn.name, state: "PENDING" });
 
 		await app.writeHistory({ started: Date.now() });
@@ -144,6 +139,7 @@ App.prototype.startRouter = function($happn) {
 	} = $happn.exchange;
 
 	const { error: logError, info: logInfo } = $happn.log;
+	const { emit } = $happn;
 
 	let startup = async () => {
 		try {
@@ -165,6 +161,7 @@ App.prototype.startRouter = function($happn) {
 				//transmissionService.initialise();
 			}
 			stateService.updateState({ service: $happn.name, state: "STARTED" });
+			emit("STARTED", true);
 			logInfo("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			logError("start error", err);
@@ -264,44 +261,6 @@ App.prototype.writeHistory = function($happn, incoming) {
 		}
 	};
 	return writeHistoryAsync(incoming);
-};
-
-/* **********************************
-METRICS
-************************************* */
-
-App.prototype.reportMetric = function($happn, hostname, metric, callback) {
-	var eventKey = `metrics/${metric.key}`;
-	var eventData = metric;
-
-	//console.log("emitting", eventKey, eventData);
-	$happn.emit(eventKey, eventData);
-};
-
-App.prototype.getNetworkInfo = function($happn) {
-	const getAsync = async () => {
-		let info = [];
-		Object.keys(ifaces).forEach(function(ifname) {
-			var alias = 0;
-
-			ifaces[ifname].forEach(function(iface) {
-				if ("IPv4" !== iface.family || iface.internal !== false) {
-					// skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-					return;
-				}
-
-				if (alias >= 1) {
-					// this single interface has multiple ipv4 addresses
-					info.push({ [ifname]: { alias: alias, address: iface.address } });
-				} else {
-					// this interface has only one ipv4 adress
-					info.push({ [ifname]: { address: iface.address } });
-				}
-				++alias;
-			});
-		});
-	};
-	return getAsync();
 };
 
 module.exports = App;

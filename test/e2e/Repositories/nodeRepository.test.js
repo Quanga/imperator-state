@@ -1,14 +1,13 @@
+/* eslint-disable no-unused-vars */
 const expect = require("expect.js");
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 describe("E2E- Node Repository Integrated Tests", async function() {
 	this.timeout(10000);
 
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
@@ -34,7 +33,7 @@ describe("E2E- Node Repository Integrated Tests", async function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
+			// await serialPortHelper.initialise();
 			await serverHelper.startServer();
 			await AsyncLogin();
 		} catch (err) {
@@ -55,7 +54,7 @@ describe("E2E- Node Repository Integrated Tests", async function() {
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
+		// await serialPortHelper.destroy();
 	});
 
 	it("can get the dets for a cbb by using the path", async function() {
@@ -63,7 +62,7 @@ describe("E2E- Node Repository Integrated Tests", async function() {
 			let initial = new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			// await serialPortHelper.sendMessage(initial);
 
 			const initial2 = new PacketConstructor(4, 13, {
 				data: [
@@ -71,7 +70,7 @@ describe("E2E- Node Repository Integrated Tests", async function() {
 					{ serial: 4523434, windowId: 2 }
 				]
 			}).packet;
-			await serialPortHelper.sendMessage(initial2);
+			// await serialPortHelper.sendMessage(initial2);
 
 			const message = new PacketConstructor(5, 13, {
 				data: [
@@ -88,7 +87,7 @@ describe("E2E- Node Repository Integrated Tests", async function() {
 					}
 				]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 
 			const message2 = new PacketConstructor(5, 13, {
 				data: [
@@ -105,7 +104,7 @@ describe("E2E- Node Repository Integrated Tests", async function() {
 					}
 				]
 			}).packet;
-			await serialPortHelper.sendMessage(message2);
+			// await serialPortHelper.sendMessage(message2);
 		};
 
 		const checkFunc = async () => {

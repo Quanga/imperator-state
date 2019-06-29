@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 const expect = require("expect.js");
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 describe("IBS - 651 data test", async function() {
@@ -10,7 +10,6 @@ describe("IBS - 651 data test", async function() {
 	const RequestHelper = require("../../helpers/request_helper");
 
 	let serverHelper = new ServerHelper();
-	let serialPortHelper = new SerialPortHelper();
 
 	let timer = ms => {
 		return new Promise(resolve => setTimeout(resolve, ms));
@@ -36,7 +35,7 @@ describe("IBS - 651 data test", async function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
+			//await serialPortHelper.initialise();
 			await serverHelper.startServer();
 			await AsyncLogin();
 		} catch (err) {
@@ -51,7 +50,7 @@ describe("IBS - 651 data test", async function() {
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
+		//await serialPortHelper.destroy();
 	});
 
 	it("can process a data packet containing one ISC with IB651s 1, 2 & 3", async function() {
@@ -59,22 +58,22 @@ describe("IBS - 651 data test", async function() {
 			let startMessage = new PacketConstructor(8, 12, {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			}).packet;
-			await serialPortHelper.sendMessage(startMessage);
+			//await serialPortHelper.sendMessage(startMessage);
 
 			let pingMessage = new PacketConstructor(1, 12, {
 				data: [27]
 			}).packet;
-			await serialPortHelper.sendMessage(pingMessage);
+			//await serialPortHelper.sendMessage(pingMessage);
 
 			let initial = new PacketConstructor(2, 27, {
 				data: [33]
 			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			//await serialPortHelper.sendMessage(initial);
 
 			let initial2 = new PacketConstructor(2, 27, {
 				data: [33, 34, 35]
 			}).packet;
-			await serialPortHelper.sendMessage(initial2);
+			//await serialPortHelper.sendMessage(initial2);
 
 			const finalmessage = new PacketConstructor(3, 27, {
 				data: [
@@ -84,13 +83,13 @@ describe("IBS - 651 data test", async function() {
 					[1, 1, 1, 1, 1, 1, 1, 1]
 				]
 			}).packet;
-			await serialPortHelper.sendMessage(finalmessage);
+			//await serialPortHelper.sendMessage(finalmessage);
 
 			await timer(1000);
 			let blast = new PacketConstructor(8, 12, {
 				data: [0, 0, 0, 0, 0, 0, 0, 1]
 			}).packet;
-			await serialPortHelper.sendMessage(blast);
+			//await serialPortHelper.sendMessage(blast);
 		};
 
 		let step2 = async () => {
@@ -184,12 +183,12 @@ describe("IBS - 651 data test", async function() {
 		let step1 = async () => {
 			var initial = "aaaa080300011ae3";
 
-			await serialPortHelper.sendMessage(initial);
+			//await serialPortHelper.sendMessage(initial);
 		};
 
 		let step2 = async () => {
-			let results = await databaseHelper.getNodeTreeData(1, 1);
-			return results;
+			//let results = await databaseHelper.getNodeTreeData(1, 1);
+			//return results;
 		};
 
 		let test = async () => {

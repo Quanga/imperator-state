@@ -1,12 +1,11 @@
+/* eslint-disable no-unused-vars */
 const expect = require("expect.js");
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 
 describe("IBS - ISC list test", function() {
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
 
 	this.timeout(20000);
 
@@ -34,7 +33,7 @@ describe("IBS - ISC list test", function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
+			// await serialPortHelper.initialise();
 			await serverHelper.startServer();
 			await AsyncLogin();
 		} catch (err) {
@@ -49,7 +48,7 @@ describe("IBS - ISC list test", function() {
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
+		// await serialPortHelper.destroy();
 	});
 
 	it("can process a packet with ISCs 1, 2 & 3, where no ISCs currently in database", async function() {
@@ -57,7 +56,7 @@ describe("IBS - ISC list test", function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 		};
 
 		let step2 = async function() {
@@ -109,12 +108,12 @@ describe("IBS - ISC list test", function() {
 			const initial = new PacketConstructor(1, 1, {
 				data: [1, 2]
 			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			// await serialPortHelper.sendMessage(initial);
 
 			let message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 		};
 
 		let step2 = async function() {
@@ -165,12 +164,12 @@ describe("IBS - ISC list test", function() {
 			const initial = new PacketConstructor(1, 1, {
 				data: [4]
 			}).packet;
-			await serialPortHelper.sendMessage(initial);
+			// await serialPortHelper.sendMessage(initial);
 
 			const message = new PacketConstructor(1, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 		};
 
 		let step2 = async () => {

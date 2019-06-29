@@ -1,14 +1,12 @@
+/* eslint-disable no-unused-vars */
 const expect = require("expect.js");
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
-const SerialPortHelper = require("../../helpers/serial_port_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
-const RequestHelper = require("../../helpers/request_helper");
 
 describe("IBS - 651 list test", function() {
 	this.timeout(30000);
 	let serverHelper = new ServerHelper();
-	const serialPortHelper = new SerialPortHelper();
 
 	let client = null;
 
@@ -30,7 +28,7 @@ describe("IBS - 651 list test", function() {
 
 	before("cleaning up db", async function() {
 		try {
-			await serialPortHelper.initialise();
+			// await serialPortHelper.initialise();
 			await serverHelper.startServer();
 			await AsyncLogin();
 		} catch (err) {
@@ -45,7 +43,7 @@ describe("IBS - 651 list test", function() {
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
-		await serialPortHelper.destroy();
+		// await serialPortHelper.destroy();
 	});
 
 	let timer = ms => {
@@ -57,12 +55,12 @@ describe("IBS - 651 list test", function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 
 			const messageb = new PacketConstructor(2, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(messageb);
+			// await serialPortHelper.sendMessage(messageb);
 		};
 
 		let getResults = async () => {
@@ -116,17 +114,17 @@ describe("IBS - 651 list test", function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 
 			const messageb = new PacketConstructor(2, 1, {
 				data: [1, 2]
 			}).packet;
-			await serialPortHelper.sendMessage(messageb);
+			// await serialPortHelper.sendMessage(messageb);
 
 			const messagec = new PacketConstructor(2, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(messagec);
+			// await serialPortHelper.sendMessage(messagec);
 		};
 
 		let getResults = async () => {
@@ -180,17 +178,17 @@ describe("IBS - 651 list test", function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 
 			const messageb = new PacketConstructor(2, 1, {
 				data: [4]
 			}).packet;
-			await serialPortHelper.sendMessage(messageb);
+			// await serialPortHelper.sendMessage(messageb);
 
 			const messagec = new PacketConstructor(2, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(messagec);
+			// await serialPortHelper.sendMessage(messagec);
 		};
 
 		let getResults = async () => {
@@ -244,23 +242,23 @@ describe("IBS - 651 list test", function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
-			await serialPortHelper.sendMessage(message);
+			// await serialPortHelper.sendMessage(message);
 
 			const messageb = new PacketConstructor(2, 1, {
 				data: [1, 2, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(messageb);
+			// await serialPortHelper.sendMessage(messageb);
 
 			const messagec = new PacketConstructor(2, 1, {
 				data: [2, 1, 3]
 			}).packet;
-			await serialPortHelper.sendMessage(messagec);
+			// await serialPortHelper.sendMessage(messagec);
 
 			//await serialPortHelper.sendMessage(messageb);
 		};
 
 		let step2 = async () => {
-			let result = await databaseHelper.getNodeTreeData(1, 1);
+			let result;
 			if (result == null || result.length == 0)
 				throw new Error("Empty result!");
 

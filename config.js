@@ -4,7 +4,9 @@
  HAPPNER configuration
  ***********************************************************/
 
-let variables = {
+const path = require("path");
+
+const variables = {
 	name: process.env.EDGE_INSTANCE_NAME,
 	util: {
 		logCacheSize: 1000,
@@ -15,7 +17,7 @@ let variables = {
 		logMessageDelimiter: "\t",
 		logDateFormat: null,
 		logLayout: null,
-		logFile: process.env.EDGE_LOCAL_LOG_FILE || "edge.log",
+		logFile: getLogsPath() || "edge.log",
 		logFileMaxSize: 1048576, // 1mb
 		logFileBackups: 5,
 		logFileNameAbsolute: true,
@@ -30,23 +32,16 @@ let variables = {
 		persist: true,
 		secure: true,
 		adminPassword: "happn",
-		filename: "./aece.nedb",
 		services: {
 			data: {
 				config: {
-					filename: `${__dirname}/data.db`
-				},
-				stats: {
-					config: {
-						interval: 10 * 1000 // the default
-					}
+					filename: getDbPath() || `${__dirname}/data.db`
 				}
 			},
 			connect: {
 				config: {
 					middleware: {
 						security: {
-							// cookieName: 'custom_token',
 							exclusions: ["/*", "/system/*", "/system/index.html"]
 						}
 					}
@@ -78,9 +73,6 @@ let variables = {
 		},
 		warningsRepository: {
 			path: `${__dirname}/lib/repositories/warningsRepository.js`
-		},
-		archiveRepository: {
-			path: `${__dirname}/lib/repositories/archiveRepository.js`
 		},
 		eventService: {
 			path: `${__dirname}/lib/services/event_service.js`
@@ -122,7 +114,6 @@ let variables = {
 		},
 		logsRepository: {},
 		warningsRepository: {},
-		archiveRepository: {},
 		eventService: {
 			startMethod: "startAsync",
 			stopMethod: "stopAsync"
@@ -162,6 +153,18 @@ if (process.env.USE_ENDPOINT === "true") {
 			}
 		}
 	};
+}
+
+function getDbPath() {
+	return path.resolve(process.env["HOME"], "./edge/db/", process.env.EDGE_DB);
+}
+
+function getLogsPath() {
+	return path.resolve(
+		process.env["HOME"],
+		"./edge/logs/",
+		process.env.EDGE_LOCAL_LOG_FILE
+	);
 }
 
 module.exports = variables;
