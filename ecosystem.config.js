@@ -9,23 +9,21 @@ module.exports = {
 			max_memory_restart: "1G",
 			env: {
 				NODE_ENV: "development",
-				EDGE_INSTANCE_NAME: "state",
+				EDGE_INSTANCE_NAME: "edge_state",
+				EDGE_DB: "./edge.db",
 				EDGE_LOCAL_IP: "0.0.0.0",
 				EDGE_LOCAL_PORT: "55000",
 				EDGE_LOCAL_LOG_FILE: "./edge.log",
 				LOG_LEVEL: "info",
+
 				USE_ENDPOINT: "true",
 				ENDPOINT_NAME: "edge_ssot",
 				ENDPOINT_IP: "0.0.0.0",
 				ENDPOINT_PORT: "55004",
-				ROUTER_SHOW_QUEUE_DEBUG: "false",
-				ROUTER_QUEUE_FETCH_INTERVAL: "1200",
-				ROUTER_TRANSMISSION_SEND_INTERVAL: "1200",
-				ROUTER_LOG_FILE: "./state.log",
-				ROUTER_SYSTEM_MODE: "EDGE",
-				ROUTER_SYSYEM_TYPE: "IBS",
-				SYSTEM_FIRING_TIME: "120000",
-				SYSTEM_REPORT_TIME: "300000",
+
+				SYSTEM_FIRING_TIME: "42000",
+				SYSTEM_REPORT_TIME: "60000",
+
 				COMMUNICATION_CHECK_INTERVAL: "3000"
 			},
 			env_production: {
