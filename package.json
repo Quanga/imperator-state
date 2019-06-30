@@ -42,6 +42,7 @@
     "happner-2": "^10.1.0",
     "kill-port": "^1.5.1",
     "memory": "0.0.3",
+    "moment": "^2.24.0",
     "node-cache": "^4.2.0",
     "pdfmake": "https://github.com/bpampuch/pdfmake.git#0.1",
     "svg-to-pdfkit": "^0.1.7",

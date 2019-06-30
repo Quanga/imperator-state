@@ -1,5 +1,5 @@
 const PdfUtils = require("../../../lib/utils/pdfUtils");
-
+const reportData = require("./testBlastModelData");
 describe("UNIT - PDF_UTILS", async function() {
 	this.timeout(10000);
 
@@ -12,7 +12,7 @@ describe("UNIT - PDF_UTILS", async function() {
 	it("can create a pdf", async function() {
 		const pdfUtils = new PdfUtils();
 		await timer(1000);
-		pdfUtils.createContent();
+		pdfUtils.createContent(reportData);
 		await pdfUtils.createPdf();
 		await timer(2000);
 	});
