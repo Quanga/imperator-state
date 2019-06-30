@@ -35,7 +35,7 @@ module.exports = {
 	deploy: {
 		production: {
 			user: "edge",
-			host: "192.168.1.6",
+			host: "192.168.1.10",
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
