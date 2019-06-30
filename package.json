@@ -43,6 +43,8 @@
     "kill-port": "^1.5.1",
     "memory": "0.0.3",
     "node-cache": "^4.2.0",
+    "pdfmake": "https://github.com/bpampuch/pdfmake.git#0.1",
+    "svg-to-pdfkit": "^0.1.7",
     "tcp-port-used": "^1.0.1",
     "uuid": "^3.3.2"
   }

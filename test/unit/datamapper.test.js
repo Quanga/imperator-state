@@ -9,7 +9,6 @@ describe("DATA MAPPER TESTS", async function() {
 		const previous = {
 			data: {
 				serial: 13,
-				parentSerial: null,
 				typeId: 3,
 				parentType: 0,
 				created: 1560599359030,
@@ -36,7 +35,6 @@ describe("DATA MAPPER TESTS", async function() {
 		const next = {
 			data: {
 				serial: 13,
-				parentSerial: null,
 				typeId: 3,
 				parentType: 0,
 				created: 1560599359030,
@@ -73,7 +71,6 @@ describe("DATA MAPPER TESTS", async function() {
 		const previous = {
 			data: {
 				serial: 13,
-				parentSerial: null,
 				typeId: 3,
 				parentType: 0,
 				created: 1560599359030,
@@ -98,7 +95,6 @@ describe("DATA MAPPER TESTS", async function() {
 		const next = {
 			data: {
 				serial: 13,
-				parentSerial: null,
 				typeId: 3,
 				parentType: 0,
 				created: 1560599359030,

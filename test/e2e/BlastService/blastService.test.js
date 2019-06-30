@@ -100,9 +100,9 @@ describe("E2E - BLAST SERVICE tests", function() {
 		let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
 		delete firstBlastId._meta;
 
-		console.log(JSON.stringify(logs, null, 2));
+		//console.log(JSON.stringify(logs, null, 2));
 		//console.log(result);
 		//console.log(JSON.stringify(firstBlastId));
-		//console.log("byte length", JSON.stringify(firstBlastId).length);
+		console.log("byte length", JSON.stringify(firstBlastId).length);
 	});
 });

@@ -19,7 +19,6 @@ describe("PARSER-CBB_LIST-parser-test", async function() {
 				itemType: "CBoosterModel",
 				itemData: {
 					serial: 67,
-					parentSerial: null,
 					typeId: 3,
 					parentType: 0,
 					created: now,

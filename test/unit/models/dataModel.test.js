@@ -23,7 +23,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 	it("can create a new  dataModel and add a ccb to it", async function() {
 		const dataModel = new DataModel();
-		const cu = new ControlUnitModel(22, null);
+		const cu = new ControlUnitModel(22);
 
 		await dataModel.upsertUnit(cu);
 
@@ -32,17 +32,15 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 	it("can create a new  dataModel and add a ccb and then 2 cbbs to it", async function() {
 		const dataModel = new DataModel();
-		const cu = new ControlUnitModel(22, null);
-		const cbb1 = new CBoosterModel(101, 22);
-		const cbb2 = new CBoosterModel(102, 22);
+		const cu = new ControlUnitModel(22);
+		const cbb1 = new CBoosterModel(101);
+		const cbb2 = new CBoosterModel(102);
 
 		let cuRes = await dataModel.upsertUnit(cu);
 		let cbb1Res = await dataModel.upsertUnit(cbb1);
 		await dataModel.upsertUnit(cbb2);
 
 		//console.log("DATAMODEL", dataModel);
-		console.log("cures", cuRes);
-		console.log("cures2", cbb1Res);
 
 		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.units["101"].data.serial).to.eql(101);
@@ -51,20 +49,18 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 	it("can create a new  dataModel and add a ccb and 2 cbbs and change value on ccb", async function() {
 		const dataModel = new DataModel();
-		const cu = new ControlUnitModel(22, null);
-		const cbb1 = new CBoosterModel(101, 22);
-		const cbb2 = new CBoosterModel(102, 22);
+		const cu = new ControlUnitModel(22);
+		const cbb1 = new CBoosterModel(101);
+		const cbb2 = new CBoosterModel(102);
 
 		await dataModel.upsertUnit(cu);
 		await dataModel.upsertUnit(cbb1);
 		await dataModel.upsertUnit(cbb2);
 
-		const cuChange = new ControlUnitModel(22, null);
+		const cuChange = new ControlUnitModel(22);
 		cuChange.data.keySwitchStatus = 1;
 
 		let changeObj = await dataModel.upsertUnit(cuChange);
-
-		//console.log("CHANGE", changeObj);
 
 		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.units["101"].data.serial).to.eql(101);
@@ -111,9 +107,9 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 
 	it("can create a new  dataModel and add a CCB and 2 CBBS and add 2 EDDs", async function() {
 		const dataModel = new DataModel();
-		const cu = new ControlUnitModel(22, null);
-		const cbb1 = new CBoosterModel(101, 22);
-		const cbb2 = new CBoosterModel(102, 22);
+		const cu = new ControlUnitModel(22);
+		const cbb1 = new CBoosterModel(101);
+		const cbb2 = new CBoosterModel(102);
 		const edd1 = new EDDModel(null, 101, 1, 3000);
 		edd1.data.logged = 1;
 
@@ -143,30 +139,25 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		edd2Change.data.serial = 3424234;
 		await dataModel.upsertUnit(edd2Change);
 
-		console.log("CHANGE", JSON.stringify(dataModel));
+		console.log("CHANGE", JSON.stringify(dataModel, null, 2));
 		expect(dataModel.units["101"].units.loggedCount).to.eql(2);
 		expect(dataModel.units["101"].units.programCount).to.eql(0);
 		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(2);
-
-		// ccb1Change.data.keySwitchStatus = 1;
-		// let changeObj = await dataModel.upsertUnit(ccb1Change);
-
-		//expect(dataModel.units["101"].data.keySwitchStatus).to.eql(0);
 	});
 
 	it("can aggregate the cbb states into the control unit", async function() {
 		const dataModel = new DataModel();
 
-		await dataModel.upsertUnit(new ControlUnitModel(22, null));
-		await dataModel.upsertUnit(new CBoosterModel(101, 22));
-		await dataModel.upsertUnit(new CBoosterModel(102, 22));
+		await dataModel.upsertUnit(new ControlUnitModel(22));
+		await dataModel.upsertUnit(new CBoosterModel(101));
+		await dataModel.upsertUnit(new CBoosterModel(102));
 
 		//console.log("CHANGE", JSON.stringify(dataModel));
 		expect(dataModel.controlUnit.units.unitsCount).to.eql(2);
 		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(0);
 		expect(dataModel.controlUnit.units.communicationStatusCount).to.eql(2);
 
-		let cbbUpdate = new CBoosterModel(101, 22);
+		let cbbUpdate = new CBoosterModel(101);
 		cbbUpdate.data.keySwitchStatus = 1;
 		await dataModel.upsertUnit(cbbUpdate);
 
@@ -174,7 +165,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(1);
 		expect(dataModel.controlUnit.units.communicationStatusCount).to.eql(2);
 
-		cbbUpdate = new CBoosterModel(102, 22);
+		cbbUpdate = new CBoosterModel(102);
 		cbbUpdate.data.keySwitchStatus = 1;
 		await dataModel.upsertUnit(cbbUpdate);
 
@@ -182,7 +173,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(2);
 		expect(dataModel.controlUnit.units.communicationStatusCount).to.eql(2);
 
-		cbbUpdate = new CBoosterModel(102, 22);
+		cbbUpdate = new CBoosterModel(102);
 		cbbUpdate.data.keySwitchStatus = 0;
 		await dataModel.upsertUnit(cbbUpdate);
 
@@ -190,7 +181,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(1);
 		expect(dataModel.controlUnit.units.communicationStatusCount).to.eql(2);
 
-		cbbUpdate = new CBoosterModel(102, 22);
+		cbbUpdate = new CBoosterModel(102);
 		cbbUpdate.data.communicationStatus = 0;
 		await dataModel.upsertUnit(cbbUpdate);
 
@@ -202,8 +193,8 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 	it("can aggregate the edd states into the CBB unit", async function() {
 		const dataModel = new DataModel();
 
-		await dataModel.upsertUnit(new ControlUnitModel(22, null));
-		await dataModel.upsertUnit(new CBoosterModel(101, 22));
+		await dataModel.upsertUnit(new ControlUnitModel(22));
+		await dataModel.upsertUnit(new CBoosterModel(101));
 		await dataModel.upsertUnit(new EDDModel(null, 101, 1, 1000));
 		await dataModel.upsertUnit(new EDDModel(null, 101, 2, 2000));
 		await dataModel.upsertUnit(new EDDModel(null, 101, 3, 3000));
@@ -238,8 +229,8 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 	it("can correctly handle program counts", async function() {
 		const dataModel = new DataModel();
 
-		await dataModel.upsertUnit(new ControlUnitModel(22, null));
-		await dataModel.upsertUnit(new CBoosterModel(101, 22));
+		await dataModel.upsertUnit(new ControlUnitModel(22));
+		await dataModel.upsertUnit(new CBoosterModel(101));
 		await dataModel.upsertUnit(new EDDModel(null, 101, 1, null));
 		await dataModel.upsertUnit(new EDDModel(null, 101, 2, null));
 		await dataModel.upsertUnit(new EDDModel(null, 101, 3, null));
