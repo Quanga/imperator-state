@@ -79,8 +79,8 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 					data: { serial: 123, keySwitchStatus: 1 },
 					units: { unitsCount: 2 },
 					children: {
-						"1": { data: { serial: 21 } },
-						"2": { data: { serial: 31 } }
+						"1": { data: { serial: 21, detonatorStatus: 1 } },
+						"2": { data: { serial: 31, detonatorStatus: 1 } }
 					}
 				},
 				"156": {
@@ -103,7 +103,6 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 			serial: 123,
 			typeId: 3,
 			path: "0/123",
-			parentSerial: null,
 			modified: Date.now(),
 			changes: { communicationState: 1 },
 			counts: {},
@@ -135,6 +134,7 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 			typeId: 4,
 			path: null,
 			parentSerial: 123,
+
 			modified: Date.now(),
 			changes: { communicationState: 1 },
 			counts: {},
@@ -163,8 +163,8 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 					data: { serial: 123, keySwitchStatus: 1 },
 					units: { unitsCount: 2 },
 					children: {
-						"1": { data: { serial: 21 } },
-						"2": { data: { serial: 31 } }
+						"1": { data: { serial: 21, detonatorStatus: 1 } },
+						"2": { data: { serial: 31, detonatorStatus: 1 } }
 					}
 				},
 				"156": {
@@ -196,7 +196,6 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 			serial: 123,
 			typeId: 3,
 			path: "0/123",
-			parentSerial: null,
 			modified: Date.now(),
 			changes: { communicationState: 1 },
 			counts: {},
@@ -243,8 +242,8 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 					data: { serial: 123, keySwitchStatus: 1 },
 					units: { unitsCount: 2 },
 					children: {
-						"1": { data: { serial: 21 } },
-						"2": { data: { serial: 31 } }
+						"1": { data: { serial: 21, detonatorStatus: 1 } },
+						"2": { data: { serial: 31, detonatorStatus: 1 } }
 					}
 				},
 				"156": {
@@ -276,7 +275,6 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 			serial: 123,
 			typeId: 3,
 			path: "0/123",
-			parentSerial: null,
 			modified: Date.now(),
 			changes: { communicationState: 1 },
 			counts: {},
