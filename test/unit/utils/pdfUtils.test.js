@@ -13,7 +13,7 @@ describe("UNIT - PDF_UTILS", async function() {
 		const pdfUtils = new PdfUtils();
 		await timer(1000);
 		pdfUtils.createContent(reportData);
-		await pdfUtils.createPdf();
+		await pdfUtils.createPdf(reportData.id);
 		await timer(2000);
 	});
 });
