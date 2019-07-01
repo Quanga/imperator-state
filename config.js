@@ -157,6 +157,7 @@ if (process.env.USE_ENDPOINT === "true") {
 
 function getDbPath() {
 	const homedir = "/var/edge";
+	console.log(process.env.EDGE_DB);
 	return path.resolve(homedir, "./edge/db/", process.env.EDGE_DB);
 }
 
