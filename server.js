@@ -4,6 +4,8 @@ const Config = require("./config.js");
 const tcpPortUsed = require("tcp-port-used");
 var mesh = new Happner();
 
+console.log(process.env.USE_ENDPOINT);
+
 const checkStart = () =>
 	new Promise(resolve => {
 		tcpPortUsed
@@ -17,7 +19,12 @@ const checkStart = () =>
 	});
 
 (async function() {
-	const checkEndpoint = await checkStart();
+	let checkEndpoint = true;
+
+	if (process.env.USE_ENDPOINT === "true") {
+		checkEndpoint = await checkStart();
+	}
+
 	if (checkEndpoint) {
 		return mesh.initialize(Config, err => {
 			if (err) {

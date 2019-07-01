@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config("../../.env");
 const { spawn } = require("child_process");
 var path = require("path");
 var libFolder = path.resolve(__dirname, "../../");
