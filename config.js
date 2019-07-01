@@ -161,11 +161,9 @@ function getDbPath() {
 }
 
 function getLogsPath() {
-	return path.resolve(
-		process.env["HOME"],
-		"./edge/logs/",
-		process.env.EDGE_LOCAL_LOG_FILE
-	);
+	const homedir = "/var/edge";
+
+	return path.resolve(homedir, "./edge/logs/", process.env.EDGE_LOCAL_LOG_FILE);
 }
 
 module.exports = variables;
