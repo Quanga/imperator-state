@@ -27,7 +27,23 @@ module.exports = {
 				COMMUNICATION_CHECK_INTERVAL: "3000"
 			},
 			env_production: {
-				NODE_ENV: "production"
+				NODE_ENV: "production",
+				EDGE_INSTANCE_NAME: "edge_state",
+				EDGE_DB: "./edge.db",
+				EDGE_LOCAL_IP: "0.0.0.0",
+				EDGE_LOCAL_PORT: "55000",
+				EDGE_LOCAL_LOG_FILE: "./edge.log",
+				LOG_LEVEL: "info",
+
+				USE_ENDPOINT: "true",
+				ENDPOINT_NAME: "edge_ssot",
+				ENDPOINT_IP: "0.0.0.0",
+				ENDPOINT_PORT: "55004",
+
+				SYSTEM_FIRING_TIME: "120000",
+				SYSTEM_REPORT_TIME: "300000",
+
+				COMMUNICATION_CHECK_INTERVAL: "3000"
 			}
 		}
 	],
