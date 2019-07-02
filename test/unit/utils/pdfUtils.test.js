@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const PdfUtils = require("../../../lib/utils/pdfUtils");
 const reportData = require("./testBlastModelData");
+const reportData2 = require("./testBlast2");
 describe("UNIT - PDF_UTILS", async function() {
 	this.timeout(10000);
 
@@ -12,11 +13,13 @@ describe("UNIT - PDF_UTILS", async function() {
 		});
 	it("can create a pdf", async function() {
 		try {
-			const pdfUtils = new PdfUtils();
-			await timer(1000);
+			let pdfUtils = new PdfUtils();
+
 			pdfUtils.createContent(reportData);
 			await pdfUtils.createPdf(reportData);
-			await timer(2000);
+			const pdfUtils2 = new PdfUtils();
+			pdfUtils2.createContent(reportData2);
+			await pdfUtils2.createPdf(reportData2);
 		} catch (err) {
 			console.log(err);
 		}
