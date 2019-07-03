@@ -12,6 +12,7 @@ package-lock.json
 .vscode
 .env
 .clinic
+.DS_Store
 
 ttyV0
 ttyV1

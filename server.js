@@ -1,10 +1,9 @@
-require("dotenv").config();
 const Happner = require("happner-2");
 const Config = require("./config.js");
 const tcpPortUsed = require("tcp-port-used");
 var mesh = new Happner();
 
-console.log(process.env.USE_ENDPOINT);
+console.log("ENV_INSTANCE", process.env.EDGE_INSTANCE_NAME);
 
 const checkStart = () =>
 	new Promise(resolve => {
