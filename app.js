@@ -28,7 +28,7 @@ App.prototype.start = function($happn) {
 	let startupCheckAsync = async () => {
 		//check for startup with RESET variable
 		if (process.argv[2] === "reset") {
-			logWarning("SERVER STARTED WITH RESET ARGUMENT");
+			logWarning("SERVER STARTED WITH RESET");
 			await app.resetRouterData();
 		}
 

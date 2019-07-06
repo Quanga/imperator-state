@@ -1,27 +1,48 @@
+if (process.env.NODE_ENV === "test") {
+	require("dotenv").config();
+}
 const Happner = require("happner-2");
 const Config = require("./config.js");
 const tcpPortUsed = require("tcp-port-used");
 var mesh = new Happner();
-
-console.log("ENV_INSTANCE", process.env.EDGE_INSTANCE_NAME);
-
-const checkStart = () =>
-	new Promise(resolve => {
-		tcpPortUsed
-			.waitUntilUsedOnHost(
-				parseInt(process.env.ENDPOINT_PORT, 10),
-				process.env.ENDPOINT_IP,
-				500,
-				4000
-			)
-			.then(() => resolve(true), err => resolve(false, err));
-	});
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
+var yesno = require("yesno");
 
 (async function() {
 	let checkEndpoint = true;
 
 	if (process.env.USE_ENDPOINT === "true") {
 		checkEndpoint = await checkStart();
+	}
+
+	if (process.argv[2] === "reset" && process.argv[3] === "--hard") {
+		console.warn("STARTED WITH HARD RESET ARG");
+		const ok = await yesno.askAsync(
+			"Are you sure you want to delete the database file? (yes/no)?",
+			false
+		);
+
+		if (ok) {
+			let file = path.resolve(os.homedir(), "./edge/db/", process.env.EDGE_DB);
+
+			let del = await new Promise(resolve => {
+				fs.unlink(file, err => {
+					if (err) {
+						resolve("DATABASE FILE NOT FOUND - ", err.path);
+					}
+
+					resolve("DATABASE FILE REMOVED");
+				});
+			});
+
+			console.log(del);
+			return process.exit(1);
+		} else {
+			console.log("Aborted reset.");
+			return process.exit(1);
+		}
 	}
 
 	if (checkEndpoint) {
@@ -62,6 +83,18 @@ process.on("SIGTERM", () => {
 	console.info("SIGTERM signal received.");
 	stop();
 });
+
+const checkStart = () =>
+	new Promise(resolve => {
+		tcpPortUsed
+			.waitUntilUsedOnHost(
+				parseInt(process.env.ENDPOINT_PORT, 10),
+				process.env.ENDPOINT_IP,
+				500,
+				4000
+			)
+			.then(() => resolve(true), err => resolve(false, err));
+	});
 
 function stop() {
 	mesh.stop(
