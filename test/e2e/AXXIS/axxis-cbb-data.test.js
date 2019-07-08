@@ -9,7 +9,7 @@ require("dotenv").config();
 describe("E2E - AXXIS - CBB data test", function() {
 	this.timeout(15000);
 	let serverHelper = new ServerHelper();
-	var client;
+	let client;
 
 	const sendQueue = new Queue((task, cb) => {
 		setTimeout(() => {

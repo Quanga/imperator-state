@@ -8,26 +8,9 @@ module.exports = {
 			watch: false,
 			max_memory_restart: "1G",
 			env: {
-				NODE_ENV: "development",
-				EDGE_INSTANCE_NAME: "edge_state",
-				EDGE_DB: "./edge.db",
-				EDGE_LOCAL_IP: "0.0.0.0",
-				EDGE_LOCAL_PORT: "55000",
-				EDGE_LOCAL_LOG_FILE: "./edge.log",
-				LOG_LEVEL: "info",
-
-				USE_ENDPOINT: "true",
-				ENDPOINT_NAME: "edge_ssot",
-				ENDPOINT_IP: "0.0.0.0",
-				ENDPOINT_PORT: "55004",
-
-				SYSTEM_FIRING_TIME: "120000",
-				SYSTEM_REPORT_TIME: "300000",
-
-				COMMUNICATION_CHECK_INTERVAL: "3000"
+				NODE_ENV: "development"
 			},
 			env_production: {
-				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				EDGE_DB: "./edge.db",
 				EDGE_LOCAL_IP: "0.0.0.0",
@@ -40,8 +23,11 @@ module.exports = {
 				ENDPOINT_IP: "0.0.0.0",
 				ENDPOINT_PORT: "55004",
 
+				ENDPOINT_USERNAME: "MESH_UNIT",
+				ENDPOINT_PASSWORD: "1234",
+
 				SYSTEM_FIRING_TIME: "120000",
-				SYSTEM_REPORT_TIME: "300000",
+				SYSTEM_REPORT_TIME: "180000",
 
 				COMMUNICATION_CHECK_INTERVAL: "3000"
 			}
@@ -50,11 +36,11 @@ module.exports = {
 
 	deploy: {
 		production: {
-			user: "pi",
-			host: "kasra.ddns.net",
+			user: "edge",
+			host: "192.168.1.10",
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
-			path: "/home/pi/state",
+			path: "/home/edge/state",
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
 		}

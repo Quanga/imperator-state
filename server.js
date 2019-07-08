@@ -1,90 +1,44 @@
+//load local .env if this is a testing environment
 if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
 }
-const Happner = require("happner-2");
-const Config = require("./config.js");
-const tcpPortUsed = require("tcp-port-used");
-var mesh = new Happner();
-const fs = require("fs");
-const path = require("path");
-const os = require("os");
-var yesno = require("yesno");
 
-(async function() {
+let mesh;
+const tcpPortUsed = require("tcp-port-used");
+
+const startServer = async () => {
+	if (process.env.EDGE_INSTANCE_NAME === undefined) {
+		console.error(
+			"Environemnt Variables not loaded.... please check NODE_ENV and how you are injecting your variables"
+		);
+		return process.exit(1);
+	}
+
 	let checkEndpoint = true;
 
 	if (process.env.USE_ENDPOINT === "true") {
-		checkEndpoint = await checkStart();
+		checkEndpoint = await checkForEndpoint();
 	}
 
 	if (process.argv[2] === "reset" && process.argv[3] === "--hard") {
-		console.warn("STARTED WITH HARD RESET ARG");
-		const ok = await yesno.askAsync(
-			"Are you sure you want to delete the database file? (yes/no)?",
-			false
-		);
-
-		if (ok) {
-			let file = path.resolve(os.homedir(), "./edge/db/", process.env.EDGE_DB);
-
-			let del = await new Promise(resolve => {
-				fs.unlink(file, err => {
-					if (err) {
-						resolve("DATABASE FILE NOT FOUND - ", err.path);
-					}
-
-					resolve("DATABASE FILE REMOVED");
-				});
-			});
-
-			console.log(del);
-			return process.exit(1);
-		} else {
-			console.log("Aborted reset.");
-			return process.exit(1);
-		}
+		await hardRest();
 	}
 
 	if (checkEndpoint) {
-		return mesh.initialize(Config, err => {
-			if (err) {
-				console.error(err.stack || err.toString());
-				process.exit(1);
-			}
-
-			mesh.on("endpoint-reconnect-scheduled", evt => {
-				console.log("ERROR RECONNECTING", evt);
-			});
-
-			//when an endpoint reconnects after a network fault, or a remote restart
-			mesh.on("endpoint-reconnect-successful", evt => {
-				console.log("RECONNECTED", evt);
-			});
-
-			//when an endpoint has intentianally disconnected
-			mesh.on("connection-ended", evt => {
-				console.log("CONNECTION ENDED", evt);
-			});
-
-			mesh.start(err => {
-				if (err) {
-					console.error(err.stack || err.toString());
-					process.exit(2);
-				}
-			});
-		});
+		console.log("Endpoint available......connecting");
+		return start();
 	}
 
 	console.log("Endpoint not available......please check port and ip address");
-	process.exit(1);
-})();
+	return process.exit(1);
+};
 
 process.on("SIGTERM", () => {
 	console.info("SIGTERM signal received.");
 	stop();
 });
 
-const checkStart = () =>
+const checkForEndpoint = () =>
 	new Promise(resolve => {
 		tcpPortUsed
 			.waitUntilUsedOnHost(
@@ -93,19 +47,103 @@ const checkStart = () =>
 				500,
 				4000
 			)
-			.then(() => resolve(true), err => resolve(false, err));
+			.then(
+				() => {
+					resolve(true);
+				},
+				err => {
+					resolve(false, err);
+				}
+			);
 	});
 
-function stop() {
+const stop = () => {
 	mesh.stop(
 		{
-			kill: true, // kill the process once stopped
-			wait: 10000, // wait for callbacks before kill
-			exitCode: 1, // when kill, exit with this integer
-			reconnect: false // inform attached clients/endpoints to reconnect
+			kill: true,
+			wait: 10000,
+			exitCode: 1,
+			reconnect: false
 		},
 		data => {
-			console.log("stopped", data);
+			console.warn("stopped", data);
 		}
 	);
-}
+};
+
+const start = () => {
+	const Mesh = require("happner-2");
+	mesh = new Mesh();
+
+	const Config = require("./config.js");
+	const config = new Config().config;
+	console.log("USING ENDPOINT", config.endpoints);
+
+	return mesh.initialize(config, err => {
+		if (err) {
+			console.error(err.stack || err.toString());
+			process.exit(1);
+		}
+
+		mesh.on("endpoint-reconnect-scheduled", evt => {
+			console.log("ERROR RECONNECTING", evt.endpointName);
+		});
+
+		mesh.on("endpoint-reconnect-successful", evt => {
+			console.log("RECONNECTED", evt.endpointName);
+		});
+
+		mesh.on("connection-ended", evt => {
+			console.log("CONNECTION ENDED", evt.endpointName);
+		});
+
+		mesh.start(err => {
+			if (err) {
+				console.error(err.stack || err.toString());
+				process.exit(2);
+			}
+		});
+	});
+};
+
+const hardRest = async () => {
+	const fs = require("fs");
+	const path = require("path");
+	const os = require("os");
+	var yesno = require("yesno");
+
+	console.warn("STARTED WITH HARD RESET ARG");
+
+	const ok = await yesno.askAsync(
+		"Are you sure you want to delete the database file? (yes/no)?",
+		false
+	);
+
+	if (ok) {
+		let file;
+		if (process.env.EDGE_DB) {
+			file = path.resolve(os.homedir(), "./edge/db/", process.env.EDGE_DB);
+		} else {
+			console.log("EDGE_DB not set");
+			process.exit(2);
+		}
+
+		const deleteFile = await new Promise(resolve => {
+			fs.unlink(file, err => {
+				if (err) {
+					resolve("DATABASE FILE NOT FOUND - ", err.path);
+				}
+
+				resolve("DATABASE FILE REMOVED");
+			});
+		});
+
+		console.log(deleteFile);
+		return process.exit(1);
+	} else {
+		console.log("Aborted reset.");
+		return process.exit(1);
+	}
+};
+
+startServer();

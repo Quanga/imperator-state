@@ -3,7 +3,6 @@ const defaultConstant = require("./lib/constants/defaultAppConstants")
 	.DefaultConstants;
 
 function App() {
-	this.systemInfo = { network: {} };
 	this.historyObj = {
 		started: [],
 		stopped: []
@@ -23,44 +22,41 @@ App.prototype.start = function($happn) {
 	const { info: logInfo, warn: logWarning } = $happn.log;
 	const { app } = $happn.exchange;
 
-	logInfo("STARTING ROUTER APP");
+	logInfo("Starting State Server Application.............");
 
-	let startupCheckAsync = async () => {
+	return (async () => {
 		//check for startup with RESET variable
 		if (process.argv[2] === "reset") {
-			logWarning("SERVER STARTED WITH RESET");
+			logWarning("Server started with reset flag");
+			logWarning("Database will be cleared and server stopped");
+
 			await app.resetRouterData();
+			return process.exit(1);
 		}
-
-		await app.restartRouter();
-	};
-
-	return startupCheckAsync();
+		//start the server
+		await app.startRouter();
+	})();
 };
 
 App.prototype.stop = function($happn) {
 	const { info: logInfo } = $happn.log;
 	const { app } = $happn.exchange;
-	const stopAsync = async () => {
+
+	return (async () => {
 		await app.writeHistory({ stopped: Date.now() });
-		logInfo("STOPPING ROUTER APP");
-	};
-	return stopAsync();
+		logInfo("Stopping State Server Application.............");
+	})();
 };
 
-/***
- * @summary this is seperate to that the UI can restart the UI once setup has been done
- * @param $happn
- */
-App.prototype.restartRouter = function($happn) {
+App.prototype.startRouter = function($happn) {
 	const { app, stateService } = $happn.exchange;
 	const { warn: logWarning } = $happn.log;
 
-	const restartAsync = async () => {
+	return (async () => {
 		stateService.updateState({ service: $happn.name, state: "PENDING" });
 
 		await app.writeHistory({ started: Date.now() });
-		await app.checkConfiguration(); //check for configuration
+		await app.checkConfiguration();
 
 		if (!this.configuration.setupComplete) {
 			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
@@ -68,16 +64,14 @@ App.prototype.restartRouter = function($happn) {
 		} else {
 			this.startRouter($happn);
 		}
-	};
-
-	return restartAsync();
+	})();
 };
 
 App.prototype.checkConfiguration = function($happn) {
-	const { app, security, portService } = $happn.exchange;
+	const { app, security } = $happn.exchange;
 	const { warn, error: logError } = $happn.log;
 
-	const checkConfigAsync = async () => {
+	return (async () => {
 		this.configuration = await app.getRouterConfigData();
 		if (!this.configuration) {
 			warn("NO CONFIGURATION DATA FOUND - APPLYING DEFAULT");
@@ -91,9 +85,6 @@ App.prototype.checkConfiguration = function($happn) {
 		this.configuration.security.defaultGroups.forEach(group => {
 			security.upsertGroup(group, function(err, upserted) {
 				if (err) logError("cannot create group", err);
-
-				//logInfo("Group Upserted", upserted);
-				//group was upserted, permissions were merged with existing group if it existed
 			});
 		});
 
@@ -106,14 +97,6 @@ App.prototype.checkConfiguration = function($happn) {
 		const { setupIssues } = this.configuration;
 		setupIssues.length = 0;
 
-		// const setPort = portService.checkPort(
-		// 	this.configuration.inputSource.comPort
-		// );
-
-		// if (!setPort) {
-		// 	setupIssues.push("Comm Port not set!");
-		// 	warn("CONFIG- COMM PORT NOT SET");
-		// }
 		if (this.configuration.identifier.name === "") {
 			setupIssues.push("Identifier Name not set!");
 			warn("CONFIG- ID NAME NOT SET");
@@ -124,8 +107,7 @@ App.prototype.checkConfiguration = function($happn) {
 		}
 
 		await app.setRouterConfigData(this.configuration, "persist/configuration");
-	};
-	return checkConfigAsync();
+	})();
 };
 
 App.prototype.startRouter = function($happn) {
@@ -141,25 +123,14 @@ App.prototype.startRouter = function($happn) {
 	const { error: logError, info: logInfo } = $happn.log;
 	const { emit } = $happn;
 
-	let startup = async () => {
+	return (async () => {
 		try {
-			const { configuration } = this.configuration;
-
 			await nodeRepository.start();
 			await logsRepository.start();
 			await warningsRepository.start();
 			await blastRepository.start();
 			await queueService.initialise();
 
-			//initialized after the repos as it will do the checks
-			//await eventService.initialise();
-
-			//Do not start the OUTGOING QUEUE or the TRANSMISSION SERVICE
-			//if the mode is AXXIS
-			if (configuration.meshType === "IBS") {
-				//await queueService.watchOutgoingQueue();
-				//transmissionService.initialise();
-			}
 			stateService.updateState({ service: $happn.name, state: "STARTED" });
 			emit("STARTED", true);
 			logInfo("::::: APP STARTUP COMPLETE ::::::");
@@ -167,16 +138,13 @@ App.prototype.startRouter = function($happn) {
 			logError("start error", err);
 			//process.exit(err.code || 1);
 		}
-	};
-
-	return startup();
+	})();
 };
 
 /* **********************************
 GETTERS AND SETTERS FOR DATA - CONFIGURATION
 ************************************* */
 
-// eslint-disable-next-line no-unused-vars
 App.prototype.getRouterConfigData = function($happn) {
 	const { data } = $happn.exchange;
 
@@ -252,7 +220,6 @@ App.prototype.writeHistory = function($happn, incoming) {
 					return (history[prp] = updatedVal[prp]);
 				}
 			});
-			//console.log("HISTORY", history);
 
 			await writeAsync(history);
 		} catch (error) {
