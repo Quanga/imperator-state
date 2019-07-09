@@ -30,7 +30,7 @@ class Config {
 				port:
 					overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
-					timeout: 15000
+					timeout: 40000
 				},
 				persist: true,
 				secure: true,

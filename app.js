@@ -34,7 +34,7 @@ App.prototype.start = function($happn) {
 			return process.exit(1);
 		}
 		//start the server
-		await app.startRouter();
+		app.startRouter();
 	})();
 };
 
@@ -129,7 +129,7 @@ App.prototype.startRouter = function($happn) {
 			await logsRepository.start();
 			await warningsRepository.start();
 			await blastRepository.start();
-			await queueService.initialise();
+			queueService.initialise();
 
 			stateService.updateState({ service: $happn.name, state: "STARTED" });
 			emit("STARTED", true);
