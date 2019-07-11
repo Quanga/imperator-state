@@ -51,7 +51,6 @@ describe("Repositories - NodeRepository Tests", function() {
 		await client.exchange.nodeRepository.delete("*");
 		await client.exchange.logsRepository.deleteAll();
 		await client.exchange.warningsRepository.deleteAll();
-		await client.exchange.packetRepository.delete("*");
 		await client.exchange.blastRepository.delete("*");
 	});
 
@@ -95,7 +94,7 @@ describe("Repositories - NodeRepository Tests", function() {
 			let res = await getAtPath();
 			expect(res.length).to.eql(1);
 			expect(res[0].test).to.eql("data");
-			await nodeRepository.deleteAll();
+			await nodeRepository.delete("*");
 			let resp2 = await getAtPath();
 			expect(resp2.length).to.eql(0);
 		};

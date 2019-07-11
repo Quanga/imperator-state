@@ -116,6 +116,7 @@ describe("E2E - CONTROL UNIT data tests", async function() {
 		}
 
 		let ibc = result[0];
+		console.log(ibc);
 
 		expect(ibc.communicationStatus).to.equal(1);
 		expect(ibc.fireButton).to.equal(0);
