@@ -22,29 +22,6 @@ App.prototype.start = function($happn) {
 	const { info: logInfo, warn: logWarning } = $happn.log;
 	const { app } = $happn.exchange;
 
-	// console.log("test");
-	// $happn.event.security.on(
-	// 	"*",
-	// 	(data, meta) => {
-	// 		console.log(data, meta);
-	// 	},
-	// 	(err, evnth) => {
-	// 		if (err) console.log(err);
-	// 	}
-	// );
-	// logInfo("Starting State Server Application.............");
-	// $happn.exchange.mesh.on("endpoint-reconnect-scheduled", evt => {
-	// 	console.log("ERROR RECONNECTING", evt.endpointName);
-	// });
-
-	// $happn.on("endpoint-reconnect-successful", evt => {
-	// 	console.log("RECONNECTED", evt.endpointName);
-	// });
-
-	// $happn.on("connection-ended", evt => {
-	// 	console.log("CONNECTION ENDED", evt.endpointName);
-	// });
-
 	return (async () => {
 		//check for startup with RESET variable
 		if (process.argv[2] === "reset") {
@@ -55,7 +32,7 @@ App.prototype.start = function($happn) {
 			return process.exit(1);
 		}
 		//start the server
-		app.startRouter();
+		await app.firststartRouter();
 	})();
 };
 
@@ -69,7 +46,7 @@ App.prototype.stop = function($happn) {
 	})();
 };
 
-App.prototype.startRouter = function($happn) {
+App.prototype.firststartRouter = function($happn) {
 	const { app, stateService } = $happn.exchange;
 	const { warn: logWarning } = $happn.log;
 
@@ -79,12 +56,13 @@ App.prototype.startRouter = function($happn) {
 		await app.writeHistory({ started: Date.now() });
 		await app.checkConfiguration();
 
-		if (!this.configuration.setupComplete) {
-			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
-			logWarning("SETUP INCOMPLETE - RUN UI TO COMPLETE");
-		} else {
-			this.startRouter($happn);
-		}
+		app.startRouter();
+		// if (!this.configuration.setupComplete) {
+		// 	stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
+		// 	logWarning("SETUP INCOMPLETE - RUN UI TO COMPLETE");
+		// } else {
+
+		// }
 	})();
 };
 
@@ -94,6 +72,7 @@ App.prototype.checkConfiguration = function($happn) {
 
 	return (async () => {
 		this.configuration = await app.getRouterConfigData();
+		console.log("CONFIG", this.configuration);
 		if (!this.configuration) {
 			warn("NO CONFIGURATION DATA FOUND - APPLYING DEFAULT");
 			this.configuration = await app.setRouterConfigData(
@@ -104,7 +83,7 @@ App.prototype.checkConfiguration = function($happn) {
 		}
 
 		this.configuration.security.defaultGroups.forEach(group => {
-			security.upsertGroup(group, function(err, upserted) {
+			security.upsertGroup(group, (err, upserted) => {
 				if (err) logError("cannot create group", err);
 			});
 		});

@@ -43,6 +43,15 @@ module.exports = {
 			path: "/home/edge/state",
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
+		},
+		production_kasra: {
+			user: "pi",
+			host: ["kasra.ddns.net"],
+			ref: "origin/master",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/pi/state",
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production"
 		}
 	}
 };
