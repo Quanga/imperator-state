@@ -93,7 +93,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 					data: [
 						{
 							serial: 13,
-							childCount: 2,
+							childCount: 0,
 							ledState: 6,
 							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 						}
@@ -120,6 +120,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		expect(cbb.childCount).to.equal(2);
 		expect(resultDataService.units["13"].data.communicationStatus).to.equal(1);
 		expect(resultDataService.units["13"].data.childCount).to.equal(2);
+
+		let snapshot = await client.exchange.dataService.getSnapShot();
+		console.log(JSON.stringify(snapshot));
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
@@ -147,7 +150,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 						},
 						{
-							windowId: 2,
+							windowId: 1,
 							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 							delay: 2000
 						}
@@ -177,6 +180,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		expect(edd1.windowId).to.equal(2); // communication status
 		expect(edd1.delay).to.equal(2000); // communication status
 		expect(cbb.childCount).to.equal(2);
+
+		let snapshot = await client.exchange.dataService.getSnapShot();
+		console.log(JSON.stringify(snapshot));
 	});
 
 	it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function() {
@@ -257,6 +263,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		expect(edd1.windowId).to.equal(2);
 		expect(edd1.delay).to.equal(3000);
 		expect(cbb.childCount).to.equal(2);
+
+		let snapshot = await client.exchange.dataService.getSnapShot();
+		console.log(JSON.stringify(snapshot));
 	});
 
 	it("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {

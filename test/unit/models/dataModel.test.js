@@ -131,7 +131,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		const edd1Change = new EDDModel(null, 101, 1, 2000);
 		edd1Change.data.detonatorStatus = 1;
 		edd1Change.data.serial = 2342342;
-		let changedEdd = await dataModel.upsertUnit(edd1Change);
+		await dataModel.upsertUnit(edd1Change);
 
 		const edd2Change = new EDDModel(null, 101, 2, 5000);
 		edd2Change.data.detonatorStatus = 1;
@@ -276,5 +276,93 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
 		expect(dataModel.units["101"].units.loggedCount).to.eql(2);
 		expect(dataModel.units["101"].units.programCount).to.eql(1);
+	});
+
+	it("can correctly handle program counts larger scale", async function() {
+		const dataModel = new DataModel();
+
+		await dataModel.upsertUnit(new ControlUnitModel(22));
+		await dataModel.upsertUnit(new CBoosterModel(101));
+
+		for (let i = 1; i < 101; i++) {
+			await dataModel.upsertUnit(new EDDModel(null, 101, i, null));
+		}
+
+		expect(dataModel.controlUnit.units.unitsCount).to.eql(1);
+		expect(dataModel.controlUnit.units.keySwitchStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.unitsCount).to.eql(100);
+
+		for (let i = 1; i <= 100; i++) {
+			let eddUpdate1 = new EDDModel(null, 101, i);
+			eddUpdate1.data.program = 1;
+			eddUpdate1.data.logged = 1;
+			await dataModel.upsertUnit(eddUpdate1);
+		}
+
+		await timer(200);
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(100);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(100);
+		expect(dataModel.units["101"].units.programCount).to.eql(100);
+
+		for (let i = 1; i <= 100; i++) {
+			let eddUpdate1 = new EDDModel(null, 101, i);
+			//eddUpdate1.data.program = 1;
+			eddUpdate1.data.program = i >= 1 && i <= 90 ? 1 : 0;
+			eddUpdate1.data.logged = 1;
+			await dataModel.upsertUnit(eddUpdate1);
+		}
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(100);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(100);
+		expect(dataModel.units["101"].units.programCount).to.eql(90);
+
+		for (let i = 1; i <= 100; i++) {
+			let eddUpdate1 = new EDDModel(null, 101, i);
+			eddUpdate1.data.program = i >= 11 && i <= 100 ? 1 : 0;
+			eddUpdate1.data.logged = 1;
+			await dataModel.upsertUnit(eddUpdate1);
+		}
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(100);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(100);
+		expect(dataModel.units["101"].units.programCount).to.eql(90);
+
+		let numbers = [1, 20, 15, 19, 36, 67, 87];
+		for (let i = 1; i <= 100; i++) {
+			let eddUpdate1 = new EDDModel(null, 101, i);
+			if (numbers.includes(i)) {
+				eddUpdate1.data.program = 0;
+			} else {
+				eddUpdate1.data.program = 1;
+			}
+			eddUpdate1.data.logged = 1;
+			await dataModel.upsertUnit(eddUpdate1);
+		}
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(100);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(100);
+		expect(dataModel.units["101"].units.programCount).to.eql(93);
+
+		numbers = [12, 24, 78, 97, 34, 67, 87];
+		for (let i = 1; i <= 100; i++) {
+			let eddUpdate1 = new EDDModel(null, 101, i);
+			if (numbers.includes(i)) {
+				eddUpdate1.data.program = 0;
+			} else {
+				eddUpdate1.data.program = 1;
+			}
+			eddUpdate1.data.logged = 1;
+			await dataModel.upsertUnit(eddUpdate1);
+		}
+
+		expect(dataModel.units["101"].units.unitsCount).to.eql(100);
+		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
+		expect(dataModel.units["101"].units.loggedCount).to.eql(100);
+		expect(dataModel.units["101"].units.programCount).to.eql(93);
 	});
 });
