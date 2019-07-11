@@ -3,7 +3,7 @@ if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
 }
 
-let mesh;
+this.mesh;
 const tcpPortUsed = require("tcp-port-used");
 
 const startServer = async () => {
@@ -58,7 +58,7 @@ const checkForEndpoint = () =>
 	});
 
 const stop = () => {
-	mesh.stop(
+	this.mesh.stop(
 		{
 			kill: true,
 			wait: 10000,
@@ -73,31 +73,38 @@ const stop = () => {
 
 const start = () => {
 	const Mesh = require("happner-2");
-	mesh = new Mesh();
+	this.mesh = new Mesh();
 
 	const Config = require("./config.js");
 	const config = new Config().config;
-	console.log("USING ENDPOINT", config.endpoints);
+	//console.log("USING ENDPOINT", config.endpoints);
 
-	return mesh.initialize(config, err => {
+	//config.components.queueService.env.meshInstance = mesh;
+	//console.log(config.components.queueService);
+
+	return this.mesh.initialize(config, err => {
 		if (err) {
 			console.error(err.stack || err.toString());
 			process.exit(1);
 		}
 
-		mesh.on("endpoint-reconnect-scheduled", evt => {
-			console.log("ERROR RECONNECTING", evt.endpointName);
-		});
+		// this.mesh.on("endpoint-reconnect-scheduled", evt => {
+		// 	console.log("ERROR RECONNECTING", evt.endpointName);
+		// });
 
-		mesh.on("endpoint-reconnect-successful", evt => {
-			console.log("RECONNECTED", evt.endpointName);
-		});
+		// this.mesh.on("endpoint-reconnect-successful", evt => {
+		// 	//console.log(evt);
 
-		mesh.on("connection-ended", evt => {
-			console.log("CONNECTION ENDED", evt.endpointName);
-		});
+		// 	console.log("RECONNECTED", evt.endpointName);
+		// });
 
-		mesh.start(err => {
+		// this.mesh.on("connection-ended", evt => {
+		// 	//console.log(evt);
+
+		// 	console.log("CONNECTION ENDED", evt.endpointName);
+		// });
+
+		this.mesh.start(err => {
 			if (err) {
 				console.error(err.stack || err.toString());
 				process.exit(2);

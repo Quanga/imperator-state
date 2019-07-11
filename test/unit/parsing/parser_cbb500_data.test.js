@@ -19,7 +19,6 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 				itemType: "CBoosterModel",
 				itemData: {
 					serial: 65535,
-					parentSerial: null,
 					typeId: 3,
 					parentType: 0,
 					created: now,
@@ -37,7 +36,7 @@ describe("PARSER-CBB500_DATA-parser-test", async function() {
 					cableFault: null,
 					earthLeakage: null,
 					ledState: null,
-					childCount: null
+					childCount: 0
 				}
 			},
 			{

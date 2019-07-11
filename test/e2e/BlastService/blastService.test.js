@@ -6,7 +6,7 @@ const Queue = require("better-queue");
 
 require("dotenv").config();
 
-describe("E2E - BLAST SERVICE tests", function() {
+describe("E2E - BLAST SERVICE tests", async function() {
 	this.timeout(25000);
 	let serverHelper = new ServerHelper();
 	var client;

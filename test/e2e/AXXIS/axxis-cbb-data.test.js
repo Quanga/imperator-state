@@ -6,7 +6,7 @@ const Mesh = require("happner-2");
 
 require("dotenv").config();
 
-describe("E2E - AXXIS - CBB data test", function() {
+describe("E2E - AXXIS - CBB data test", async function() {
 	this.timeout(15000);
 	let serverHelper = new ServerHelper();
 	let client;
@@ -105,7 +105,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 		});
 
 		await holdAsync();
-		await timer(1000);
+		await timer(2000);
 
 		let resultPresist = await client.exchange.nodeRepository.getAllNodes();
 		let resultDataService = await client.exchange.dataService.getSnapShot();
@@ -117,9 +117,9 @@ describe("E2E - AXXIS - CBB data test", function() {
 		);
 
 		expect(cbb.communicationStatus).to.equal(1); // communication status
-		expect(cbb.childCount).to.equal(2);
+		expect(cbb.childCount).to.equal(0);
 		expect(resultDataService.units["13"].data.communicationStatus).to.equal(1);
-		expect(resultDataService.units["13"].data.childCount).to.equal(2);
+		expect(resultDataService.units["13"].data.childCount).to.equal(0);
 
 		let snapshot = await client.exchange.dataService.getSnapShot();
 		console.log(JSON.stringify(snapshot));
@@ -150,7 +150,7 @@ describe("E2E - AXXIS - CBB data test", function() {
 							rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
 						},
 						{
-							windowId: 1,
+							windowId: 2,
 							rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 							delay: 2000
 						}
@@ -162,9 +162,10 @@ describe("E2E - AXXIS - CBB data test", function() {
 		});
 
 		await holdAsync();
-		await timer(1000);
+		await timer(2000);
 
 		const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+		console.log(resultPersist);
 		if (resultPersist === null || resultPersist.length === 0)
 			throw new Error("Empty result!");
 

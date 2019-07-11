@@ -148,7 +148,8 @@ class Config {
 						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT,
 						endpointName: overrideObj.endpointName || process.env.ENDPOINT_NAME,
 						endpointUsername:
-							overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME
+							overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME,
+						meshInstance: null
 					}
 				},
 				transmissionService: { startMethod: "start" },

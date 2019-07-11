@@ -22,7 +22,28 @@ App.prototype.start = function($happn) {
 	const { info: logInfo, warn: logWarning } = $happn.log;
 	const { app } = $happn.exchange;
 
-	logInfo("Starting State Server Application.............");
+	// console.log("test");
+	// $happn.event.security.on(
+	// 	"*",
+	// 	(data, meta) => {
+	// 		console.log(data, meta);
+	// 	},
+	// 	(err, evnth) => {
+	// 		if (err) console.log(err);
+	// 	}
+	// );
+	// logInfo("Starting State Server Application.............");
+	// $happn.exchange.mesh.on("endpoint-reconnect-scheduled", evt => {
+	// 	console.log("ERROR RECONNECTING", evt.endpointName);
+	// });
+
+	// $happn.on("endpoint-reconnect-successful", evt => {
+	// 	console.log("RECONNECTED", evt.endpointName);
+	// });
+
+	// $happn.on("connection-ended", evt => {
+	// 	console.log("CONNECTION ENDED", evt.endpointName);
+	// });
 
 	return (async () => {
 		//check for startup with RESET variable

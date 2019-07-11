@@ -17,7 +17,6 @@ describe("PARSER-control-unit-parser-test", async function() {
 				itemType: "ControlUnitModel",
 				itemData: {
 					serial: 1,
-					parentSerial: null,
 					typeId: 0,
 					parentType: null,
 					created: now,
