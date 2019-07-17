@@ -44,6 +44,15 @@ module.exports = {
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
 		},
+		production14: {
+			user: "edge",
+			host: ["192.168.1.14"],
+			ref: "origin/master",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/edge/state",
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production"
+		},
 
 		production_AECE: {
 			user: "edge",
