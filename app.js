@@ -72,7 +72,7 @@ App.prototype.checkConfiguration = function($happn) {
 
 	return (async () => {
 		this.configuration = await app.getRouterConfigData();
-		console.log("CONFIG", this.configuration);
+
 		if (!this.configuration) {
 			warn("NO CONFIGURATION DATA FOUND - APPLYING DEFAULT");
 			this.configuration = await app.setRouterConfigData(

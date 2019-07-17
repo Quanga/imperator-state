@@ -44,12 +44,37 @@ module.exports = {
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
 		},
+
+		production_AECE: {
+			user: "edge",
+			host: [
+				{
+					host: "0.tcp.ngrok.io",
+					port: "11870"
+				}
+			],
+			ref: "origin/master",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/edge/state",
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production"
+		},
 		production_kasra: {
 			user: "pi",
 			host: ["kasra.ddns.net"],
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/pi/state",
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production"
+		},
+		production_aws: {
+			user: "ec2-user",
+			key: "~/aws_rsa.pem",
+			host: "ec2-18-222-47-118.us-east-2.compute.amazonaws.com",
+			ref: "origin/master",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/ec2-user/state",
 			"post-deploy":
 				"npm install && pm2 reload ecosystem.config.js --env production"
 		}

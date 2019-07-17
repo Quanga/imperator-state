@@ -83,6 +83,9 @@ class Config {
 				},
 				blastService: {
 					path: `${__dirname}/lib/services/blast_service.js`
+				},
+				wifiService: {
+					path: `${__dirname}/lib/services/wifiService.js`
 				}
 			},
 			components: {
@@ -153,6 +156,9 @@ class Config {
 					}
 				},
 				transmissionService: { startMethod: "start" },
+				wifiService: {
+					startMethod: "start"
+				},
 				app: {
 					startMethod: "start",
 					stopMethod: "stop"

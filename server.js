@@ -1,4 +1,3 @@
-//load local .env if this is a testing environment
 if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
 }
