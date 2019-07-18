@@ -264,7 +264,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		eddUpdate1.data.logged = 1;
 
 		eddUpdate2 = new EDDModel(null, 101, 2);
-		eddUpdate2.data.program = 0;
+		eddUpdate2.data.program = 1;
 		eddUpdate2.data.logged = 1;
 
 		await dataModel.upsertUnit(eddUpdate1);
@@ -275,7 +275,7 @@ describe("UNIT - DATA MODEL TESTS", async function() {
 		expect(dataModel.units["101"].units.unitsCount).to.eql(4);
 		expect(dataModel.units["101"].units.detonatorStatusCount).to.eql(0);
 		expect(dataModel.units["101"].units.loggedCount).to.eql(2);
-		expect(dataModel.units["101"].units.programCount).to.eql(1);
+		expect(dataModel.units["101"].units.programCount).to.eql(2);
 	});
 
 	it("can correctly handle program counts larger scale", async function() {
