@@ -13,6 +13,7 @@ module.exports = {
 		"linebreak-style": ["error", "unix"],
 
 		semi: ["error", "always"],
-		"no-console": 0
+		"no-console": 0,
+		"max-len": ["error", { code: 120, ignoreStrings: true }]
 	}
 };

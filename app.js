@@ -129,7 +129,7 @@ App.prototype.startRouter = function($happn) {
 			await logsRepository.start();
 			await warningsRepository.start();
 			await blastRepository.start();
-			queueService.initialise();
+			await queueService.initialise();
 
 			stateService.updateState({ service: $happn.name, state: "STARTED" });
 			emit("STARTED", true);
