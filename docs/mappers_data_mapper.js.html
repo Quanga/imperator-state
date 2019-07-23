@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: mappers/data_mapper.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-myModule.html">myModule</a></li></ul><h3>Classes</h3><ul><li><a href="DataModel.html">DataModel</a></li><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:snowball">snowball</a></li><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>mappers/data_mapper.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const diff = require("deep-object-diff").diff;
+const {
+	ControlUnitModel,
+	SectionControlModel,
+	BoosterModel,
+	CBoosterModel,
+	EDDModel
+} = require("../models/unitModels");
+
+class DataMapper {
+	async getUpdates(nextState, prevState) {
+		try {
+			const diffs = diff(prevState.data, nextState.data);
+
+			let diffNulls = Object.keys(diffs).filter(x => diffs[x] === null);
+
+			let filterOut = ["path", "created", ...diffNulls];
+
+			for (let index = 0; index &lt; filterOut.length; index++) {
+				const element = filterOut[index];
+				delete diffs[element];
+			}
+
+			if (Object.keys(diffs).length > 0) {
+				return diffs;
+			}
+			return null;
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	}
+
+	/** @function
+	 * @summary Async function that transforms the nodes stored as JSON and turns them back
+	 * into their Unit Models
+	 * @param $happn
+	 * @param nodeObj
+	 */
+	async mapToUnits(getResult) {
+		try {
+			let resultArr = [];
+
+			if (!Array.isArray(getResult)) {
+				getResult = [getResult];
+			}
+
+			for (const item of getResult) {
+				let unitObj = null;
+				switch (item.typeId) {
+				case 0:
+					unitObj = new ControlUnitModel(item.serial);
+					//unitObj.meta.type = config.systemType;
+					break;
+				case 1:
+					unitObj = new SectionControlModel(item.serial);
+					break;
+				case 2:
+					unitObj = new BoosterModel(item.serial, null);
+					break;
+				case 3:
+					unitObj = new CBoosterModel(item.serial);
+					break;
+				case 4:
+					unitObj = new EDDModel(item.serial, null, null, null);
+					break;
+				}
+
+				let remappedObj = await this.mapProps(item, unitObj);
+				// if (remappedObj.meta.modified) {
+				// 	remappedObj.meta.storedPacketDate = remappedObj.data.modified;
+				// } else {
+				// 	remappedObj.meta.storedPacketDate = remappedObj.data.created;
+				// }
+
+				resultArr.push(remappedObj);
+			}
+			return resultArr;
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	}
+
+	async mapProps(foundNode, newObj) {
+		const { data: newObjData } = newObj;
+		try {
+			for (let key in newObjData) {
+				if (foundNode.hasOwnProperty(key)) {
+					let propResult = foundNode[key];
+					if (propResult !== null) {
+						newObjData[key] = foundNode[key];
+					}
+				}
+			}
+			return newObj;
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	}
+}
+
+module.exports = DataMapper;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Jul 21 2019 08:26:40 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

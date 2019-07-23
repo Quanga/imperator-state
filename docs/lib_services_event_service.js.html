@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: lib/services/event_service.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>lib/services/event_service.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
+var Queue = require("better-queue");
+const PacketTemplate = require("../constants/packetTemplates");
+
+function EventService() {
+	this.__constants = new PacketTemplate();
+
+	this.__logConstants = this.__constants.loggables;
+	this.__warnConstants = this.__constants.warnables;
+
+	this.dataModel = [];
+	this.activeBlast = null;
+	this.blastModels = [];
+	this.eventRef = null;
+}
+
+EventService.prototype.startAsync = function($happn) {
+	const { eventService } = $happn.exchange;
+	const { dataService } = $happn.event;
+	const { error: logError, info: logInfo } = $happn.log;
+	const { emit } = $happn;
+
+	const initAsync = async () => {
+		logInfo("initialise Event Service .................. STARTED");
+		this.emitQueue = new Queue(
+			(task, cb) => {
+				task.forEach(taskItem => {
+					emit(taskItem.path, taskItem.value);
+				});
+				cb(task);
+			},
+			{
+				merge: (oldTask, newTask, cb) => {
+					oldTask.value = oldTask.value.concat(newTask.value);
+					cb(null, oldTask);
+				},
+				batchSize: 10,
+				batchDelay: 100,
+				batchDelayTimeout: 1000
+			}
+		);
+
+		dataService.on(
+			"UNIT_UPDATED",
+			async data => {
+				await eventService.processLogs(data);
+			},
+			(err, eventRef) => {
+				if (err) return logError("Cannot subscribe to the data service", err);
+
+				this.eventRef = eventRef;
+			}
+		);
+	};
+	return initAsync();
+};
+
+EventService.prototype.stopAsync = function($happn) {
+	const { error: logError, info: logInfo } = $happn.log;
+	const { nodeRepository } = $happn.exchange;
+
+	const initAsync = async () => {};
+
+	return initAsync();
+};
+
+EventService.prototype.processLogs = function($happn, obj) {
+	const { eventService } = $happn.exchange;
+
+	let processAsync = async () => {
+		const { logsRepository } = $happn.exchange;
+
+		if (obj.typeId !== 4) {
+			await logsRepository.insertLog(obj);
+
+			this.emitQueue.push({
+				id: "log",
+				path: "UPDATE_LOG",
+				value: [obj]
+			});
+
+			await eventService.processWarnings(obj);
+		} else {
+			this.emitQueue.push({
+				id: "det",
+				path: "UPDATE_DET",
+				value: [obj]
+			});
+		}
+	};
+
+	return processAsync();
+};
+
+EventService.prototype.processWarnings = function($happn, changeEvents) {
+	const { warningsRepository } = $happn.exchange;
+	/**
+	 * let changedObject = {
+						serial: node.data.serial,
+						typeId: node.data.typeId,
+						modified: node.meta.storedPacketDate,
+						changes: node.meta.dirty,
+						number: this.emitCount
+					};
+	 */
+
+	let processWarningsAsync = async () => {
+		//will process here
+		const { changes } = changeEvents;
+		const changeKey = Object.keys(changes);
+		//const warnings = this.__constants.getWarnables();
+
+		//const loggableWarnings = changeKey.filter(x => x.indexOf(warnings) === -1);
+
+		// 	for (let index = 0; index &lt; filterOut.length; index++) {
+		//   const element = filterOut[index];
+		//   delete differences[element];
+	};
+
+	//3. compare which warnings need to be logged
+	//4. send them to the warnings repository
+	//5. emit an event for the ui to get the warnings
+
+	//return processWarningsAsync();
+};
+
+module.exports = EventService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jul 23 2019 10:57:12 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

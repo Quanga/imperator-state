@@ -1,4 +1,82 @@
-/* eslint-disable no-unused-vars */
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: lib/services/data_service.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>lib/services/data_service.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
 /**
  * @category Data Service
  * @module lib/services/dataService
@@ -31,10 +109,10 @@ function DataService() {
 }
 
 /**
- * <ul>
- * <li>Start the component when Happner starts.</li>
- * <li>Creates a new DataModel and Emit Queue.</li>
- * <li>Starts the listners for the Data Model</li></ul><br>
+ * &lt;ul>
+ * &lt;li>Start the component when Happner starts.&lt;/li>
+ * &lt;li>Creates a new DataModel and Emit Queue.&lt;/li>
+ * &lt;li>Starts the listners for the Data Model&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise}
  */
@@ -73,10 +151,10 @@ DataService.prototype.componentStart = function($happn) {
 };
 
 /**
- * <ul>
- * <li>Stops the component when Happner stops.</li>
- * <li>Stops the listners.</li>
- * <li>Starts the listners for the Data Model</li></ul><br>
+ * &lt;ul>
+ * &lt;li>Stops the component when Happner stops.&lt;/li>
+ * &lt;li>Stops the listners.&lt;/li>
+ * &lt;li>Starts the listners for the Data Model&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise} void
  */
@@ -91,9 +169,9 @@ DataService.prototype.componentStop = function($happn) {
 };
 
 /**
- * <ul>
- * <li>Called by {@link module:app~App#startRouter}.</li>
- * <li>Starts the listners for the Data Model</li></ul><br>
+ * &lt;ul>
+ * &lt;li>Called by {@link module:app~App#startRouter}.&lt;/li>
+ * &lt;li>Starts the listners for the Data Model&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise}
  */
@@ -113,8 +191,8 @@ DataService.prototype.initialise = function($happn) {
 };
 
 /**
- * <ul><li>Create and populate the DataModel on startup of this Service.</li>
- * <li>Gets the persisted units from the datastore</li>
+ * &lt;ul>&lt;li>Create and populate the DataModel on startup of this Service.&lt;/li>
+ * &lt;li>Gets the persisted units from the datastore&lt;/li>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise}
  * @mermaid graph LR
@@ -151,8 +229,8 @@ DataService.prototype.createDataModel = function($happn) {
 };
 
 /**
- * <ul><li>Starts the listners for the Data Model.</li>
- * <li>Broker the events from the DataModel to the rest of the system.</li></ul><br>
+ * &lt;ul>&lt;li>Starts the listners for the Data Model.&lt;/li>
+ * &lt;li>Broker the events from the DataModel to the rest of the system.&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise} void
  * @listens DataModel#UNITCOUNT - Brokers emits and hands to Happn Emit
@@ -172,7 +250,7 @@ DataService.prototype.createDataModelListeners = function($happn) {
 };
 
 /**
- * <ul><li>Removes the listners from the Data Model.</li></ul>
+ * &lt;ul>&lt;li>Removes the listners from the Data Model.&lt;/li>&lt;/ul>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise}
  */
@@ -192,9 +270,9 @@ DataService.prototype.unlisten = function($happn) {
 };
 
 /**
- * <ul><li>Validate the persisted Units and return to the create method</li></ul>
+ * &lt;ul>&lt;li>Validate the persisted Units and return to the create method&lt;/li>&lt;/ul>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
- * @returns {(Promise<units[]> | Promise<null>)} result Array or null
+ * @returns {(Promise&lt;units[]> | Promise&lt;null>)} result Array or null
  */
 DataService.prototype.validatePersisted = function($happn, units) {
 	const { log } = $happn;
@@ -205,10 +283,10 @@ DataService.prototype.validatePersisted = function($happn, units) {
 
 			let controlUnit = await units.filter(u => u.typeId === 0);
 
-			if (controlUnit && controlUnit.length > 0) {
+			if (controlUnit &amp;&amp; controlUnit.length > 0) {
 				if (controlUnit.length > 1) {
 					const allCu = controlUnit.reduce((acc, cur) => acc.concat(`-${cur.path}  `), "");
-					controlUnit = controlUnit.sort((a, b) => a.modified < b.modified);
+					controlUnit = controlUnit.sort((a, b) => a.modified &lt; b.modified);
 					log.warn(`Too Many control units found.... please remove one of ${allCu}`);
 					log.warn(`Adding latest to Blast Model - unit ${controlUnit[0].path}`);
 				}
@@ -220,7 +298,7 @@ DataService.prototype.validatePersisted = function($happn, units) {
 			}
 
 			let boosters = units.filter(u => u.typeId === 3);
-			if (boosters && boosters.length > 0) {
+			if (boosters &amp;&amp; boosters.length > 0) {
 				log.info(`Adding ${boosters.length} boosters to the Data Model`);
 				for (let booster of boosters) {
 					log.info(`Adding ${booster.serial} to the Data Model`);
@@ -231,7 +309,7 @@ DataService.prototype.validatePersisted = function($happn, units) {
 			}
 
 			let dets = units.filter(u => u.typeId === 4);
-			if (dets && dets.length > 0) {
+			if (dets &amp;&amp; dets.length > 0) {
 				log.info(`Adding ${dets.length} detonators to the Data Model`);
 				for (let det of dets) {
 					resultArr.push(det);
@@ -252,8 +330,8 @@ DataService.prototype.validatePersisted = function($happn, units) {
 };
 
 /**
- * <ul><li>Clears the DataModel by creating a new DataModel instance.</li>
- * <li>Utiliity method for now</li></ul>
+ * &lt;ul>&lt;li>Clears the DataModel by creating a new DataModel instance.&lt;/li>
+ * &lt;li>Utiliity method for now&lt;/li>&lt;/ul>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise}
  */
@@ -265,8 +343,8 @@ DataService.prototype.clearDataModel = function($happn) {
 };
 
 /**
- * <ul><li>Primary Pathway for the Node Array</li>
- * <li>Handles upserting and flow</li></ul><br>
+ * &lt;ul>&lt;li>Primary Pathway for the Node Array&lt;/li>
+ * &lt;li>Handles upserting and flow&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @param {object[]} nodeArr The incoming node array
  * @returns {Promise}
@@ -340,8 +418,8 @@ DataService.prototype.upsertNodeDataArr = function($happn, nodeArr) {
 };
 
 /**
- * <ul><li>Update the state of the checked Array</li>
- * <li>.....</li></ul><br>
+ * &lt;ul>&lt;li>Update the state of the checked Array&lt;/li>
+ * &lt;li>.....&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @param {object[]} nodeArr The incoming node array
  * @param {boolean} force force update flag
@@ -399,12 +477,12 @@ DataService.prototype.updateState = function($happn, nodeArr, force) {
 };
 
 /**
- * <ul>
- * <li>Preprocess the nodeArray to see if any action is required before updating</li>
- * <li>.....</li></ul><br>
+ * &lt;ul>
+ * &lt;li>Preprocess the nodeArray to see if any action is required before updating&lt;/li>
+ * &lt;li>.....&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @param {object[]} nodeArr The incoming node array
- * @returns {Promise<action>} Action
+ * @returns {Promise&lt;action>} Action
  
  * @mermaid sequenceDiagram
  * updateState->>dataModel: upsertUnit
@@ -422,8 +500,8 @@ DataService.prototype.preProcess = function($happn, nodeArr) {
 		try {
 			if (parentType === 3) {
 				//clear EDDs when typeId is 4, and UID is 255.255.255.255
-				if (nodeArr[0].dataType === "list" && nodeArr.length === 2) {
-					if (nodeArr[1].data.typeId === 4 && nodeArr[1].data.serial === 4294967295) {
+				if (nodeArr[0].dataType === "list" &amp;&amp; nodeArr.length === 2) {
+					if (nodeArr[1].data.typeId === 4 &amp;&amp; nodeArr[1].data.serial === 4294967295) {
 						log.info(`EDD_SIG for ${nodeArr[0].data.serial} received`);
 						return { type: "EDD_CLEARSIG" };
 					}
@@ -432,8 +510,8 @@ DataService.prototype.preProcess = function($happn, nodeArr) {
 				if (nodeArr[0].dataType === "data") {
 					//edge case where strange edd comes in after eddsig in an 05 command
 					if (
-						result.length === 2 &&
-						result[1].data.delay === 255 &&
+						result.length === 2 &amp;&amp;
+						result[1].data.delay === 255 &amp;&amp;
 						result[1].data.windowId === 255
 					) {
 						result = result.slice(0, 1);
@@ -445,7 +523,7 @@ DataService.prototype.preProcess = function($happn, nodeArr) {
 
 					return { type: "FILTERED", value: result };
 				}
-				if (nodeArr.length === 1 && nodeArr[0].data.communicationStatus === 0) {
+				if (nodeArr.length === 1 &amp;&amp; nodeArr[0].data.communicationStatus === 0) {
 					log.info(`Communication lost for unit - ${nodeArr[0].data.serial}`);
 					return { type: "COMM_LOST" };
 				}
@@ -468,9 +546,9 @@ DataService.prototype.postProcess = function($happn, updatesArr) {
 			case 0:
 				{
 					if (
-						data.keySwitchStatus === 1 &&
-							data.fireButton === 1 &&
-							diff &&
+						data.keySwitchStatus === 1 &amp;&amp;
+							data.fireButton === 1 &amp;&amp;
+							diff &amp;&amp;
 							diff.fireButton === 1
 					) {
 						const snapShot = await this.dataModel.snapShot();
@@ -493,7 +571,7 @@ DataService.prototype.postProcess = function($happn, updatesArr) {
 				break;
 			case 3:
 				{
-					if (data.keySwitchStatus === 0 && diff && diff.keySwitchStatus === 0) {
+					if (data.keySwitchStatus === 0 &amp;&amp; diff &amp;&amp; diff.keySwitchStatus === 0) {
 						let dets = await this.dataModel.updateEDDConnections(data.serial, data.modified);
 						if (dets.length > 0) {
 							await this.__updateExistingNodes($happn, dets);
@@ -642,7 +720,7 @@ DataService.prototype.getUnits = function($happn, withChildren) {
 			let unitKeys = Object.keys(result);
 
 			if (!withChildren) {
-				for (let i = 0; i < unitKeys.length; i++) {
+				for (let i = 0; i &lt; unitKeys.length; i++) {
 					await delete result[unitKeys[i]].event;
 					await delete result[unitKeys[i]].meta;
 					await delete result[unitKeys[i]].children;
@@ -695,3 +773,30 @@ DataService.prototype.getSnapShot = function($happn) {
  */
 
 module.exports = DataService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jul 23 2019 10:57:12 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

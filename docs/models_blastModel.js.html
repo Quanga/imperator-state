@@ -1,4 +1,82 @@
-/**
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: models/blastModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-myModule.html">myModule</a></li></ul><h3>Classes</h3><ul><li><a href="DataModel.html">DataModel</a></li><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:snowball">snowball</a></li><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>models/blastModel.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @category Blast Service
  * @module lib/models/blastModel
  */
@@ -7,8 +85,7 @@ const EventEmitter = require("events").EventEmitter;
 var isTimestamp = require("validate.io-timestamp");
 
 /**
- * @category Blast Service
- * @summary Creates an instance of BlastModel.
+ * Creates an instance of BlastModel.
  * @param {object} snapshot - snapshot of the DataModel supplied by the Data Service
  * @param {number} created - the timestamp from the fire button packet
  * @param {number} duration - the firing time of the process
@@ -17,11 +94,10 @@ var isTimestamp = require("validate.io-timestamp");
 class BlastModel {
 	constructor(snapshot, created, duration) {
 		if (!isTimestamp(created))
-			throw new Error("Created date is not valid...cannot create Blast Model");
+			throw new Error("The created date is not valid....cannot create Blast Model");
 
 		if (typeof duration !== "number") throw new Error("Duration is not a valid Number - check env");
-
-		if (duration < 10000) throw new Error("Duration is too low for blast report- check env");
+		if (duration &lt; 10000) throw new Error("Duration is too low for blast report- check env");
 		if (!snapshot) throw new Error("Cannot create Blast Model without Starting Snapshot");
 
 		this.event = new EventEmitter();
@@ -67,7 +143,7 @@ class BlastModel {
 
 			if (unitKeys.length > 0) {
 				for (const unitKey of unitKeys) {
-					if (units[unitKey].data.keySwitchStatus === 1 && units[unitKey].units.unitsCount > 0) {
+					if (units[unitKey].data.keySwitchStatus === 1 &amp;&amp; units[unitKey].units.unitsCount > 0) {
 						snapShotObj.blastUnits[unitKey] = units[unitKey];
 						blastWatch.watchUnits.push(unitKey);
 
@@ -81,7 +157,7 @@ class BlastModel {
 							}
 						}
 					} else if (
-						units[unitKey].data.keySwitchStatus === 0 &&
+						units[unitKey].data.keySwitchStatus === 0 &amp;&amp;
 						units[unitKey].units.unitsCount > 0
 					) {
 						snapShotObj.excludedUnits[unitKey] = units[unitKey];
@@ -105,6 +181,13 @@ class BlastModel {
 	 * @fires module:lib/models/blastModel.BlastModel#state
 	 */
 	setState(state) {
+		/**
+		 * Snowball event.
+		 *
+		 * @event BlastModel#snowball
+		 * @type {object}
+		 * @property {boolean} isPacked - Indicates whether the snowball is tightly packed.
+		 */
 		this.event.emit(state);
 		this.data.state = state;
 	}
@@ -144,8 +227,8 @@ class BlastModel {
 		for (const log of logObj.value) {
 			//check to the fireButton off to complete firing part
 			if (
-				log.typeId === 0 &&
-				log.changes.hasOwnProperty("fireButton") &&
+				log.typeId === 0 &amp;&amp;
+				log.changes.hasOwnProperty("fireButton") &amp;&amp;
 				log.changes.fireButton === 0
 			) {
 				this.data.firingComplete = log.modified;
@@ -182,8 +265,8 @@ class BlastModel {
 			}
 
 			if (
-				Object.keys(this.blastWatch.watchDets).length === 0 &&
-				this.blastWatch.watchUnits.length === 0 &&
+				Object.keys(this.blastWatch.watchDets).length === 0 &amp;&amp;
+				this.blastWatch.watchUnits.length === 0 &amp;&amp;
 				this.data.state !== "BLAST_DATA_COMPLETE"
 			) {
 				this.closeBlast(log.modified);
@@ -217,10 +300,37 @@ class BlastModel {
 
 /**
  * BlastModel State event.
- * @category Blast Service
+ *
  * @event module:lib/models/blastModel.BlastModel#state
  * @type {object}
  * @property {string} state - Indicates the state change of the Blast Model.
  */
 
 module.exports = BlastModel;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Jul 21 2019 08:26:40 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
