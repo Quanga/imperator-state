@@ -99,12 +99,9 @@ function BlastService() {
 	this.eventRefDet = null;
 }
 
-/*************************************************************************
- *   COMPONENT FUNCTION
- *************************************************************************/
-
 /**
- *  Start the component when Happner starts.  Starts a listener for a BLAST_STARTED event emitted from the dataService
+ *  &lt;ul>&lt;li>Start the component when Happner starts.&lt;/li>
+ * &lt;li> Starts a listener for a BLAST_STARTED event emitted from the dataService&lt;/li>&lt;/ul>&lt;br>
  * @param {$happn} $happn
  * @returns {Promise}
  */
@@ -149,11 +146,7 @@ BlastService.prototype.componentStop = function($happn) {
 	})();
 };
 
-/*************************************************************************
- *   BLAST START AND STOP FUNCTIONS
- *************************************************************************/
-
-/** @function
+/**
  * @summary Create a new blast
  * @param {$happn} $happn
  * @param {number} created
@@ -162,42 +155,8 @@ BlastService.prototype.componentStop = function($happn) {
  */
 BlastService.prototype.createNewBlast = function($happn, created, snapShot) {
 	const { blastService, blastRepository } = $happn.exchange;
-	const { event, log } = $happn;
+	const { log } = $happn;
 	const { env } = $happn.config;
-
-	const subscribeToLogs = async () => {
-		this.currentBlast.blastEvent.event.on("BLAST_DATA_COMPLETE", () => {
-			blastService.closeBlast();
-		});
-
-		this.currentBlast.blastEvent.event.on("BLAST_TIMER_COMPLETE", () => {
-			blastService.closeBlast();
-		});
-
-		event.eventService.on(
-			"UPDATE_LOG",
-			async data => {
-				await blastService.updateBlast(data);
-			},
-			(err, evRef) => {
-				if (err) return log.error("Error subscribing to eventService", err);
-
-				this.eventRefLog = evRef;
-			}
-		);
-
-		event.eventService.on(
-			"UPDATE_DET",
-			data => {
-				blastService.updateBlast(data);
-			},
-			(err, evRef) => {
-				if (err) return log.error("Error subscribing to eventService", err);
-
-				this.eventRefDet = evRef;
-			}
-		);
-	};
 
 	return (async () => {
 		try {
@@ -211,17 +170,65 @@ BlastService.prototype.createNewBlast = function($happn, created, snapShot) {
 			const currentBlast = { ...this.currentBlast };
 			delete currentBlast.event;
 
-			log.info(
-				`Creating new blast - ${currentBlast.blastEvent.data.id} - ${currentBlast.blastEvent.data.created}`
-			);
+			const { blastEvent } = currentBlast;
+			log.info(`Creating new blast - ${blastEvent.data.id} - ${blastEvent.data.created}`);
 
 			await blastRepository.upsertIndex(currentBlast);
 			await blastRepository.set(currentBlast);
 			blastService.blastTimer(true);
 
-			await subscribeToLogs();
+			await blastService.subscribeToLogs();
 		} catch (err) {
 			log.error("Error writing new blast object", err);
+		}
+	})();
+};
+
+/**
+ * @summary Subcribe to the blast events
+ * @param {$happn} $happn
+ * @returns {Promise} void
+ */
+BlastService.prototype.subscribeToBlast = function($happn) {
+	const { blastService } = $happn.exchange;
+	const { log, event } = $happn;
+	const { blastEvent } = this.currentBlast;
+
+	return (async () => {
+		try {
+			blastEvent.event.on("BLAST_DATA_COMPLETE", () => {
+				blastService.closeBlast();
+			});
+
+			blastEvent.event.on("BLAST_TIMER_COMPLETE", () => {
+				blastService.closeBlast();
+			});
+
+			event.eventService.on(
+				"UPDATE_LOG",
+				async data => {
+					await blastService.updateBlast(data);
+				},
+				(err, evRef) => {
+					if (err) return log.error("Error subscribing to eventService", err);
+
+					this.eventRefLog = evRef;
+				}
+			);
+
+			event.eventService.on(
+				"UPDATE_DET",
+				data => {
+					blastService.updateBlast(data);
+				},
+				(err, evRef) => {
+					if (err) return log.error("Error subscribing to eventService", err);
+
+					this.eventRefDet = evRef;
+				}
+			);
+		} catch (err) {
+			log.error("Error subscribing to Blast Model events", err);
 		}
 	})();
 };
@@ -249,7 +256,7 @@ BlastService.prototype.updateBlast = function($happn, logObj) {
 	})();
 };
 
-/** @function
+/**
  * @summary Close off the Blast - works off this.currentBlast
  * @param {$happn} $happn
  * @returns {Promise}
@@ -258,10 +265,10 @@ BlastService.prototype.closeBlast = function($happn) {
 	const { blastRepository, dataService, blastService } = $happn.exchange;
 	const { emit, event, log } = $happn;
 
-	if (!this.currentBlast) return null;
-
 	return (async () => {
 		try {
+			if (!this.currentBlast) return null;
+
 			log.info("Closing blast", this.currentBlast.blastEvent.data.id);
 
 			const snapShot = await dataService.getSnapShot();
@@ -401,24 +408,28 @@ BlastService.prototype.reportTimer = function($happn, start) {
 
 	let countdown = env.systemReportTime - env.systemFiringTime;
 	emit("REPORT_TIMER", countdown);
-	log.info(`Blast Timer Started at ${countdown}ms`);
 
 	if (start) {
-		this.reportTimer = setInterval(() => {
-			if (countdown > 0) {
+		log.info(`Blast Timer Started at ${countdown}ms`);
+
+		this._reportTimer = setInterval(() => {
+			if (countdown > 1) {
 				countdown = countdown - 1000;
 				emit("REPORT_TIMER", countdown);
 			} else {
-				clearInterval(this.reportTimer);
+				clearInterval(this._reportTimer);
+				log.info(`Blast Timer Stopped`);
 				emit("REPORT_TIMER", 0);
-				this.reportTimer = null;
+				this._reportTimer = null;
 			}
 		}, 1000);
 	} else {
-		if (this.reportTimer) {
+		log.info(`Blast Timer Stopped`);
+
+		if (this._reportTimer) {
 			emit("REPORT_TIMER", 0);
-			clearInterval(this.reportTimer);
-			this.reportTimer = null;
+			clearInterval(this._reportTimer);
+			this._reportTimer = null;
 		}
 	}
 };
@@ -438,7 +449,7 @@ module.exports = BlastService;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jul 23 2019 10:57:12 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jul 23 2019 14:38:34 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
