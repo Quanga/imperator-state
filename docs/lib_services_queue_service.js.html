@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: app.js</title>
+    <title>JSDoc: lib/services/queue_service.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -66,7 +66,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>app.js</h1>
+                        <h1>lib/services/queue_service.js</h1>
                     </header>
                     
                     
@@ -77,139 +77,236 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
+var Queue = require("better-queue");
+let server = require("../../server.js");
 
 /**
- * @category System
- * @module app
- * @description  Entry point for the Happner Server to start the different components
- * after the mesh has loaded all the Modules and components
- * @mermaid graph LR
-				A[HAPPNER] --> |config|B(App)
-				B-->|entry|C[start]
-				C-->D[START ALL OTHER PROCESSES]
+ * @category Transport
+ * @module lib/services/queueService
  */
 
 /**
- * @category System
- * @class App
+ * @category Transport
+ * @class QueueService
+ * @requires better-queue
+ * @requires server.js
  */
-function App() {}
-
-/**************************************
- * SERVICE AND APP STARTUP
- * ************************************
- */
+function QueueService() {
+	this._eventRef = null;
+	this._epRef = null;
+}
 
 /**
- * @summary Start the App from the Happner Framework Config.
-  &lt;ul>
-  &lt;li>Starts the App Component when Happner loads all components &lt;/li>
-  &lt;li>Checks whether a RESET arg has been supplied to the node process.&lt;/li>
-  &lt;li>Checks the Configuration to get its running information.&lt;/li>
-  &lt;li>runs [startRouter]{@link module:app~App#startRouter} if all check work&lt;/li>
-  &lt;/ul>&lt;br>
- * @param {$happn} $happn Dependancy Injection of the Happner Framework
- * @returns {Promise} void
- * @mermaid graph LR
-				A[Happner] -->|$happn| B(Start)
-				B --> C{Check RESET}
-				C -->|true| K[systemService.resetRouterData]
-				K -->exit
-				C -->|false| D[Update state]
-				D --> E[Upsert History]
-				E --> F{Check Config}
-				F -->|false| G[updateState]
-				F -->|true| H[startRouter]
+ *  &lt;ul>&lt;li>Start the component when Happner starts.&lt;/li>
+ * &lt;li> Starts a listener for a BLAST_STARTED event emitted from the dataService&lt;/li>&lt;/ul>&lt;br>
+ * @param {$happn} $happn
+ * @returns {Promise}
  */
-App.prototype.start = function($happn) {
+QueueService.prototype.componentStart = function($happn) {
+	const { queueService, stateService } = $happn.exchange;
 	const { log } = $happn;
-	const { app, stateService, systemService } = $happn.exchange;
-
-	return (async () => {
-		if (process.argv[2] === "reset") {
-			log.warn("Server started with reset flag");
-			log.warn("Database will be cleared and server stopped");
-
-			await systemService.resetRouterData();
-			return process.exit(1);
-		}
-
-		stateService.updateState({ service: $happn.name, state: "PENDING" });
-		await systemService.upsertHistory({ started: Date.now() });
-
-		const config = await systemService.checkConfiguration();
-
-		if (!config.setupComplete) {
-			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
-			log.warn("Setup available but incomplete - run ui to complete");
-			log.warn("Then restart the process for changes to take effect!");
-		} else {
-			app.startRouter();
-		}
-	})();
-};
-
-/**
-* @summary
- &lt;ul>
-&lt;li>Stops the App Component when Happner stops.&lt;/li>
-&lt;li> Writes a ShutDown time to the history info&lt;/li>
-&lt;/ul>&lt;br>
- * @param {$happn} $happn Dependancy Injection of the Happner Framework
- * @returns {Promise} void
- */
-App.prototype.stop = function($happn) {
-	const { log } = $happn;
-	const { systemService } = $happn.exchange;
-
-	return (async () => {
-		await systemService.upsertHistory({ stopped: Date.now() });
-		log.info("Stopping State Server Application.............");
-	})();
-};
-
-/**
- * @summary AppLand Startup of the Application Component by Component
- * @param {$happn} $happn Dependancy Injection of the Happner Framework
- * @returns {Promise} void
- * @mermaid graph LR
-				A[Start] -.-> B(startRouter)
-				B --> |1|C[nodeRepository.start]
-				C -->D[logsRepository.start]
-				D -->E[warningsRepo.start]
-				E--> F[blastRepo.start]
-				F -->G[queueService.initialise]
-				G-->H[updateState:STARTED]
-				B-->|2|I(stateService)
-				I-->J(emit:STARTED)
- */
-App.prototype.startRouter = function($happn) {
-	const { nodeRepository, logsRepository, blastRepository } = $happn.exchange;
-	const { warningsRepository, queueService, stateService } = $happn.exchange;
-	const { dataService } = $happn.exchange;
-
-	const { emit, log } = $happn;
 
 	return (async () => {
 		try {
-			await nodeRepository.start();
-			await logsRepository.start();
-			await warningsRepository.start();
-			await blastRepository.start();
-			await dataService.initialise();
-			queueService.initialise();
+			await queueService.subscribeToMesh();
 
-			stateService.updateState({ service: $happn.name, state: "STARTED" });
-			emit("STARTED", true);
-			log.info("::::: APP STARTUP COMPLETE ::::::");
+			this.incomingQueue = new Queue((input, cb) => {
+				queueService.processIncoming(input).then((err, res) => {
+					if (err) log.error("cannot process queue", err);
+					cb(null, res);
+				});
+			});
+
+			this.outgoingQueue = new Queue((input, cb) => {
+				//this will send to the transmission service
+			});
+
+			stateService.updateState({ service: $happn.name, state: "PENDING" });
+
+			log.info("Initializing Queue Service..............");
 		} catch (err) {
-			log.error("start error", err);
-			process.exit(err.code || 1);
+			log.error("Error starting queueService", err);
 		}
 	})();
 };
 
-module.exports = App;
+/**
+ *  &lt;ul>&lt;li>Stop the component when Happner starts.&lt;/li>
+ * &lt;li> &lt;/li>&lt;/ul>&lt;br>
+ * @param {$happn} $happn
+ * @returns {Promise}
+ * @todo HANDLE REMOVAL OF MESH LISTNERS
+ */
+QueueService.prototype.componentStop = function($happn) {
+	const { env } = $happn.config;
+	const { queueService: epQueueService } = $happn.event[env.endpointName];
+	const { error: logError, info: logInfo } = $happn.log;
+
+	return (async () => {
+		try {
+			logInfo("stopping queue service...");
+
+			if (this._epRef) {
+				epQueueService.off(this._epRef, function(error) {
+					if (error) {
+						return logError("could not unsubscribe from ep queue");
+					}
+				});
+			}
+		} catch (err) {
+			logError("Error stopping queueService", err);
+		}
+	})();
+};
+
+/**
+ *  &lt;ul>&lt;li>Subscribe to mesh events&lt;/li>
+ * &lt;li> Handle by event&lt;/li>&lt;/ul>&lt;br>
+ * @param {$happn} $happn
+ * @returns {Promise}
+ * @listens  endpoint-reconnect-scheduled
+ * @listens endpoint-reconnect-successful
+ * @listens connection-ended
+ */
+QueueService.prototype.subscribeToMesh = function($happn) {
+	const { queueService } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		server.mesh.on("endpoint-reconnect-scheduled", evt => {
+			queueService.stop();
+			log.warn("ERROR RECONNECTING", evt.endpointName);
+		});
+
+		server.mesh.on("endpoint-reconnect-successful", evt => {
+			queueService.initialise();
+			log.info("RECONNECTED", evt.endpointName);
+		});
+
+		server.mesh.on("connection-ended", evt => {
+			queueService.stop();
+			log.warn("CONNECTION ENDED", evt.endpointName);
+		});
+	})();
+};
+
+/**
+ * @summary Initialize the Queue Service
+ * Check Directories and set the incoming and outgoing directories
+ * @param {$happn} $happn
+ */
+QueueService.prototype.initialise = function($happn) {
+	const { log } = $happn;
+	const { stateService, queueService, nodeRepository } = $happn.exchange;
+	const { env } = $happn.config;
+
+	return (async () => {
+		try {
+			if (env.useEndpoint === "true") {
+				const { queueService: evQueueService } = $happn.event[env.endpointName];
+				const { queueService: epQueueService } = $happn.exchange[env.endpointName];
+
+				let activeQueues = await epQueueService.getActiveQueues();
+
+				if (activeQueues.findIndex(i => i === env.endpointUsername) === -1) {
+					let lastPacket = await nodeRepository.getLastPacketTime();
+
+					log.info(
+						`No active queue found, creating queue for ${
+							env.endpointUsername
+						} with last know packet ${lastPacket || 0}`
+					);
+
+					await epQueueService.buildQueue(env.endpointUsername, lastPacket || 0);
+				}
+
+				await queueService.checkQueue();
+				log.info("Queue drained > Resuming queue processing......");
+
+				evQueueService.on(
+					`enqueue/${env.endpointUsername}`,
+					data => {
+						queueService.checkQueue();
+					},
+					(error, _eventRef) => {
+						if (error) {
+							return log.error("Failed to subscribe to queue endpoint");
+						}
+						this._epRef = _eventRef;
+					}
+				);
+			}
+
+			stateService.updateState({ service: $happn.name, state: "STARTED" });
+			log.info(`Initializing Queue Service..............PASSED`);
+		} catch (err) {
+			stateService.updateState({ service: $happn.name, state: "FAILED" });
+			log.error(`Initializing Queue Service..............FAILED - ${err}`);
+		}
+	})();
+};
+
+/**
+ * @summary Check the queue and dequeue the items
+ * @param {$happn} $happn
+ */
+QueueService.prototype.checkQueue = function($happn) {
+	const { env } = $happn.config;
+	const { queueService: epQueueService } = $happn.exchange[env.endpointName];
+
+	return (async () => {
+		let queueCount = await epQueueService.size(env.endpointUsername);
+		for (let i = 0; i &lt; queueCount; i++) {
+			let packet = await epQueueService.dequeue(env.endpointUsername);
+			this.incomingQueue.push(packet);
+		}
+	})();
+};
+
+/**
+ * @summary Process the incoming item
+ * @param {$happn} $happn
+ * @param {object} msgObj
+ * @example { message, created }
+ */
+QueueService.prototype.processIncoming = function($happn, msgObj) {
+	const { log } = $happn;
+	const { packetService, dataService } = $happn.exchange;
+
+	return (async () => {
+		try {
+			log.info(`${msgObj.created} - message ${msgObj.packet} > received`);
+			const parsedPacket = await packetService.extractData(msgObj);
+
+			if (parsedPacket.length === 0) return log.warn("no data found in parsed packet!");
+
+			if (parsedPacket.length > 0 &amp;&amp; parsedPacket[0].data === null)
+				return log.warn("no data found in parsed packet data!");
+
+			const nodeData = await packetService.buildNodeData(parsedPacket);
+			await dataService.upsertNodeDataArr(nodeData);
+		} catch (err) {
+			return log.error(`Processing Queue Error.............. - ${err}`);
+		}
+	})();
+};
+
+/**
+ * @summary Add an item to the outgoing queue
+ * @param {$happn} $happn
+ * @param {string} packet
+ * @todo THIS IS NOT FLESHED OUT YET
+ */
+QueueService.prototype.addToQueue = function($happn, packet) {
+	const { log } = $happn;
+
+	return (async () => {
+		log.info(`packet - ${packet} added to outgoing queue`);
+		this.incomingQueue.push(packet);
+	})();
+};
+
+module.exports = QueueService;
 </code></pre>
         </article>
     </section>
