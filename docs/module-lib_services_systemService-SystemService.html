@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: BlastService</title>
+    <title>JSDoc: SystemService</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -64,7 +64,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Class</p>
-                        <h1>BlastService</h1>
+                        <h1>SystemService</h1>
                     </header>
                     
                     
@@ -77,7 +77,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-lib_services_blastService.html">lib/services/blastService</a>~</span>BlastService<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="module-lib_services_systemService.html">lib/services/systemService</a>~</span>SystemService<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -92,10 +92,10 @@
                     <div class="member">
 
     
-    <h4 class="name" id="BlastService">
+    <h4 class="name" id="SystemService">
         
         <span class="code-name">
-            new BlastService<span class="signature">()</span><span class="type-signature"></span>
+            new SystemService<span class="signature">()</span><span class="type-signature"></span>
         </span>
     </h4>
     
@@ -115,58 +115,6 @@
 
 
 
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-        
-<tr class="deep-level-0">
-    
-        <td class="name"><code>this.currentBlast</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">object</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>The active current Blast</p></td>
-</tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -204,26 +152,15 @@
 
     
         <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line10">line 10</a>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line12">line 12</a>
             </span>
         </p>
     
 </dl>
 
 
-
-    <div class="method-parameter columns">
-        <div class="column is-2"><label>Requires:</label></div>
-        <div class="column is-10">
-            <ul>
-                <li>module:class:BlastModel</li>
-            
-                <li>module:pdfUtils</li>
-            </ul>
-        </div>
-    </div>
 
 
 
@@ -253,14 +190,6 @@
     
 
     
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li>module:class:BlastModel</li>
-        
-            <li>module:pdfUtils</li>
-        </ul>
-    
 
     
 
@@ -280,20 +209,39 @@
                 <div class="member">
 
     
-    <h4 class="name" id="blastTimer">
+    <h4 class="name" id="checkConfiguration">
         
         <span class="code-name">
-            blastTimer<span class="signature">($happn, start)</span><span class="type-signature"></span>
+            checkConfiguration<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise.&lt;config>}</span>
         </span>
     </h4>
     
 
     
-    <p class="summary"><p>Timer used by UI to display the current Firing Time.</p></p>
+    <p class="summary"><p>Run through system and security checks</p>
+  <ul>
+  <li>Starts the App Component when Happner loads all components </li>
+  <li>Checks whether a RESET arg has been supplied to the node process.</li>
+  <li>Checks the Configuration to get its running information.</li>
+  <li>runs <a href="module-app-App.html#startRouter">startRouter</a> if all check work</li>
+  </ul><br></p>
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><div class="mermaid">graph LR
+A[App]-.->|get|C[systemRepository.get.configuration]
+
+subgraph checkConfiguration
+C-->D{exists}
+D-->|FALSE|E[setConfigData]
+E-->G[setStartupUsers]
+D-->|TRUE|F[CheckSecurity]
+F-->config.secure
+G-->F
+F-->H[setup.complete]
+end
+config.secure-->return[return config]
+H-->return</div>
     </div>
     
 
@@ -347,32 +295,7 @@
 
   
 
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>start</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>true to start - false to stop</p></td>
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
 </tr>
 
 
@@ -417,154 +340,9 @@
 
     
         <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line291">line 291</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    
-    <h4 class="name" id="closeBlast">
-        
-        <span class="code-name">
-            closeBlast<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><p>Close off the Blast - works off this.currentBlast</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line186">line 186</a>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line43">line 43</a>
             </span>
         </p>
     
@@ -595,11 +373,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'><p>Config Object</p></div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Promise</span>
+<span class="param-type">Promise.&lt;config></span>
 
 
     </div>
@@ -618,19 +398,24 @@
                 <div class="member">
 
     
-    <h4 class="name" id="componentStart">
+    <h4 class="name" id="checkStartUpUsers">
         
         <span class="code-name">
-            componentStart<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            checkStartUpUsers<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span>
         </span>
     </h4>
     
 
     
+    <p class="summary"><p>check that the initail user password has been modified from the default</p></p>
+    
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Start the component when Happner starts.</li>
-<li> Starts a listener for a BLAST_STARTED event emitted from the dataService</li></ul><br>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><div class="mermaid">graph LR
+defaultUsers-->|get|B[application_data.state]
+B-->|INSECURE|E[resultArray]
+B-->|SECURE|null
+E -->|return|R[resultArray >0]</div>
     </div>
     
 
@@ -684,7 +469,7 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
 </tr>
 
 
@@ -729,9 +514,9 @@
 
     
         <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line30">line 30</a>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line137">line 137</a>
             </span>
         </p>
     
@@ -762,11 +547,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'><p>bool</p></div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Promise</span>
+<span class="param-type">Promise.&lt;boolean></span>
 
 
     </div>
@@ -785,16 +572,16 @@
                 <div class="member">
 
     
-    <h4 class="name" id="componentStop">
+    <h4 class="name" id="deleteConfig">
         
         <span class="code-name">
-            componentStop<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            deleteConfig<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
         </span>
     </h4>
     
 
     
-    <p class="summary"><p>Stop the component when Happner stops</p></p>
+    <p class="summary"><p>Remove the config object from the persisted story</p></p>
     
     
     <div class="description">
@@ -852,7 +639,7 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
 </tr>
 
 
@@ -897,952 +684,9 @@
 
     
         <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line61">line 61</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    
-    <h4 class="name" id="createNewBlast">
-        
-        <span class="code-name">
-            createNewBlast<span class="signature">($happn, created, snapShot)</span><span class="type-signature"> &rarr; {Promise}</span>
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><p>Create a new blast</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>created</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>snapShot</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">*</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line78">line 78</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    
-    <h4 class="name" id="deleteBlast">
-        
-        <span class="code-name">
-            deleteBlast<span class="signature">($happn, id)</span><span class="type-signature"> &rarr; {promise}</span>
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><p>Utility function to remove the Blast ID from the index and the Blast Object in the Blast Repo.</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>id</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The blast ID to be sent to the PDF utility</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line246">line 246</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    
-    <h4 class="name" id="pdfBlast">
-        
-        <span class="code-name">
-            pdfBlast<span class="signature">($happn, id)</span><span class="type-signature"> &rarr; {promise}</span>
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><p>Function to get a Blast JSON Object and send it to the PDF Utility.</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>id</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The blast ID to be sent to the PDF utility</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line267">line 267</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    
-    <h4 class="name" id="reportTimer">
-        
-        <span class="code-name">
-            reportTimer<span class="signature">($happn, start)</span><span class="type-signature"></span>
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><ul><li>Timer used by UI to display the current time left to compile the report</li>
-<li>If there is no return data from the units which will close it off before that</li></ul><br></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>start</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line327">line 327</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    
-    <h4 class="name" id="subscribeToBlast">
-        
-        <span class="code-name">
-            subscribeToBlast<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><p>Subcribe to the blast events</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line114">line 114</a>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line273">line 273</a>
             </span>
         </p>
     
@@ -1898,16 +742,16 @@
                 <div class="member">
 
     
-    <h4 class="name" id="updateBlast">
+    <h4 class="name" id="resetRouterData">
         
         <span class="code-name">
-            updateBlast<span class="signature">($happn, logObj)</span><span class="type-signature"> &rarr; {Promise}</span>
+            resetRouterData<span class="signature">($happn, payload)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
         </span>
     </h4>
     
 
     
-    <p class="summary"><p>Function used to update the blast with any logs</p></p>
+    <p class="summary"><p>Reset all configuration data in the data store as well as removing users</p></p>
     
     
     <div class="description">
@@ -1965,7 +809,7 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
 </tr>
 
 
@@ -1974,13 +818,13 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>logObj</code></td>
+      <td class="name"><code>payload</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">*</span>
+<span class="param-type">object</span>
 
 
   
@@ -1990,7 +834,7 @@
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>config object</p></td>
 </tr>
 
 
@@ -2035,9 +879,9 @@
 
     
         <p class="tag-source">
-            <a href="lib_services_blast_service.js.html" class="button">View Source</a>
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_blast_service.js.html">lib/services/blast_service.js</a>, <a href="lib_services_blast_service.js.html#line164">line 164</a>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line238">line 238</a>
             </span>
         </p>
     
@@ -2068,6 +912,378 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'><p>return config</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;object></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="setConfigData">
+        
+        <span class="code-name">
+            setConfigData<span class="signature">($happn, payload)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary"><p>Sets the configurate data to the SystemRepository</p></p>
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>$happn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>payload</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>config object</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
+            <span>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line218">line 218</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>return config</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;object></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="setStartupUsers">
+        
+        <span class="code-name">
+            setStartupUsers<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary"><p>Initial user and group setup for an empty database</p></p>
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><div class="mermaid">graph LR
+A[App]-.->B(entry)
+subgraph setStartupUsers
+B-->C[upsertGroups]
+C-->D[upsertUsers]
+end</div>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>$happn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
+            <span>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line85">line 85</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>void</p></div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
@@ -2084,6 +1300,206 @@
     </div>
 
 
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="upsertHistory">
+        
+        <span class="code-name">
+            upsertHistory<span class="signature">($happn, historyObj)</span><span class="type-signature"> &rarr; {Promise}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary"><p>Add an entry to the History</p></p>
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>$happn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>historyObj</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="lib_services_systemService.js.html" class="button">View Source</a>
+            <span>
+                <a href="lib_services_systemService.js.html">lib/services/systemService.js</a>, <a href="lib_services_systemService.js.html#line181">line 181</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>void</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>{ stopped: Date.now() }</code></pre>
 
 
 </div>

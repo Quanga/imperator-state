@@ -43,7 +43,7 @@ function App() {}
 				F -->|false| G[updateState]
 				F -->|true| H[startRouter]
  */
-App.prototype.start = function($happn) {
+App.prototype.componentStart = function($happn) {
 	const { log } = $happn;
 	const { app, stateService, systemService } = $happn.exchange;
 
@@ -65,14 +65,14 @@ App.prototype.start = function($happn) {
 			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
 			log.warn("Setup available but incomplete - run ui to complete");
 			log.warn("Then restart the process for changes to take effect!");
-		} else {
-			app.startRouter();
 		}
+
+		app.startRouter();
 	})();
 };
 
 /**
-* @summary
+* @summary Stops the App from the Happner Framework Config.
  <ul>
 <li>Stops the App Component when Happner stops.</li>
 <li> Writes a ShutDown time to the history info</li>
@@ -80,7 +80,7 @@ App.prototype.start = function($happn) {
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise} void
  */
-App.prototype.stop = function($happn) {
+App.prototype.componentStop = function($happn) {
 	const { log } = $happn;
 	const { systemService } = $happn.exchange;
 

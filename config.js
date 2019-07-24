@@ -148,8 +148,8 @@ class Config {
 					startMethod: "start"
 				},
 				app: {
-					startMethod: "start",
-					stopMethod: "stop"
+					startMethod: "componentStart",
+					stopMethod: "componentStop"
 				}
 			}
 		};
