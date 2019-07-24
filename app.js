@@ -47,9 +47,10 @@ App.prototype.componentStart = function($happn) {
 	const { log } = $happn;
 	const { app, stateService, systemService } = $happn.exchange;
 
-	pmx.action("--reset", async () => {
+	pmx.action("reset", async reply => {
 		await systemService.resetRouterData();
-		return process.exit(1);
+		reply("reset");
+		process.exit(1);
 	});
 
 	return (async () => {
