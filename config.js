@@ -35,6 +35,11 @@ class Config {
 				secure: true,
 				adminPassword: "happn",
 				services: {
+					security: {
+						config: {
+							pbkdf2Iterations: 1000
+						}
+					},
 					data: {
 						config: {
 							filename: overrideObj.db || this.getDbPath() || `${__dirname}/data.db`
