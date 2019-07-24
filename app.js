@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-
+const pmx = require("@pm2/io");
 /**
  * @category System
  * @module app
@@ -46,6 +46,11 @@ function App() {}
 App.prototype.componentStart = function($happn) {
 	const { log } = $happn;
 	const { app, stateService, systemService } = $happn.exchange;
+
+	pmx.action("--reset", async () => {
+		await systemService.resetRouterData();
+		return process.exit(1);
+	});
 
 	return (async () => {
 		if (process.argv[2] === "reset") {

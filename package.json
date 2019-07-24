@@ -33,6 +33,7 @@
     "sinon": "^7.3.2"
   },
   "dependencies": {
+    "@pm2/io": "^4.2.5",
     "better-docs": "^1.1.6",
     "better-queue": "^3.8.10",
     "byte-data": "^16.0.3",
