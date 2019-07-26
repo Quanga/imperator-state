@@ -118,6 +118,9 @@ class Config {
 					startMethod: "startAsync",
 					stopMethod: "stopAsync"
 				},
+				transmissionService: {
+					startMethod: "componentStart"
+				},
 				blastService: {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
@@ -148,7 +151,6 @@ class Config {
 						meshInstance: null
 					}
 				},
-				transmissionService: { startMethod: "start" },
 				wifiService: {
 					startMethod: "start"
 				},

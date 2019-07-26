@@ -11,6 +11,7 @@ module.exports = {
 				NODE_ENV: "development"
 			},
 			env_production: {
+				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				EDGE_DB: "./edge.db",
 				EDGE_LOCAL_IP: "0.0.0.0",
@@ -29,9 +30,10 @@ module.exports = {
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
 
-				COMMUNICATION_CHECK_INTERVAL: 300000
+				COMMUNICATION_CHECK_INTERVAL: 600000
 			},
 			env_production500: {
+				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				EDGE_DB: "./edge.db",
 				EDGE_LOCAL_IP: "0.0.0.0",
@@ -50,7 +52,7 @@ module.exports = {
 				SYSTEM_FIRING_TIME: 420000,
 				SYSTEM_REPORT_TIME: 840000,
 
-				COMMUNICATION_CHECK_INTERVAL: 300000
+				COMMUNICATION_CHECK_INTERVAL: 600000
 			}
 		}
 	],
