@@ -1,5 +1,10 @@
 /* eslint-disable no-unused-vars */
 const pmx = require("@pm2/io");
+const server = require("./server");
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
+
 /**
  * @category System
  * @module app
@@ -47,20 +52,9 @@ App.prototype.componentStart = function($happn) {
 	const { log } = $happn;
 	const { app, stateService, systemService } = $happn.exchange;
 
-	pmx.action("reset", async reply => {
-		await systemService.resetRouterData();
-		reply("reset");
-		process.exit(1);
-	});
-
 	return (async () => {
-		if (process.argv[2] === "reset") {
-			log.warn("Server started with reset flag");
-			log.warn("Database will be cleared and server stopped");
-
-			await systemService.resetRouterData();
-			return process.exit(1);
-		}
+		await app.checkStartupArgs();
+		await app.startPM2Actions();
 
 		stateService.updateState({ service: $happn.name, state: "PENDING" });
 		await systemService.upsertHistory({ started: Date.now() });
@@ -133,6 +127,116 @@ App.prototype.startRouter = function($happn) {
 		} catch (err) {
 			log.error("start error", err);
 			process.exit(err.code || 1);
+		}
+	})();
+};
+
+/**
+ * @summary Starts triggers for PM2 to be able to clear users or whole system
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ */
+App.prototype.startPM2Actions = function($happn) {
+	const { app } = $happn.exchange;
+
+	return (async () => {
+		pmx.action("reset-config", async reply => {
+			await app.reset("CONFIG");
+		});
+
+		pmx.action("reset-users", async reply => {
+			app.resetUsers("USERS");
+		});
+
+		pmx.action("reset-hard", async reply => {
+			app.hardReset("HARD");
+		});
+	})();
+};
+
+/**
+ * @summary Starts triggers for PM2 to be able to clear users or whole system
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ */
+App.prototype.checkStartupArgs = function($happn) {
+	const { app } = $happn.exchange;
+
+	return (async () => {
+		switch (process.argv[2]) {
+		case "reset-config": {
+			return await app.reset("CONFIG");
+		}
+		case "reset-users": {
+			return await app.reset("USERS");
+		}
+		case "reset-hard": {
+			return await app.reset("HARD");
+		}
+		default:
+			return false;
+		}
+	})();
+};
+
+/**
+ * @summary full reset
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ * @mermaid graph LR
+				A[reset] --> B(systemService.resetRouterData)
+				C[reset-users] --> D(systemService.resetUsers
+				D --> E(systemService.setStartupUsers)
+* @todo NEED TO FIX THIS HARD RESET
+			
+ */
+App.prototype.reset = function($happn, arg) {
+	const { systemService } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		switch (arg) {
+		case "CONFIG": {
+			log.warn("Reset flag on start");
+			log.warn("Database will be cleared and server stopped");
+			await systemService.resetRouterData();
+			log.warn("SERVER SHUTDOWN");
+			return process.exit(1);
+		}
+		case "USERS": {
+			log.warn("Server started with reset-user flag");
+			log.warn("Database will be cleared and server stopped");
+
+			await systemService.resetUsers();
+			await systemService.setStartupUsers();
+			log.warn("SERVER SHUTDOWN");
+			return process.exit(1);
+		}
+		case "HARD": {
+			log.warn("Server started with hard-reset flag");
+
+			await new Promise(resolve => {
+				log.warn("Database will be cleared and server stopped");
+				let file;
+				if (process.env.EDGE_DB) {
+					file = path.resolve(os.homedir(), "./edge/db/", process.env.EDGE_DB);
+				} else {
+					console.log("EDGE_DB not set");
+					process.exit(2);
+				}
+
+				fs.unlink(file, err => {
+					if (err) {
+						resolve("DATABASE FILE NOT FOUND - ", err.path);
+					}
+
+					resolve("DATABASE FILE REMOVED");
+				});
+				//server.stop();
+			});
+			console.log("COMPLETE");
+			return process.exit(1);
+		}
 		}
 	})();
 };

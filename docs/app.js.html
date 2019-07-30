@@ -58,7 +58,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -77,7 +77,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
-
+const pmx = require("@pm2/io");
 /**
  * @category System
  * @module app
@@ -126,13 +126,8 @@ App.prototype.componentStart = function($happn) {
 	const { app, stateService, systemService } = $happn.exchange;
 
 	return (async () => {
-		if (process.argv[2] === "reset") {
-			log.warn("Server started with reset flag");
-			log.warn("Database will be cleared and server stopped");
-
-			await systemService.resetRouterData();
-			return process.exit(1);
-		}
+		await app.checkStartupArgs();
+		await app.startPM2Actions();
 
 		stateService.updateState({ service: $happn.name, state: "PENDING" });
 		await systemService.upsertHistory({ started: Date.now() });
@@ -209,6 +204,92 @@ App.prototype.startRouter = function($happn) {
 	})();
 };
 
+/**
+ * @summary Starts triggers for PM2 to be able to clear users or whole system
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ */
+App.prototype.startPM2Actions = function($happn) {
+	const { app } = $happn.exchange;
+
+	return (async () => {
+		pmx.action("reset", async reply => {
+			await app.reset();
+		});
+
+		pmx.action("reset-users", async reply => {
+			app.resetUsers();
+		});
+	})();
+};
+
+/**
+ * @summary Starts triggers for PM2 to be able to clear users or whole system
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ */
+App.prototype.checkStartupArgs = function($happn) {
+	const { app } = $happn.exchange;
+
+	return (async () => {
+		switch (process.argv[2]) {
+		case "reset": {
+			return await app.reset();
+		}
+		case "reset-users": {
+			return await app.resetUsers();
+		}
+		default:
+			return false;
+		}
+	})();
+};
+
+/**
+ * @summary full reset
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ * @mermaid graph LR
+				A[reset] --> B(systemService.resetRouterData)
+				C[reset-users] --> D(systemService.resetUsers
+				D --> E(systemService.setStartupUsers)
+			
+ */
+App.prototype.reset = function($happn) {
+	const { systemService } = $happn.exchange;
+	const { log } = $happn;
+
+	log.warn("Reset flag on start");
+	log.warn("Database will be cleared and server stopped");
+	return (async () => {
+		await systemService.resetRouterData();
+		return process.exit(1);
+	})();
+};
+
+/**
+ * @summary reset users
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ * @mermaid graph LR
+				A[reset] --> B(systemService.resetRouterData)
+				C[reset-users] --> D(systemService.resetUsers
+				D --> E(systemService.setStartupUsers)
+			
+ */
+App.prototype.resetUsers = function($happn) {
+	const { systemService } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		log.warn("Server started with reset flag");
+		log.warn("Database will be cleared and server stopped");
+
+		await systemService.resetUsers();
+		await systemService.setStartupUsers();
+		return process.exit(1);
+	})();
+};
 module.exports = App;
 </code></pre>
         </article>
@@ -224,7 +305,7 @@ module.exports = App;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jul 24 2019 11:10:44 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Mon Jul 29 2019 09:24:36 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>

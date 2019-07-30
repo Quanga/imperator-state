@@ -4,54 +4,55 @@ var path = require("path");
 var libFolder = path.resolve(__dirname, "../../");
 const killport = require("kill-port");
 const find = require("find-process");
+const emitter = require("events").EventEmitter;
 
 class ServerHelper {
 	constructor() {
-		this.__serverProc = null;
+		this.serverProc = null;
 		this.defaults = {};
 		this.nodeEnv = process.env.NODE_ENV;
+		this.emitter = new emitter();
 	}
 
-	async startServer() {
+	async startServer(args) {
 		process.env.NODE_ENV = "test";
+		console.log("Change NODE_ENV to test");
+
 		const portCheck = await find("port", 55000);
 
 		if (!portCheck.length) {
 			console.log("port 55000 is free now");
-			this.__serverProc;
+			//this.serverProc;
 		} else {
-			console.log("%s is listening port 55000", portCheck[0].pid);
+			console.log(`${portCheck[0].pid} is listening port 55000`);
 			await killport(55000);
 		}
 
-		await this.spawnServer();
+		await this.spawnServer(args);
 	}
 
-	async spawnServer() {
-		if (this.__serverProc !== null) return;
+	async spawnServer(args) {
+		if (this.serverProc !== null) return;
 
 		console.log(":: STARTING SERVER............");
 
-		this.__serverProc = await spawn(
-			"node",
-			[path.join(libFolder, "server.js")],
-			this.defaults
-		);
+		this.serverProc = await spawn("node", [path.join(libFolder, "server.js"), args], this.defaults);
 
 		await new Promise((resolve, reject) => {
-			this.__serverProc.stdout.on("data", data => {
+			this.serverProc.stdout.on("data", data => {
 				console.log(`${data}`);
-				if (data.toString().match(/STARTUP COMPLETE/)) {
+				this.emitter.emit("data", data);
+				if (data.toString().match(/STARTUP COMPLETE/) || data.toString().match(/SERVER SHUTDOWN/)) {
 					resolve();
 				}
 			});
 
-			this.__serverProc.on("error", err => {
+			this.serverProc.on("error", err => {
 				console.log("SERVER ERROR", err);
 				reject(err);
 			});
 
-			this.__serverProc.on("exception", function(err) {
+			this.serverProc.on("exception", function(err) {
 				console.log("SERVER EXCEPTION", err);
 				reject(err);
 			});
@@ -62,8 +63,8 @@ class ServerHelper {
 		console.log("STOPPING SERVER");
 
 		process.env.NODE_ENV = this.nodeEnv;
-		//await this.__serverProc.kill("SIGKILL");
-		await this.__serverProc.kill("SIGTERM");
+		//await this.serverProc.kill("SIGKILL");
+		await this.serverProc.kill("SIGTERM");
 	}
 }
 
