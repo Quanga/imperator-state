@@ -1,3 +1,8 @@
+/**
+ * @category System
+ * @module server
+ */
+
 if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
 }
@@ -5,7 +10,11 @@ if (process.env.NODE_ENV === "test") {
 this.mesh;
 const tcpPortUsed = require("tcp-port-used");
 
-const startServer = async () => {
+/**
+ * @function Server
+ * @summary Entry Point
+ */
+const Server = async () => {
 	if (process.env.EDGE_INSTANCE_NAME === undefined) {
 		console.error(
 			"Environemnt Variables not loaded.... please check NODE_ENV and how you are injecting your variables"
@@ -70,38 +79,22 @@ const stop = () => {
 	);
 };
 
+/**
+ *
+ * @function start
+ */
 const start = () => {
 	const Mesh = require("happner-2");
 	this.mesh = new Mesh();
 
 	const Config = require("./config.js");
 	const config = new Config().config;
-	//console.log("USING ENDPOINT", config.endpoints);
-
-	//config.components.queueService.env.meshInstance = mesh;
-	//console.log(config.components.queueService);
 
 	return this.mesh.initialize(config, err => {
 		if (err) {
 			console.error(err.stack || err.toString());
 			process.exit(1);
 		}
-
-		// this.mesh.on("endpoint-reconnect-scheduled", evt => {
-		// 	console.log("ERROR RECONNECTING", evt.endpointName);
-		// });
-
-		// this.mesh.on("endpoint-reconnect-successful", evt => {
-		// 	//console.log(evt);
-
-		// 	console.log("RECONNECTED", evt.endpointName);
-		// });
-
-		// this.mesh.on("connection-ended", evt => {
-		// 	//console.log(evt);
-
-		// 	console.log("CONNECTION ENDED", evt.endpointName);
-		// });
 
 		this.mesh.start(err => {
 			if (err) {
@@ -152,4 +145,10 @@ const hardRest = async () => {
 	}
 };
 
-startServer();
+Server();
+
+/**
+ * @summary Dependancy Injection of the Happner Framework
+ * @typedef $happn
+ * @type {object}
+ */

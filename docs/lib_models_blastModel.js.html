@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: lib/models/blastModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>lib/models/blastModel.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @category Blast Service
+ * @module lib/models/blastModel
+ */
+const uuid = require("uuid");
+const EventEmitter = require("events").EventEmitter;
+const isTimestamp = require("validate.io-timestamp");
+
+/**
+ * @category Blast Service
+ * @summary Creates an instance of BlastModel.
+ * @param {object} snapshot - snapshot of the DataModel supplied by the Data Service
+ * @param {number} created - the timestamp from the fire button packet
+ * @param {number} duration - the firing time of the process
+ * @memberof module:lib/models/blastModel
+ */
+class BlastModel {
+	constructor(snapshot, created, duration) {
+		if (!isTimestamp(created))
+			throw new Error("Created date is not valid...cannot create Blast Model");
+
+		if (typeof duration !== "number") throw new Error("Duration is not a valid Number - check env");
+
+		if (duration &lt; 10000) throw new Error("Duration is too low for blast report- check env");
+		if (!snapshot) throw new Error("Cannot create Blast Model without Starting Snapshot");
+
+		this.event = new EventEmitter();
+		const snapShotProcessed = this.createSnapshot(snapshot);
+
+		this.data = {
+			id: uuid.v4(),
+			created: created,
+			firingComplete: null,
+			firingTime: null,
+			blastClosed: null,
+			blastReturnTime: null,
+			snapshots: { start: snapShotProcessed.snapShotObj, end: null },
+			logs: [],
+			state: null
+		};
+
+		this.timer = this.setFiringTimer(duration);
+		this.blastWatch = snapShotProcessed.blastWatch;
+		this.expectedComplete = created + duration;
+
+		this.setState("BLAST_FIRING");
+	}
+
+	/**
+	 * Function to take in a snapshot from the Data Model and work out the format
+	 * @param {*} snapShot Data Model SnapShot Object
+	 * @returns {object} Blast Model Snapshot Object
+	 */
+	createSnapshot(snapShot) {
+		const { controlUnit, units } = snapShot;
+		try {
+			const snapShotObj = {
+				controlUnit,
+				blastUnits: {},
+				excludedUnits: {},
+				disarmedUnits: {}
+			};
+
+			//check which units are armed and have detonators
+			const unitKeys = Object.keys(units);
+			const blastWatch = { watchUnits: [], watchDets: {} };
+
+			if (unitKeys.length > 0) {
+				for (const unitKey of unitKeys) {
+					if (units[unitKey].data.keySwitchStatus === 1 &amp;&amp; units[unitKey].units.unitsCount > 0) {
+						snapShotObj.blastUnits[unitKey] = units[unitKey];
+						blastWatch.watchUnits.push(unitKey);
+
+						if (units[unitKey].hasOwnProperty("children")) {
+							const childKeys = Object.keys(units[unitKey].children);
+							if (childKeys.length > 0) {
+								let liveChildren = childKeys.filter(
+									u => units[unitKey].children[u].data.detonatorStatus === 1
+								);
+								blastWatch.watchDets[unitKey] = [...liveChildren];
+							}
+						}
+					} else if (
+						units[unitKey].data.keySwitchStatus === 0 &amp;&amp;
+						units[unitKey].units.unitsCount > 0
+					) {
+						snapShotObj.excludedUnits[unitKey] = units[unitKey];
+					} else {
+						snapShotObj.disarmedUnits[unitKey] = units[unitKey];
+					}
+				}
+				return { snapShotObj, blastWatch };
+			} else {
+				console.log("no units found");
+				return null;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	/**
+	 * Sets the state of the Model and Emits the state to be used externally
+	 * @param {string} state - eg BLAST_FIRING .
+	 * @fires module:lib/models/blastModel.BlastModel#state
+	 */
+	setState(state) {
+		this.event.emit(state);
+		this.data.state = state;
+	}
+
+	/**
+	 * Starts the firing timer in a timeout
+	 * @param {number} duration - duration is supplied in the constructor.
+	 */
+	setFiringTimer(duration) {
+		return setTimeout(() => {
+			this.closeBlast(Date.now(), true);
+		}, duration);
+	}
+
+	/**
+	 * A number, or a string containing a number.
+	 * @typedef {{value: (number|string)}} LogObject
+	 */
+
+	/**
+	 * Add Log objects from the Event Service to this blast model
+	 * @param {Object} logObj the Log Object Wrapper.
+	 * @param {string} logObj.id - id of the obj.
+	 * @param {LogObject[]} logObj.value - Array of logs.
+	 */
+	addLog(logObj) {
+		if (!Array.isArray(logObj.value)) {
+			logObj.value = [logObj.value];
+		}
+
+		if (logObj.value[0].modified > this.expectedComplete) {
+			return this.closeBlast(logObj.value[0].modified, true);
+		}
+
+		this.data.logs.push(logObj.value);
+
+		for (const log of logObj.value) {
+			//check to the fireButton off to complete firing part
+			if (
+				log.typeId === 0 &amp;&amp;
+				log.changes.hasOwnProperty("fireButton") &amp;&amp;
+				log.changes.fireButton === 0
+			) {
+				this.data.firingComplete = log.modified;
+				this.data.firingTime = this.data.firingComplete - this.data.created;
+				this.setState("BLAST_FIRED");
+			}
+
+			//check that each unit and det has been returned to end the blast.
+			if (log.typeId === 3) {
+				//check to see if it is in the list
+				const checkBlastUnit = this.blastWatch.watchUnits.findIndex(
+					x => x === log.serial.toString()
+				);
+
+				if (checkBlastUnit !== -1) {
+					this.blastWatch.watchUnits.splice(checkBlastUnit, 1);
+				}
+			}
+
+			if (log.typeId === 4) {
+				//check to see if it is in the list
+				if (this.blastWatch.watchDets.hasOwnProperty(log.parentSerial.toString())) {
+					const checkDetUnit = this.blastWatch.watchDets[log.parentSerial.toString()].findIndex(
+						x => x === log.windowId.toString()
+					);
+
+					if (checkDetUnit !== -1) {
+						this.blastWatch.watchDets[log.parentSerial].splice(checkDetUnit, 1);
+						if (this.blastWatch.watchDets[log.parentSerial].length === 0) {
+							delete this.blastWatch.watchDets[log.parentSerial];
+						}
+					}
+				}
+			}
+
+			if (
+				Object.keys(this.blastWatch.watchDets).length === 0 &amp;&amp;
+				this.blastWatch.watchUnits.length === 0 &amp;&amp;
+				this.data.state !== "BLAST_DATA_COMPLETE"
+			) {
+				this.closeBlast(log.modified);
+			}
+		}
+	}
+
+	closeBlast(time, timed) {
+		clearTimeout(this.timer);
+		this.timer = null;
+		this.data.blastClosed = time;
+		this.data.blastReturnTime = this.data.blastClosed - this.data.firingComplete;
+		if (!timed) {
+			this.setState("BLAST_DATA_COMPLETE");
+		} else {
+			this.setState("BLAST_TIMER_COMPLETE");
+		}
+	}
+
+	/**
+	 * This will be an instance member, Observable#publish.
+	 */
+	endBlast(snapshot) {
+		this.data.snapshots.end = this.createSnapshot(snapshot).snapShotObj;
+	}
+
+	async getBlastReport() {
+		return this.data;
+	}
+}
+
+/**
+ * BlastModel State event.
+ * @category Blast Service
+ * @event module:lib/models/blastModel.BlastModel#state
+ * @type {object}
+ * @property {string} state - Indicates the state change of the Blast Model.
+ */
+
+module.exports = BlastModel;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Mon Jul 29 2019 09:24:36 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

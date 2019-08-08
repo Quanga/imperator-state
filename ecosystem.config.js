@@ -11,6 +11,7 @@ module.exports = {
 				NODE_ENV: "development"
 			},
 			env_production: {
+				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				EDGE_DB: "./edge.db",
 				EDGE_LOCAL_IP: "0.0.0.0",
@@ -29,9 +30,10 @@ module.exports = {
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
 
-				COMMUNICATION_CHECK_INTERVAL: "3000"
+				COMMUNICATION_CHECK_INTERVAL: 600000
 			},
 			env_production500: {
+				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				EDGE_DB: "./edge.db",
 				EDGE_LOCAL_IP: "0.0.0.0",
@@ -50,7 +52,7 @@ module.exports = {
 				SYSTEM_FIRING_TIME: 420000,
 				SYSTEM_REPORT_TIME: 840000,
 
-				COMMUNICATION_CHECK_INTERVAL: "3000"
+				COMMUNICATION_CHECK_INTERVAL: 600000
 			}
 		}
 	],
@@ -59,11 +61,10 @@ module.exports = {
 		production: {
 			user: "edge",
 			host: ["192.168.1.10"],
-			ref: "origin/master",
+			ref: "origin/emitter-changes",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
 		production14: {
 			user: "edge",
@@ -71,8 +72,7 @@ module.exports = {
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
 
 		production_AECE: {
@@ -80,14 +80,13 @@ module.exports = {
 			host: [
 				{
 					host: "0.tcp.ngrok.io",
-					port: "13921"
+					port: "17586"
 				}
 			],
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production500"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production500"
 		},
 		production_kasra: {
 			user: "pi",
@@ -95,8 +94,7 @@ module.exports = {
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/pi/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
 		production_aws: {
 			user: "ec2-user",
@@ -105,8 +103,7 @@ module.exports = {
 			ref: "origin/master",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		}
 	}
 };

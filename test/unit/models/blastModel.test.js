@@ -13,9 +13,8 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 		});
 
 	it("can create a new blastModel with a 5second report time", async function() {
-		const mock = new Mock();
 		const created = Date.now();
-		/**
+		/***
          blastUnits: {},
 				excludedUnits: {},
 				disarmedUnits: {}
@@ -45,19 +44,13 @@ describe("UNIT - BLASTMODEL TESTS", async function() {
 
 		const reportTime = 5000;
 
-		const blastModel = new BlastModel(mock, snapshot, created, reportTime);
+		const blastModel = new BlastModel(snapshot, created, reportTime);
 
 		expect(blastModel.data.state).to.eql("BLAST_FIRING");
 		expect(blastModel.data.snapshots.start.controlUnit.data.serial).to.eql(42);
-		expect(
-			blastModel.data.snapshots.start.excludedUnits["115"].data.serial
-		).to.eql(115);
-		expect(
-			blastModel.data.snapshots.start.blastUnits["123"].data.serial
-		).to.eql(123);
-		expect(
-			blastModel.data.snapshots.start.disarmedUnits["156"].data.serial
-		).to.eql(156);
+		expect(blastModel.data.snapshots.start.excludedUnits["115"].data.serial).to.eql(115);
+		expect(blastModel.data.snapshots.start.blastUnits["123"].data.serial).to.eql(123);
+		expect(blastModel.data.snapshots.start.disarmedUnits["156"].data.serial).to.eql(156);
 
 		await timer(6000);
 		expect(blastModel.data.state).to.eql("BLAST_TIMER_COMPLETE");

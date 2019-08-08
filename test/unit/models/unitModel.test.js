@@ -16,7 +16,7 @@ describe("Test the unitmodel functions", async function() {
 	it("creates a timer on the CBB which checks comms", async function() {
 		try {
 			let testModel = new CBoosterModel(1, 33);
-			testModel.lastCommunication = new Date();
+			testModel.setLastCommunication = new Date();
 			await timer(5000);
 			expect(testModel.data.communicationStatus).to.equal(0);
 		} catch (err) {
@@ -27,12 +27,12 @@ describe("Test the unitmodel functions", async function() {
 	it("resets a timer on the CBB which checks comms", async function() {
 		try {
 			let testModel = new CBoosterModel(1, 33);
-			testModel.lastCommunication = new Date();
+			testModel.setLastCommunication = new Date();
 			await timer(5000);
 			expect(testModel.data.communicationStatus).to.equal(0);
 
 			await timer(500);
-			testModel.lastCommunication = new Date();
+			testModel.setLastCommunication = new Date();
 			await timer(1000);
 
 			expect(testModel.data.communicationStatus).to.equal(1);

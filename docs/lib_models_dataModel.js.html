@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: lib/models/dataModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>lib/models/dataModel.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
+
+/**
+ * @category Data Service
+ * @module lib/models/dataModel
+ */
+const DataMapper = require("../mappers/data_mapper");
+const { ControlUnitModel } = require("../models/unitModels");
+const EventEmitter = require("events").EventEmitter;
+const clone = require("clone");
+
+/**
+ * @category Data Service
+ * @summary The DataModel which represents the state of the Data.
+ * @extends EventEmitter
+ */
+class DataModel extends EventEmitter {
+	constructor() {
+		super();
+		this.controlUnit = null;
+		this.units = {};
+
+		this.mapper = new DataMapper();
+	}
+
+	/**
+	 * @summary Insert a unit into the model if it is not found
+	 * @param {unitObj} unit
+	 * @returns {Promise}
+	 */
+	async insertUnit(unit) {
+		const { typeId, serial } = unit.data;
+
+		try {
+			switch (typeId) {
+			case 0:
+				this.controlUnit = unit;
+				break;
+			case 3:
+				{
+					const { keySwitchStatus, communicationStatus } = unit.data;
+					this.units[serial] = unit;
+
+					this.units[serial].event.on("COMMS_LOST", () => {
+						let clonedUnit = clone(unit);
+						clonedUnit.data.communicationStatus = 0;
+						clonedUnit.data.modified = Date.now();
+						this.emit("UNIT_COMMS_LOST", [clonedUnit]);
+					});
+
+					if (!this.controlUnit) {
+						this.controlUnit = new ControlUnitModel(null, null);
+					}
+
+					this.controlUnit.units.unitsCount++;
+					await this.updateBoosterCounts({
+						keySwitchStatus,
+						communicationStatus
+					});
+
+					unit.setLastCommunication(unit.data.created);
+
+					this.emit("UNITCOUNT", {
+						serial: unit.data.parentSerial,
+						typeId: 0,
+						counts: this.controlUnit.units
+					});
+				}
+				break;
+			case 4:
+				{
+					const { tagged, logged, detonatorStatus } = unit.data;
+					const { program, parentSerial } = unit.data;
+
+					const { windowId } = unit.data;
+					this.units[parentSerial].children[windowId] = unit;
+					this.units[parentSerial].units.unitsCount++;
+
+					await this.updateEddCounts(unit, {
+						tagged,
+						logged,
+						detonatorStatus,
+						program
+					});
+
+					this.emit("UNITCOUNT", {
+						serial: parentSerial,
+						typeId: 3,
+						counts: this.units[parentSerial].units
+					});
+				}
+				break;
+			default:
+				return false;
+			}
+
+			await unit.setPath();
+			return true;
+		} catch (err) {
+			this.emit("error", "Error insering unit", err);
+		}
+	}
+
+	/**
+	 * @summary Update a unit that is found
+	 * @param {unitObj} prevState state found in the model
+	 * @param {unitObj} nextState incoming state
+	 * @param {diffObj} diffs found diffs
+	 * @returns {Promise}
+	 */
+	async updateUnit(prevState, nextState, diffs) {
+		const { typeId, serial, created } = nextState.data;
+
+		await this.updateUnitState(nextState);
+
+		switch (typeId) {
+		case 0:
+			{
+				nextState.data = await this.applyUpdate(prevState.data, diffs, created);
+				this.controlUnit.data = nextState.data;
+			}
+			break;
+
+		case 3:
+			{
+				let countUpdate = await this.updateBoosterCounts(diffs);
+				nextState.data = await this.applyUpdate(prevState.data, diffs, created);
+				this.units[serial].data = nextState.data;
+
+				if (nextState.data.communicationStatus) {
+					this.units[serial].setLastCommunication(nextState.data.modified);
+				}
+
+				if (countUpdate) {
+					this.emit("UNITCOUNT", {
+						serial: this.controlUnit.data.serial,
+						typeId: 0,
+						counts: this.controlUnit.units
+					});
+				}
+			}
+			break;
+
+		case 4:
+			{
+				const { windowId, parentSerial } = nextState.data;
+				let countUpdate = await this.updateEddCounts(nextState, diffs);
+
+				nextState.data = await this.applyUpdate(prevState.data, diffs, created);
+				this.units[parentSerial].children[windowId].data = nextState.data;
+
+				if (countUpdate) {
+					this.emit("UNITCOUNT", {
+						serial: parentSerial,
+						typeId: 3,
+						counts: this.units[parentSerial].units
+					});
+				}
+			}
+			break;
+
+		default:
+			return;
+		}
+
+		if (!nextState.data.path || nextState.data.path === "") {
+			await nextState.setPath();
+		}
+		return true;
+		//return { action: "UPDATE", value: nextState, diff: diffs };
+	}
+
+	/**
+	 * @summary Upsert unit data
+	 * @param {unitObj} nextState
+	 * @param {boolean} force force an update even if there are no diffs
+	 * @returns {Promise} void
+	 * @mermaid graph LR
+	 * 				subgraph incoming
+						A[dataService]
+					end
+					subgraph upsertUnit
+					A[dataService] -.->|nextState|getUnit
+						getUnit -->|true|diff{diff}
+					end
+					subgraph external
+						diff -->|false|insertUnit
+						diff -->|true|updateUnit
+					end
+
+	 */
+	async upsertUnit(nextState, force = false) {
+		try {
+			let diffs = null;
+
+			let prevState = await this.getUnit(nextState);
+
+			if (!prevState) {
+				await this.insertUnit(nextState);
+				return { action: "INSERT", value: nextState };
+			}
+
+			diffs = await this.mapper.getUpdates(nextState, prevState);
+			if (!diffs &amp;&amp; force !== true) {
+				return { action: "NONE", value: nextState };
+			}
+
+			await this.updateUnit(prevState, nextState, diffs);
+			return { action: "UPDATE", value: nextState, diff: diffs };
+		} catch (err) {
+			console.log(err);
+			this.emit("error", "Error upserting unit", err);
+		}
+	}
+
+	/**
+	 * @summary getUnit using its state
+	 * @param {unitObj} nextState
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
+	async getUnit(nextState) {
+		try {
+			const { typeId, serial } = nextState.data;
+			switch (typeId) {
+			case 0: {
+				return this.controlUnit;
+			}
+			case 3: {
+				return this.units[serial];
+			}
+			case 4: {
+				const { parentSerial, windowId } = nextState.data;
+				return this.units[parentSerial].children[windowId];
+			}
+			default:
+				return null;
+			}
+		} catch (err) {
+			this.emit("error", "Error getting unit", err);
+		}
+	}
+
+	/**
+	 * @summary Applies the diffs to the State
+	 * @param {unitObj} state
+	 * @param {diffObj} diffs the diffs between the current state and previous state
+	 * @param {number} modified timestamp on modified
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
+	async applyUpdate(state, diff, modified) {
+		try {
+			if (!diff) return state;
+			for (const key in diff) {
+				if (state.hasOwnProperty(key)) {
+					if (diff[key] !== null) {
+						state[key] = diff[key];
+					}
+				}
+			}
+			state.modified = modified;
+
+			return state;
+		} catch (err) {
+			this.emit("error", "Error applying state", err);
+		}
+	}
+
+	/**
+	 * @summary Applies the diffs to the State
+	 * @param {unitObj} state
+	 * @param {diffObj} diffs the diffs between the current state and previous state
+	 * @param {number} modified timestamp on modified
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
+	async updateUnitState(unit) {
+		const { typeId } = unit.data;
+		try {
+			switch (typeId) {
+			case 0:
+				{
+					const { keySwitchStatus, fireButton } = unit.data;
+					if (keySwitchStatus === 1 &amp;&amp; fireButton === 1) {
+						unit.state = "FIRING";
+					}
+					if (fireButton === 0 &amp;&amp; keySwitchStatus === 1) {
+						unit.state = "ARMED";
+					} else {
+						unit.state = "DISARMED";
+					}
+				}
+				break;
+
+			default:
+				return null;
+			}
+			return unit;
+		} catch (err) {
+			this.emit("error", "Error updating state", err);
+		}
+	}
+
+	/**
+	 * @summary Uppdate the booster counts on the control unit
+	 * @param {diffObj} diffs the diffs between the current state and previous state
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
+	async updateBoosterCounts(diffs) {
+		if (!diffs) return false;
+		//take the incoming state and check is you need to add or remove item in the count on the control unit
+		const items = ["keySwitchStatus", "communicationStatus"];
+
+		for (const item of items) {
+			if (diffs.hasOwnProperty(item)) {
+				let objKey = this.controlUnit.units[`${item}Count`];
+
+				if (diffs[item] === 1) {
+					objKey++;
+				} else {
+					if (objKey > 0) {
+						if (diffs[item] == 0) {
+							objKey--;
+						}
+					}
+				}
+				this.controlUnit.units[`${item}Count`] = objKey;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @summary Update the booster connections
+	 * @param {number} modified
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async updateBoosterConnections(modified) {
+		let resultArr = [];
+
+		const boosterKey = Object.keys(this.units);
+
+		for (const unit of boosterKey) {
+			const booster = clone(this.units[unit]);
+			booster.data.communicationStatus = 0;
+			booster.data.modified = modified;
+
+			resultArr.push(booster);
+		}
+
+		return resultArr;
+	}
+
+	/**
+	 * @summary Update the EDD counts
+	 * @param {nextState} nextState object
+	 * @param {diffObj} diffs
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async updateEddCounts(nextState, diffs) {
+		if (!diffs) return false;
+
+		//take the incoming state and check is you need to add or remove item in the count on the control unit
+		const { parentSerial } = nextState.data;
+		const parent = this.units[parentSerial];
+
+		const items = ["detonatorStatus", "logged", "tagged", "program"];
+
+		for (const item of items) {
+			if (diffs.hasOwnProperty(item)) {
+				let objKey = parent.units[`${item}Count`];
+
+				if (diffs[item] === 1) {
+					//console.log("adding to", item, objKey);
+					objKey++;
+				} else if (diffs[item] === 0) {
+					if (objKey > 0) {
+						if (diffs[item] === 0) {
+							//console.log("diffs", diffs);
+							//console.log("removing from", item, objKey);
+							objKey--;
+						}
+					}
+				}
+				this.units[parentSerial].units[`${item}Count`] = objKey;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @summary Update the EDD connections
+	 * @param {string} serial object
+	 * @param {number} modified
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async updateEDDConnections(serial, modified) {
+		let resultArr = [];
+
+		const eddKeys = Object.keys(this.units[serial].children);
+
+		for (const unit of eddKeys) {
+			const edd = clone(this.units[serial].children[unit]);
+			edd.data.detonatorStatus = 0;
+			edd.data.modified = modified;
+
+			let updateRes = await this.upsertUnit(edd);
+			resultArr.push(updateRes);
+		}
+
+		return resultArr;
+	}
+
+	/**
+	 * @summary Reset the child counts to 0
+	 * @param {object} nextState object
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async resetChildCount(nextState) {
+		const { serial } = nextState.data;
+		this.units[serial].children = {};
+		this.units[serial].units = {
+			unitsCount: 0,
+			taggedCount: 0,
+			loggedCount: 0,
+			programCount: 0,
+			detectedCount: 0,
+			detonatorStatusCount: 0
+		};
+
+		const unit = await clone(this.units[serial]);
+		unit.data.childCount = 0;
+
+		this.emit("UNITCOUNT", {
+			serial,
+			typeId: 3,
+			counts: this.units[serial].units
+		});
+
+		return [unit];
+	}
+
+	/**
+	 * @summary Take a snapshot of the state
+	 * @returns {Promise&lt;object>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async snapShot() {
+		try {
+			let controlUnit = clone(this.controlUnit);
+			let units = clone(this.units);
+			const unitsKeys = Object.keys(units);
+			unitsKeys.forEach(u => {
+				delete units[u].event;
+				delete units[u].meta;
+			});
+
+			return { controlUnit, units };
+		} catch (err) {
+			console.log(err);
+		}
+	}
+}
+
+module.exports = DataModel;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Mon Jul 29 2019 09:24:36 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

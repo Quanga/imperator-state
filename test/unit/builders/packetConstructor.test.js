@@ -42,9 +42,7 @@ describe("001 PacketConstructor tests", async () => {
 				}).packet;
 
 				const packetTemplate = new PacketTemplate();
-				const parser = new DeviceDataParser(
-					packetTemplate.incomingCommTemplate[8]
-				);
+				const parser = new DeviceDataParser(packetTemplate.incomingCommTemplate[8]);
 
 				const testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[8],
@@ -153,9 +151,7 @@ describe("001 PacketConstructor tests", async () => {
 				});
 
 				const packetTemplate = new PacketTemplate();
-				const parser = new DataListParser(
-					packetTemplate.incomingCommTemplate[1]
-				);
+				const parser = new DataListParser(packetTemplate.incomingCommTemplate[1]);
 
 				const testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[1],
@@ -269,9 +265,7 @@ describe("001 PacketConstructor tests", async () => {
 				});
 
 				const packetTemplate = new PacketTemplate();
-				const parser = new DataListParser(
-					packetTemplate.incomingCommTemplate[2]
-				);
+				const parser = new DataListParser(packetTemplate.incomingCommTemplate[2]);
 
 				const testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[2],
@@ -360,17 +354,11 @@ describe("001 PacketConstructor tests", async () => {
 				];
 
 				const data = {
-					data: [
-						[0, 0, 0, 0, 0, 0, 0, 1],
-						[0, 0, 0, 0, 0, 0, 1, 0],
-						[0, 0, 0, 0, 0, 0, 1, 0]
-					]
+					data: [[0, 0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 1, 0]]
 				};
 				const packetConstructor = new PacketConstructor(3, 34, data);
 				const packetTemplate = new PacketTemplate();
-				const parser = new DeviceDataParser(
-					packetTemplate.incomingCommTemplate[3]
-				);
+				const parser = new DeviceDataParser(packetTemplate.incomingCommTemplate[3]);
 
 				var testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[3],
@@ -397,10 +385,7 @@ describe("001 PacketConstructor tests", async () => {
 
 	it("can construct a data packet with command 04", async () => {
 		const data = {
-			data: [
-				{ serial: 4423423, windowId: 33 },
-				{ serial: 4523434, windowId: 34 }
-			]
+			data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 		};
 		let test = async () => {
 			try {
@@ -478,9 +463,7 @@ describe("001 PacketConstructor tests", async () => {
 				const packetConstructor = new PacketConstructor(4, 34, data);
 
 				const packetTemplate = new PacketTemplate();
-				const parser = new DataListParser(
-					packetTemplate.incomingCommTemplate[4]
-				);
+				const parser = new DataListParser(packetTemplate.incomingCommTemplate[4]);
 
 				const testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[4],
@@ -577,9 +560,7 @@ describe("001 PacketConstructor tests", async () => {
 				const packetConstructor = new PacketConstructor(5, 43, data);
 				const packetTemplate = new PacketTemplate();
 
-				const parser = new DeviceDataParser(
-					packetTemplate.incomingCommTemplate[5]
-				);
+				const parser = new DeviceDataParser(packetTemplate.incomingCommTemplate[5]);
 
 				var testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[5],
@@ -650,9 +631,7 @@ describe("001 PacketConstructor tests", async () => {
 				const packetConstructor = new PacketConstructor(5, 43, data);
 				const packetTemplate = new PacketTemplate();
 
-				const parser = new DeviceDataParser(
-					packetTemplate.incomingCommTemplate[5]
-				);
+				const parser = new DeviceDataParser(packetTemplate.incomingCommTemplate[5]);
 
 				var testObj = {
 					packetTemplate: packetTemplate.incomingCommTemplate[5],
@@ -677,5 +656,16 @@ describe("001 PacketConstructor tests", async () => {
 		};
 
 		return test();
+	});
+
+	it("can construct an outgoing packet with 01 command", async function() {
+		const CMD_PI_CLOSE_RELAY = 0b00010001;
+		//const CMD_PI_CLOSE_RELAY_ARR = [0, 0, 0, 1, 0, 0, 0, 1];
+		const CMD_PI_OPEN_RELAY = 0b00010010;
+		//const CMD_PI_OPEN_RELAY_ARR = [0, 0, 0, 1, 0, 0, 1, 0];
+		const packetConstructor = new PacketConstructor(CMD_PI_CLOSE_RELAY, 158);
+		const packetConstructor2 = new PacketConstructor(CMD_PI_OPEN_RELAY, 158);
+		console.log(packetConstructor);
+		console.log(packetConstructor2);
 	});
 });

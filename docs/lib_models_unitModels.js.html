@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: lib/models/unitModels.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNITCOUNT">UNITCOUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>lib/models/unitModels.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @category Unit Models
+ * @module lib/models/unitsModels
+ */
+
+const EventEmitter = require("events").EventEmitter;
+
+/**
+ * @category Unit Models
+ * @summary Base Class Unit Models for the DataModel.
+ * @param {string} serial - snapshot of the DataModel supplied by the Data Service
+ * @memberof module:lib/models/unitsModels
+ */
+class UnitModel {
+	constructor(serial) {
+		this.data = {
+			serial: serial,
+			typeId: null,
+			parentType: null,
+			created: null,
+			modified: null,
+			path: ""
+		};
+	}
+
+	async setPath() {
+		const { typeId, serial } = this.data;
+		this.data.path = `${typeId}/${serial}`;
+	}
+}
+
+/**
+ * @category Unit Models
+ * @summary Control Unit for the DataModel.
+ * @param {string} serial - snapshot of the DataModel supplied by the Data Service
+ * @memberof module:lib/models/unitsModels
+ */
+class ControlUnitModel extends UnitModel {
+	constructor(serial) {
+		super(serial);
+
+		this.data.typeId = 0;
+		//status
+		this.data.communicationStatus = 1;
+
+		//bits
+		this.data.keySwitchStatus = null;
+		this.data.fireButton = null;
+		this.data.cableFault = null;
+		this.data.isolationRelay = null;
+		this.data.earthLeakage = null;
+		this.data.blastArmed = null;
+
+		this.units = {
+			unitsCount: 0,
+			keySwitchStatusCount: 0,
+			communicationStatusCount: 0
+		};
+	}
+}
+
+class SectionControlModel extends UnitModel {
+	constructor(serial) {
+		super(serial);
+
+		this.data.typeId = 1;
+		this.data.parentType = 0;
+
+		//status
+		this.data.communicationStatus = 1;
+
+		//bits
+		this.data.keySwitchStatus = null;
+		this.data.cableFault = null;
+		this.data.isolationRelay = null;
+		this.data.earthLeakage = null;
+		this.data.blastArmed = null;
+
+		this.childUnits = [];
+	}
+}
+
+class BoosterModel extends UnitModel {
+	constructor(serial, parentSerial) {
+		super(serial, parentSerial);
+		this.data.typeId = 2;
+		this.data.parentType = 1;
+
+		//status
+		this.data.communicationStatus = 1;
+
+		//bits
+		this.data.keySwitchStatus = null;
+		this.data.detonatorStatus = null;
+
+		this.data.boosterFired = null;
+		this.data.partialBlast = null;
+		this.data.missingPulseDetected = null;
+
+		this.data.dcSupplyVoltage = null;
+		this.data.mains = null;
+	}
+}
+
+class CBoosterModel extends UnitModel {
+	constructor(serial, ledState, childCount) {
+		super(serial);
+
+		this.data.typeId = 3;
+		this.data.parentType = 0;
+
+		//status
+		this.data.communicationStatus = 1;
+
+		//bits
+		this.data.blastArmed = null;
+		this.data.keySwitchStatus = null;
+		this.data.isolationRelay = null;
+		this.data.mains = null;
+		this.data.lowBat = null;
+		this.data.tooLowBat = null;
+		this.data.dcSupplyVoltage = null;
+		this.data.shaftFault = null;
+		this.data.cableFault = null;
+		this.data.earthLeakage = null;
+		this.data.ledState = ledState || null;
+		this.data.childCount = childCount !== undefined ? childCount : null;
+
+		//counts
+		this.units = {
+			unitsCount: 0,
+			taggedCount: 0,
+			loggedCount: 0,
+			programCount: 0,
+			detectedCount: 0,
+			detonatorStatusCount: 0
+		};
+
+		this.event = new EventEmitter();
+
+		this.children = {};
+
+		this.meta = { _lastCommunication: null };
+	}
+
+	async setLastCommunication(value) {
+		this.data.communicationStatus = 1;
+		this.meta._lastCommunication = value;
+
+		this.checkComs();
+	}
+
+	async checkComs() {
+		if (this.meta.communicationCountDown !== undefined) {
+			clearTimeout(this.meta.communicationCountDown);
+		}
+
+		this.meta.communicationCountDown = setTimeout(
+			() => this.emitTimeout(),
+			parseInt(process.env.COMMUNICATION_CHECK_INTERVAL, 10)
+		);
+	}
+
+	emitTimeout() {
+		this.event.emit("COMMS_LOST", this);
+		this.meta.communicationCountDown = undefined;
+	}
+}
+
+class EDDModel extends UnitModel {
+	constructor(serial, parentSerial, windowId, delay = null) {
+		super(serial, parentSerial);
+		this.data.parentSerial = parentSerial;
+		this.data.typeId = 4;
+		this.data.parentType = 3;
+
+		//status
+		this.data.detonatorStatus = 0;
+
+		//bits
+		this.data.bridgeWire = 0;
+		this.data.calibration = 0;
+		this.data.program = 0;
+		this.data.boosterFired = 0;
+		this.data.tagged = 0;
+		this.data.logged = 0;
+		this.data.delay = delay;
+		this.data.windowId = windowId || null;
+
+		this.setPath = this.setPath.bind(this);
+	}
+
+	async setPath() {
+		const { parentType, parentSerial, typeId, windowId } = this.data;
+		this.data.path = `${parentType}/${parentSerial}/${typeId}/${windowId}`;
+	}
+}
+
+module.exports = {
+	UnitModel,
+	ControlUnitModel,
+	SectionControlModel,
+	BoosterModel,
+	CBoosterModel,
+	EDDModel
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Mon Jul 29 2019 09:24:36 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
