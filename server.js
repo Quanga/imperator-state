@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === "test") {
 }
 
 this.mesh;
-const tcpPortUsed = require("tcp-port-used");
 
 /**
  * @function Server
@@ -22,48 +21,17 @@ const Server = async () => {
 		return process.exit(1);
 	}
 
-	let checkEndpoint = true;
-
-	if (process.env.USE_ENDPOINT === "true") {
-		checkEndpoint = await checkForEndpoint();
-	}
-
 	if (process.argv[2] === "reset" && process.argv[3] === "--hard") {
 		await hardRest();
 	}
 
-	if (checkEndpoint) {
-		console.log("Endpoint available......connecting");
-		return start();
-	}
-
-	console.log("Endpoint not available......please check port and ip address");
-	return process.exit(1);
+	start();
 };
 
 process.on("SIGTERM", () => {
 	console.info("SIGTERM signal received.");
 	stop();
 });
-
-const checkForEndpoint = () =>
-	new Promise(resolve => {
-		tcpPortUsed
-			.waitUntilUsedOnHost(
-				parseInt(process.env.ENDPOINT_PORT, 10),
-				process.env.ENDPOINT_IP,
-				500,
-				4000
-			)
-			.then(
-				() => {
-					resolve(true);
-				},
-				err => {
-					resolve(false, err);
-				}
-			);
-	});
 
 const stop = () => {
 	this.mesh.stop(
@@ -88,7 +56,7 @@ const start = () => {
 	this.mesh = new Mesh();
 
 	const Config = require("./config.js");
-	const config = new Config().config;
+	const config = new Config().configuration;
 
 	return this.mesh.initialize(config, err => {
 		if (err) {

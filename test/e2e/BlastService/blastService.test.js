@@ -4,9 +4,8 @@ const Mesh = require("happner-2");
 const SimData = require("./blastMessages");
 const Queue = require("better-queue");
 
-require("dotenv").config();
-
-describe("E2E - BLAST SERVICE tests", async function() {
+const utils = require("../../helpers/utils");
+describe("E2E - Services", async function() {
 	this.timeout(25000);
 	let serverHelper = new ServerHelper();
 	var client;
@@ -18,9 +17,6 @@ describe("E2E - BLAST SERVICE tests", async function() {
 		}, task.wait);
 	});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
 	const simData = new SimData();
 
 	const AsyncLogin = () =>
@@ -57,52 +53,50 @@ describe("E2E - BLAST SERVICE tests", async function() {
 		}
 	});
 
-	beforeEach(
-		"delete all current nodes, logs, warnings and packets",
-		async function() {
-			await client.exchange.nodeRepository.delete("*");
-			await client.exchange.logsRepository.deleteAll();
-			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.blastRepository.delete("*");
-		}
-	);
+	beforeEach("delete all current nodes, logs, warnings and packets", async function() {
+		await client.exchange.nodeRepository.delete("*");
+		await client.exchange.logsRepository.deleteAll();
+		await client.exchange.warningsRepository.deleteAll();
+		await client.exchange.blastRepository.delete("*");
+	});
 
 	after("stop test server", async function() {
 		client.disconnect();
 		await serverHelper.stopServer();
 	});
-
-	it("can create a new blast model from a snapshot", async function() {
-		const logs = [];
-		client.event.dataService.on("*", (data, meta) => {
-			if (data.changes && data.changes.hasOwnProperty("communicationStatus")) {
-				logs.push({ data, meta });
-			}
-		});
-
-		const thisData = simData.createBlast1();
-		thisData.forEach(messageObj => sendQueue.push(messageObj));
-
-		const holdAsync = () =>
-			new Promise(resolve => {
-				sendQueue.on("drain", () => {
-					return resolve();
-				});
+	context("Blast Service", async () => {
+		it("can create a new blast model from a snapshot", async function() {
+			const logs = [];
+			client.event.dataService.on("*", (data, meta) => {
+				if (data.changes && data.changes.hasOwnProperty("communicationStatus")) {
+					logs.push({ data, meta });
+				}
 			});
 
-		await holdAsync();
+			const thisData = simData.createBlast1();
+			thisData.forEach(messageObj => sendQueue.push(messageObj));
 
-		await timer(6000);
-		let result = await client.exchange.blastRepository.get("index");
-		delete result._meta;
+			const holdAsync = () =>
+				new Promise(resolve => {
+					sendQueue.on("drain", () => {
+						return resolve();
+					});
+				});
 
-		let blastIds = Object.keys(result);
-		let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
-		delete firstBlastId._meta;
+			await holdAsync();
 
-		//console.log(JSON.stringify(logs, null, 2));
-		//console.log(result);
-		//console.log(JSON.stringify(firstBlastId));
-		console.log("byte length", JSON.stringify(firstBlastId).length);
+			await utils.timer(6000);
+			let result = await client.exchange.blastRepository.get("index");
+			delete result._meta;
+
+			let blastIds = Object.keys(result);
+			let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
+			delete firstBlastId._meta;
+
+			//console.log(JSON.stringify(logs, null, 2));
+			//console.log(result);
+			//console.log(JSON.stringify(firstBlastId));
+			console.log("byte length", JSON.stringify(firstBlastId).length);
+		});
 	});
 });

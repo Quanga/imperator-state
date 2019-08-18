@@ -14,6 +14,6 @@ module.exports = {
 
 		semi: ["error", "always"],
 		"no-console": 0,
-		"max-len": ["error", { code: 120, ignoreStrings: true }]
+		"max-len": ["error", { code: 100, ignoreStrings: true, tabWidth: 2 }]
 	}
 };

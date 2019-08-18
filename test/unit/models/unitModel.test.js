@@ -14,30 +14,22 @@ describe("Test the unitmodel functions", async function() {
 	};
 
 	it("creates a timer on the CBB which checks comms", async function() {
-		try {
-			let testModel = new CBoosterModel(1, 33);
-			testModel.setLastCommunication = new Date();
-			await timer(5000);
-			expect(testModel.data.communicationStatus).to.equal(0);
-		} catch (err) {
-			return Promise.reject(err);
-		}
+		let testModel = new CBoosterModel(1, 33);
+		testModel.setLastCommunication = new Date();
+		await timer(5000);
+		expect(testModel.data.communicationStatus).to.equal(0);
 	});
 
 	it("resets a timer on the CBB which checks comms", async function() {
-		try {
-			let testModel = new CBoosterModel(1, 33);
-			testModel.setLastCommunication = new Date();
-			await timer(5000);
-			expect(testModel.data.communicationStatus).to.equal(0);
+		let testModel = new CBoosterModel(1, 33);
+		testModel.setLastCommunication = new Date();
+		await timer(5000);
+		expect(testModel.data.communicationStatus).to.equal(0);
 
-			await timer(500);
-			testModel.setLastCommunication = new Date();
-			await timer(1000);
+		await timer(500);
+		testModel.setLastCommunication = new Date();
+		await timer(1000);
 
-			expect(testModel.data.communicationStatus).to.equal(1);
-		} catch (err) {
-			return Promise.reject(err);
-		}
+		expect(testModel.data.communicationStatus).to.equal(1);
 	});
 });

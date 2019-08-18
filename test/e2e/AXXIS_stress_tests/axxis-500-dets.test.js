@@ -61,25 +61,22 @@ describe("E2E - can handle 500 detonators", async function() {
 		}
 	});
 
-	beforeEach(
-		"delete all current nodes, logs, warnings and packets",
-		async function() {
-			await client.exchange.logsRepository.deleteAll();
-			await client.exchange.warningsRepository.deleteAll();
-			await client.exchange.nodeRepository.delete("*");
-			await client.exchange.dataService.clearDataModel();
+	beforeEach("delete all current nodes, logs, warnings and packets", async function() {
+		await client.exchange.logsRepository.deleteAll();
+		await client.exchange.warningsRepository.deleteAll();
+		await client.exchange.nodeRepository.delete("*");
+		await client.exchange.dataService.clearDataModel();
 
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(8, 8, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1]
-					}).packet,
-					created: Date.now()
-				},
-				wait: 100
-			});
-		}
-	);
+		sendQueue.push({
+			message: {
+				packet: new PacketConstructor(8, 8, {
+					data: [0, 0, 0, 0, 0, 0, 0, 1]
+				}).packet,
+				created: Date.now()
+			},
+			wait: 100
+		});
+	});
 
 	after("stop test server", async function() {
 		client.disconnect();

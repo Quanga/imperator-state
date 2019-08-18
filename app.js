@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const pmx = require("@pm2/io");
-const server = require("./server");
+//const server = require("./server");
 const path = require("path");
 const os = require("os");
 const fs = require("fs");
@@ -53,21 +53,25 @@ App.prototype.componentStart = function($happn) {
 	const { app, stateService, systemService } = $happn.exchange;
 
 	return (async () => {
-		await app.checkStartupArgs();
-		await app.startPM2Actions();
+		try {
+			await app.checkStartupArgs();
+			await app.startPM2Actions();
 
-		stateService.updateState({ service: $happn.name, state: "PENDING" });
-		await systemService.upsertHistory({ started: Date.now() });
+			stateService.updateState({ service: $happn.name, state: "PENDING" });
+			await systemService.upsertHistory({ started: Date.now() });
 
-		const config = await systemService.checkConfiguration();
+			const config = await systemService.checkConfiguration();
 
-		if (!config.setupComplete) {
-			stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
-			log.warn("Setup available but incomplete - run ui to complete");
-			log.warn("Then restart the process for changes to take effect!");
+			if (!config.setupComplete) {
+				await stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
+				log.warn("Setup available but incomplete - run ui to complete");
+				log.warn("Then restart the process for changes to take effect!");
+			}
+
+			await app.startRouter();
+		} catch (err) {
+			console.log(err);
 		}
-
-		app.startRouter();
 	})();
 };
 
@@ -108,9 +112,11 @@ App.prototype.componentStop = function($happn) {
 App.prototype.startRouter = function($happn) {
 	const { nodeRepository, logsRepository, blastRepository } = $happn.exchange;
 	const { warningsRepository, queueService, stateService } = $happn.exchange;
+	const { endpointService } = $happn.exchange;
 	const { dataService } = $happn.exchange;
+	const { env } = $happn.config;
 
-	const { emit, log } = $happn;
+	const { emit, log, name } = $happn;
 
 	return (async () => {
 		try {
@@ -119,10 +125,14 @@ App.prototype.startRouter = function($happn) {
 			await warningsRepository.start();
 			await blastRepository.start();
 			await dataService.initialise();
-			queueService.initialise();
 
-			stateService.updateState({ service: $happn.name, state: "STARTED" });
-			emit("STARTED", true);
+			if (env.useEndpoint) {
+				await endpointService.start();
+			}
+			//queueService.initialise();
+
+			stateService.updateState({ service: name, state: "STARTED" });
+			//emit("STARTED", true);
 			log.info("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			log.error("start error", err);

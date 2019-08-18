@@ -8,18 +8,13 @@ const mockHappn = new MockHappn();
 
 describe("Standalone Parser Tests", () => {
 	it("should handle a 01 command", async () => {
-
 		let messageObj = {
 			created: Date.now(),
 			message: "aaaa0d040043ffffffffff8a44"
 		};
 
-		try {
-			let packetResult = await packetService.extractData(mockHappn, messageObj);
-			let nodeResult = await packetService.buildNodeData(mockHappn, packetResult);
-			console.log(nodeResult);
-		} catch (err) {
-			return Promise.reject(err);
-		}
+		let packetResult = await packetService.extractData(mockHappn, messageObj);
+		let nodeResult = await packetService.buildNodeData(mockHappn, packetResult);
+		console.log(nodeResult);
 	});
 });

@@ -2,20 +2,13 @@
 const Happner = require("happner-2");
 //const Config = require("../../config.js");
 const ServerHelper = require("../helpers/server_helper");
+const utils = require("../helpers/utils");
 
-describe("E2E - CONNECTION EVENTS", function() {
-	//let config = new Config().config;
-
-	const timer = duration =>
-		new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve();
-			}, duration);
-		});
-
+describe("E2E - Services", function() {
 	this.timeout(40000);
-	it("can connect to an endpoint", async function() {
-		try {
+
+	context("Endpoint Service", async () => {
+		it("can connect to an endpoint", async function() {
 			const testEndpoint = {
 				name: "edge_ssot",
 				happn: {
@@ -94,11 +87,11 @@ describe("E2E - CONNECTION EVENTS", function() {
 				});
 			});
 
-			await timer(3000);
+			await utils.timer(3000);
 			let serverHelper = new ServerHelper();
 			await serverHelper.startServer();
 
-			await timer(5000);
+			await utils.timer(5000);
 			mesh.stop(
 				{
 					kill: false, // kill the process once stopped
@@ -111,7 +104,7 @@ describe("E2E - CONNECTION EVENTS", function() {
 				}
 			);
 
-			await timer(2000);
+			await utils.timer(2000);
 
 			await new Promise((resolve, reject) => {
 				mesh.initialize(testEndpoint, function(err) {
@@ -128,12 +121,9 @@ describe("E2E - CONNECTION EVENTS", function() {
 					});
 				});
 			});
-			await timer(10000);
+			await utils.timer(10000);
 
 			await serverHelper.stopServer();
-			await timer(3000);
-		} catch (err) {
-			console.log(err);
-		}
+		});
 	});
 });

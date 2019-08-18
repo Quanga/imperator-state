@@ -5,12 +5,11 @@
   "main": "server.js",
   "scripts": {
     "document": "jsdoc -c jsdoc/config.js -r",
-    "doc": "jsdoc -c jsdoc/config.js -r lib",
     "start": "node server.js",
-    "test-unit": "nyc mocha  test/unit/*.test.js --recursive",
-    "test-integration": "nyc mocha test/integration/test-*.js --recursive;",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "test": "nyc mocha test/unit/*-test-*.js && nyc report --reporter=text-lcov | coveralls"
+    "test-unit": "nyc mocha test/unit/*.test.js --recursive",
+    "test-integration": "nyc mocha test/integration/test-*.js --recursive",
+    "test": "nyc mocha test/**/*.test.js --recursive",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -20,8 +19,10 @@
   "license": "",
   "homepage": "https://github.com/aecelectronics/Happner3_State.git",
   "devDependencies": {
+    "better-docs": "^1.1.6",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "chai-match": "^1.1.1",
     "coveralls": "^3.0.4",
     "dotenv": "^8.0.0",
     "expect.js": "^0.3.1",
@@ -30,11 +31,12 @@
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "prettier-eslint": "^9.0.0",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0",
+    "sinon-with-promise": "^1.0.2"
   },
   "dependencies": {
     "@pm2/io": "^4.2.5",
-    "better-docs": "^1.1.6",
     "better-queue": "^3.8.10",
     "byte-data": "^16.0.3",
     "clone": "^2.1.2",
@@ -42,11 +44,10 @@
     "detect-rpi": "^1.3.0",
     "find-process": "^1.4.2",
     "happn-logger": "git+https://github.com/Quanga/happn-logger.git",
-    "happner-2": "^10.1.1",
+    "happner-2": "10.1.1",
     "kill-port": "^1.5.1",
     "make-dir": "^3.0.0",
     "moment": "^2.24.0",
-    "node-cache": "^4.2.0",
     "pdfmake": "https://github.com/bpampuch/pdfmake.git#0.1",
     "svg-to-pdfkit": "^0.1.7",
     "tcp-port-used": "^1.0.1",

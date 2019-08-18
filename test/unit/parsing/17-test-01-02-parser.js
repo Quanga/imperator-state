@@ -58,38 +58,30 @@ describe("parser-01-02-parser-test", async function() {
 			}
 		];
 
-		let test = async () => {
-			try {
-				const parser = new DataListParser();
-				const packetTemplate = new PacketTemplate();
+		const parser = new DataListParser();
+		const packetTemplate = new PacketTemplate();
 
-				var testObj = new PacketModel({
-					packetTemplate: packetTemplate.incomingCommTemplate[1],
-					packet: "aaaa0c01000100010002bf5d",
-					created: Date.now(),
-					pos: 0
-				});
+		var testObj = new PacketModel({
+			packetTemplate: packetTemplate.incomingCommTemplate[1],
+			packet: "aaaa0c01000100010002bf5d",
+			created: Date.now(),
+			pos: 0
+		});
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+		let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+		let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let res = result.map(item => {
-					return item.data;
-				});
+		let res = result.map(item => {
+			return item.data;
+		});
 
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-				});
+		res.forEach(item => {
+			delete item.modified;
+			delete item.created;
+		});
 
-				await assert.deepEqual(res, expected);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
+		await assert.deepEqual(res, expected);
 	});
 
 	it("test for 02 ", async function() {
@@ -154,38 +146,30 @@ describe("parser-01-02-parser-test", async function() {
 			}
 		];
 
-		let test = async () => {
-			try {
-				const parser = new DataListParser();
-				const packetTemplate = new PacketTemplate();
+		const parser = new DataListParser();
+		const packetTemplate = new PacketTemplate();
 
-				var testObj = new PacketModel({
-					packetTemplate: packetTemplate.incomingCommTemplate[2],
-					packet: "aaaa0e0200010100020003000118",
-					created: Date.now(),
-					pos: 0
-				});
+		var testObj = new PacketModel({
+			packetTemplate: packetTemplate.incomingCommTemplate[2],
+			packet: "aaaa0e0200010100020003000118",
+			created: Date.now(),
+			pos: 0
+		});
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+		let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+		let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let res = result.map(item => {
-					return item.data;
-				});
+		let res = result.map(item => {
+			return item.data;
+		});
 
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-				});
+		res.forEach(item => {
+			delete item.modified;
+			delete item.created;
+		});
 
-				await assert.deepEqual(res, expected);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
+		await assert.deepEqual(res, expected);
 	});
 
 	it("test for 03 ", async function() {
@@ -250,38 +234,30 @@ describe("parser-01-02-parser-test", async function() {
 			}
 		];
 
-		let test = async () => {
-			try {
-				const parser = new DeviceDataParser();
-				const packetTemplate = new PacketTemplate();
+		const parser = new DeviceDataParser();
+		const packetTemplate = new PacketTemplate();
 
-				//aaaa 10 03 0001 2130 - 4020 4240 4350  -63ff;
-				var testObj = new PacketModel({
-					packetTemplate: packetTemplate.incomingCommTemplate[3],
-					packet: "aaaa10030001213040204240435063ff",
-					created: Date.now(),
-					pos: 0
-				});
+		//aaaa 10 03 0001 2130 - 4020 4240 4350  -63ff;
+		var testObj = new PacketModel({
+			packetTemplate: packetTemplate.incomingCommTemplate[3],
+			packet: "aaaa10030001213040204240435063ff",
+			created: Date.now(),
+			pos: 0
+		});
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
+		let parsedPacketArr = await parser.parse(mockHappn, testObj);
 
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+		let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
-				let res = result.map(item => {
-					return item.data;
-				});
+		let res = result.map(item => {
+			return item.data;
+		});
 
-				res.forEach(item => {
-					delete item.modified;
-					delete item.created;
-				});
+		res.forEach(item => {
+			delete item.modified;
+			delete item.created;
+		});
 
-				await assert.deepEqual(res, expected);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
+		await assert.deepEqual(res, expected);
 	});
 });

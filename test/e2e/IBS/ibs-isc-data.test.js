@@ -3,8 +3,9 @@ const expect = require("expect.js");
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const util = require("../../helpers/utils");
 
-describe("IBS - 651 list test", function() {
+describe("UNIT - Parser", function() {
 	this.timeout(30000);
 	let serverHelper = new ServerHelper();
 
@@ -26,32 +27,28 @@ describe("IBS - 651 list test", function() {
 			});
 		});
 
-	before("cleaning up db", async function() {
-		try {
-			// await serialPortHelper.initialise();
-			await serverHelper.startServer();
-			await AsyncLogin();
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	});
+	context("IBS - 651 list", async () => {
+		before("cleaning up db", async function() {
+			try {
+				// await serialPortHelper.initialise();
+				await serverHelper.startServer();
+				await AsyncLogin();
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		});
 
-	beforeEach("delete all current nodes", async function() {
-		client.exchange.nodeRepository.deleteAll();
-	});
+		beforeEach("delete all current nodes", async function() {
+			client.exchange.nodeRepository.deleteAll();
+		});
 
-	after("stop test server", async function() {
-		client.disconnect();
-		await serverHelper.stopServer();
-		// await serialPortHelper.destroy();
-	});
+		after("stop test server", async function() {
+			client.disconnect();
+			await serverHelper.stopServer();
+			// await serialPortHelper.destroy();
+		});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
-
-	it("can process a packet containing IB651s 1, 2 & 3, where no IB651s currently in database", async function() {
-		let sendMessages = async () => {
+		it("can process a packet containing IB651s 1, 2 & 3, where no IB651s currently in database", async function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
@@ -61,13 +58,11 @@ describe("IBS - 651 list test", function() {
 				data: [1, 2, 3]
 			}).packet;
 			// await serialPortHelper.sendMessage(messageb);
-		};
 
-		let getResults = async () => {
+			await util.timer(1000);
 			let result = await client.exchange.nodeRepository.getAllNodes();
 
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+			if (result == null || result.length == 0) throw new Error("Empty result!");
 
 			let ib651_1 = null,
 				ib651_2 = null,
@@ -87,30 +82,9 @@ describe("IBS - 651 list test", function() {
 
 			expect(ib651_3.data.communicationStatus).to.equal(1);
 			expect(ib651_3.data.windowId).to.equal(3);
-		};
+		});
 
-		let test = async () => {
-			try {
-				await sendMessages();
-				await timer(2000);
-				await getResults();
-
-				// let requestHelper = new RequestHelper();
-				// let fin = await requestHelper.getAll();
-				// console.log(JSON.stringify(fin));
-
-				// let requestHelper2 = new RequestHelper();
-				// let fin2 = await requestHelper2.getBlastModel();
-				// console.log(JSON.stringify(fin2));
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-		return test();
-	});
-
-	it("can process a packet containing IB651s 1, 2 & 3, where IB651s 1 & 2 are currently in database", async function() {
-		let sendMessages = async () => {
+		it("can process a packet containing IB651s 1, 2 & 3, where IB651s 1 & 2 are currently in database", async function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
@@ -125,12 +99,11 @@ describe("IBS - 651 list test", function() {
 				data: [1, 2, 3]
 			}).packet;
 			// await serialPortHelper.sendMessage(messagec);
-		};
 
-		let getResults = async () => {
+			await util.timer(2000);
+
 			let result = await client.exchange.nodeRepository.getAllNodes();
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+			if (result == null || result.length == 0) throw new Error("Empty result!");
 
 			var ib651_1 = null,
 				ib651_2 = null,
@@ -150,31 +123,9 @@ describe("IBS - 651 list test", function() {
 
 			expect(ib651_3.data.communicationStatus).to.equal(1);
 			expect(ib651_3.data.windowId).to.equal(3);
-		};
+		});
 
-		let test = async () => {
-			try {
-				await sendMessages();
-				await timer(2000);
-				await getResults();
-
-				// let requestHelper = new RequestHelper();
-				// let fin = await requestHelper.getAll();
-				// console.log(JSON.stringify(fin));
-
-				// let requestHelper2 = new RequestHelper();
-				// let fin2 = await requestHelper2.getBlastModel();
-				// console.log(JSON.stringify(fin2));
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
-	});
-
-	it("can process a packet containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", async function() {
-		let sendMessages = async () => {
+		it("can process a packet containing IB651s 1, 2 & 3, where only IB651 4 is currently in database", async function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
@@ -189,12 +140,10 @@ describe("IBS - 651 list test", function() {
 				data: [1, 2, 3]
 			}).packet;
 			// await serialPortHelper.sendMessage(messagec);
-		};
 
-		let getResults = async () => {
+			await util.timer(2000);
 			let result = await client.exchange.nodeRepository.getAllNodes();
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+			if (result == null || result.length == 0) throw new Error("Empty result!");
 
 			var ib651_1 = null,
 				ib651_2 = null,
@@ -223,22 +172,9 @@ describe("IBS - 651 list test", function() {
 			expect(ib651_4.data.communicationStatus).to.equal(0);
 			expect(ib651_4.data.parentSerial).to.equal(ib651_4.data.serial);
 			expect(result.ib651_4.data.windowId).to.equal(0);
-		};
+		});
 
-		let test = async () => {
-			try {
-				await sendMessages();
-				await timer(2000);
-				await getResults();
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-		return test();
-	});
-
-	it("can process a packet that changes the ordering of window ids of existing IB651s in database", async function() {
-		let step1 = async () => {
+		it("can process a packet that changes the ordering of window ids of existing IB651s in database", async function() {
 			const message = new PacketConstructor(1, 1, {
 				data: [1]
 			}).packet;
@@ -255,12 +191,10 @@ describe("IBS - 651 list test", function() {
 			// await serialPortHelper.sendMessage(messagec);
 
 			//await serialPortHelper.sendMessage(messageb);
-		};
 
-		let step2 = async () => {
+			await util.timer(1000);
 			let result;
-			if (result == null || result.length == 0)
-				throw new Error("Empty result!");
+			if (result == null || result.length == 0) throw new Error("Empty result!");
 
 			var ib651_1 = null,
 				ib651_2 = null,
@@ -272,35 +206,15 @@ describe("IBS - 651 list test", function() {
 				if (x["c.serial"] == 3 && x["c.typeId"] == 2) ib651_3 = x;
 			});
 
-			return {
+			let resultObj = {
 				ib651_1: ib651_1,
 				ib651_2: ib651_2,
 				ib651_3: ib651_3
 			};
-		};
 
-		let step3 = async result => {
-			try {
-				expect(result.ib651_2["c.windowId"]).to.equal(1);
-				expect(result.ib651_1["c.windowId"]).to.equal(2);
-				expect(result.ib651_3["c.windowId"]).to.equal(3);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		let test = async () => {
-			try {
-				await timer(3500);
-				await step1();
-				await timer(3000);
-				let result = await step2();
-				await step3(result);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
+			expect(resultObj.ib651_2["c.windowId"]).to.equal(1);
+			expect(resultObj.ib651_1["c.windowId"]).to.equal(2);
+			expect(resultObj.ib651_3["c.windowId"]).to.equal(3);
+		});
 	});
 });

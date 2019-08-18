@@ -8,11 +8,11 @@ const path = require("path");
 
 class Config {
 	constructor(overrideObj = {}) {
-		this.config = {
+		this.configuration = {
 			name: overrideObj.name || process.env.EDGE_INSTANCE_NAME,
 			util: {
 				logCacheSize: 1000,
-				logLevel: process.env.LOG_LEVEL || "info",
+				logLevel: overrideObj.logLevel || process.env.LOG_LEVEL || "info",
 				logTimeDelta: true,
 				logStackTraces: true, // if last arg to logger is instanceof Error
 				logComponents: [],
@@ -29,7 +29,7 @@ class Config {
 				host: overrideObj.host || process.env.EDGE_LOCAL_IP || "localhost",
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
-					timeout: 60000
+					timeout: 10000
 				},
 				persist: true,
 				secure: true,
@@ -62,6 +62,8 @@ class Config {
 				blastService: { path: `${__dirname}/lib/services/blast_service.js` },
 				dataService: { path: `${__dirname}/lib/services/data_service.js` },
 				dataMapper: { path: `${__dirname}/lib/mappers/data_mapper.js` },
+
+				endpointService: { path: `${__dirname}/lib/services/endpointService.js` },
 				eventService: { path: `${__dirname}/lib/services/event_service.js` },
 				logsRepository: { path: `${__dirname}/lib/repositories/logsRepository.js` },
 				nodeRepository: { path: `${__dirname}/lib/repositories/nodeRepository.js` },
@@ -106,6 +108,21 @@ class Config {
 					stopMethod: "componentStop"
 				},
 				dataMapper: {},
+				endpointService: {
+					stopMethod: "componentStop",
+					env: {
+						endpointIP: overrideObj.endpointIP || process.env.ENDPOINT_IP || "localhost",
+						endpointPort: overrideObj.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
+						endpointCheckInterval:
+							overrideObj.endpointCheckInterval ||
+							parseInt(process.env.EP_CHECK_INTERVAL, 10) ||
+							5000,
+						endpointName: overrideObj.endpointName || process.env.ENDPOINT_NAME || "edge_ssot",
+						endpointUsername:
+							overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME || "UNIT001",
+						endpointPassword: overrideObj.endpointPassword || process.env.ENDPOINT_PASSWORD || ""
+					}
+				},
 				nodeRepository: {
 					stopMethod: "stop"
 				},
@@ -143,42 +160,20 @@ class Config {
 							"persist/*": "persist",
 							"state/*": "mem"
 						}
-					},
-					env: {
-						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT,
-						endpointName: overrideObj.endpointName || process.env.ENDPOINT_NAME,
-						endpointUsername: overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME,
-						meshInstance: null
 					}
 				},
 				wifiService: {
-					startMethod: "start"
+					//startMethod: "start"
 				},
 				app: {
 					startMethod: "componentStart",
-					stopMethod: "componentStop"
+					stopMethod: "componentStop",
+					env: {
+						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT || false
+					}
 				}
 			}
 		};
-
-		if (overrideObj.useEndpoint || process.env.USE_ENDPOINT === "true") {
-			const endpointName = overrideObj.endpointName || process.env.ENDPOINT_NAME;
-
-			this.config.endpoints = {
-				[endpointName]: {
-					reconnect: {
-						retries: 100 // default Infinity
-					},
-					config: {
-						host: overrideObj.endpointIP || process.env.ENDPOINT_IP || "localhost",
-						port: overrideObj.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
-						username: overrideObj.enpointUsername || process.env.ENDPOINT_USERNAME || "MESH_UNIT",
-						password:
-							overrideObj.endpointPassword || process.env.ENDPOINT_PASSWORD.toString() || "1234"
-					}
-				}
-			};
-		}
 	}
 
 	getDbPath() {
@@ -192,6 +187,44 @@ class Config {
 		//const homedir = "/var/edge";
 		return path.resolve(homedir, "./edge/logs/", process.env.EDGE_LOCAL_LOG_FILE);
 	}
+
+	parseEnv(env) {
+		if (typeof env === "string") {
+			if (env === "true" || env === "TRUE") return true;
+			return false;
+		}
+
+		if (typeof env === "boolean") {
+			return env;
+		}
+
+		return false;
+	}
 }
 
 module.exports = Config;
+
+/* 
+// env: {
+		// 	endpointName: overrideObj.endpointName || process.env.ENDPOINT_NAME,
+		// 	endpointUsername: overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME,
+		// 	meshInstance: null
+		// }
+
+		// if (overrideObj.useEndpoint || process.env.USE_ENDPOINT === "true") {
+		// 	const endpointName = overrideObj.endpointName || process.env.ENDPOINT_NAME;
+
+		// 	this.config.endpoints = {
+		// 		[endpointName]: {
+		// 			reconnect: {
+		// 				retries: 100 // default Infinity
+		// 			},
+		// 			config: {
+		// 				host: ,
+		//
+		//
+		// 			}
+		// 		}
+		// 	};
+		// }
+		*/
