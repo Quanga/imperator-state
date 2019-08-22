@@ -155,7 +155,7 @@ App.prototype.startPM2Actions = function($happn) {
 		});
 
 		pmx.action("reset-users", async reply => {
-			app.resetUsers("USERS");
+			app.reset("USERS");
 		});
 
 		pmx.action("reset-hard", async reply => {
