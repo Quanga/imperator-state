@@ -201,7 +201,7 @@ App.prototype.checkStartupArgs = function($happn) {
 			
  */
 App.prototype.reset = function($happn, arg) {
-	const { systemService } = $happn.exchange;
+	const { systemService, securityService } = $happn.exchange;
 	const { log } = $happn;
 
 	return (async () => {
@@ -218,7 +218,7 @@ App.prototype.reset = function($happn, arg) {
 			log.warn("Database will be cleared and server stopped");
 
 			await systemService.resetUsers();
-			await systemService.setStartupUsers();
+			await securityService.setStartupUsers();
 			log.warn("SERVER SHUTDOWN");
 			return process.exit(1);
 		}
