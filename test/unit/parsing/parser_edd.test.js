@@ -392,64 +392,31 @@ describe("UNIT - Parser", async function() {
 		});
 
 		it("can test an packet", async function() {
-			let test = async () => {
-				try {
-					const DataListParser = require("../../../lib/parsers/deviceDataParser");
-					const PacketTemplate = require("../../../lib/constants/packetTemplates");
+			const DataListParser = require("../../../lib/parsers/deviceDataParser");
+			const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
-					const packetTemplate = new PacketTemplate();
+			const packetTemplate = new PacketTemplate();
 
-					const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
+			const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
 
-					const testObj = {
-						//packet: "aaaa0c05fffff40118607f2f",
-						packet: "aaaa0c05002762001929d64e",
-						created: Date.now()
-					};
-
-					let parsedPacketArr = await parser.parse(mockHappn, testObj);
-					let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-
-					let res = result.map(item => {
-						return {
-							itemType: item.constructor.name,
-							itemData: item.data
-						};
-					});
-					console.log("RESULT", res);
-
-					//await assert.deepEqual(res, expected);
-				} catch (err) {
-					return Promise.reject(err);
-				}
+			const testObj = {
+				//packet: "aaaa0c05fffff40118607f2f",
+				packet: "aaaa0c05002762001929d64e",
+				created: Date.now()
 			};
 
-			return test();
+			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
+				};
+			});
+			console.log("RESULT", res);
+
+			//await assert.deepEqual(res, expected);
 		});
 	});
 });
-
-//aaaa1005002700001828ff00ff0000ae
-
-//aaaa3017ffffed0101f023ee01015424ef0101b824f001011c25f101018025f20101e425f301014826f40101ac262665
-
-//aaaa0c05ffff64001929715d
-//aaaa4416ffff1b3c5efe01001b45531702001b45531603001b45531504001b45531405001b45531306001b45531207001b45531108001b45531009001b45530f0a004e45
-//aaaa4417ffff01007300000200736400030073c8000400732c010500739001060073f4010700735802080073bc0209007320030a007384030b0073e8030c00734c040055
-
-//01007300
-//00020073
-//60003007
-//3c800040
-//0732c010
-//50073900
-//1060073f
-//40107007
-//35802080
-//073bc020
-//90073200
-//30a00738
-//4030b007
-//3e8030c0
-//0734c040
-//055

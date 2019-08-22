@@ -7,7 +7,7 @@ const ServerHelper = require("../../helpers/server_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const Queue = require("better-queue");
 
-describe("E2E - AXXIS", async function() {
+describe("INTEGRATION - Units", async function() {
 	this.timeout(25000);
 	let serverHelper = new ServerHelper();
 	var client;

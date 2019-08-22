@@ -6,16 +6,40 @@ chai.use(require("chai-match"));
 const sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 
+const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const MockHappn = require("../../mocks/mock_happn");
+const DataListParser = require("../../../lib/parsers/deviceListParser");
+const DeviceDataParser = require("../../../lib/parsers/deviceDataParser");
+
+const PacketTemplate = require("../../../lib/constants/packetTemplates");
+
 describe("UNIT - Utils", async () => {
-	const PacketConstructor = require("../../../lib/builders/packetConstructor");
-	const MockHappn = require("../../mocks/mock_happn");
-	var DataListParser = require("../../../lib/parsers/deviceListParser");
-	var DeviceDataParser = require("../../../lib/parsers/deviceDataParser");
-
-	const PacketTemplate = require("../../../lib/constants/packetTemplates");
-
 	let mockHappn = new MockHappn();
 	context("001 PacketConstructor tests", async () => {
+		it("will fail with the wrong constructor", async () => {
+			//constructor(command, parentSerial, data = { data: [] })
+			expect(() => new PacketConstructor()).to.throw(
+				Error,
+				"No arguments supplied, cannot create PacketConstructor"
+			);
+		});
+
+		it("will fail with the wrong command type", async () => {
+			//constructor(command, parentSerial, data = { data: [] })
+			let x = new PacketConstructor(8, 12, {
+				data: [0, 0, 0, 0, 0, 0, 0, 0]
+			}).packet;
+			console.log(x);
+
+			x = new PacketConstructor("8", 12, {
+				data: [0, 0, 0, 0, 0, 0, 0, 0]
+			}).packet;
+			console.log(x);
+			// expect(() => new PacketConstructor()).to.throw(
+			// 	Error,
+			// 	"No arguments supplied, cannot create PacketConstructor"
+			// );
+		});
 		it("can construct a data packet with command 08", async () => {
 			const created = Date.now();
 
@@ -42,8 +66,7 @@ describe("UNIT - Utils", async () => {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			}).packet;
 
-			const packetTemplate = new PacketTemplate();
-			const incomingTemplate = packetTemplate.incomingCommTemplate[8];
+			const incomingTemplate = new PacketTemplate().incomingCommTemplate[8];
 			const parser = new DeviceDataParser(incomingTemplate);
 
 			const testObj = {
@@ -53,7 +76,6 @@ describe("UNIT - Utils", async () => {
 				pos: 0
 			};
 			const parsedPacketArr = await parser.parse(mockHappn, testObj);
-
 			const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
 			const res = result.map(item => {
@@ -584,22 +606,45 @@ describe("UNIT - Utils", async () => {
 
 			const parser = new DeviceDataParser(packetTemplate.incomingCommTemplate[5]);
 
-			var testObj = {
+			const testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[5],
 				packet: packetConstructor.packet,
 				created,
 				pos: 0
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
-
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			const parsedPacketArr = await parser.parse(mockHappn, testObj);
+			const result = await parser.buildNodeData(mockHappn, parsedPacketArr);
 
 			const res = result.map(item => {
 				return { item: item.constructor.name, data: item.data };
 			});
 
 			await expect(res).to.deep.equal(expected);
+		});
+
+		it("can calculate the correct packet length", async () => {
+			const data = {
+				data: [
+					{
+						serial: 13,
+						childCount: 33,
+						ledState: 6,
+						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+					}
+				]
+			};
+			const packetConstructor = new PacketConstructor(5, 43, data);
+			console.log(packetConstructor.packet)
+
+			/*
+			 AAAA 0A 03 0001 4040 07BE
+			 */
+			var expected = "10";
+			//const expectedHex = 0x0a;
+			const result = packetConstructor.calculatePacketLength(data.data[0].rawData); // incoming CRC stripped off end
+			expect(result).to.be.equal(expected);
+			console.log(parseInt("10", 16))
 		});
 
 		it("can construct an outgoing packet with 01 command", async function() {

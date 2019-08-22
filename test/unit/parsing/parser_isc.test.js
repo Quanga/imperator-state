@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-describe("PARSER-section-control-parser-test", async function() {
+describe("UNIT - Parser", async function() {
 	const MockHappn = require("../../mocks/mock_happn");
 	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
@@ -8,195 +8,186 @@ describe("PARSER-section-control-parser-test", async function() {
 	let mockHappn = new MockHappn();
 
 	this.timeout(2000);
+	xcontext("ISC", async () => {
+		it("can create a result array with ISC list from a parsed packet", async function() {
+			/*
+			 ISC serial list for IBC id 8
+	
+			 start  length  command serial  isc1    isc2    isc3    isc4    isc5    isc6    isc7    crc
+			 AAAA   16      01      0008    0025    0026    002E    0032    002A    0012    002C    7BCA
+			 */
+			let now = Date.now();
 
-	it("can create a result array with ISC list from a parsed packet", async function() {
-		/*
-         ISC serial list for IBC id 8
+			var expected = [
+				{
+					itemType: "ControlUnitModel",
+					itemData: {
+						serial: 8,
+						parentSerial: null,
+						typeId: 0,
+						parentType: null,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						fireButton: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 37,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 38,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 46,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 50,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 42,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 18,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				},
+				{
+					itemType: "SectionControlModel",
+					itemData: {
+						serial: 44,
+						parentSerial: 8,
+						typeId: 1,
+						parentType: 0,
+						created: now,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						keySwitchStatus: null,
+						cableFault: null,
+						isolationRelay: null,
+						earthLeakage: null,
+						blastArmed: null
+					}
+				}
+			];
 
-         start  length  command serial  isc1    isc2    isc3    isc4    isc5    isc6    isc7    crc
-         AAAA   16      01      0008    0025    0026    002E    0032    002A    0012    002C    7BCA
-         */
-		let now = Date.now();
+			const packetTemplate = new PacketTemplate();
 
-		var expected = [
-			{
-				itemType: "ControlUnitModel",
-				itemData: {
-					serial: 8,
-					parentSerial: null,
-					typeId: 0,
-					parentType: null,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					fireButton: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 37,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 38,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 46,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 50,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 42,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 18,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			},
-			{
-				itemType: "SectionControlModel",
-				itemData: {
-					serial: 44,
-					parentSerial: 8,
-					typeId: 1,
-					parentType: 0,
-					created: now,
-					modified: null,
-					path: "",
-					communicationStatus: 1,
-					keySwitchStatus: null,
-					cableFault: null,
-					isolationRelay: null,
-					earthLeakage: null,
-					blastArmed: null
-				}
-			}
-		];
+			const parser = new DataListParser(packetTemplate.incomingCommTemplate[1]);
 
-		let test = async () => {
-			try {
-				const packetTemplate = new PacketTemplate();
+			var testObj = {
+				packet: "AAAA1601000800250026002E0032002A0012002C7BCA",
+				created: now
+			};
 
-				const parser = new DataListParser(
-					packetTemplate.incomingCommTemplate[1]
-				);
+			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			//console.log(parsedPacketArr);
 
-				var testObj = {
-					packet: "AAAA1601000800250026002E0032002A0012002C7BCA",
-					created: now
+			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
 				};
+			});
+			//console.log(res);
 
-				let parsedPacketArr = await parser.parse(mockHappn, testObj);
-				//console.log(parsedPacketArr);
-
-				let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
-				let res = result.map(item => {
-					return {
-						itemType: item.constructor.name,
-						itemData: item.data
-					};
-				});
-				//console.log(res);
-
-				await assert.deepEqual(res, expected);
-			} catch (err) {
-				return Promise.reject(err);
-			}
-		};
-
-		return test();
+			await assert.deepEqual(res, expected);
+		});
 	});
 });

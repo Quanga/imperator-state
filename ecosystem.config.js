@@ -60,8 +60,8 @@ module.exports = {
 	deploy: {
 		production: {
 			user: "edge",
-			host: ["192.168.1.10"],
-			ref: "origin/emitter-changes",
+			host: ["192.168.1.28"],
+			ref: "origin/stage-1.1",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"

@@ -27,7 +27,7 @@ describe("UNIT - Parser", function() {
 			});
 		});
 
-	context("IBS - 651 list", async () => {
+	xcontext("IBS - 651 list", async () => {
 		before("cleaning up db", async function() {
 			try {
 				// await serialPortHelper.initialise();

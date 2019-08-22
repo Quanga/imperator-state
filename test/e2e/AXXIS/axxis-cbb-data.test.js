@@ -9,7 +9,7 @@ const Mesh = require("happner-2");
 
 const utils = require("../../helpers/utils");
 
-describe("E2E - AXXIS", async function() {
+describe("INTEGRATION - Units", async function() {
 	this.timeout(15000);
 	let serverHelper = new ServerHelper();
 	let client;
@@ -155,9 +155,10 @@ describe("E2E - AXXIS", async function() {
 			});
 
 			await holdAsync();
-			await utils.timer(2000);
+			await utils.timer(3000);
 
 			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+			console.log(resultPersist)
 			if (resultPersist === null || resultPersist.length === 0) throw new Error("Empty result!");
 
 			let cbb = null,

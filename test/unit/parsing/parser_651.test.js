@@ -5,7 +5,7 @@ describe("UNIT - Parser", async function() {
 	const MockHappn = require("../../mocks/mock_happn");
 	let mockHappn = new MockHappn();
 
-	context("651 Parser Test", async () => {
+	xcontext("651 Parser Test", async () => {
 		it("can create a result array with nodes containing ISC and IB651 data from a parsed packet", async function() {
 			/*
          start  length  command ISC serial  ISC data    IB651 data  CRC

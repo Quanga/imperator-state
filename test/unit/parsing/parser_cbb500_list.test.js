@@ -275,5 +275,269 @@ describe("UNIT - Parser", async function() {
 
 			expect(res).to.deep.equal(expected);
 		});
+
+		it("it can parse a general", async function() {
+			const created = Date.now();
+			var expected = [
+				{
+					itemType: "CBoosterModel",
+					itemData: {
+						serial: 65535,
+						typeId: 3,
+						parentType: 0,
+						created,
+						modified: null,
+						path: "",
+						communicationStatus: 1,
+						blastArmed: null,
+						keySwitchStatus: null,
+						isolationRelay: null,
+						mains: null,
+						lowBat: null,
+						tooLowBat: null,
+						dcSupplyVoltage: null,
+						shaftFault: null,
+						cableFault: null,
+						earthLeakage: null,
+						ledState: null,
+						childCount: null
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838606,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 381
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838605,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 382
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838604,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 383
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838603,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 384
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838602,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 385
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838601,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 386
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838600,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 387
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838599,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 388
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457838598,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 389
+					}
+				},
+				{
+					itemType: "EDDModel",
+					itemData: {
+						serial: 457865855,
+						parentSerial: 65535,
+						typeId: 4,
+						parentType: 3,
+						created,
+						modified: null,
+						path: "",
+						detonatorStatus: 0,
+						bridgeWire: 0,
+						calibration: 0,
+						program: 0,
+						boosterFired: 0,
+						tagged: 0,
+						logged: 0,
+						delay: null,
+						windowId: 390
+					}
+				}
+			];
+
+			const packetTemplate = new PacketTemplate();
+
+			const parser = new DataListParser(packetTemplate.incomingCommTemplate[22]);
+
+			var testObj = {
+				packet:
+					"aaaa441600231b663e6b011b66c51a021b664390031b661e62047f0b3442057f07f74e067f127408077f1275f4087f08006c097f0d9e360a7f0810da0b7f0bce500c46b0",
+				created
+			};
+
+			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+
+			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
+				};
+			});
+			console.log(res);
+			expect(res).to.deep.equal(expected);
+		});
 	});
 });
+
+//aaaa440400231b663e6b011b66c51a021b664390031b661e62047f0b3442057f07f74e067f127408077f1275f4087f08006c097f0d9e360a7f0810da0b7f0bce500c46b0

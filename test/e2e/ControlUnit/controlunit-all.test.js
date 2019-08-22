@@ -12,7 +12,7 @@ describe("E2E - Units", async function() {
 
 	const sendQueue = new Queue((task, cb) => {
 		setTimeout(() => {
-			client.exchange.queueService.addToQueue(task.message);
+			client.exchange.queueService.processIncoming(task.message);
 			cb();
 		}, task.wait);
 	});
@@ -67,7 +67,7 @@ describe("E2E - Units", async function() {
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(8, 8, {
+					packet: new PacketConstructor(8, 12, {
 						data: [0, 0, 0, 0, 0, 0, 0, 1]
 					}).packet,
 					created: Date.now()
@@ -103,7 +103,7 @@ describe("E2E - Units", async function() {
 			});
 
 			await holdAsync();
-			await utils.timer(1000);
+			await utils.timer(2000);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
 

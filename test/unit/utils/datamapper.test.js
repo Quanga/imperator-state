@@ -1,4 +1,4 @@
-const DataMapper = require("../../lib/mappers/data_mapper");
+const DataMapper = require("../../../lib/mappers/data_mapper");
 const expect = require("expect.js");
 
 describe("UNIT - Utils", async function() {

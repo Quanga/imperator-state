@@ -1,5 +1,5 @@
 var assert = require("assert");
-const PacketConstants = require("../../lib/constants/packetTemplates");
+const PacketConstants = require("../../../lib/constants/packetTemplates");
 
 describe("UNIT - Constants", async function() {
 	const packetConstants = new PacketConstants();
@@ -8,7 +8,7 @@ describe("UNIT - Constants", async function() {
 		it("can get all incoming packet constants", async function() {
 			let allIncoming = await packetConstants.incomingCommTemplate;
 			let incomingKeys = await Array.from(Object.keys(allIncoming));
-			assert.equal(incomingKeys.length, 8);
+			assert.equal(incomingKeys.length, 9);
 		});
 
 		it("can get all the unitBitTemplates", async function() {

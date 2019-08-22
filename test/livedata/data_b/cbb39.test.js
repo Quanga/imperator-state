@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
@@ -9,18 +9,13 @@ const fs = require("fs");
 const path = require("path");
 var Queue = require("better-queue");
 const moment = require("moment");
+const util = require("../../helpers/utils");
+const ipInt = require("ip-to-int");
 
 //const sandbox = sinon.createSandbox();
 
-const timer = ms =>
-	new Promise(resolve => {
-		setTimeout(() => {
-			resolve();
-		}, ms);
-	});
-
 describe("LIVE DATA", async function() {
-	this.timeout(30000);
+	this.timeout(60000);
 	context("CBB39 file data", async () => {
 		const Happner = require("happner-2");
 		const Config = require("../../../config");
@@ -46,9 +41,8 @@ describe("LIVE DATA", async function() {
 		let mesh, config;
 
 		const sendQueue = new Queue((task, cb) => {
-			setTimeout(() => {
-				mesh.exchange.queueService.processIncoming(task.message);
-				cb();
+			setTimeout(async () => {
+				mesh.exchange.queueService.processIncoming(task.message).then(() => cb());
 			}, task.wait);
 		});
 
@@ -61,7 +55,10 @@ describe("LIVE DATA", async function() {
 		it("can run the preblast informations", async () => {
 			try {
 				const filedata = fs.readFileSync(
-					path.resolve(__dirname, "CBB39 - Cullinan 08-08-2019- All events from 3am till 10am.txt")
+					path.resolve(
+						__dirname,
+						"CBB39 - Cullinan 08-08-2019- All events from 3am till 10am copy.txt"
+					)
 				);
 
 				const data = await compressList(filedata);
@@ -101,33 +98,36 @@ describe("LIVE DATA", async function() {
 				console.log("STARTED");
 
 				console.log("COMPLETE");
+				fs.writeFileSync("./39data.txt", JSON.stringify(data, null, 2));
 
 				data.forEach(packet => {
-					sendQueue.push({ message: packet, wait: 10 });
+					sendQueue.push({ message: packet, wait: 15 });
 				});
 				//throw new Error("stop");
 
 				await holdAsync();
-				await timer(10000);
+				await util.timer(8000);
 
 				let logs = await mesh.exchange.logsRepository.getAll();
 				console.log("LOGS", logs.length);
-				console.log("LOGS2", logs);
 
 				const logChanges = logs
-					.filter(s => s.serial === 39)
+					.filter(s => s.serial === 39 || s.parentSerial === 39)
 					.map(x => {
 						return {
 							serial: x.serial,
+							ip: ipInt(x.serial).toIP(),
 							typeId: x.typeId,
 							logType: x.logType,
+							parentSerial: x.parentSerial,
+							windowId: x.windowId,
 							modified: moment(x.modified, "x").format("HH:mm:ss.SSSS"),
 							counts: x.counts,
 							changes: x.changes
 						};
 					});
-				console.log(JSON.stringify(logChanges, null, 2));
-
+				//console.log(JSON.stringify(logChanges, null, 2));
+				fs.writeFileSync("./39info.txt", JSON.stringify(logChanges, null, 2));
 				//test/livedata/data_a/
 				//let result3 = await mesh.exchange.dataService.getSnapShot();
 
@@ -169,8 +169,8 @@ describe("LIVE DATA", async function() {
 
 				groupofDates.forEach((element, i) => {
 					let momentDate = moment(element).format("x");
-					let incre = parseInt(momentDate);
-					results.push((incre += i));
+					let incre = parseInt(momentDate) + i;
+					results.push(incre);
 				});
 			});
 
@@ -202,6 +202,11 @@ describe("LIVE DATA", async function() {
 				if (err) throw new Error(err);
 				console.log("done", res);
 			});
+		});
+
+		it("can convert ip", async () => {
+			const ser = 2131232012;
+			console.log(ipInt(ser).toIP());
 		});
 	});
 });
