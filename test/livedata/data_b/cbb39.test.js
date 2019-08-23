@@ -52,6 +52,28 @@ describe("LIVE DATA", async function() {
 					return resolve();
 				});
 			});
+
+		const removeDbItems = async () => {
+			await new Promise((resolve, reject) => {
+				mesh.exchange.data.remove(`persist/nodes/*`, null, (e, result) => {
+					if (e) {
+						return reject(e);
+					}
+					console.log(result);
+					resolve(result);
+				});
+			});
+
+			await new Promise((resolve, reject) => {
+				mesh.exchange.data.remove(`persist/logs/*`, null, (e, result) => {
+					if (e) {
+						return reject(e);
+					}
+					console.log(result);
+					resolve(result);
+				});
+			});
+		};
 		it("can run the preblast informations", async () => {
 			try {
 				const filedata = fs.readFileSync(
@@ -61,34 +83,13 @@ describe("LIVE DATA", async function() {
 					)
 				);
 
-				const data = await compressList(filedata);
-				//console.log(data);
-				//throw new Error("stop");
+				const data = await util.compressList(filedata);
 
 				config = new Config(override).configuration;
 				mesh = new Happner();
 
 				await mesh.initialize(config);
-				//console.log(mesh.data);
-				await new Promise((resolve, reject) => {
-					mesh.exchange.data.remove(`persist/nodes/*`, null, (e, result) => {
-						if (e) {
-							return reject(e);
-						}
-						console.log(result);
-						resolve(result);
-					});
-				});
-
-				await new Promise((resolve, reject) => {
-					mesh.exchange.data.remove(`persist/logs/*`, null, (e, result) => {
-						if (e) {
-							return reject(e);
-						}
-						console.log(result);
-						resolve(result);
-					});
-				});
+				await removeDbItems();
 
 				expect(mesh._mesh.initialized).to.be.true;
 				console.log("INITIALIZED");
@@ -98,12 +99,11 @@ describe("LIVE DATA", async function() {
 				console.log("STARTED");
 
 				console.log("COMPLETE");
-				fs.writeFileSync("./39data.txt", JSON.stringify(data, null, 2));
+				fs.writeFileSync(path.resolve(__dirname, "./39data.txt"), JSON.stringify(data, null, 2));
 
 				data.forEach(packet => {
 					sendQueue.push({ message: packet, wait: 15 });
 				});
-				//throw new Error("stop");
 
 				await holdAsync();
 				await util.timer(8000);
@@ -127,7 +127,10 @@ describe("LIVE DATA", async function() {
 						};
 					});
 				//console.log(JSON.stringify(logChanges, null, 2));
-				fs.writeFileSync("./39info.txt", JSON.stringify(logChanges, null, 2));
+				fs.writeFileSync(
+					path.resolve(__dirname, "./39info.txt"),
+					JSON.stringify(logChanges, null, 2)
+				);
 				//test/livedata/data_a/
 				//let result3 = await mesh.exchange.dataService.getSnapShot();
 
@@ -147,65 +150,29 @@ describe("LIVE DATA", async function() {
 			const converted = moment(datestring).format("x");
 			expect(moment(datestring).isValid()).to.be.true;
 			console.log(converted);
-			//1565226000000
-			//const convertedback = moment(converted, "x").format();
 			const convertedback = moment(1565239143000, "x").format("YYYY-MM-DD HH:mm:ss.SSSS");
 			console.log(convertedback);
-
-			//await timer(2000);
 		});
-
-		const compressList = async data => {
-			const entries = data.toString();
-			const packets = entries.match(/aaaa[0-9,a-f]*/gm);
-			const dates = entries.match(/\d*-\d*-\d*\s\d*:\d*:\d*/g);
-
-			var uniqueDates = dates.filter((v, i, a) => a.indexOf(v) === i);
-
-			let results = [];
-			//loop through groups of dates now and number them by addind one ms to each one
-			uniqueDates.forEach(group => {
-				const groupofDates = dates.filter(x => x === group);
-
-				groupofDates.forEach((element, i) => {
-					let momentDate = moment(element).format("x");
-					let incre = parseInt(momentDate) + i;
-					results.push(incre);
-				});
-			});
-
-			let combined = [];
-
-			packets.forEach((packet, i) => {
-				if (combined.length === 0 || combined[combined.length - 1].packet !== packet) {
-					combined.push({
-						created: results[i],
-						packet,
-						time: moment(results[i], "x").format("HH:mm:ss.SSSS")
-					});
-				}
-			});
-
-			const filtered = combined.filter(x => x.packet.match(/aaa.{5}0027/g));
-
-			return filtered;
-		};
 
 		it("can correctly compress the list", async () => {
 			const filedata = fs.readFileSync(
 				path.resolve(__dirname, "CBB39 - Cullinan 08-08-2019- All events from 3am till 10am.txt")
 			);
-			const combinedList = await compressList(filedata);
+
+			const combinedList = await util.compressList(filedata, "0027");
 			console.log(combinedList.length);
-			//console.log(JSON.stringify(combinedList, 2, null));
-			fs.writeFile("./out.json", JSON.stringify(combinedList, 2, null), (err, res) => {
-				if (err) throw new Error(err);
-				console.log("done", res);
-			});
+			fs.writeFile(
+				path.resolve(__dirname, "./out.json"),
+				JSON.stringify(combinedList, 2, null),
+				err => {
+					if (err) throw new Error(err);
+					console.log("done");
+				}
+			);
 		});
 
-		it("can convert ip", async () => {
-			const ser = 2131232012;
+		xit("can convert ip", async () => {
+			const ser = 459677282;
 			console.log(ipInt(ser).toIP());
 		});
 	});
