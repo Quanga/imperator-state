@@ -1,17 +1,15 @@
+/* eslint-disable max-len */
 const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
-const sinon = require("sinon");
-const sinonChai = require("sinon-chai");
-const chaiPromise = require("chai-as-promised");
+// const sinon = require("sinon");
+// const sinonChai = require("sinon-chai");
+// const chaiPromise = require("chai-as-promised");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(2000);
-	const MockHappn = require("../../mocks/mock_happn");
 	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
-
-	let mockHappn = new MockHappn();
 
 	context("CBB500 LIST", async () => {
 		it("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
@@ -263,9 +261,9 @@ describe("UNIT - Parser", async function() {
 				created
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 			let res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
@@ -525,9 +523,9 @@ describe("UNIT - Parser", async function() {
 				created
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 			let res = result.map(item => {
 				return {
 					itemType: item.constructor.name,

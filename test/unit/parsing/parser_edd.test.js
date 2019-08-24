@@ -1,9 +1,6 @@
 var assert = require("assert");
 
 describe("UNIT - Parser", async function() {
-	const MockHappn = require("../../mocks/mock_happn");
-	let mockHappn = new MockHappn();
-
 	this.timeout(30000);
 	context("CBB100 DATA - Command 05", async () => {
 		it("can create a result array with nodes containing CBB & EDD data from a parsed packet", async function() {
@@ -372,8 +369,8 @@ describe("UNIT - Parser", async function() {
 						created: createTime
 					};
 
-					let parsedPacketArr = await parser.parse(mockHappn, testObj);
-					let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+					let parsedPacketArr = await parser.parse(testObj);
+					let result = await parser.buildNodeData(parsedPacketArr);
 
 					let res = result.map(item => {
 						return {
@@ -405,8 +402,8 @@ describe("UNIT - Parser", async function() {
 				created: Date.now()
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let parsedPacketArr = await parser.parse(testObj);
+			let result = await parser.buildNodeData(parsedPacketArr);
 
 			let res = result.map(item => {
 				return {

@@ -49,15 +49,15 @@ function App() {}
 				F -->|true| H[startRouter]
  */
 App.prototype.componentStart = function($happn) {
-	const { log } = $happn;
 	const { app, stateService, systemService } = $happn.exchange;
+	const { log, name } = $happn;
 
 	return (async () => {
 		try {
 			await app.checkStartupArgs();
 			await app.startPM2Actions();
 
-			stateService.updateState({ service: $happn.name, state: "PENDING" });
+			stateService.updateState({ service: name, state: "PENDING" });
 			await systemService.upsertHistory({ started: Date.now() });
 
 			const config = await systemService.checkConfiguration();
@@ -110,29 +110,17 @@ App.prototype.componentStop = function($happn) {
 				I-->J(emit:STARTED)
  */
 App.prototype.startRouter = function($happn) {
-	const { nodeRepository, logsRepository, blastRepository } = $happn.exchange;
-	const { warningsRepository, queueService, stateService } = $happn.exchange;
-	const { endpointService } = $happn.exchange;
-	const { dataService } = $happn.exchange;
+	const { endpointService, stateService, dataService } = $happn.exchange;
 	const { env } = $happn.config;
 
-	const { emit, log, name } = $happn;
+	const { log, name } = $happn;
 
 	return (async () => {
 		try {
-			await nodeRepository.start();
-			await logsRepository.start();
-			await warningsRepository.start();
-			await blastRepository.start();
 			await dataService.initialise();
-
-			if (env.useEndpoint) {
-				await endpointService.start();
-			}
-			//queueService.initialise();
+			if (env.useEndpoint) await endpointService.start();
 
 			stateService.updateState({ service: name, state: "STARTED" });
-			//emit("STARTED", true);
 			log.info("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			log.error("start error", err);
@@ -150,15 +138,15 @@ App.prototype.startPM2Actions = function($happn) {
 	const { app } = $happn.exchange;
 
 	return (async () => {
-		pmx.action("reset-config", async reply => {
-			await app.reset("CONFIG");
+		pmx.action("reset-config", reply => {
+			app.reset("CONFIG");
 		});
 
-		pmx.action("reset-users", async reply => {
+		pmx.action("reset-users", reply => {
 			app.reset("USERS");
 		});
 
-		pmx.action("reset-hard", async reply => {
+		pmx.action("reset-hard", reply => {
 			app.hardReset("HARD");
 		});
 	})();
@@ -231,20 +219,17 @@ App.prototype.reset = function($happn, arg) {
 				if (process.env.EDGE_DB) {
 					file = path.resolve(os.homedir(), "./edge/db/", process.env.EDGE_DB);
 				} else {
-					console.log("EDGE_DB not set");
+					log.info("EDGE_DB not set");
 					process.exit(2);
 				}
 
 				fs.unlink(file, err => {
-					if (err) {
-						resolve("DATABASE FILE NOT FOUND - ", err.path);
-					}
+					if (err) return resolve("Database file not found - ", err.path);
 
-					resolve("DATABASE FILE REMOVED");
+					resolve("Database file removed");
 				});
-				//server.stop();
 			});
-			console.log("COMPLETE");
+			log.info("COMPLETE");
 			return process.exit(1);
 		}
 		}

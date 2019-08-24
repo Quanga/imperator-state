@@ -1,11 +1,8 @@
 var assert = require("assert");
 
 describe("UNIT - Parser", async function() {
-	const MockHappn = require("../../mocks/mock_happn");
 	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
-
-	let mockHappn = new MockHappn();
 
 	this.timeout(2000);
 	xcontext("ISC", async () => {
@@ -175,10 +172,10 @@ describe("UNIT - Parser", async function() {
 				created: now
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 			//console.log(parsedPacketArr);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 			let res = result.map(item => {
 				return {
 					itemType: item.constructor.name,

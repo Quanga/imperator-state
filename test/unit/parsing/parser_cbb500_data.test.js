@@ -2,11 +2,8 @@ const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
 
-const MockHappn = require("../../mocks/mock_happn");
-
 describe("UNIT - Parser", async function() {
 	this.timeout(10000);
-	let mockHappn = new MockHappn();
 
 	context("CBB500 DATA", async () => {
 		it("can create a result array with nodes containing CBB & EDD data from a parsed packet", async function() {
@@ -225,9 +222,9 @@ describe("UNIT - Parser", async function() {
 				created
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 
 			let res = result.map(item => {
 				return {

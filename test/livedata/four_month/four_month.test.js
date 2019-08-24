@@ -14,9 +14,9 @@ const ipInt = require("ip-to-int");
 
 //const sandbox = sinon.createSandbox();
 
-describe("LIVE DATA", async function() {
+xdescribe("HUGE", async function() {
 	this.timeout(60000);
-	context("CBB39 file data", async () => {
+	context("four month test", async () => {
 		const Happner = require("happner-2");
 		const Config = require("../../../config");
 
@@ -74,16 +74,11 @@ describe("LIVE DATA", async function() {
 				});
 			});
 		};
-		it("can run the preblast informations", async () => {
+		it("can run the whole", async () => {
 			try {
-				const filedata = fs.readFileSync(
-					path.resolve(
-						__dirname,
-						"CBB39 - Cullinan 08-08-2019- All events from 3am till 10am copy.txt"
-					)
-				);
+				const filedata = fs.readFileSync(path.resolve("/users/timbewsey1/desktop", "packets2.txt"));
 
-				const data = await util.compressList(filedata, "0027");
+				const data = await util.cleanlist(filedata);
 
 				config = new Config(override).configuration;
 				mesh = new Happner();
@@ -99,8 +94,9 @@ describe("LIVE DATA", async function() {
 				console.log("STARTED");
 
 				console.log("COMPLETE");
-				fs.writeFileSync(path.resolve(__dirname, "./39data.txt"), JSON.stringify(data, null, 2));
+				fs.writeFileSync(path.resolve(__dirname, "./output.txt"), JSON.stringify(data, null, 2));
 
+				//throw new Error("stop test");
 				data.forEach(packet => {
 					sendQueue.push({ message: packet, wait: 15 });
 				});

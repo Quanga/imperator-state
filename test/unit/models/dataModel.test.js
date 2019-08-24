@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-const DataModel = require("../../../lib/models/dataModel");
 const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
@@ -13,6 +12,7 @@ const utils = require("../../helpers/utils");
 
 const sandbox = sinon.createSandbox();
 
+const DataModel = require("../../../lib/models/dataModel");
 const { ControlUnitModel, CBoosterModel, EDDModel } = require("../../../lib/models/unitModels");
 
 describe("UNIT - Models", async function() {

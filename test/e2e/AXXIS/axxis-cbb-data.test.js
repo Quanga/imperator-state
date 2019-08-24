@@ -158,7 +158,7 @@ describe("INTEGRATION - Units", async function() {
 			await utils.timer(3000);
 
 			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
-			console.log(resultPersist)
+			console.log(resultPersist);
 			if (resultPersist === null || resultPersist.length === 0) throw new Error("Empty result!");
 
 			let cbb = null,
@@ -606,6 +606,8 @@ describe("INTEGRATION - Units", async function() {
 				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
 				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
 			});
+			const snapshot = await client.exchange.dataService.getSnapShot();
+			console.log(snapshot.units[13].children);
 
 			expect(cbb.communicationStatus).to.equal(1);
 			expect(cbb.childCount).to.equal(2);
@@ -730,8 +732,10 @@ describe("INTEGRATION - Units", async function() {
 			});
 
 			await holdAsync();
-			await utils.timer(3000);
+			await utils.timer(2000);
 			result = await client.exchange.nodeRepository.getAllNodes();
+			const snapshot = await client.exchange.dataService.getSnapShot();
+			console.log();
 
 			if (result == null || result.length == 0) throw new Error("Empty result!");
 
@@ -742,6 +746,7 @@ describe("INTEGRATION - Units", async function() {
 
 			expect(cbb.communicationStatus).to.equal(1);
 			expect(cbb.childCount).to.equal(0);
+			expect(snapshot.units[13].children["1"].data.detonatorStatus).to.equal(0);
 			expect(edd1.detonatorStatus).to.equal(0);
 		});
 	});

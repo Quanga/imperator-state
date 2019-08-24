@@ -1,0 +1,51 @@
+[
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "03:07:00.0000"
+  },
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "03:07:10.0000"
+  },
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "03:15:08.0000"
+  },
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "03:15:18.0010"
+  },
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "03:18:23.0000"
+  },
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "03:18:38.0000"
+  },
+  {
+    "serial": 39,
+    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "modified": "06:39:03.0000"
+  }
+]

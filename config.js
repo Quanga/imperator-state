@@ -85,7 +85,6 @@ class Config {
 				securityService: {},
 				systemRepository: {},
 				statsService: {},
-				stateService: {},
 				data: {
 					data: {
 						routes: {
@@ -124,16 +123,24 @@ class Config {
 					}
 				},
 				nodeRepository: {
-					stopMethod: "stop"
+					startMethod: "componentStart",
+					stopMethod: "componentStop"
 				},
 				blastRepository: {
-					stopMethod: "stop"
+					startMethod: "componentStart",
+					stopMethod: "componentStop"
 				},
-				logsRepository: {},
-				warningsRepository: {},
+				logsRepository: {
+					startMethod: "componentStart",
+					stopMethod: "componentStop"
+				},
+				warningsRepository: {
+					startMethod: "componentStart",
+					stopMethod: "componentStop"
+				},
 				eventService: {
-					startMethod: "startAsync",
-					stopMethod: "stopAsync"
+					startMethod: "componentStart",
+					stopMethod: "componentStop"
 				},
 				transmissionService: {
 					startMethod: "componentStart"
@@ -171,7 +178,8 @@ class Config {
 					env: {
 						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT || false
 					}
-				}
+				},
+				stateService: {}
 			}
 		};
 	}

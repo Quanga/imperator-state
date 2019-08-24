@@ -1,9 +1,7 @@
 var assert = require("assert");
-const MockHappn = require("../../mocks/mock_happn");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(2000);
-	let mockHappn = new MockHappn();
 
 	context("CONTROL UNIT", async () => {
 		it("can create a node result array with one set of node data from a parsed packet", async function() {
@@ -52,8 +50,8 @@ describe("UNIT - Parser", async function() {
 				created: now
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let parsedPacketArr = await parser.parse(testObj);
+			let result = await parser.buildNodeData(parsedPacketArr);
 
 			let res = result.map(item => {
 				return {

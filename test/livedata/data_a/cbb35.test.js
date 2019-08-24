@@ -86,7 +86,7 @@ describe("LIVE DATA", async function() {
 
 				await mesh.initialize(config);
 
-				await removeDbItems();
+				await removeDbItems(mesh);
 
 				expect(mesh._mesh.initialized).to.be.true;
 				console.log("INITIALIZED");

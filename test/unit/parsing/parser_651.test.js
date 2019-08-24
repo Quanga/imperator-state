@@ -2,8 +2,6 @@ var assert = require("assert");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(10000);
-	const MockHappn = require("../../mocks/mock_happn");
-	let mockHappn = new MockHappn();
 
 	xcontext("651 Parser Test", async () => {
 		it("can create a result array with nodes containing ISC and IB651 data from a parsed packet", async function() {
@@ -65,9 +63,9 @@ describe("UNIT - Parser", async function() {
 				created: Date.now()
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 
 			let res = result.map(item => {
 				return {

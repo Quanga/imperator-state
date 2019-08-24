@@ -4,11 +4,8 @@ chai.use(require("chai-match"));
 
 describe("UNIT - Parser", async function() {
 	this.timeout(30000);
-	const MockHappn = require("../../mocks/mock_happn");
 	var DataListParser = require("../../../lib/parsers/deviceListParser");
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
-
-	let mockHappn = new MockHappn();
 
 	context("CBB100 LIST - Command 04", async () => {
 		it("can create an array of units containing CBB and EDD data from a packet", async function() {
@@ -134,9 +131,9 @@ describe("UNIT - Parser", async function() {
 				created: now
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 			let res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
@@ -214,9 +211,9 @@ describe("UNIT - Parser", async function() {
 				created: now
 			};
 
-			let parsedPacketArr = await parser.parse(mockHappn, testObj);
+			let parsedPacketArr = await parser.parse(testObj);
 
-			let result = await parser.buildNodeData(mockHappn, parsedPacketArr);
+			let result = await parser.buildNodeData(parsedPacketArr);
 			let res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
