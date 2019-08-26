@@ -75,6 +75,15 @@ module.exports = {
 			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
+		"production-intelliblast-edge-002": {
+			key: process.env.HOME + "/id_deploy",
+			user: "admin",
+			host: "intelliblast-edge-002",
+			ref: "origin/stage-1.1",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/admin/state",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
+		},
 		production_aws: {
 			user: "ec2-user",
 			key: "~/aws_rsa.pem",
