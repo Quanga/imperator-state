@@ -18,8 +18,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: null,
 						typeId: 1,
 						parentType: 0,
-						created: null,
-						modified: null,
+						createdAt: null,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: 0,
@@ -36,8 +36,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 4,
 						typeId: 2,
 						parentType: 1,
-						created: null,
-						modified: null,
+						createdAt: null,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: 0,
@@ -60,7 +60,7 @@ describe("UNIT - Parser", async function() {
 
 			const testObj = {
 				packet: "AAAA0C0300044040210ECAF6",
-				created: Date.now()
+				createdAt: Date.now()
 			};
 
 			let parsedPacketArr = await parser.parse(testObj);

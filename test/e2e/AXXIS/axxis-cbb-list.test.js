@@ -7,6 +7,8 @@ const ServerHelper = require("../../helpers/server_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const Queue = require("better-queue");
 
+const util = require("../../helpers/utils");
+
 describe("INTEGRATION - Units", async function() {
 	this.timeout(25000);
 	let serverHelper = new ServerHelper();
@@ -14,50 +16,24 @@ describe("INTEGRATION - Units", async function() {
 
 	const sendQueue = new Queue((task, cb) => {
 		setTimeout(() => {
-			client.exchange.queueService.processIncoming(task.message);
-			cb();
+			client.exchange.queueService.processIncoming(task.message).then(() => cb());
 		}, task.wait);
 	});
 
-	let timer = ms => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	};
+	context("CBB100 list test - 04 Command", async () => {
+		before(async () => {
+			await serverHelper.startServer("test");
 
-	const holdAsync = () =>
-		new Promise(resolve => {
-			sendQueue.on("drain", () => {
-				return resolve();
-			});
-		});
-
-	const AsyncLogin = () =>
-		new Promise((resolve, reject) => {
-			client = new Mesh.MeshClient({
+			client = await new Mesh.MeshClient({
 				secure: true,
 				port: 55000
 			});
 
-			client.on("login/allow", () => resolve());
-			client.on("login/deny", () => reject());
-			client.on("login/error", () => reject());
-			client.login({
-				username: "_ADMIN",
-				password: "happn"
-			});
-		});
-
-	context("CBB100 list test - 04 Command", async () => {
-		before(async () => {
-			try {
-				await serverHelper.startServer();
-				await AsyncLogin();
-			} catch (err) {
-				return Promise.reject(err);
-			}
+			await util.asyncLogin(client);
 		});
 
 		beforeEach(async () => {
-			await client.exchange.logsRepository.deleteAll();
+			await client.exchange.logsRepository.delete("*");
 			await client.exchange.warningsRepository.deleteAll();
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.dataService.clearDataModel();
@@ -67,7 +43,7 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(8, 8, {
 						data: [0, 0, 0, 0, 0, 0, 0, 1]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -84,13 +60,13 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 12, {
 						data: []
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
 
@@ -111,13 +87,13 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 12, {
 						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
 			if (result == null || result.length == 0) throw new Error("Empty result!");
@@ -143,7 +119,7 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 12, {
 						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -157,12 +133,12 @@ describe("INTEGRATION - Units", async function() {
 							{ serial: 4523437, windowId: 37 }
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
 			if (result == null || result.length == 0) throw new Error("Empty result!");
@@ -188,7 +164,7 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 12, {
 						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -202,7 +178,7 @@ describe("INTEGRATION - Units", async function() {
 							{ serial: 4523437, windowId: 37 }
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -216,13 +192,13 @@ describe("INTEGRATION - Units", async function() {
 							{ serial: 4523469, windowId: 40 }
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
 			if (result == null || result.length == 0) throw new Error("Empty result!");
@@ -248,7 +224,7 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 12, {
 						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -258,7 +234,7 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 12, {
 						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -272,7 +248,7 @@ describe("INTEGRATION - Units", async function() {
 							{ serial: 4523437, windowId: 37 }
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -286,13 +262,13 @@ describe("INTEGRATION - Units", async function() {
 							{ serial: 4523469, windowId: 40 }
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(500);
 
 			let resPersist = await client.exchange.nodeRepository.getAllNodes();
 			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
@@ -320,7 +296,7 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 22, {
 						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -342,7 +318,7 @@ describe("INTEGRATION - Units", async function() {
 							}
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -364,13 +340,13 @@ describe("INTEGRATION - Units", async function() {
 							}
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(500);
 
 			let resPersisted = await nodeRepository.getAllNodes();
 			let resData = await dataService.getSnapShot();
@@ -387,13 +363,13 @@ describe("INTEGRATION - Units", async function() {
 					packet: new PacketConstructor(4, 22, {
 						data: [{ serial: 4294967295, windowId: 1 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
-			await timer(1000);
+			await util.holdTillDrained(sendQueue);
+			await util.timer(2000);
 
 			resPersisted = await nodeRepository.getAllNodes();
 			resData = await dataService.getSnapShot();

@@ -5,7 +5,7 @@ const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const Queue = require("better-queue");
 const utils = require("../../helpers/utils");
 
-describe("E2E - Units", async function() {
+describe("INTEGRATION - Units", async function() {
 	this.timeout(15000);
 	let serverHelper = new ServerHelper();
 	var client;
@@ -43,7 +43,7 @@ describe("E2E - Units", async function() {
 			});
 		});
 
-	context("Type 0", async () => {
+	context("Control Unit data", async () => {
 		before(async () => {
 			try {
 				await serverHelper.startServer();
@@ -60,7 +60,7 @@ describe("E2E - Units", async function() {
 		});
 
 		beforeEach(async () => {
-			await client.exchange.logsRepository.deleteAll();
+			await client.exchange.logsRepository.delete("*");
 			await client.exchange.warningsRepository.deleteAll();
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.dataService.clearDataModel();
@@ -70,7 +70,7 @@ describe("E2E - Units", async function() {
 					packet: new PacketConstructor(8, 12, {
 						data: [0, 0, 0, 0, 0, 0, 0, 1]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -87,7 +87,7 @@ describe("E2E - Units", async function() {
 					packet: new PacketConstructor(8, 12, {
 						data: [0, 0, 0, 0, 0, 0, 0, 0]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -97,7 +97,7 @@ describe("E2E - Units", async function() {
 					packet: new PacketConstructor(8, 12, {
 						data: [0, 0, 0, 0, 0, 0, 1, 1]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -125,7 +125,7 @@ describe("E2E - Units", async function() {
 					packet: new PacketConstructor(8, 12, {
 						data: [0, 0, 0, 0, 0, 0, 1, 1]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -135,7 +135,7 @@ describe("E2E - Units", async function() {
 					packet: new PacketConstructor(8, 12, {
 						data: [0, 0, 0, 0, 0, 0, 1, 0]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});

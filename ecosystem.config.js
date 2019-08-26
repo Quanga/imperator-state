@@ -66,34 +66,13 @@ module.exports = {
 			path: "/home/edge/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
-		production14: {
-			user: "edge",
-			host: ["192.168.1.14"],
-			ref: "origin/master",
+		"production-intelliblast-edge-001": {
+			key: process.env.HOME + "/id_deploy",
+			user: "admin",
+			host: ["intelliblast-edge-001", "intelliblast-edge-002"],
+			ref: "origin/stage-1.1",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
-		},
-
-		production_AECE: {
-			user: "edge",
-			host: [
-				{
-					host: "0.tcp.ngrok.io",
-					port: "17586"
-				}
-			],
-			ref: "origin/master",
-			repo: "git@github.com:aecelectronics/Happner3_State.git",
-			path: "/home/edge/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production500"
-		},
-		production_kasra: {
-			user: "pi",
-			host: ["kasra.ddns.net"],
-			ref: "origin/master",
-			repo: "git@github.com:aecelectronics/Happner3_State.git",
-			path: "/home/pi/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
 		production_aws: {

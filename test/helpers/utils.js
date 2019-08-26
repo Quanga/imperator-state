@@ -37,18 +37,27 @@ module.exports = {
 				const groupofDates = dates.filter(x => x === group);
 
 				groupofDates.forEach((element, i) => {
-					let momentDate = moment(element).format("x");
-					let incre = parseInt(momentDate);
-					results.push((incre += i));
+					const momentDate = moment(element).format("x");
+					const incre = parseInt(momentDate) + i;
+
+					results.push(incre);
 				});
 			});
 
 			let combined = [];
 
 			packets.forEach((packet, i) => {
-				if (combined.length === 0 || combined[combined.length - 1].packet !== packet) {
+				if (i === 0) {
 					combined.push({
-						created: results[i],
+						createdAt: results[i],
+						packet,
+						time: moment(results[i], "x").format("HH:mm:ss.SSSS")
+					});
+				}
+
+				if (i !== 0 && combined[combined.length - 1].packet !== packet) {
+					combined.push({
+						createdAt: results[i],
 						packet,
 						time: moment(results[i], "x").format("HH:mm:ss.SSSS")
 					});
@@ -56,6 +65,7 @@ module.exports = {
 			});
 
 			let res;
+
 			if (serial) {
 				const reg = new RegExp(`aaa.{5}${serial}`, "g");
 				res = combined.filter(x => x.packet.match(reg));
@@ -64,5 +74,29 @@ module.exports = {
 			}
 
 			return resolve(res);
+		}),
+	asyncLogin: client =>
+		new Promise((resolve, reject) => {
+			client.on("login/allow", () => {
+				console.log("CLIENT CONNECTED:::::::::::::::::::::::::");
+				resolve();
+			});
+
+			client.on("login/deny", () => reject());
+
+			client.on("login/error", () => {
+				console.log("CLIENT ISSUE::::::");
+			});
+
+			client.login({
+				username: "_ADMIN",
+				password: "happn"
+			});
+		}),
+	holdTillDrained: sendQueue =>
+		new Promise(resolve => {
+			sendQueue.on("drain", () => {
+				return resolve();
+			});
 		})
 };

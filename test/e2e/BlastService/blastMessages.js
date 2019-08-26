@@ -13,7 +13,7 @@ BlastList.prototype.createBlast1 = function() {
 			packet: new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			}).packet,
-			created: started
+			createdAt: started
 		},
 		wait: 1000
 	});
@@ -31,7 +31,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 5000
+			createdAt: started + 5000
 		},
 		wait: 1000
 	});
@@ -49,7 +49,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 15000
+			createdAt: started + 15000
 		},
 		wait: 1000
 	});
@@ -67,7 +67,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 25000
+			createdAt: started + 25000
 		},
 		wait: 1000
 	});
@@ -85,7 +85,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 35000
+			createdAt: started + 35000
 		},
 		wait: 1000
 	});
@@ -94,12 +94,9 @@ BlastList.prototype.createBlast1 = function() {
 	result.push({
 		message: {
 			packet: new PacketConstructor(4, 13, {
-				data: [
-					{ serial: 4423423, windowId: 1 },
-					{ serial: 4523434, windowId: 2 }
-				]
+				data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
 			}).packet,
-			created: started + 45000
+			createdAt: started + 45000
 		},
 		wait: 1000
 	});
@@ -108,14 +105,11 @@ BlastList.prototype.createBlast1 = function() {
 	result.push({
 		message: {
 			packet: new PacketConstructor(4, 14, {
-				data: [
-					{ serial: 4423478, windowId: 1 },
-					{ serial: 4523479, windowId: 2 }
-				]
+				data: [{ serial: 4423478, windowId: 1 }, { serial: 4523479, windowId: 2 }]
 			}).packet,
-			created: Date.now()
+			createdAt: Date.now()
 		},
-		created: started + 55000
+		createdAt: started + 55000
 	});
 
 	//add to 14 1 logged (first) and one tagged to the data of the EDDs
@@ -141,7 +135,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 65000
+			createdAt: started + 65000
 		},
 		wait: 1000
 	});
@@ -169,7 +163,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 75000
+			createdAt: started + 75000
 		},
 		wait: 1000
 	});
@@ -197,7 +191,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 85000
+			createdAt: started + 85000
 		},
 		wait: 1000
 	});
@@ -215,7 +209,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 95000
+			createdAt: started + 95000
 		},
 		wait: 1000
 	});
@@ -226,7 +220,7 @@ BlastList.prototype.createBlast1 = function() {
 			packet: new PacketConstructor(8, 8, {
 				data: [0, 1, 0, 0, 0, 0, 0, 1]
 			}).packet,
-			created: started + 100500
+			createdAt: started + 100500
 		},
 		wait: 1000
 	});
@@ -237,7 +231,7 @@ BlastList.prototype.createBlast1 = function() {
 			packet: new PacketConstructor(8, 8, {
 				data: [0, 1, 0, 0, 0, 1, 0, 1]
 			}).packet,
-			created: started + 110500
+			createdAt: started + 110500
 		},
 		wait: 1000
 	});
@@ -248,7 +242,7 @@ BlastList.prototype.createBlast1 = function() {
 			packet: new PacketConstructor(8, 8, {
 				data: [0, 1, 0, 0, 0, 0, 0, 1]
 			}).packet,
-			created: started + 210500
+			createdAt: started + 210500
 		},
 		wait: 2000
 	});
@@ -260,7 +254,7 @@ BlastList.prototype.createBlast1 = function() {
 			packet: new PacketConstructor(8, 8, {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			}).packet,
-			created: started + 230500
+			createdAt: started + 230500
 		},
 		wait: 2000
 	});
@@ -288,7 +282,7 @@ BlastList.prototype.createBlast1 = function() {
 					}
 				]
 			}).packet,
-			created: started + 330500
+			createdAt: started + 330500
 		},
 		wait: 1000
 	});

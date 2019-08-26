@@ -10,6 +10,15 @@ var MockHappn = function() {
 	this.emit = function(message) {
 		this.emitter.emit(message);
 	};
+	this.log = {
+		error: function(message, err) {
+			console.log(message);
+			//throw err;
+		},
+		info: function(message) {
+			console.log(message);
+		}
+	};
 	this.exchange = {
 		incomingFileQueue: {
 			length: function() {
@@ -131,20 +140,6 @@ var MockHappn = function() {
 };
 
 //util.inherits(MockHappn, EventEmitter);
-
-Object.defineProperty(MockHappn.prototype, "log", {
-	get: function() {
-		return {
-			error: function(message, err) {
-				console.log(message);
-				//throw err;
-			},
-			info: function(message) {
-				console.log(message);
-			}
-		};
-	}
-});
 
 // Object.defineProperty(MockHappn.prototype, "emit", {
 // 	get: function(message) {

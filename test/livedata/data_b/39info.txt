@@ -1,51 +1,7167 @@
 [
   {
     "serial": 39,
-    "ip": "0.0.0.39",
     "typeId": 3,
-    "logType": "EDD_SIG",
-    "modified": "03:07:00.0000"
+    "logType": "UNIT_INSERT",
+    "created": "03:00:00.0000"
   },
   {
     "serial": 39,
-    "ip": "0.0.0.39",
     "typeId": 3,
     "logType": "EDD_SIG",
-    "modified": "03:07:10.0000"
+    "created": "03:07:00.0000"
   },
   {
     "serial": 39,
-    "ip": "0.0.0.39",
     "typeId": 3,
     "logType": "EDD_SIG",
-    "modified": "03:15:08.0000"
+    "created": "03:07:10.0000"
   },
   {
     "serial": 39,
-    "ip": "0.0.0.39",
     "typeId": 3,
-    "logType": "EDD_SIG",
-    "modified": "03:15:18.0010"
+    "logType": "DET_INSERT",
+    "created": "03:07:20.0000",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "ip": "127.10.196.47"
+      }
+    ]
   },
   {
     "serial": 39,
-    "ip": "0.0.0.39",
     "typeId": 3,
-    "logType": "EDD_SIG",
-    "modified": "03:18:23.0000"
+    "logType": "DET_INSERT",
+    "created": "03:07:30.0120",
+    "events": [
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "ip": "127.5.124.163"
+      },
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "ip": "127.20.133.236"
+      }
+    ]
   },
   {
     "serial": 39,
-    "ip": "0.0.0.39",
     "typeId": 3,
-    "logType": "EDD_SIG",
-    "modified": "03:18:38.0000"
+    "logType": "DET_INSERT",
+    "created": "03:07:35.0120",
+    "events": [
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "ip": "127.24.222.225"
+      },
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "ip": "127.21.60.157"
+      }
+    ]
   },
   {
     "serial": 39,
-    "ip": "0.0.0.39",
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:07:40.0120",
+    "events": [
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "ip": "127.11.134.196"
+      },
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "ip": "127.20.22.198"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:07:45.0120",
+    "events": [
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:08:50.0120",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2082059121,
+        "windowId": 63,
+        "ip": "124.25.179.113"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 64,
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2081719823,
+        "windowId": 65,
+        "ip": "124.20.134.15"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 66,
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 67,
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 68,
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 69,
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 70,
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 71,
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 72,
+        "ip": "127.16.247.110"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:08:55.0120",
+    "events": [
+      {
+        "serial": 2131067179,
+        "windowId": 73,
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 74,
+        "ip": "127.12.96.36"
+      },
+      {
+        "serial": 2132333794,
+        "windowId": 75,
+        "ip": "127.24.212.226"
+      },
+      {
+        "serial": 2131779278,
+        "windowId": 76,
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 77,
+        "ip": "127.19.207.241"
+      },
+      {
+        "serial": 2131065963,
+        "windowId": 78,
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 79,
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 80,
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 81,
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 82,
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 83,
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 84,
+        "ip": "127.16.202.10"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:09:00.0120",
+    "events": [
+      {
+        "serial": 2131521887,
+        "windowId": 85,
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 86,
+        "ip": "127.5.191.19"
+      },
+      {
+        "serial": 2132301989,
+        "windowId": 87,
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 88,
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 89,
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 90,
+        "ip": "127.21.35.241"
+      },
+      {
+        "serial": 2131491236,
+        "windowId": 91,
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 92,
+        "ip": "127.5.128.147"
+      },
+      {
+        "serial": 2132094921,
+        "windowId": 93,
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 94,
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 95,
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 96,
+        "ip": "127.20.179.170"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:09:05.0120",
+    "events": [
+      {
+        "serial": 2131225257,
+        "windowId": 97,
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 98,
+        "ip": "127.21.60.151"
+      },
+      {
+        "serial": 2132213299,
+        "windowId": 99,
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 100,
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:10.0040",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 0
+        },
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 150
+        },
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 300
+        },
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 450
+        },
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 600
+        },
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 750
+        },
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 900
+        },
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1050
+        },
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1200
+        },
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1350
+        },
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1500
+        },
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1650
+        },
+        "ip": "127.10.196.47"
+      },
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1800
+        },
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1950
+        },
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2100
+        },
+        "ip": "127.5.124.163"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:19.0050",
+    "events": [
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2250
+        },
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2400
+        },
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2550
+        },
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2700
+        },
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2850
+        },
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3000
+        },
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3150
+        },
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3300
+        },
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3450
+        },
+        "ip": "127.20.133.236"
+      },
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3600
+        },
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3750
+        },
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3900
+        },
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4050
+        },
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4200
+        },
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4350
+        },
+        "ip": "127.24.222.225"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:23.0150",
+    "events": [
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4500
+        },
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4650
+        },
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4800
+        },
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4950
+        },
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5100
+        },
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5250
+        },
+        "ip": "127.21.60.157"
+      },
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5400
+        },
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5550
+        },
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5700
+        },
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5850
+        },
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6000
+        },
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6150
+        },
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6300
+        },
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6450
+        },
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6600
+        },
+        "ip": "127.11.134.196"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:28.0150",
+    "events": [
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6750
+        },
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6900
+        },
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7050
+        },
+        "ip": "127.20.22.198"
+      },
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7200
+        },
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7350
+        },
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7500
+        },
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7650
+        },
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7800
+        },
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7950
+        },
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8100
+        },
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8250
+        },
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8400
+        },
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8550
+        },
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8700
+        },
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8850
+        },
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:33.0150",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9000
+        },
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9150
+        },
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2082059121,
+        "windowId": 63,
+        "diff": {
+          "logged": 1,
+          "delay": 9300
+        },
+        "ip": "124.25.179.113"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 64,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9450
+        },
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2081719823,
+        "windowId": 65,
+        "diff": {
+          "logged": 1,
+          "delay": 9600
+        },
+        "ip": "124.20.134.15"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 66,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9750
+        },
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 67,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9900
+        },
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 68,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10050
+        },
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 69,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10200
+        },
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 70,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10350
+        },
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 71,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10500
+        },
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 72,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10650
+        },
+        "ip": "127.16.247.110"
+      },
+      {
+        "serial": 2131067179,
+        "windowId": 73,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10800
+        },
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 74,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10950
+        },
+        "ip": "127.12.96.36"
+      },
+      {
+        "serial": 2132333794,
+        "windowId": 75,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11100
+        },
+        "ip": "127.24.212.226"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:38.0150",
+    "events": [
+      {
+        "serial": 2131779278,
+        "windowId": 76,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11250
+        },
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 77,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11400
+        },
+        "ip": "127.19.207.241"
+      },
+      {
+        "serial": 2131065963,
+        "windowId": 78,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11550
+        },
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 79,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11700
+        },
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 80,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11850
+        },
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 81,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12000
+        },
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 82,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12150
+        },
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 83,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12300
+        },
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 84,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12450
+        },
+        "ip": "127.16.202.10"
+      },
+      {
+        "serial": 2131521887,
+        "windowId": 85,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12600
+        },
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 86,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12750
+        },
+        "ip": "127.5.191.19"
+      },
+      {
+        "serial": 2132301989,
+        "windowId": 87,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12900
+        },
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 88,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13050
+        },
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 89,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13200
+        },
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 90,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13350
+        },
+        "ip": "127.21.35.241"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:09:43.0150",
+    "events": [
+      {
+        "serial": 2131491236,
+        "windowId": 91,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13500
+        },
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 92,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13650
+        },
+        "ip": "127.5.128.147"
+      },
+      {
+        "serial": 2132094921,
+        "windowId": 93,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13800
+        },
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 94,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13950
+        },
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 95,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14100
+        },
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 96,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14250
+        },
+        "ip": "127.20.179.170"
+      },
+      {
+        "serial": 2131225257,
+        "windowId": 97,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14400
+        },
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 98,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14550
+        },
+        "ip": "127.21.60.151"
+      },
+      {
+        "serial": 2132213299,
+        "windowId": 99,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14700
+        },
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 100,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14999
+        },
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "03:13:23.0000",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "keySwitchStatus": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
     "typeId": 3,
     "logType": "EDD_SIG",
-    "modified": "06:39:03.0000"
+    "created": "03:15:08.0000"
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "03:15:08.0000",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "childCount": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "created": "03:15:18.0010"
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:15:28.0010",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "ip": "127.10.196.47"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:15:33.0120",
+    "events": [
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "ip": "127.5.124.163"
+      },
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "ip": "127.20.133.236"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:16:53.0120",
+    "events": [
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "ip": "127.24.222.225"
+      },
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "ip": "127.21.60.157"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:16:58.0120",
+    "events": [
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "ip": "127.11.134.196"
+      },
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "ip": "127.20.22.198"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:17:03.0120",
+    "events": [
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:17:08.0120",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2082059121,
+        "windowId": 63,
+        "ip": "124.25.179.113"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 64,
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2081719823,
+        "windowId": 65,
+        "ip": "124.20.134.15"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 66,
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 67,
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 68,
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 69,
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 70,
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 71,
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 72,
+        "ip": "127.16.247.110"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:17:13.0120",
+    "events": [
+      {
+        "serial": 2131067179,
+        "windowId": 73,
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 74,
+        "ip": "127.12.96.36"
+      },
+      {
+        "serial": 2132333794,
+        "windowId": 75,
+        "ip": "127.24.212.226"
+      },
+      {
+        "serial": 2131779278,
+        "windowId": 76,
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 77,
+        "ip": "127.19.207.241"
+      },
+      {
+        "serial": 2131065963,
+        "windowId": 78,
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 79,
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 80,
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 81,
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 82,
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 83,
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 84,
+        "ip": "127.16.202.10"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:17:18.0120",
+    "events": [
+      {
+        "serial": 2131521887,
+        "windowId": 85,
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 86,
+        "ip": "127.5.191.19"
+      },
+      {
+        "serial": 2132301989,
+        "windowId": 87,
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 88,
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 89,
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 90,
+        "ip": "127.21.35.241"
+      },
+      {
+        "serial": 2131491236,
+        "windowId": 91,
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 92,
+        "ip": "127.5.128.147"
+      },
+      {
+        "serial": 2132094921,
+        "windowId": 93,
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 94,
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 95,
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 96,
+        "ip": "127.20.179.170"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:17:23.0120",
+    "events": [
+      {
+        "serial": 2131225257,
+        "windowId": 97,
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 98,
+        "ip": "127.21.60.151"
+      },
+      {
+        "serial": 2132213299,
+        "windowId": 99,
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 100,
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:28.0040",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 0
+        },
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 150
+        },
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 300
+        },
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 450
+        },
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 600
+        },
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 750
+        },
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 900
+        },
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1050
+        },
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1200
+        },
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1350
+        },
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1500
+        },
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1650
+        },
+        "ip": "127.10.196.47"
+      },
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1800
+        },
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1950
+        },
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2100
+        },
+        "ip": "127.5.124.163"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:35.0050",
+    "events": [
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2250
+        },
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2400
+        },
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2550
+        },
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2700
+        },
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2850
+        },
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3000
+        },
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3150
+        },
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3300
+        },
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3450
+        },
+        "ip": "127.20.133.236"
+      },
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3600
+        },
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3750
+        },
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3900
+        },
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4050
+        },
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4200
+        },
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4350
+        },
+        "ip": "127.24.222.225"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:38.0150",
+    "events": [
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4500
+        },
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4650
+        },
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4800
+        },
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4950
+        },
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5100
+        },
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5250
+        },
+        "ip": "127.21.60.157"
+      },
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5400
+        },
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5550
+        },
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5700
+        },
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5850
+        },
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6000
+        },
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6150
+        },
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6300
+        },
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6450
+        },
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6600
+        },
+        "ip": "127.11.134.196"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:43.0150",
+    "events": [
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6750
+        },
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6900
+        },
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7050
+        },
+        "ip": "127.20.22.198"
+      },
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7200
+        },
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7350
+        },
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7500
+        },
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7650
+        },
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7800
+        },
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7950
+        },
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8100
+        },
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8250
+        },
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8400
+        },
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8550
+        },
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8700
+        },
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8850
+        },
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:48.0150",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9000
+        },
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9150
+        },
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2082059121,
+        "windowId": 63,
+        "diff": {
+          "logged": 1,
+          "delay": 9300
+        },
+        "ip": "124.25.179.113"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 64,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9450
+        },
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2081719823,
+        "windowId": 65,
+        "diff": {
+          "logged": 1,
+          "delay": 9600
+        },
+        "ip": "124.20.134.15"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 66,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9750
+        },
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 67,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9900
+        },
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 68,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10050
+        },
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 69,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10200
+        },
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 70,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10350
+        },
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 71,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10500
+        },
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 72,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10650
+        },
+        "ip": "127.16.247.110"
+      },
+      {
+        "serial": 2131067179,
+        "windowId": 73,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10800
+        },
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 74,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10950
+        },
+        "ip": "127.12.96.36"
+      },
+      {
+        "serial": 2132333794,
+        "windowId": 75,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11100
+        },
+        "ip": "127.24.212.226"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:53.0150",
+    "events": [
+      {
+        "serial": 2131779278,
+        "windowId": 76,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11250
+        },
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 77,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11400
+        },
+        "ip": "127.19.207.241"
+      },
+      {
+        "serial": 2131065963,
+        "windowId": 78,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11550
+        },
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 79,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11700
+        },
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 80,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11850
+        },
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 81,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12000
+        },
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 82,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12150
+        },
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 83,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12300
+        },
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 84,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12450
+        },
+        "ip": "127.16.202.10"
+      },
+      {
+        "serial": 2131521887,
+        "windowId": 85,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12600
+        },
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 86,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12750
+        },
+        "ip": "127.5.191.19"
+      },
+      {
+        "serial": 2132301989,
+        "windowId": 87,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12900
+        },
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 88,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13050
+        },
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 89,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13200
+        },
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 90,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13350
+        },
+        "ip": "127.21.35.241"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:17:58.0150",
+    "events": [
+      {
+        "serial": 2131491236,
+        "windowId": 91,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13500
+        },
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 92,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13650
+        },
+        "ip": "127.5.128.147"
+      },
+      {
+        "serial": 2132094921,
+        "windowId": 93,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13800
+        },
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 94,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13950
+        },
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 95,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14100
+        },
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 96,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14250
+        },
+        "ip": "127.20.179.170"
+      },
+      {
+        "serial": 2131225257,
+        "windowId": 97,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14400
+        },
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 98,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14550
+        },
+        "ip": "127.21.60.151"
+      },
+      {
+        "serial": 2132213299,
+        "windowId": 99,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14700
+        },
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 100,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14999
+        },
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "03:18:18.0000",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "keySwitchStatus": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "created": "03:18:23.0000"
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "03:18:23.0000",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "childCount": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "created": "03:18:38.0000"
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:18:48.0010",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "ip": "127.10.196.47"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:18:53.0120",
+    "events": [
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "ip": "127.5.124.163"
+      },
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "ip": "127.20.133.236"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:18:58.0120",
+    "events": [
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "ip": "127.24.222.225"
+      },
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "ip": "127.21.60.157"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:19:28.0120",
+    "events": [
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "ip": "127.11.134.196"
+      },
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "ip": "127.20.22.198"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:19:33.0120",
+    "events": [
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:19:38.0120",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 63,
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 64,
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 65,
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 66,
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 67,
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 68,
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 69,
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 70,
+        "ip": "127.16.247.110"
+      },
+      {
+        "serial": 2131067179,
+        "windowId": 71,
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 72,
+        "ip": "127.12.96.36"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:19:43.0120",
+    "events": [
+      {
+        "serial": 2132333794,
+        "windowId": 73,
+        "ip": "127.24.212.226"
+      },
+      {
+        "serial": 2131779278,
+        "windowId": 74,
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 75,
+        "ip": "127.19.207.241"
+      },
+      {
+        "serial": 2131065963,
+        "windowId": 76,
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 77,
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 78,
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 79,
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 80,
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 81,
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 82,
+        "ip": "127.16.202.10"
+      },
+      {
+        "serial": 2131521887,
+        "windowId": 83,
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 84,
+        "ip": "127.5.191.19"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:19:48.0120",
+    "events": [
+      {
+        "serial": 2132301989,
+        "windowId": 85,
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 86,
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 87,
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 88,
+        "ip": "127.21.35.241"
+      },
+      {
+        "serial": 2131491236,
+        "windowId": 89,
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 90,
+        "ip": "127.5.128.147"
+      },
+      {
+        "serial": 2132094921,
+        "windowId": 91,
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 92,
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 93,
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 94,
+        "ip": "127.20.179.170"
+      },
+      {
+        "serial": 2131225257,
+        "windowId": 95,
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 96,
+        "ip": "127.21.60.151"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_INSERT",
+    "created": "03:19:53.0120",
+    "events": [
+      {
+        "serial": 2132213299,
+        "windowId": 97,
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 98,
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:19:58.0020",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 0
+        },
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 150
+        },
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 300
+        },
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 450
+        },
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 600
+        },
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 750
+        },
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 900
+        },
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1050
+        },
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1200
+        },
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1350
+        },
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1500
+        },
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1650
+        },
+        "ip": "127.10.196.47"
+      },
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1800
+        },
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 1950
+        },
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2100
+        },
+        "ip": "127.5.124.163"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:20:04.0050",
+    "events": [
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2250
+        },
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2400
+        },
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2550
+        },
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2700
+        },
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 2850
+        },
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3000
+        },
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3150
+        },
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3300
+        },
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3450
+        },
+        "ip": "127.20.133.236"
+      },
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3600
+        },
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3750
+        },
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 3900
+        },
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4050
+        },
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4200
+        },
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4350
+        },
+        "ip": "127.24.222.225"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:20:10.0050",
+    "events": [
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4500
+        },
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4650
+        },
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4800
+        },
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 4950
+        },
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5100
+        },
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5250
+        },
+        "ip": "127.21.60.157"
+      },
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5400
+        },
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5550
+        },
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5700
+        },
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 5850
+        },
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6000
+        },
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6150
+        },
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6300
+        },
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6450
+        },
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6600
+        },
+        "ip": "127.11.134.196"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:20:14.0050",
+    "events": [
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6750
+        },
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 6900
+        },
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7050
+        },
+        "ip": "127.20.22.198"
+      },
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7200
+        },
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7350
+        },
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7500
+        },
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7650
+        },
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7800
+        },
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 7950
+        },
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8100
+        },
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8250
+        },
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8400
+        },
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8550
+        },
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8700
+        },
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 8850
+        },
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:20:19.0010",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9000
+        },
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9150
+        },
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 63,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9450
+        },
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 64,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9750
+        },
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 65,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 9900
+        },
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 66,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10050
+        },
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 67,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10200
+        },
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 68,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10350
+        },
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 69,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10500
+        },
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 70,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10650
+        },
+        "ip": "127.16.247.110"
+      },
+      {
+        "serial": 2131067179,
+        "windowId": 71,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10800
+        },
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 72,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 10950
+        },
+        "ip": "127.12.96.36"
+      },
+      {
+        "serial": 2132333794,
+        "windowId": 73,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11100
+        },
+        "ip": "127.24.212.226"
+      },
+      {
+        "serial": 2131779278,
+        "windowId": 74,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11250
+        },
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 75,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11400
+        },
+        "ip": "127.19.207.241"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:20:23.0150",
+    "events": [
+      {
+        "serial": 2131065963,
+        "windowId": 76,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11550
+        },
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 77,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11700
+        },
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 78,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 11850
+        },
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 79,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12000
+        },
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 80,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12150
+        },
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 81,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12300
+        },
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 82,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12450
+        },
+        "ip": "127.16.202.10"
+      },
+      {
+        "serial": 2131521887,
+        "windowId": 83,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12600
+        },
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 84,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12750
+        },
+        "ip": "127.5.191.19"
+      },
+      {
+        "serial": 2132301989,
+        "windowId": 85,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 12900
+        },
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 86,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13050
+        },
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 87,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13200
+        },
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 88,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13350
+        },
+        "ip": "127.21.35.241"
+      },
+      {
+        "serial": 2131491236,
+        "windowId": 89,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13500
+        },
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 90,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13650
+        },
+        "ip": "127.5.128.147"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "03:20:29.0000",
+    "events": [
+      {
+        "serial": 2132094921,
+        "windowId": 91,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13800
+        },
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 92,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 13950
+        },
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 93,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14100
+        },
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 94,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14250
+        },
+        "ip": "127.20.179.170"
+      },
+      {
+        "serial": 2131225257,
+        "windowId": 95,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14400
+        },
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 96,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14550
+        },
+        "ip": "127.21.60.151"
+      },
+      {
+        "serial": 2132213299,
+        "windowId": 97,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14700
+        },
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 98,
+        "diff": {
+          "detonatorStatus": 1,
+          "bridgeWire": 1,
+          "calibration": 1,
+          "program": 1,
+          "logged": 1,
+          "delay": 14999
+        },
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "03:28:59.0090",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "ledState": 8
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "03:29:39.0150",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "ledState": 1
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "04:39:27.0090",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "blastArmed": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "04:49:23.0090",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "blastArmed": 1
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:04:08.0000",
+    "events": [
+      {
+        "serial": 2131501510,
+        "windowId": 1,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.33.198"
+      },
+      {
+        "serial": 2131599491,
+        "windowId": 2,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.13.160.131"
+      },
+      {
+        "serial": 2131760388,
+        "windowId": 3,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.21.4"
+      },
+      {
+        "serial": 2131387621,
+        "windowId": 4,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.10.100.229"
+      },
+      {
+        "serial": 2132329143,
+        "windowId": 5,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.194.183"
+      },
+      {
+        "serial": 2131467492,
+        "windowId": 6,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.156.228"
+      },
+      {
+        "serial": 2131517473,
+        "windowId": 7,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.96.33"
+      },
+      {
+        "serial": 2131492466,
+        "windowId": 8,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.254.114"
+      },
+      {
+        "serial": 2131242148,
+        "windowId": 9,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.8.44.164"
+      },
+      {
+        "serial": 2131433113,
+        "windowId": 10,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.22.153"
+      },
+      {
+        "serial": 2131210481,
+        "windowId": 11,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.7.176.241"
+      },
+      {
+        "serial": 2131412015,
+        "windowId": 12,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.10.196.47"
+      },
+      {
+        "serial": 2131442989,
+        "windowId": 13,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.61.45"
+      },
+      {
+        "serial": 2131803016,
+        "windowId": 14,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.187.136"
+      },
+      {
+        "serial": 2131066019,
+        "windowId": 15,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.124.163"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:10:23.0150",
+    "events": [
+      {
+        "serial": 2132063149,
+        "windowId": 16,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.179.173"
+      },
+      {
+        "serial": 2132386487,
+        "windowId": 17,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.25.162.183"
+      },
+      {
+        "serial": 2131462195,
+        "windowId": 18,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.136.51"
+      },
+      {
+        "serial": 2131207450,
+        "windowId": 19,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.7.165.26"
+      },
+      {
+        "serial": 2132051448,
+        "windowId": 20,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.133.248"
+      },
+      {
+        "serial": 2131779272,
+        "windowId": 21,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.94.200"
+      },
+      {
+        "serial": 2131076357,
+        "windowId": 22,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.165.5"
+      },
+      {
+        "serial": 2132125837,
+        "windowId": 23,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.21.168.141"
+      },
+      {
+        "serial": 2132051436,
+        "windowId": 24,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.133.236"
+      },
+      {
+        "serial": 2132304326,
+        "windowId": 25,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.97.198"
+      },
+      {
+        "serial": 2131805567,
+        "windowId": 26,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.197.127"
+      },
+      {
+        "serial": 2131453705,
+        "windowId": 27,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.103.9"
+      },
+      {
+        "serial": 2132309698,
+        "windowId": 28,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.118.194"
+      },
+      {
+        "serial": 2131779979,
+        "windowId": 29,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.97.139"
+      },
+      {
+        "serial": 2132336353,
+        "windowId": 30,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.222.225"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:10:28.0150",
+    "events": [
+      {
+        "serial": 2131818025,
+        "windowId": 31,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.246.41"
+      },
+      {
+        "serial": 2132301994,
+        "windowId": 32,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.88.170"
+      },
+      {
+        "serial": 2131348605,
+        "windowId": 33,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.9.204.125"
+      },
+      {
+        "serial": 2131069703,
+        "windowId": 34,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.139.7"
+      },
+      {
+        "serial": 2131424934,
+        "windowId": 35,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.10.246.166"
+      },
+      {
+        "serial": 2132098205,
+        "windowId": 36,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.21.60.157"
+      },
+      {
+        "serial": 2131200102,
+        "windowId": 37,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.7.136.102"
+      },
+      {
+        "serial": 2131782948,
+        "windowId": 38,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.109.36"
+      },
+      {
+        "serial": 2131544009,
+        "windowId": 39,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.199.201"
+      },
+      {
+        "serial": 2132302017,
+        "windowId": 40,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.88.193"
+      },
+      {
+        "serial": 2131818617,
+        "windowId": 41,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.248.121"
+      },
+      {
+        "serial": 2131401247,
+        "windowId": 42,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.10.154.31"
+      },
+      {
+        "serial": 2131802285,
+        "windowId": 43,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.184.173"
+      },
+      {
+        "serial": 2131242879,
+        "windowId": 44,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.8.47.127"
+      },
+      {
+        "serial": 2131461828,
+        "windowId": 45,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.134.196"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:10:34.0050",
+    "events": [
+      {
+        "serial": 2131780656,
+        "windowId": 46,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.100.48"
+      },
+      {
+        "serial": 2131780105,
+        "windowId": 47,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.98.9"
+      },
+      {
+        "serial": 2132022982,
+        "windowId": 48,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.22.198"
+      },
+      {
+        "serial": 2131196735,
+        "windowId": 49,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.7.123.63"
+      },
+      {
+        "serial": 2131084251,
+        "windowId": 50,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.195.219"
+      },
+      {
+        "serial": 2131498952,
+        "windowId": 51,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.23.200"
+      },
+      {
+        "serial": 2132338240,
+        "windowId": 52,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.230.64"
+      },
+      {
+        "serial": 2131527583,
+        "windowId": 53,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.135.159"
+      },
+      {
+        "serial": 2132336348,
+        "windowId": 54,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.222.220"
+      },
+      {
+        "serial": 2132302010,
+        "windowId": 55,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.88.186"
+      },
+      {
+        "serial": 2131517402,
+        "windowId": 56,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.95.218"
+      },
+      {
+        "serial": 2132457515,
+        "windowId": 57,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.26.184.43"
+      },
+      {
+        "serial": 2131543501,
+        "windowId": 58,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.197.205"
+      },
+      {
+        "serial": 2132035381,
+        "windowId": 59,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.71.53"
+      },
+      {
+        "serial": 2132199279,
+        "windowId": 60,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.22.199.111"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:10:39.0140",
+    "events": [
+      {
+        "serial": 2131655595,
+        "windowId": 61,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.14.123.171"
+      },
+      {
+        "serial": 2132049119,
+        "windowId": 62,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.124.223"
+      },
+      {
+        "serial": 2132159872,
+        "windowId": 63,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.22.45.128"
+      },
+      {
+        "serial": 2131200117,
+        "windowId": 64,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.7.136.117"
+      },
+      {
+        "serial": 2131833819,
+        "windowId": 65,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.17.51.219"
+      },
+      {
+        "serial": 2132475811,
+        "windowId": 66,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.26.255.163"
+      },
+      {
+        "serial": 2131246983,
+        "windowId": 67,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.8.63.135"
+      },
+      {
+        "serial": 2131496476,
+        "windowId": 68,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.14.28"
+      },
+      {
+        "serial": 2132416626,
+        "windowId": 69,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.26.24.114"
+      },
+      {
+        "serial": 2131818350,
+        "windowId": 70,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.247.110"
+      },
+      {
+        "serial": 2131067179,
+        "windowId": 71,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.129.43"
+      },
+      {
+        "serial": 2131517476,
+        "windowId": 72,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.96.36"
+      },
+      {
+        "serial": 2132333794,
+        "windowId": 73,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.212.226"
+      },
+      {
+        "serial": 2131779278,
+        "windowId": 74,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.94.206"
+      },
+      {
+        "serial": 2132004849,
+        "windowId": 75,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.19.207.241"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:10:43.0150",
+    "events": [
+      {
+        "serial": 2131065963,
+        "windowId": 76,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.124.107"
+      },
+      {
+        "serial": 2132125847,
+        "windowId": 77,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.21.168.151"
+      },
+      {
+        "serial": 2131805494,
+        "windowId": 78,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.197.54"
+      },
+      {
+        "serial": 2131654444,
+        "windowId": 79,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.14.119.44"
+      },
+      {
+        "serial": 2131780106,
+        "windowId": 80,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.98.10"
+      },
+      {
+        "serial": 2131242168,
+        "windowId": 81,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.8.44.184"
+      },
+      {
+        "serial": 2131806730,
+        "windowId": 82,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.16.202.10"
+      },
+      {
+        "serial": 2131521887,
+        "windowId": 83,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.113.95"
+      },
+      {
+        "serial": 2131083027,
+        "windowId": 84,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.191.19"
+      },
+      {
+        "serial": 2132301989,
+        "windowId": 85,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.88.165"
+      },
+      {
+        "serial": 2132336042,
+        "windowId": 86,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.24.221.170"
+      },
+      {
+        "serial": 2131540761,
+        "windowId": 87,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.12.187.25"
+      },
+      {
+        "serial": 2132091889,
+        "windowId": 88,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.21.35.241"
+      },
+      {
+        "serial": 2131491236,
+        "windowId": 89,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.249.164"
+      },
+      {
+        "serial": 2131067027,
+        "windowId": 90,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.5.128.147"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "DET_UPDATE",
+    "created": "05:10:48.0150",
+    "events": [
+      {
+        "serial": 2132094921,
+        "windowId": 91,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.21.47.201"
+      },
+      {
+        "serial": 2132262285,
+        "windowId": 92,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.23.189.141"
+      },
+      {
+        "serial": 2131485771,
+        "windowId": 93,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.11.228.75"
+      },
+      {
+        "serial": 2132063146,
+        "windowId": 94,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.20.179.170"
+      },
+      {
+        "serial": 2131225257,
+        "windowId": 95,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.7.234.169"
+      },
+      {
+        "serial": 2132098199,
+        "windowId": 96,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.21.60.151"
+      },
+      {
+        "serial": 2132213299,
+        "windowId": 97,
+        "diff": {
+          "detonatorStatus": 0,
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0,
+          "boosterFired": 1
+        },
+        "ip": "127.22.254.51"
+      },
+      {
+        "serial": 2131232012,
+        "windowId": 98,
+        "diff": {
+          "bridgeWire": 0,
+          "calibration": 0,
+          "program": 0
+        },
+        "ip": "127.8.5.12"
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "EDD_SIG",
+    "created": "06:39:03.0000"
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "06:39:03.0000",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "childCount": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "06:39:33.0010",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "blastArmed": 0,
+          "keySwitchStatus": 0
+        }
+      }
+    ]
+  },
+  {
+    "serial": 39,
+    "typeId": 3,
+    "logType": "UNIT_UPDATE",
+    "created": "06:39:38.0010",
+    "events": [
+      {
+        "serial": 39,
+        "diff": {
+          "ledState": 1
+        }
+      }
+    ]
   }
 ]

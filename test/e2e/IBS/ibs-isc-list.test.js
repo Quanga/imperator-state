@@ -5,7 +5,7 @@ const ServerHelper = require("../../helpers/server_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const util = require("../../helpers/utils");
 
-describe("E2E - Units", function() {
+describe("INTEGRATION - Units", function() {
 	this.timeout(20000);
 	let serverHelper = new ServerHelper();
 

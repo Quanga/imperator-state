@@ -95,7 +95,6 @@ describe("LIVE DATA", async function() {
 				expect(mesh._mesh.started).to.be.true;
 				console.log("STARTED");
 				const preData = await util.compressList(filedata, "0023");
-				console.log("PRE", preData);
 
 				console.log("COMPLETE");
 				preData.forEach(packet => {
@@ -104,6 +103,7 @@ describe("LIVE DATA", async function() {
 
 				await holdAsync();
 				await util.timer(2000);
+				console.log("SENT PRE");
 
 				let result = await mesh.exchange.dataService.getSnapShot();
 				//console.log(;
@@ -184,16 +184,6 @@ describe("LIVE DATA", async function() {
 				await holdAsync();
 				await util.timer(2000);
 
-				const ccbblast = fs.readFileSync(path.resolve(__dirname, "./CCB_INFO.txt"));
-
-				const ccbblast2 = await util.compressList(ccbblast, "0023");
-
-				ccbblast2.forEach(packet => {
-					sendQueue.push({ message: packet, wait: 10 });
-				});
-				await holdAsync();
-				await util.timer(2000);
-
 				let result3 = await mesh.exchange.dataService.getSnapShot();
 
 				//console.log(;
@@ -214,17 +204,14 @@ describe("LIVE DATA", async function() {
 				console.log("LOGS", logs.length);
 
 				const logChanges = logs
-					.filter(s => s.serial === 35 || s.parentSerial === 35 || s.serial === 7)
+					.filter(s => s.serial === 35)
 					.map(x => {
 						return {
 							serial: x.serial,
 							typeId: x.typeId,
 							logType: x.logType,
-							parentSerial: x.parentSerial,
-							windowId: x.windowId,
-							modified: moment(x.modified, "x").format("HH:mm:ss.SSSS"),
-							counts: x.counts,
-							changes: x.changes
+							created: moment(x.created, "x").format("HH:mm:ss.SSSS"),
+							events: x.events
 						};
 					});
 

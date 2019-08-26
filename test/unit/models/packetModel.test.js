@@ -25,14 +25,14 @@ describe("UNIT - Models", async function() {
 				new PacketModelData(packetTemplate, "AAAA0C0300044040210ECAF6", Date.now(), "2");
 			expect(() => wrongPacket1()).to.throw(
 				Error,
-				"The Object is missing properties - created, packetTemplate, packet"
+				"The Object is missing properties - createdAt, packetTemplate, packet"
 			);
 
 			const rightPacket = () =>
 				new PacketModelData({
 					packetTemplate,
 					pos: 1,
-					created: 123123,
+					createdAt: 123123,
 					packetSerial: "04",
 					packet: "AAAA0C0300044040210ECAF6"
 				});
@@ -41,13 +41,13 @@ describe("UNIT - Models", async function() {
 		});
 
 		it("can create a PacketModel with all required arguments for pos=0", async function() {
-			//let packet = { created: Date.now(), message: "AAAA0C0300044040210ECAF6" };
+			//let packet = { createdAt: Date.now(), message: "AAAA0C0300044040210ECAF6" };
 			const packetTemplate = new PacketTemplate().incomingCommTemplate[3];
 
 			const packetModel = new PacketModelData({
 				packetTemplate,
 				packet: "AAAA0C0300044040210ECAF6",
-				created: Date.now(),
+				createdAt: Date.now(),
 				pos: 0
 			});
 
@@ -61,7 +61,7 @@ describe("UNIT - Models", async function() {
 				new PacketModelData({
 					packetTemplate: null,
 					packet: "AAAA0C0300044040210ECAF6",
-					created: Date.now(),
+					createdAt: Date.now(),
 					Pos: 0
 				});
 			expect(() => newPacket()).to.throw(Error, "Incorrect packet template object");
@@ -74,7 +74,7 @@ describe("UNIT - Models", async function() {
 				new PacketModelData({
 					packetTemplate: packetTemplate,
 					packet: 109109809801098098,
-					created: Date.now(),
+					createdAt: Date.now(),
 					pos: 0
 				});
 			expect(() => newPacket()).to.throw(Error, "Packet must be an string");
@@ -82,7 +82,7 @@ describe("UNIT - Models", async function() {
 			const newPacket2 = () =>
 				new PacketModelData({
 					packetTemplate: packetTemplate,
-					created: Date.now(),
+					createdAt: Date.now(),
 					pos: 0
 				});
 			expect(() => newPacket2()).to.throw(Error, "The Object is missing properties - packet");
@@ -94,7 +94,7 @@ describe("UNIT - Models", async function() {
 			const packetModel = new PacketModelList({
 				packetTemplate,
 				packet: "7f0da08302",
-				created: Date.now(),
+				createdAt: Date.now(),
 				pos: 1
 			});
 

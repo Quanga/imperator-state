@@ -112,7 +112,7 @@ describe("UNIT - Models", async function() {
 			const cu = new ControlUnitModel(22, null);
 			const cbb1 = new CBoosterModel(101, 22);
 			const cbb2 = new CBoosterModel(102, 22);
-			cbb1.data.created = 1010101;
+			cbb1.data.createdAt = 1010101;
 
 			await dataModel.upsertUnit(cu);
 			await dataModel.upsertUnit(cbb1);
@@ -120,19 +120,19 @@ describe("UNIT - Models", async function() {
 
 			expect(dataModel.controlUnit.units.unitsCount).to.be.equal(2);
 			expect(dataModel.units["101"].data.serial).to.be.equal(101);
-			expect(dataModel.units["101"].data.created).to.be.equal(1010101);
-			expect(dataModel.units["101"].data.modified).to.be.equal(null);
+			expect(dataModel.units["101"].data.createdAt).to.be.equal(1010101);
+			expect(dataModel.units["101"].data.modifiedAt).to.be.equal(null);
 			expect(dataModel.units["102"].data.serial).to.be.equal(102);
 
 			const ccb1Change = new CBoosterModel(101, null);
-			ccb1Change.data.created = 2010101;
+			ccb1Change.data.createdAt = 2010101;
 
 			ccb1Change.data.keySwitchStatus = 1;
 			let changeObj = await dataModel.upsertUnit(ccb1Change);
 
 			expect(dataModel.units["101"].data.keySwitchStatus).to.be.equal(1);
-			expect(dataModel.units["101"].data.created).to.be.equal(1010101);
-			expect(dataModel.units["101"].data.modified).to.be.equal(2010101);
+			expect(dataModel.units["101"].data.createdAt).to.be.equal(1010101);
+			expect(dataModel.units["101"].data.modifiedAt).to.be.equal(2010101);
 			expect(dataModel.controlUnit.units.keySwitchStatusCount).to.be.equal(1);
 
 			const ccb1Change2 = new CBoosterModel(101, null);

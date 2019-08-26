@@ -12,7 +12,7 @@ describe("UNIT - Parser", async function() {
          start  length  command   CBB serial    Data                    CRC
          AAAA   1C      05        0043          00001828ff00ff00        bf80
          */
-			let created = Date.now();
+			let createdAt = Date.now();
 
 			const expected = [
 				{
@@ -21,8 +21,8 @@ describe("UNIT - Parser", async function() {
 						serial: 65535,
 						typeId: 3,
 						parentType: 0,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						blastArmed: null,
@@ -46,8 +46,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -67,8 +67,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -88,8 +88,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -109,8 +109,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -130,8 +130,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -151,8 +151,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -172,8 +172,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -193,8 +193,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 65535,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -219,7 +219,7 @@ describe("UNIT - Parser", async function() {
 			const testObj = {
 				packet:
 					"aaaa3017ffffed0101f023ee01015424ef0101b824f001011c25f101018025f20101e425f301014826f40101ac262665",
-				created
+				createdAt
 			};
 
 			let parsedPacketArr = await parser.parse(testObj);

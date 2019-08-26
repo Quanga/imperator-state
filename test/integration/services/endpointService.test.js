@@ -7,13 +7,7 @@ const sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
-
-const timer = ms =>
-	new Promise(resolve => {
-		setTimeout(() => {
-			resolve();
-		}, ms);
-	});
+const util = require("../../helpers/utils");
 
 describe("INTEGRATION -- Services", async function() {
 	const sandbox = sinon.createSandbox();
@@ -62,13 +56,11 @@ describe("INTEGRATION -- Services", async function() {
 				expect(mesh._mesh.initialized).to.be.true;
 				console.log("INITIALIZED");
 
-				//const endpointServiceSpy = sinon.spy(mesh.exchange.endpointService, "start");
 				await mesh.start();
 				expect(mesh._mesh.started).to.be.true;
-				//expect(endpointServiceSpy).not.to.have.been.called;
 				console.log("STARTED");
 
-				await timer(2000);
+				await util.timer(2000);
 				console.log("STOPPING");
 				await mesh.stop();
 				expect(mesh._mesh.stopped).to.be.true;
@@ -94,7 +86,7 @@ describe("INTEGRATION -- Services", async function() {
 				console.log("STARTED");
 				expect(mesh._mesh.started).to.be.true;
 				//expect(endpointServiceSpy).to.have.been.calledOnce;
-				await timer(10000);
+				await util.timer(10000);
 
 				console.log("STOPPING");
 				await mesh.stop();
@@ -181,7 +173,7 @@ describe("INTEGRATION -- Services", async function() {
 				console.log("STARTED");
 				expect(mesh._mesh.started).to.be.true;
 				expect(endpointServiceSpy).to.have.been.calledOnce;
-				await timer(10000);
+				await util.timer(10000);
 
 				console.log("STOPPING");
 				epMesh.stop();
@@ -237,7 +229,7 @@ describe("INTEGRATION -- Services", async function() {
 							packet: new PacketConstructor(8, 8, {
 								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
 							}).packet,
-							created: Date.now()
+							createdAt: Date.now()
 						};
 						if (this.flip === 0) {
 							this.flip = 1;
@@ -288,14 +280,14 @@ describe("INTEGRATION -- Services", async function() {
 
 				const adminClient = new Happner.MeshClient({ secure: true, port: 55007 });
 				await adminClient.login({ username: "OEM", password: "oem" });
-				await timer(8000);
+				await util.timer(8000);
 
 				const result = await adminClient.exchange.dataService.getSnapShot();
 				const logs = await mesh.exchange.logsRepository.getAll();
 				console.log(result);
 				//console.log(logs);
 				expect(logs.length).to.be.equal(10);
-				await timer(2000);
+				await util.timer(2000);
 
 				console.log("STOPPING");
 				epMesh.stop();
@@ -351,7 +343,7 @@ describe("INTEGRATION -- Services", async function() {
 							packet: new PacketConstructor(8, 8, {
 								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
 							}).packet,
-							created: Date.now()
+							createdAt: Date.now()
 						};
 						if (this.flip === 0) {
 							this.flip = 1;
@@ -402,18 +394,18 @@ describe("INTEGRATION -- Services", async function() {
 
 				const adminClient = new Happner.MeshClient({ secure: true, port: 55007 });
 				await adminClient.login({ username: "OEM", password: "oem" });
-				await timer(4000);
+				await util.timer(4000);
 
 				console.log("STOPPING ENDPOINT");
 				epMesh.stop();
-				await timer(4000);
+				await util.timer(4000);
 
 				const result = await adminClient.exchange.dataService.getSnapShot();
 				const logs = await mesh.exchange.logsRepository.getAll();
 				console.log(result);
 				//console.log(logs);
 				expect(logs.length).to.be.equal(10);
-				await timer(2000);
+				await util.timer(2000);
 
 				console.log("STOPPING");
 				await mesh.stop();
@@ -468,7 +460,7 @@ describe("INTEGRATION -- Services", async function() {
 							packet: new PacketConstructor(8, 8, {
 								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
 							}).packet,
-							created: Date.now()
+							createdAt: Date.now()
 						};
 						if (this.flip === 0) {
 							this.flip = 1;
@@ -521,7 +513,7 @@ describe("INTEGRATION -- Services", async function() {
 
 				const adminClient = new Happner.MeshClient({ secure: true, port: 55007 });
 				await adminClient.login({ username: "OEM", password: "oem" });
-				await timer(4000);
+				await util.timer(4000);
 
 				console.log("STOPPING ENDPOINT");
 				await new Promise(resolve => {
@@ -537,21 +529,21 @@ describe("INTEGRATION -- Services", async function() {
 					);
 				});
 
-				await timer(2000);
+				await util.timer(2000);
 
 				console.log("RESTARTING ENDPOINT");
 				await epMesh.initialize(epConfig);
 				await epMesh.start();
 				expect(epMesh._mesh.started).to.be.true;
 
-				await timer(6000);
+				await util.timer(6000);
 
 				const result = await adminClient.exchange.dataService.getSnapShot();
 				const logs = await mesh.exchange.logsRepository.getAll();
 				console.log(result);
 				//console.log(logs);
 				expect(logs.length).to.be.equal(20);
-				await timer(2000);
+				await util.timer(2000);
 
 				console.log("STOPPING");
 				await mesh.stop();

@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 const pmx = require("@pm2/io");
-//const server = require("./server");
 const path = require("path");
 const os = require("os");
 const fs = require("fs");

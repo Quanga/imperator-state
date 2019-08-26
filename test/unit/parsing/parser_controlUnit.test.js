@@ -17,8 +17,8 @@ describe("UNIT - Parser", async function() {
 						serial: 1,
 						typeId: 0,
 						parentType: null,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: 1,
@@ -31,7 +31,7 @@ describe("UNIT - Parser", async function() {
 				}
 			];
 
-			// let packet = { created: Date.now(), message: "AAAA0A08000100C0CA96" };
+			// let packet = { createdAt: Date.now(), message: "AAAA0A08000100C0CA96" };
 			// let packetService = new PacketService();
 
 			// let parsed = await packetService.extractData(mockHappn, packet);
@@ -47,7 +47,7 @@ describe("UNIT - Parser", async function() {
 
 			const testObj = {
 				packet: "AAAA0A08000100C0CA96",
-				created: now
+				createdAt: now
 			};
 
 			let parsedPacketArr = await parser.parse(testObj);

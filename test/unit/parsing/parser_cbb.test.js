@@ -18,8 +18,8 @@ describe("UNIT - Parser", async function() {
 						serial: 67,
 						typeId: 3,
 						parentType: 0,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						blastArmed: null,
@@ -43,8 +43,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 67,
 						typeId: 4,
 						parentType: 3,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -64,8 +64,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 67,
 						typeId: 4,
 						parentType: 3,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -85,8 +85,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 67,
 						typeId: 4,
 						parentType: 3,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -106,8 +106,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 67,
 						typeId: 4,
 						parentType: 3,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -128,7 +128,7 @@ describe("UNIT - Parser", async function() {
 
 			var testObj = {
 				packet: "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac",
-				created: now
+				createdAt: now
 			};
 
 			let parsedPacketArr = await parser.parse(testObj);
@@ -161,8 +161,8 @@ describe("UNIT - Parser", async function() {
 						serial: 67,
 						typeId: 3,
 						parentType: 0,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						blastArmed: null,
@@ -186,8 +186,8 @@ describe("UNIT - Parser", async function() {
 						parentSerial: 67,
 						typeId: 4,
 						parentType: 3,
-						created: now,
-						modified: null,
+						createdAt: now,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -208,7 +208,7 @@ describe("UNIT - Parser", async function() {
 
 			var testObj = {
 				packet: "aaaa0d040043ffffffffff8a44",
-				created: now
+				createdAt: now
 			};
 
 			let parsedPacketArr = await parser.parse(testObj);

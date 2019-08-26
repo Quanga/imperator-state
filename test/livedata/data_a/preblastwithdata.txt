@@ -18,7 +18,7 @@
     "units": {
       "unitsCount": 1,
       "keySwitchStatusCount": 1,
-      "communicationStatusCount": 0
+      "communicationStatusCount": 1
     }
   },
   "units": {
@@ -28,9 +28,9 @@
         "typeId": 3,
         "parentType": 0,
         "created": 1564533180000,
-        "modified": 1564533180000,
+        "modified": 1564538194000,
         "path": "3/35",
-        "communicationStatus": 0,
+        "communicationStatus": 1,
         "blastArmed": 1,
         "keySwitchStatus": 1,
         "isolationRelay": 0,

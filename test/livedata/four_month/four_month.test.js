@@ -117,7 +117,7 @@ xdescribe("HUGE", async function() {
 							logType: x.logType,
 							parentSerial: x.parentSerial,
 							windowId: x.windowId,
-							modified: moment(x.modified, "x").format("HH:mm:ss.SSSS"),
+							modifiedAt: moment(x.modifiedAt, "x").format("HH:mm:ss.SSSS"),
 							counts: x.counts,
 							changes: x.changes
 						};

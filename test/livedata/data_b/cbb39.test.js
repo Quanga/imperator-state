@@ -108,33 +108,25 @@ describe("LIVE DATA", async function() {
 				await holdAsync();
 				await util.timer(8000);
 
-				let logs = await mesh.exchange.logsRepository.getAll();
+				let logs = await mesh.exchange.logsRepository.get("*");
 				console.log("LOGS", logs.length);
 
 				const logChanges = logs
-					.filter(s => s.serial === 39 || s.parentSerial === 39)
+					.filter(s => s.serial === 39)
 					.map(x => {
 						return {
 							serial: x.serial,
-							ip: ipInt(x.serial).toIP(),
 							typeId: x.typeId,
 							logType: x.logType,
-							parentSerial: x.parentSerial,
-							windowId: x.windowId,
-							modified: moment(x.modified, "x").format("HH:mm:ss.SSSS"),
-							counts: x.counts,
-							changes: x.changes
+							created: moment(x.createdAt, "x").format("HH:mm:ss.SSSS"),
+							events: x.events
 						};
 					});
-				//console.log(JSON.stringify(logChanges, null, 2));
 				fs.writeFileSync(
 					path.resolve(__dirname, "./39info.txt"),
 					JSON.stringify(logChanges, null, 2)
 				);
-				//test/livedata/data_a/
-				//let result3 = await mesh.exchange.dataService.getSnapShot();
 
-				//console.log(JSON.stringify(result3, null, 2));
 				console.log("STOPPING");
 
 				await mesh.stop();

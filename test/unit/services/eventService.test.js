@@ -16,12 +16,12 @@ const LogModel = require("../../../lib/models/logModel");
 
 describe("UNIT - Services", async function() {
 	context("EventService", async () => {
-		let mock, eventService, created;
+		let mock, eventService, createdAt;
 
 		beforeEach(() => {
 			mock = new Mock();
 			eventService = new EventService();
-			created = Date.now();
+			createdAt = Date.now();
 		});
 
 		afterEach(() => {
@@ -32,7 +32,7 @@ describe("UNIT - Services", async function() {
 			const send = {
 				type: "EDD_SIG",
 				serial: 34,
-				created,
+				createdAt,
 				typeId: 3
 			};
 
@@ -44,7 +44,7 @@ describe("UNIT - Services", async function() {
 			expect(sentLog).to.deep.equal({
 				serial: 34,
 				typeId: 3,
-				created,
+				createdAt,
 				logType: "EDD_SIG"
 			});
 			//console.log();
@@ -54,7 +54,7 @@ describe("UNIT - Services", async function() {
 			const send = {
 				type: "INSERT",
 				serial: 22,
-				created,
+				createdAt,
 				typeId: 3,
 				payload: [{ data: { serial: 22 } }]
 			};
@@ -68,7 +68,7 @@ describe("UNIT - Services", async function() {
 				logType: "UNIT_INSERT",
 				serial: 22,
 				typeId: 3,
-				created
+				createdAt
 			});
 			//console.log();
 		});
@@ -77,7 +77,7 @@ describe("UNIT - Services", async function() {
 			const send = {
 				type: "INSERT",
 				serial: 22,
-				created,
+				createdAt,
 				typeId: 3,
 				payload: [{ data: { serial: 22, typeId: 3 }, diff: { keyswitchStatus: 1 } }]
 			};
@@ -91,7 +91,7 @@ describe("UNIT - Services", async function() {
 				logType: "UNIT_INSERT",
 				serial: 22,
 				typeId: 3,
-				created,
+				createdAt,
 				events: [{ diff: { keyswitchStatus: 1 } }]
 			});
 		});
@@ -100,7 +100,7 @@ describe("UNIT - Services", async function() {
 			const send = {
 				type: "INSERT",
 				serial: 22,
-				created,
+				createdAt,
 				typeId: 3,
 				payload: [
 					{ data: { serial: 44323344, typeId: 4, windowId: 1 } },
@@ -117,7 +117,7 @@ describe("UNIT - Services", async function() {
 				logType: "DET_INSERT",
 				serial: 22,
 				typeId: 3,
-				created,
+				createdAt,
 				events: [{ serial: 44323344, windowId: 1 }, { serial: 44323334, windowId: 2 }]
 			});
 		});
@@ -126,7 +126,7 @@ describe("UNIT - Services", async function() {
 			const send = {
 				type: "UPDATE",
 				serial: 22,
-				created,
+				createdAt,
 				typeId: 3,
 				payload: [{ data: { serial: 22 }, diff: { keySwitchStatus: 1 } }]
 			};
@@ -140,7 +140,7 @@ describe("UNIT - Services", async function() {
 				logType: "UNIT_UPDATE",
 				serial: 22,
 				typeId: 3,
-				created,
+				createdAt,
 				events: [{ serial: 22, diff: { keySwitchStatus: 1 } }]
 			});
 			//console.log();
@@ -150,7 +150,7 @@ describe("UNIT - Services", async function() {
 			const send = {
 				type: "UPDATE",
 				serial: 22,
-				created,
+				createdAt,
 				typeId: 3,
 				payload: [
 					{ data: { serial: 44323344, typeId: 4, windowId: 1 }, diff: { detonatorStatus: 0 } },
@@ -167,7 +167,7 @@ describe("UNIT - Services", async function() {
 				logType: "DET_UPDATE",
 				serial: 22,
 				typeId: 3,
-				created,
+				createdAt,
 				events: [
 					{ serial: 44323344, windowId: 1, diff: { detonatorStatus: 0 } },
 					{ serial: 44323334, windowId: 2, diff: { detonatorStatus: 0 } }
@@ -178,7 +178,7 @@ describe("UNIT - Services", async function() {
 		it("can process a warning from an event object with 0 warnable events", async () => {
 			const logModel = new LogModel();
 			logModel.setType("UNIT_UPDATE");
-			logModel.setId({ serial: 22, typeId: 3, created });
+			logModel.setId({ serial: 22, typeId: 3, createdAt });
 			logModel.setEvents([{ diff: { keyswitchStatus: 1 } }]);
 
 			let persistWarnSpy = sandbox.spy(mock.exchange.eventService, "persistWarning");
@@ -192,7 +192,7 @@ describe("UNIT - Services", async function() {
 		it("can process a warning from an event object with 2 warnable events", async () => {
 			const logModel = new LogModel();
 			logModel.setType("UNIT_UPDATE");
-			logModel.setId({ serial: 22, typeId: 3, created });
+			logModel.setId({ serial: 22, typeId: 3, createdAt });
 			logModel.setEvents([{ diff: { keyswitchStatus: 1, cableFault: 1, earthLeakage: 1 } }]);
 
 			let persistWarnSpy = sandbox.spy(mock.exchange.eventService, "persistWarning");
@@ -206,7 +206,7 @@ describe("UNIT - Services", async function() {
 		it("can process a warning from an event object with 2 warnable events where one is 0", async () => {
 			const logModel = new LogModel();
 			logModel.setType("UNIT_UPDATE");
-			logModel.setId({ serial: 22, typeId: 3, created });
+			logModel.setId({ serial: 22, typeId: 3, createdAt });
 			logModel.setEvents([{ diff: { keyswitchStatus: 1, cableFault: 1, earthLeakage: 0 } }]);
 
 			let persistWarnSpy = sandbox.spy(mock.exchange.eventService, "persistWarning");

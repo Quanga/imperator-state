@@ -39,7 +39,7 @@ describe("UNIT - Utils", async () => {
 			// );
 		});
 		it("can construct a data packet with command 08", async () => {
-			const created = Date.now();
+			const createdAt = Date.now();
 
 			const expected = {
 				item: "ControlUnitModel",
@@ -47,8 +47,8 @@ describe("UNIT - Utils", async () => {
 					serial: 12,
 					typeId: 0,
 					parentType: null,
-					created: created,
-					modified: null,
+					createdAt: createdAt,
+					modifiedAt: null,
 					path: "",
 					communicationStatus: 1,
 					keySwitchStatus: 0,
@@ -70,7 +70,7 @@ describe("UNIT - Utils", async () => {
 			const testObj = {
 				packetTemplate: incomingTemplate,
 				packet: packetConstructor,
-				created,
+				createdAt,
 				pos: 0
 			};
 			const parsedPacketArr = await parser.parse(testObj);
@@ -92,8 +92,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: null,
 						typeId: 0,
 						parentType: null,
-						created: null,
-						modified: null,
+						createdAt: null,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -111,8 +111,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: 12,
 						typeId: 1,
 						parentType: 0,
-						created: null,
-						modified: null,
+						createdAt: null,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -129,8 +129,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: 12,
 						typeId: 1,
 						parentType: 0,
-						created: null,
-						modified: null,
+						createdAt: null,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -147,8 +147,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: 12,
 						typeId: 1,
 						parentType: 0,
-						created: null,
-						modified: null,
+						createdAt: null,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -170,7 +170,7 @@ describe("UNIT - Utils", async () => {
 			const testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[1],
 				packet: packetConstructor.packet,
-				created: Date.now(),
+				createdAt: Date.now(),
 				pos: 0
 			};
 
@@ -185,7 +185,7 @@ describe("UNIT - Utils", async () => {
 		});
 
 		it("can construct a list packet with command 02", async () => {
-			const created = Date.now();
+			const createdAt = Date.now();
 			var expected = [
 				{
 					item: "SectionControlModel",
@@ -193,8 +193,8 @@ describe("UNIT - Utils", async () => {
 						serial: 34,
 						typeId: 1,
 						parentType: 0,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -210,8 +210,8 @@ describe("UNIT - Utils", async () => {
 						serial: null,
 						typeId: 2,
 						parentType: 1,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -229,8 +229,8 @@ describe("UNIT - Utils", async () => {
 						serial: null,
 						typeId: 2,
 						parentType: 1,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -248,8 +248,8 @@ describe("UNIT - Utils", async () => {
 						serial: null,
 						typeId: 2,
 						parentType: 1,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: null,
@@ -274,7 +274,7 @@ describe("UNIT - Utils", async () => {
 			const testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[2],
 				packet: packetConstructor.packet,
-				created,
+				createdAt,
 				pos: 0
 			};
 
@@ -288,7 +288,7 @@ describe("UNIT - Utils", async () => {
 		});
 
 		it("can construct a data packet with command 03", async () => {
-			const created = Date.now();
+			const createdAt = Date.now();
 			const expected = [
 				{
 					item: "SectionControlModel",
@@ -296,8 +296,8 @@ describe("UNIT - Utils", async () => {
 						serial: 34,
 						typeId: 1,
 						parentType: 0,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: 1,
@@ -313,8 +313,8 @@ describe("UNIT - Utils", async () => {
 						serial: null,
 						typeId: 2,
 						parentType: 1,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: 1,
@@ -332,8 +332,8 @@ describe("UNIT - Utils", async () => {
 						serial: null,
 						typeId: 2,
 						parentType: 1,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						keySwitchStatus: 1,
@@ -358,7 +358,7 @@ describe("UNIT - Utils", async () => {
 			var testObj = {
 				packetTemplate: incomingTemplate,
 				packet: packetConstructor.packet,
-				created,
+				createdAt,
 				pos: 0
 			};
 
@@ -377,7 +377,7 @@ describe("UNIT - Utils", async () => {
 				data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
 			};
 
-			const created = Date.now();
+			const createdAt = Date.now();
 
 			const expected = [
 				{
@@ -386,8 +386,8 @@ describe("UNIT - Utils", async () => {
 						serial: 34,
 						typeId: 3,
 						parentType: 0,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						blastArmed: null,
@@ -411,8 +411,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: 34,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -432,8 +432,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: 34,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -456,7 +456,7 @@ describe("UNIT - Utils", async () => {
 			const testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[4],
 				packet: packetConstructor.packet,
-				created,
+				createdAt,
 				pos: 0
 			};
 
@@ -472,7 +472,7 @@ describe("UNIT - Utils", async () => {
 		});
 
 		it("can construct a data packet with command 05", async () => {
-			const created = Date.now();
+			const createdAt = Date.now();
 			let expected = [
 				{
 					item: "CBoosterModel",
@@ -480,8 +480,8 @@ describe("UNIT - Utils", async () => {
 						serial: 43,
 						typeId: 3,
 						parentType: 0,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						blastArmed: 0,
@@ -505,8 +505,8 @@ describe("UNIT - Utils", async () => {
 						parentSerial: 43,
 						typeId: 4,
 						parentType: 3,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						detonatorStatus: 0,
 						bridgeWire: 0,
@@ -544,7 +544,7 @@ describe("UNIT - Utils", async () => {
 			var testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[5],
 				packet: packetConstructor.packet,
-				created,
+				createdAt,
 				pos: 0
 			};
 
@@ -571,7 +571,7 @@ describe("UNIT - Utils", async () => {
 				]
 			};
 
-			const created = Date.now();
+			const createdAt = Date.now();
 			var expected = [
 				{
 					item: "CBoosterModel",
@@ -579,8 +579,8 @@ describe("UNIT - Utils", async () => {
 						serial: 43,
 						typeId: 3,
 						parentType: 0,
-						created,
-						modified: null,
+						createdAt,
+						modifiedAt: null,
 						path: "",
 						communicationStatus: 1,
 						blastArmed: 0,
@@ -607,7 +607,7 @@ describe("UNIT - Utils", async () => {
 			const testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[5],
 				packet: packetConstructor.packet,
-				created,
+				createdAt,
 				pos: 0
 			};
 
