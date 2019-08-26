@@ -19,7 +19,7 @@ module.exports = {
 				EDGE_LOCAL_LOG_FILE: "./edge.log",
 				LOG_LEVEL: "info",
 
-				USE_ENDPOINT: "true",
+				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "edge_ssot",
 				ENDPOINT_IP: "0.0.0.0",
 				ENDPOINT_PORT: "55004",
@@ -41,7 +41,7 @@ module.exports = {
 				EDGE_LOCAL_LOG_FILE: "./edge.log",
 				LOG_LEVEL: "info",
 
-				USE_ENDPOINT: "true",
+				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "edge_ssot",
 				ENDPOINT_IP: "0.0.0.0",
 				ENDPOINT_PORT: "55004",
@@ -72,7 +72,7 @@ module.exports = {
 			host: ["intelliblast-edge-001", "intelliblast-edge-002"],
 			ref: "origin/stage-1.1",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
-			path: "/home/edge/state",
+			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
 		},
 		production_aws: {

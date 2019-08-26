@@ -53,23 +53,23 @@ App.prototype.componentStart = function($happn) {
 
 	return (async () => {
 		try {
+			await stateService.updateState({ service: name, state: "PENDING" });
+			await systemService.upsertHistory({ started: Date.now() });
+
 			await app.checkStartupArgs();
 			await app.startPM2Actions();
-
-			stateService.updateState({ service: name, state: "PENDING" });
-			await systemService.upsertHistory({ started: Date.now() });
 
 			const config = await systemService.checkConfiguration();
 
 			if (!config.setupComplete) {
-				await stateService.updateState({ service: $happn.name, state: "INCOMPLETE" });
+				await stateService.updateState({ service: name, state: "INCOMPLETE" });
 				log.warn("Setup available but incomplete - run ui to complete");
 				log.warn("Then restart the process for changes to take effect!");
 			}
 
 			await app.startRouter();
 		} catch (err) {
-			console.log(err);
+			log.error(err);
 		}
 	})();
 };
@@ -84,12 +84,12 @@ App.prototype.componentStart = function($happn) {
  * @returns {Promise} void
  */
 App.prototype.componentStop = function($happn) {
-	const { log } = $happn;
-	const { systemService } = $happn.exchange;
+	const { systemService, stateService } = $happn.exchange;
+	const { name } = $happn;
 
 	return (async () => {
 		await systemService.upsertHistory({ stopped: Date.now() });
-		log.info("Stopping State Server Application.............");
+		await stateService.updateState({ service: name, state: "INCOMPLETE" });
 	})();
 };
 
@@ -111,7 +111,6 @@ App.prototype.componentStop = function($happn) {
 App.prototype.startRouter = function($happn) {
 	const { endpointService, stateService, dataService } = $happn.exchange;
 	const { env } = $happn.config;
-
 	const { log, name } = $happn;
 
 	return (async () => {
@@ -119,8 +118,8 @@ App.prototype.startRouter = function($happn) {
 			await dataService.initialise();
 			if (env.useEndpoint) await endpointService.start();
 
-			stateService.updateState({ service: name, state: "STARTED" });
 			log.info("::::: APP STARTUP COMPLETE ::::::");
+			await stateService.updateState({ service: name, state: "STARTED" });
 		} catch (err) {
 			log.error("start error", err);
 			process.exit(err.code || 1);

@@ -197,6 +197,8 @@ class Config {
 	}
 
 	parseEnv(env) {
+		if(env===true) return true;
+		
 		if (typeof env === "string") {
 			if (env === "true" || env === "TRUE") return true;
 			return false;
