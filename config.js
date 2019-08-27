@@ -100,7 +100,10 @@ class Config {
 				parserFactory: {},
 				packetService: {
 					startMethod: "start",
-					stopMethod: "stop"
+					stopMethod: "stop",
+					env: {
+						mode: overrideObj.mode || process.env.MODE || "CBB100"
+					}
 				},
 				dataService: {
 					startMethod: "componentStart",
@@ -197,8 +200,8 @@ class Config {
 	}
 
 	parseEnv(env) {
-		if(env===true) return true;
-		
+		if (env === true) return true;
+
 		if (typeof env === "string") {
 			if (env === "true" || env === "TRUE") return true;
 			return false;

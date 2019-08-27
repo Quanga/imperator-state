@@ -18,6 +18,7 @@ module.exports = {
 				EDGE_LOCAL_PORT: "55000",
 				EDGE_LOCAL_LOG_FILE: "./edge.log",
 				LOG_LEVEL: "info",
+				MODE: "AXXIS100",
 
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "edge_ssot",
@@ -40,6 +41,7 @@ module.exports = {
 				EDGE_LOCAL_PORT: "55000",
 				EDGE_LOCAL_LOG_FILE: "./edge.log",
 				LOG_LEVEL: "info",
+				MODE: "AXXIS500",
 
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "edge_ssot",
