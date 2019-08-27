@@ -10,29 +10,38 @@ module.exports = {
 			env: {
 				NODE_ENV: "development"
 			},
-			env_production: {
+			env_production001: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "edge_state",
+				EDGE_INSTANCE_NAME: "intelliblast-state-001",
 				MODE: "AXXIS100",
-
 				USE_ENDPOINT: true,
+				ENDPOINT_NAME: "intelliblast-edge-001",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
-
+				COMMUNICATION_CHECK_INTERVAL: 600000
+			},
+			env_production002: {
+				NODE_ENV: "production",
+				EDGE_INSTANCE_NAME: "intelliblast-state-002",
+				MODE: "AXXIS100",
+				USE_ENDPOINT: true,
+				ENDPOINT_NAME: "intelliblast-edge-002",
+				ENDPOINT_USERNAME: "intelliblast-state-002",
+				ENDPOINT_PASSWORD: "ibstate",
+				SYSTEM_FIRING_TIME: 120000,
+				SYSTEM_REPORT_TIME: 300000,
 				COMMUNICATION_CHECK_INTERVAL: 600000
 			},
 			env_production500: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				MODE: "AXXIS500",
-
 				USE_ENDPOINT: true,
+				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-
 				SYSTEM_FIRING_TIME: 420000,
 				SYSTEM_REPORT_TIME: 840000,
 
@@ -49,7 +58,7 @@ module.exports = {
 			ref: "origin/stage-1.1",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production001"
 		},
 		"production-intelliblast-edge-002": {
 			key: process.env.HOME + "/id_deploy",
@@ -58,7 +67,7 @@ module.exports = {
 			ref: "origin/stage-1.1",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production002"
 		},
 		production_aws: {
 			user: "ec2-user",

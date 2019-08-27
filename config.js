@@ -148,11 +148,9 @@ class Config {
 						systemFiringTime:
 							overrideObj.systemFiringTime ||
 							parseInt(process.env.SYSTEM_FIRING_TIME, 10) ||
-							2 * 60 * 1000,
+							120000,
 						systemReportTime:
-							overrideObj.systemReportTime ||
-							parseInt(process.env.SYSTEM_REPORT_TIME, 10) ||
-							3 * 60 * 1000
+							overrideObj.systemReportTime || parseInt(process.env.SYSTEM_REPORT_TIME, 10) || 180000
 					}
 				},
 				queueService: {
@@ -180,18 +178,6 @@ class Config {
 		};
 	}
 
-	// getDbPath() {
-	// 	const homedir = require("os").homedir();
-	// 	return path.resolve(homedir, "./edge/db/", process.env.EDGE_DB);
-	// }
-
-	// getLogsPath() {
-	// 	const homedir = require("os").homedir();
-
-	// 	//const homedir = "/var/edge";
-	// 	return path.resolve(homedir, "./edge/logs/", process.env.EDGE_LOCAL_LOG_FILE);
-	// }
-
 	getPath(subFolder, envParam) {
 		if (!envParam) return null;
 		return path.resolve(os.homedir(), `./edge/${subFolder}/`, envParam);
@@ -214,28 +200,3 @@ class Config {
 }
 
 module.exports = Config;
-
-/* 
-// env: {
-		// 	endpointName: overrideObj.endpointName || process.env.ENDPOINT_NAME,
-		// 	endpointUsername: overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME,
-		// 	meshInstance: null
-		// }
-
-		// if (overrideObj.useEndpoint || process.env.USE_ENDPOINT === "true") {
-		// 	const endpointName = overrideObj.endpointName || process.env.ENDPOINT_NAME;
-
-		// 	this.config.endpoints = {
-		// 		[endpointName]: {
-		// 			reconnect: {
-		// 				retries: 100 // default Infinity
-		// 			},
-		// 			config: {
-		// 				host: ,
-		//
-		//
-		// 			}
-		// 		}
-		// 	};
-		// }
-		*/
