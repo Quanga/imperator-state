@@ -24,11 +24,11 @@ module.exports = {
 			},
 			env_production002: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "intelliblast-state-002",
+				EDGE_INSTANCE_NAME: "intelliblast-state-001",
 				MODE: "AXXIS100",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
-				ENDPOINT_USERNAME: "intelliblast-state-002",
+				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
