@@ -36,7 +36,7 @@ describe("UNIT - Services", async function() {
 				typeId: 3
 			};
 
-			const logSpy = sandbox.spy(mock.exchange.logsRepository, "insertLog");
+			const logSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			await eventService.handleEvent(mock, send);
 			expect(logSpy).to.have.been.calledOnce;
 
@@ -59,7 +59,7 @@ describe("UNIT - Services", async function() {
 				payload: [{ data: { serial: 22 } }]
 			};
 
-			const logSpy = sandbox.spy(mock.exchange.logsRepository, "insertLog");
+			const logSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			await eventService.handleEvent(mock, send);
 			expect(logSpy).to.have.been.calledOnce;
 
@@ -82,7 +82,7 @@ describe("UNIT - Services", async function() {
 				payload: [{ data: { serial: 22, typeId: 3 }, diff: { keyswitchStatus: 1 } }]
 			};
 
-			const logSpy = sandbox.spy(mock.exchange.logsRepository, "insertLog");
+			const logSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			await eventService.handleEvent(mock, send);
 			expect(logSpy).to.have.been.calledOnce;
 
@@ -108,7 +108,7 @@ describe("UNIT - Services", async function() {
 				]
 			};
 
-			const logSpy = sandbox.spy(mock.exchange.logsRepository, "insertLog");
+			const logSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			await eventService.handleEvent(mock, send);
 			expect(logSpy).to.have.been.calledOnce;
 
@@ -118,7 +118,7 @@ describe("UNIT - Services", async function() {
 				serial: 22,
 				typeId: 3,
 				createdAt,
-				events: [{ serial: 44323344, windowId: 1 }, { serial: 44323334, windowId: 2 }]
+				events: [{ serial: 44323344, windowId: 1, "ip": "2.164.82.16" }, { serial: 44323334, windowId: 2, "ip": "2.164.82.6" }]
 			});
 		});
 
@@ -131,7 +131,7 @@ describe("UNIT - Services", async function() {
 				payload: [{ data: { serial: 22 }, diff: { keySwitchStatus: 1 } }]
 			};
 
-			const logSpy = sandbox.spy(mock.exchange.logsRepository, "insertLog");
+			const logSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			await eventService.handleEvent(mock, send);
 			expect(logSpy).to.have.been.calledOnce;
 
@@ -158,7 +158,7 @@ describe("UNIT - Services", async function() {
 				]
 			};
 
-			const logSpy = sandbox.spy(mock.exchange.logsRepository, "insertLog");
+			const logSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			await eventService.handleEvent(mock, send);
 			expect(logSpy).to.have.been.calledOnce;
 

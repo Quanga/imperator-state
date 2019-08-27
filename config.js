@@ -1,10 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-
-/***********************************************************
- HAPPNER configuration
- ***********************************************************/
-
 const path = require("path");
+const os = require("os");
 
 class Config {
 	constructor(overrideObj = {}) {
@@ -19,7 +15,10 @@ class Config {
 				logMessageDelimiter: "\t",
 				logDateFormat: null,
 				logLayout: null,
-				logFile: overrideObj.logFile || this.getLogsPath() || "edge.log",
+				logFile:
+					overrideObj.logFile ||
+					this.getPath("logs", process.env.EDGE_LOCAL_LOG_FILE) ||
+					this.getPath("logs", "./edge.log"),
 				logFileMaxSize: 1048576, // 1mb
 				logFileBackups: 5,
 				logFileNameAbsolute: true,
@@ -42,16 +41,10 @@ class Config {
 					},
 					data: {
 						config: {
-							filename: overrideObj.db || this.getDbPath() || `${__dirname}/data.db`
-						}
-					},
-					connect: {
-						config: {
-							middleware: {
-								security: {
-									exclusions: ["/*", "/system/*", "/system/index.html"]
-								}
-							}
+							filename:
+								overrideObj.db ||
+								this.getPath("db", process.env.EDGE_DB) ||
+								this.getPath("db", "./edge.db")
 						}
 					}
 				}
@@ -187,16 +180,21 @@ class Config {
 		};
 	}
 
-	getDbPath() {
-		const homedir = require("os").homedir();
-		return path.resolve(homedir, "./edge/db/", process.env.EDGE_DB);
-	}
+	// getDbPath() {
+	// 	const homedir = require("os").homedir();
+	// 	return path.resolve(homedir, "./edge/db/", process.env.EDGE_DB);
+	// }
 
-	getLogsPath() {
-		const homedir = require("os").homedir();
+	// getLogsPath() {
+	// 	const homedir = require("os").homedir();
 
-		//const homedir = "/var/edge";
-		return path.resolve(homedir, "./edge/logs/", process.env.EDGE_LOCAL_LOG_FILE);
+	// 	//const homedir = "/var/edge";
+	// 	return path.resolve(homedir, "./edge/logs/", process.env.EDGE_LOCAL_LOG_FILE);
+	// }
+
+	getPath(subFolder, envParam) {
+		if (!envParam) return null;
+		return path.resolve(os.homedir(), `./edge/${subFolder}/`, envParam);
 	}
 
 	parseEnv(env) {

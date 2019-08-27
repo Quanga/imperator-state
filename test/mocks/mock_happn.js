@@ -117,7 +117,7 @@ var MockHappn = function() {
 			}
 		},
 		logsRepository: {
-			insertLog: function(arg) {
+			set: function(arg) {
 				return new Promise((resolve, reject) => {
 					console.log("LOG CALLED");
 					resolve(arg);
