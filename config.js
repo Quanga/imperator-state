@@ -75,7 +75,11 @@ class Config {
 			},
 			components: {
 				systemService: {},
-				securityService: {},
+				securityService: {
+					env: {
+						meshName: overrideObj.name || process.env.EDGE_INSTANCE_NAME
+					}
+				},
 				systemRepository: {},
 				statsService: {},
 				data: {
