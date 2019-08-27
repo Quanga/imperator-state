@@ -102,7 +102,7 @@ class Config {
 					startMethod: "start",
 					stopMethod: "stop",
 					env: {
-						mode: overrideObj.mode || process.env.MODE || "CBB100"
+						mode: overrideObj.mode || process.env.MODE || "AXXIS100"
 					}
 				},
 				dataService: {
