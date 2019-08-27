@@ -8,4 +8,4 @@ aaaa - header
 00 - cfc data (Device type (us=1 ds=0),NA,NA,NA,ELT,cable fault,7 min fired, 2min fired)
 0000 - QOS firing - firing signals recieved
 02 - firmware version
-ebf8 - crc
+ebf8 - crc 
