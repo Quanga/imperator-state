@@ -13,7 +13,7 @@ module.exports = {
 			env_production001: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS100",
+				MODE: "AXXIS100_CFC",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-001",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
@@ -25,7 +25,7 @@ module.exports = {
 			env_production002: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS100",
+				MODE: "AXXIS100_CFC",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
