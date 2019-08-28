@@ -88,7 +88,7 @@ module.exports = {
 			ref: "origin/stage-1.1",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production002"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
 		},
 		production_aws: {
 			user: "ec2-user",
