@@ -54,7 +54,7 @@ describe("INTEGRATION - Units", async function() {
 			await serverHelper.stopServer();
 		});
 
-		it("can process a packet with CBBs 1 where no CBBs currently in database", async function() {
+		it("will fail to add a packet if there is no data in the packet", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
@@ -68,17 +68,12 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			const result = await client.exchange.nodeRepository.getAllNodes();
+			expect(result).to.be.instanceOf(Array);
+			expect(result.length).to.be.greaterThan(0);
 
-			if (result == null || result.length == 0) throw new Error("Empty result!");
-
-			let cbb = null;
-
-			result.forEach(x => {
-				if (parseInt(x.serial) === 12 && x.typeId === 3) cbb = x;
-			});
-
-			expect(cbb.communicationStatus).to.equal(1);
+			let cbb = result.filter(x => parseInt(x.serial) === 12 && x.typeId === 3);
+			expect(cbb.communicationStatus).to.be.undefined;
 		});
 
 		it("can process a packet with CBBs 1 and 2 EDDs where no CBBs currently in database", async function() {
@@ -96,20 +91,16 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
-			if (result == null || result.length == 0) throw new Error("Empty result!");
+			expect(result).to.be.instanceOf(Array);
+			expect(result.length).to.be.greaterThan(3);
 
-			let cbb = null,
-				edd1 = null,
-				edd2 = null;
-
-			await result.forEach(x => {
-				if (parseInt(x.serial) === 12 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4423423 && x.typeId === 4) edd1 = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd2 = x;
-			});
-
+			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
+
+			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
 			expect(edd1.detonatorStatus).to.equal(0);
+
+			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd2.detonatorStatus).to.equal(0);
 		});
 
@@ -141,20 +132,16 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
-			if (result == null || result.length == 0) throw new Error("Empty result!");
+			expect(result).to.be.instanceOf(Array);
+			expect(result.length).to.be.greaterThan(3);
 
-			let cbb = null,
-				edd1 = null,
-				edd2 = null;
-
-			await result.forEach(x => {
-				if (parseInt(x.serial) === 12 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4423423 && x.typeId === 4) edd1 = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd2 = x;
-			});
-
+			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
+
+			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
 			expect(edd1.detonatorStatus).to.equal(0);
+
+			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd2.detonatorStatus).to.equal(0);
 		});
 
@@ -201,20 +188,16 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(500);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
-			if (result == null || result.length == 0) throw new Error("Empty result!");
+			expect(result).to.be.instanceOf(Array);
+			expect(result.length).to.be.greaterThan(3);
 
-			let cbb = null,
-				edd1 = null,
-				edd2 = null;
-
-			await result.forEach(x => {
-				if (parseInt(x.serial) === 12 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4423423 && x.typeId === 4) edd1 = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd2 = x;
-			});
-
+			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
+
+			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
 			expect(edd1.detonatorStatus).to.equal(0);
+
+			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd2.detonatorStatus).to.equal(0);
 		});
 
@@ -270,21 +253,15 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			let resPersist = await client.exchange.nodeRepository.getAllNodes();
-			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
+			const result = await client.exchange.nodeRepository.getAllNodes();
+			expect(result).to.be.instanceOf(Array);
+			expect(result.length).to.be.greaterThan(3);
 
-			let cbb = null,
-				edd1 = null,
-				edd2 = null;
-
-			await resPersist.forEach(x => {
-				if (parseInt(x.serial) === 12 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4423423 && x.typeId === 4) edd1 = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd2 = x;
-			});
-
+			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
+			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
 			expect(edd1.detonatorStatus).to.equal(0);
+			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd2.detonatorStatus).to.equal(0);
 		});
 
@@ -378,9 +355,8 @@ describe("INTEGRATION - Units", async function() {
 				return { node: node.constructor.name, data: node };
 			});
 
-			const cbb = mappedNodes.filter(x => x.data.typeId === 3);
-			expect(cbb.length).to.eql(1);
-			expect(cbb[0].data.childCount).to.eql(0);
+			const cbb = mappedNodes.find(x => x.data.typeId === 3);
+			expect(cbb.data.childCount).to.eql(0);
 
 			expect(resData.units["22"].units.unitsCount).to.eql(0);
 		});

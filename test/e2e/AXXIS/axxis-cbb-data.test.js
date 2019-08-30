@@ -78,7 +78,8 @@ describe("INTEGRATION - Units", async function() {
 
 			let resultPresist = await client.exchange.nodeRepository.getAllNodes();
 			let resultDataService = await client.exchange.dataService.getSnapShot();
-			if (resultPresist == null || resultPresist.length === 0) throw new Error("Empty result!");
+			expect(resultPresist).to.be.instanceOf(Array);
+			expect(resultPresist.length).to.be.equal(2);
 
 			let cbb = await resultPresist.find(unit => parseInt(unit.serial) === 13 && unit.typeId === 3);
 
@@ -128,16 +129,11 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(3000);
 
 			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
-			console.log(resultPersist);
-			if (resultPersist === null || resultPersist.length === 0) throw new Error("Empty result!");
+			expect(resultPersist).to.be.instanceOf(Array);
+			expect(resultPersist.length).to.be.greaterThan(3);
 
-			let cbb = null,
-				edd1 = null;
-
-			await resultPersist.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
-			});
+			const cbb = resultPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
+			const edd1 = resultPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 
 			expect(cbb.communicationStatus).to.equal(1); // communication status
 			expect(edd1.windowId).to.equal(2); // communication status
@@ -206,22 +202,17 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			const resPersist = await client.exchange.nodeRepository.getAllNodes();
+			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+			expect(resultPersist).to.be.instanceOf(Array);
+			expect(resultPersist.length).to.be.greaterThan(3);
 
-			if (resPersist == null || resPersist.length === 0) throw new Error("Empty resPersist!");
-
-			let cbb = null,
-				edd1 = null;
-
-			resPersist.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
-			});
-
+			const cbb = resultPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
+			expect(cbb.childCount).to.equal(2);
+
+			const edd1 = resultPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd1.windowId).to.equal(2);
 			expect(edd1.delay).to.equal(3000);
-			expect(cbb.childCount).to.equal(2);
 
 			// let snapshot = await client.exchange.dataService.getSnapShot();
 			// console.log(JSON.stringify(snapshot));
@@ -276,14 +267,15 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(2000);
 
 			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			expect(resPersist).to.be.instanceOf(Array);
+			expect(resPersist.length).to.be.equal(3);
 
-			if (resPersist == null || resPersist.length === 0) throw new Error("Empty resPersist!");
+			let cbb = resPersist.find(x => x.typeId === 3);
+			expect(cbb.communicationStatus).to.equal(1); // communication status
 
-			let cbb = resPersist.filter(x => x.typeId === 3);
-			let edd = resPersist.filter(x => x.typeId === 4);
-			expect(cbb[0].communicationStatus).to.equal(1); // communication status
-			expect(edd[0].windowId).to.equal(2); // communication status
-			expect(edd[0].delay).to.equal(3000); // communication status
+			let edd = resPersist.find(x => x.typeId === 4);
+			expect(edd.windowId).to.equal(2); // communication status
+			expect(edd.delay).to.equal(3000); // communication status
 		});
 
 		it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
@@ -364,21 +356,17 @@ describe("INTEGRATION - Units", async function() {
 			});
 
 			await util.holdTillDrained(sendQueue);
-			await util.timer(3000);
+			await util.timer(1000);
+
 			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			expect(resPersist).to.be.instanceOf(Array);
+			expect(resPersist.length).to.be.greaterThan(3);
 
-			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
-
-			let cbb = null,
-				edd1 = null;
-
-			resPersist.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
-			});
-
+			const cbb = resPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
 			expect(cbb.childCount).to.equal(2);
+
+			const edd1 = resPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd1.windowId).to.equal(2);
 			expect(edd1.delay).to.equal(3000);
 		});
@@ -457,20 +445,15 @@ describe("INTEGRATION - Units", async function() {
 
 			await util.holdTillDrained(sendQueue);
 			await util.timer(1000);
+
 			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			expect(resPersist).to.be.instanceOf(Array);
+			expect(resPersist.length).to.be.greaterThan(3);
 
-			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
-
-			let cbb = null,
-				edd1 = null;
-
-			resPersist.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
-			});
-
+			const cbb = resPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
 			expect(cbb.childCount).to.equal(2);
+			const edd1 = resPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd1.windowId).to.equal(2);
 			expect(edd1.delay).to.equal(3000);
 		});

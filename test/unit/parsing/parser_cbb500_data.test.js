@@ -2,18 +2,15 @@ const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
 
+const PacketValidation = require("../../../lib/parsers/packetValidataion");
+
 describe("UNIT - Parser", async function() {
 	this.timeout(10000);
 
 	context("CBB500 DATA", async () => {
+		const validator = new PacketValidation();
+		let createdAt = Date.now();
 		it("can create a result array with nodes containing CBB & EDD data from a parsed packet", async function() {
-			/*
-
-         start  length  command   CBB serial    Data                    CRC
-         AAAA   1C      05        0043          00001828ff00ff00        bf80
-         */
-			let createdAt = Date.now();
-
 			const expected = [
 				{
 					itemType: "CBoosterModel",
@@ -222,9 +219,15 @@ describe("UNIT - Parser", async function() {
 				createdAt
 			};
 
-			let parsedPacketArr = await parser.parse(testObj);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[23].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
 
 			let result = await parser.buildNodeData(parsedPacketArr);
+			console.log(result);
 
 			let res = result.map(item => {
 				return {

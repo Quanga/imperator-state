@@ -1,6 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
+const PacketValidation = require("../../../lib/parsers/packetValidataion");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(30000);
@@ -8,152 +9,147 @@ describe("UNIT - Parser", async function() {
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
 	context("CBB100 LIST - Command 04", async () => {
-		it("can create an array of units containing CBB and EDD data from a packet", async function() {
-			let now = Date.now();
+		const validator = new PacketValidation();
+		let now = Date.now();
 
-			var expected = [
-				{
-					itemType: "CBoosterModel",
-					itemData: {
-						serial: 67,
-						typeId: 3,
-						parentType: 0,
-						createdAt: now,
-						modifiedAt: null,
-						path: "",
-						communicationStatus: 1,
-						blastArmed: null,
-						keySwitchStatus: null,
-						isolationRelay: null,
-						mains: null,
-						lowBat: null,
-						tooLowBat: null,
-						dcSupplyVoltage: null,
-						shaftFault: null,
-						cableFault: null,
-						earthLeakage: null,
-						ledState: null,
-						childCount: null
-					}
-				},
-				{
-					itemType: "EDDModel",
-					itemData: {
-						serial: 457435452,
-						parentSerial: 67,
-						typeId: 4,
-						parentType: 3,
-						createdAt: now,
-						modifiedAt: null,
-						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
-						delay: null,
-						windowId: 97
-					}
-				},
-				{
-					itemType: "EDDModel",
-					itemData: {
-						serial: 457435453,
-						parentSerial: 67,
-						typeId: 4,
-						parentType: 3,
-						createdAt: now,
-						modifiedAt: null,
-						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
-						delay: null,
-						windowId: 98
-					}
-				},
-				{
-					itemType: "EDDModel",
-					itemData: {
-						serial: 457435454,
-						parentSerial: 67,
-						typeId: 4,
-						parentType: 3,
-						createdAt: now,
-						modifiedAt: null,
-						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
-						delay: null,
-						windowId: 99
-					}
-				},
-				{
-					itemType: "EDDModel",
-					itemData: {
-						serial: 457435455,
-						parentSerial: 67,
-						typeId: 4,
-						parentType: 3,
-						createdAt: now,
-						modifiedAt: null,
-						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
-						delay: null,
-						windowId: 100
-					}
+		var expected = [
+			{
+				itemType: "CBoosterModel",
+				itemData: {
+					serial: 67,
+					typeId: 3,
+					parentType: 0,
+					createdAt: now,
+					modifiedAt: null,
+					path: "",
+					communicationStatus: 1,
+					blastArmed: null,
+					keySwitchStatus: null,
+					isolationRelay: null,
+					mains: null,
+					lowBat: null,
+					tooLowBat: null,
+					dcSupplyVoltage: null,
+					shaftFault: null,
+					cableFault: null,
+					earthLeakage: null,
+					ledState: null,
+					childCount: null
 				}
-			];
+			},
+			{
+				itemType: "EDDModel",
+				itemData: {
+					serial: 457435452,
+					parentSerial: 67,
+					typeId: 4,
+					parentType: 3,
+					createdAt: now,
+					modifiedAt: null,
+					path: "",
+					detonatorStatus: 0,
+					bridgeWire: 0,
+					calibration: 0,
+					program: 0,
+					boosterFired: 0,
+					tagged: 0,
+					logged: 0,
+					delay: null,
+					windowId: 97
+				}
+			},
+			{
+				itemType: "EDDModel",
+				itemData: {
+					serial: 457435453,
+					parentSerial: 67,
+					typeId: 4,
+					parentType: 3,
+					createdAt: now,
+					modifiedAt: null,
+					path: "",
+					detonatorStatus: 0,
+					bridgeWire: 0,
+					calibration: 0,
+					program: 0,
+					boosterFired: 0,
+					tagged: 0,
+					logged: 0,
+					delay: null,
+					windowId: 98
+				}
+			},
+			{
+				itemType: "EDDModel",
+				itemData: {
+					serial: 457435454,
+					parentSerial: 67,
+					typeId: 4,
+					parentType: 3,
+					createdAt: now,
+					modifiedAt: null,
+					path: "",
+					detonatorStatus: 0,
+					bridgeWire: 0,
+					calibration: 0,
+					program: 0,
+					boosterFired: 0,
+					tagged: 0,
+					logged: 0,
+					delay: null,
+					windowId: 99
+				}
+			},
+			{
+				itemType: "EDDModel",
+				itemData: {
+					serial: 457435455,
+					parentSerial: 67,
+					typeId: 4,
+					parentType: 3,
+					createdAt: now,
+					modifiedAt: null,
+					path: "",
+					detonatorStatus: 0,
+					bridgeWire: 0,
+					calibration: 0,
+					program: 0,
+					boosterFired: 0,
+					tagged: 0,
+					logged: 0,
+					delay: null,
+					windowId: 100
+				}
+			}
+		];
 
-			const packetTemplate = new PacketTemplate();
+		const packetTemplate = new PacketTemplate();
+		const parser = new DataListParser(packetTemplate.incomingCommTemplate[4]);
 
-			const parser = new DataListParser(packetTemplate.incomingCommTemplate[4]);
-
-			var testObj = {
+		it("can create an array of units containing CBB and EDD data from a packet", async function() {
+			const testObj = {
 				packet: "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac",
 				createdAt: now
 			};
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[4].chunk
+			);
 
-			let parsedPacketArr = await parser.parse(testObj);
+			const parsedPacketArr = await parser.parse(valid);
 
-			let result = await parser.buildNodeData(parsedPacketArr);
-			let res = result.map(item => {
+			const result = await parser.buildNodeData(parsedPacketArr);
+			const res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
 					itemData: item.data
 				};
 			});
 
-			await expect(res).to.deep.equal(expected);
+			expect(res).to.deep.equal(expected);
 		});
 
 		it("can process an edd delete command", async function() {
-			/*
-			aaaa0d040043ffffffffff8a44
-	
-			 start  length  command   CBB serial    Data                    CRC
-			 AAAA   1C      05        0043          00001828ff00ff00        bf80
-			 */
-
-			let now = Date.now();
-
 			var expected = [
 				{
 					itemType: "CBoosterModel",
@@ -206,22 +202,27 @@ describe("UNIT - Parser", async function() {
 
 			const parser = new DataListParser(packetTemplate.incomingCommTemplate[4]);
 
-			var testObj = {
+			const testObj = {
 				packet: "aaaa0d040043ffffffffff8a44",
 				createdAt: now
 			};
 
-			let parsedPacketArr = await parser.parse(testObj);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[4].chunk
+			);
 
-			let result = await parser.buildNodeData(parsedPacketArr);
-			let res = result.map(item => {
+			const parsedPacketArr = await parser.parse(valid);
+
+			const result = await parser.buildNodeData(parsedPacketArr);
+			const res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
 					itemData: item.data
 				};
 			});
 
-			await expect(res).to.deep.equal(expected);
+			expect(res).to.deep.equal(expected);
 		});
 	});
 });

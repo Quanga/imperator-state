@@ -4,6 +4,7 @@ var EventEmitter = require("events");
 var util = require("util");
 
 var MockHappn = function() {
+	this.name;
 	this.__queueLength = 1;
 	this.nodes = [];
 	this.emitter = new EventEmitter.EventEmitter();
@@ -16,6 +17,9 @@ var MockHappn = function() {
 			//throw err;
 		},
 		info: function(message) {
+			console.log(message);
+		},
+		warn: function(message) {
 			console.log(message);
 		}
 	};
@@ -67,7 +71,7 @@ var MockHappn = function() {
 		packetService: {
 			extractData: function(message) {
 				return new Promise(function(resolve) {
-					resolve({ message: message });
+					resolve();
 				});
 			}
 		},
@@ -134,6 +138,18 @@ var MockHappn = function() {
 		eventService: {
 			persistWarning: function(warn) {
 				console.log("Warning", warn);
+			},
+			logPacketError: function(error) {
+				return new Promise(resolve => {
+					resolve(error);
+				});
+			}
+		},
+		stateService: {
+			updateState: function() {
+				return new Promise((resolve, reject) => {
+					resolve();
+				});
 			}
 		}
 	};

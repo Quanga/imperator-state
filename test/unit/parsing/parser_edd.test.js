@@ -1,16 +1,20 @@
-var assert = require("assert");
+const chai = require("chai");
+const expect = chai.expect;
+chai.use(require("chai-match"));
+const PacketValidation = require("../../../lib/parsers/packetValidataion");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(30000);
 	context("CBB100 DATA - Command 05", async () => {
+		const createTime = Date.now();
+		const validator = new PacketValidation();
+
 		it("can create a result array with nodes containing CBB & EDD data from a parsed packet", async function() {
 			/*
 
          start  length  command   CBB serial    Data                    CRC
          AAAA   1C      05        0043          00001828ff00ff00        bf80
          */
-
-			const createTime = Date.now();
 
 			const expected = [
 				{
@@ -354,38 +358,35 @@ describe("UNIT - Parser", async function() {
 				}
 			];
 
-			let test = async () => {
-				try {
-					const DataListParser = require("../../../lib/parsers/deviceDataParser");
-					const PacketTemplate = require("../../../lib/constants/packetTemplates");
+			const DataListParser = require("../../../lib/parsers/deviceDataParser");
+			const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
-					const packetTemplate = new PacketTemplate();
+			const packetTemplate = new PacketTemplate();
 
-					const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
+			const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
 
-					const testObj = {
-						packet:
-							"aaaa4805004364008a211001dc05110140061201a4061301080714016c071501d00716013408170198081801fc08190160091a01c4091b01280a1c018c0a1d01f00a1e01540b8f97",
-						createdAt: createTime
-					};
-
-					let parsedPacketArr = await parser.parse(testObj);
-					let result = await parser.buildNodeData(parsedPacketArr);
-
-					let res = result.map(item => {
-						return {
-							itemType: item.constructor.name,
-							itemData: item.data
-						};
-					});
-
-					await assert.deepEqual(res, expected);
-				} catch (err) {
-					return Promise.reject(err);
-				}
+			const testObj = {
+				packet:
+					"aaaa4805004364008a211001dc05110140061201a4061301080714016c071501d00716013408170198081801fc08190160091a01c4091b01280a1c018c0a1d01f00a1e01540b8f97",
+				createdAt: createTime
 			};
 
-			return test();
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[5].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
+			let result = await parser.buildNodeData(parsedPacketArr);
+
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
+				};
+			});
+
+			expect(res).to.deep.equal(expected);
 		});
 
 		it("can test an packet", async function() {
@@ -397,12 +398,16 @@ describe("UNIT - Parser", async function() {
 			const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
 
 			const testObj = {
-				//packet: "aaaa0c05fffff40118607f2f",
-				packet: "aaaa0c05002762001929d64e",
+				packet: "aaaa1005001e010029290104a00f5acf",
 				createdAt: Date.now()
 			};
 
-			let parsedPacketArr = await parser.parse(testObj);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[5].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
 			let result = await parser.buildNodeData(parsedPacketArr);
 
 			let res = result.map(item => {

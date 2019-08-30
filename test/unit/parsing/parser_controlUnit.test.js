@@ -1,66 +1,72 @@
-var assert = require("assert");
+const chai = require("chai");
+const expect = chai.expect;
+chai.use(require("chai-match"));
+const PacketValidation = require("../../../lib/parsers/packetValidataion");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(2000);
 
 	context("CONTROL UNIT", async () => {
-		it("can create a node result array with one set of node data from a parsed packet", async function() {
-			/*
-         AAAA 0A 08 0001 00C0 CA96 (event on IBC-1 id 0001 - key switch armed on IBC)
-         */
-			let now = Date.now();
+		let now = Date.now();
 
-			const expected = [
-				{
-					itemType: "ControlUnitModel",
-					itemData: {
-						serial: 1,
-						typeId: 0,
-						parentType: null,
-						createdAt: now,
-						modifiedAt: null,
-						path: "",
-						communicationStatus: 1,
-						keySwitchStatus: 1,
-						fireButton: 0,
-						cableFault: 0,
-						isolationRelay: 1,
-						earthLeakage: 0,
-						blastArmed: 0
-					}
+		const expected = [
+			{
+				itemType: "ControlUnitModel",
+				itemData: {
+					serial: 1,
+					typeId: 0,
+					parentType: null,
+					createdAt: now,
+					modifiedAt: null,
+					path: "",
+					communicationStatus: 1,
+					keySwitchStatus: 1,
+					fireButton: 0,
+					cableFault: 0,
+					isolationRelay: 1,
+					earthLeakage: 0,
+					blastArmed: 0
 				}
-			];
+			}
+		];
+		const validator = new PacketValidation();
 
-			// let packet = { createdAt: Date.now(), message: "AAAA0A08000100C0CA96" };
-			// let packetService = new PacketService();
+		const DataListParser = require("../../../lib/parsers/deviceDataParser");
+		const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
-			// let parsed = await packetService.extractData(mockHappn, packet);
-			// let packetArr = await packetService.buildNodeData(mockHappn, parsed);
-			// let result = packetArr.map(ob => ob.data);
-			// await assert.deepEqual(result, expected);
-			const DataListParser = require("../../../lib/parsers/deviceDataParser");
-			const PacketTemplate = require("../../../lib/constants/packetTemplates");
+		const packetTemplate = new PacketTemplate();
 
-			const packetTemplate = new PacketTemplate();
-
-			const parser = new DataListParser(packetTemplate.incomingCommTemplate[8]);
-
+		const parser = new DataListParser(packetTemplate.incomingCommTemplate[8]);
+		it("can create a node result array with one set of node data from a parsed packet", async function() {
 			const testObj = {
 				packet: "AAAA0A08000100C0CA96",
 				createdAt: now
 			};
 
-			let parsedPacketArr = await parser.parse(testObj);
-			let result = await parser.buildNodeData(parsedPacketArr);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[8].chunk
+			);
 
-			let res = result.map(item => {
+			// AAAA 0A 08 0001 00C0 CA96
+			//                 ^^^^
+			// after packet validation
+			/*{ createdAt: 1567083781362,
+				packetSerial: 1,
+				command: 08,
+				dataPackets: [ '00C0' ] }*/
+
+			const parsedPacketArr = await parser.parse(valid);
+			const result = await parser.buildNodeData(parsedPacketArr);
+
+			const res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
 					itemData: item.data
 				};
 			});
 
-			await assert.deepEqual(res, expected);
+			await expect(res).to.deep.equal(expected);
 		});
 	});
 });
