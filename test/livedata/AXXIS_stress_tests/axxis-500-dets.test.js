@@ -51,8 +51,8 @@ describe("LIVE DATA", async function() {
 		});
 
 		beforeEach(async () => {
-			await client.exchange.logsRepository.deleteAll();
-			await client.exchange.warningsRepository.deleteAll();
+			await client.exchange.logsRepository.delete("*");
+			await client.exchange.warningsRepository.delete("");
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.dataService.clearDataModel();
 

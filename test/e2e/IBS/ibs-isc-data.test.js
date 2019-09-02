@@ -39,7 +39,7 @@ describe("UNIT - Parser", function() {
 		});
 
 		beforeEach("delete all current nodes", async function() {
-			client.exchange.nodeRepository.deleteAll();
+			client.exchange.nodeRepository.delete("*");
 		});
 
 		after("stop test server", async function() {

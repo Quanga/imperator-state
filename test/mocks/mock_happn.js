@@ -151,6 +151,13 @@ var MockHappn = function() {
 					resolve();
 				});
 			}
+		},
+		queueService: {
+			validatePacket: function() {
+				return new Promise((resolve, reject) => {
+					resolve();
+				});
+			}
 		}
 	};
 };

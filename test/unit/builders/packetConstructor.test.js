@@ -11,9 +11,12 @@ const DataListParser = require("../../../lib/parsers/deviceListParser");
 const DeviceDataParser = require("../../../lib/parsers/deviceDataParser");
 
 const PacketTemplate = require("../../../lib/constants/packetTemplates");
+const PacketValidation = require("../../../lib/parsers/packetValidataion");
 
 describe("UNIT - Utils", async () => {
 	context("001 PacketConstructor tests", async () => {
+		const validator = new PacketValidation();
+
 		it("will fail with the wrong constructor", async () => {
 			//constructor(command, parentSerial, data = { data: [] })
 			expect(() => new PacketConstructor()).to.throw(
@@ -32,11 +35,11 @@ describe("UNIT - Utils", async () => {
 			x = new PacketConstructor("8", 12, {
 				data: [0, 0, 0, 0, 0, 0, 0, 0]
 			}).packet;
-			console.log(x);
-			// expect(() => new PacketConstructor()).to.throw(
-			// 	Error,
-			// 	"No arguments supplied, cannot create PacketConstructor"
-			// );
+
+			expect(() => new PacketConstructor()).to.throw(
+				Error,
+				"No arguments supplied, cannot create PacketConstructor"
+			);
 		});
 		it("can construct a data packet with command 08", async () => {
 			const createdAt = Date.now();
@@ -65,6 +68,7 @@ describe("UNIT - Utils", async () => {
 			}).packet;
 
 			const incomingTemplate = new PacketTemplate().incomingCommTemplate[8];
+
 			const parser = new DeviceDataParser(incomingTemplate);
 
 			const testObj = {
@@ -73,7 +77,10 @@ describe("UNIT - Utils", async () => {
 				createdAt,
 				pos: 0
 			};
-			const parsedPacketArr = await parser.parse(testObj);
+
+			const valid = await validator.validatePacket(testObj, incomingTemplate.chunk);
+
+			const parsedPacketArr = await parser.parse(valid);
 			const result = await parser.buildNodeData(parsedPacketArr);
 
 			const res = result.map(item => {
@@ -184,7 +191,7 @@ describe("UNIT - Utils", async () => {
 			await expect(res).to.deep.equal(expected);
 		});
 
-		it("can construct a list packet with command 02", async () => {
+		xit("can construct a list packet with command 02", async () => {
 			const createdAt = Date.now();
 			var expected = [
 				{
@@ -287,7 +294,7 @@ describe("UNIT - Utils", async () => {
 			await expect(res).to.deep.equal(expected);
 		});
 
-		it("can construct a data packet with command 03", async () => {
+		xit("can construct a data packet with command 03", async () => {
 			const createdAt = Date.now();
 			const expected = [
 				{
@@ -393,6 +400,7 @@ describe("UNIT - Utils", async () => {
 						blastArmed: null,
 						keySwitchStatus: null,
 						isolationRelay: null,
+						lfs: null,
 						mains: null,
 						lowBat: null,
 						tooLowBat: null,
@@ -414,13 +422,13 @@ describe("UNIT - Utils", async () => {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 33
 					}
@@ -435,13 +443,13 @@ describe("UNIT - Utils", async () => {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 34
 					}
@@ -459,8 +467,12 @@ describe("UNIT - Utils", async () => {
 				createdAt,
 				pos: 0
 			};
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[4].chunk
+			);
 
-			let parsedPacketArr = await parser.parse(testObj);
+			let parsedPacketArr = await parser.parse(valid);
 
 			let result = await parser.buildNodeData(parsedPacketArr);
 
@@ -488,6 +500,7 @@ describe("UNIT - Utils", async () => {
 						keySwitchStatus: 1,
 						isolationRelay: 0,
 						mains: 0,
+						lfs: 1,
 						lowBat: 1,
 						tooLowBat: 0,
 						dcSupplyVoltage: 0,
@@ -541,14 +554,19 @@ describe("UNIT - Utils", async () => {
 
 			const parser = new DeviceDataParser(packetTemplate.incomingCommTemplate[5]);
 
-			var testObj = {
+			const testObj = {
 				packetTemplate: packetTemplate.incomingCommTemplate[5],
 				packet: packetConstructor.packet,
 				createdAt,
 				pos: 0
 			};
 
-			const parsedPacketArr = await parser.parse(testObj);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[5].chunk
+			);
+
+			const parsedPacketArr = await parser.parse(valid);
 
 			const result = await parser.buildNodeData(parsedPacketArr);
 
@@ -587,6 +605,7 @@ describe("UNIT - Utils", async () => {
 						keySwitchStatus: 1,
 						isolationRelay: 0,
 						mains: 0,
+						lfs: 1,
 						lowBat: 1,
 						tooLowBat: 0,
 						dcSupplyVoltage: 0,
@@ -611,7 +630,12 @@ describe("UNIT - Utils", async () => {
 				pos: 0
 			};
 
-			const parsedPacketArr = await parser.parse(testObj);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[5].chunk
+			);
+
+			const parsedPacketArr = await parser.parse(valid);
 			const result = await parser.buildNodeData(parsedPacketArr);
 
 			const res = result.map(item => {

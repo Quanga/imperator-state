@@ -34,7 +34,7 @@ describe("INTEGRATION - Units", async function() {
 
 		beforeEach(async () => {
 			await client.exchange.logsRepository.delete("*");
-			await client.exchange.warningsRepository.deleteAll();
+			await client.exchange.warningsRepository.delete("*");
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.dataService.clearDataModel();
 
@@ -98,10 +98,10 @@ describe("INTEGRATION - Units", async function() {
 			expect(cbb.communicationStatus).to.equal(1);
 
 			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.equal(0);
+			expect(edd1.detonatorStatus).to.be.null;
 
 			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.equal(0);
+			expect(edd2.detonatorStatus).to.be.null;
 		});
 
 		it("can process a second packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
@@ -139,10 +139,10 @@ describe("INTEGRATION - Units", async function() {
 			expect(cbb.communicationStatus).to.equal(1);
 
 			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.equal(0);
+			expect(edd1.detonatorStatus).to.be.null;
 
 			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.equal(0);
+			expect(edd2.detonatorStatus).to.be.null;
 		});
 
 		it("can process a third packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
@@ -195,10 +195,10 @@ describe("INTEGRATION - Units", async function() {
 			expect(cbb.communicationStatus).to.equal(1);
 
 			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.equal(0);
+			expect(edd1.detonatorStatus).to.be.null;
 
 			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.equal(0);
+			expect(edd2.detonatorStatus).to.be.null;
 		});
 
 		it("can handle a duplicate packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
@@ -260,9 +260,9 @@ describe("INTEGRATION - Units", async function() {
 			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1);
 			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.equal(0);
+			expect(edd1.detonatorStatus).to.null;
 			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.equal(0);
+			expect(edd2.detonatorStatus).to.null;
 		});
 
 		it("can clear the list of edds from the database for a CBB", async function() {

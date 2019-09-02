@@ -54,25 +54,18 @@ describe("LIVE DATA", async function() {
 			});
 
 		const removeDbItems = async mesh => {
-			await new Promise((resolve, reject) => {
-				mesh.exchange.data.remove(`persist/nodes/*`, null, (e, result) => {
-					if (e) {
-						return reject(e);
-					}
-					console.log(result);
-					resolve(result);
+			const paths = ["nodes", "logs", "packetLog"];
+			for (const pth of paths) {
+				await new Promise((resolve, reject) => {
+					mesh.exchange.data.remove(`persist/${pth}/*`, null, (e, result) => {
+						if (e) {
+							return reject(e);
+						}
+						console.log(result);
+						resolve(result);
+					});
 				});
-			});
-
-			await new Promise((resolve, reject) => {
-				mesh.exchange.data.remove(`persist/logs/*`, null, (e, result) => {
-					if (e) {
-						return reject(e);
-					}
-					console.log(result);
-					resolve(result);
-				});
-			});
+			}
 		};
 		it("can run the preblast informations", async () => {
 			try {
@@ -128,6 +121,8 @@ describe("LIVE DATA", async function() {
 				);
 
 				console.log("STOPPING");
+				let errpackets = await mesh.exchange.eventService.getPacketError("*");
+				console.log(JSON.stringify(errpackets));
 
 				await mesh.stop();
 				expect(mesh._mesh.stopped).to.be.true;

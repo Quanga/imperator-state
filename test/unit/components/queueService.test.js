@@ -30,7 +30,8 @@ describe("UNIT - Components", async function() {
 
 		it("can queue an incoming packet and will resolve null if there is an error", async () => {
 			const messageObj = {
-				packet: "987139872391827398",
+				packet:
+					"aaaa4805004d300029291001cc291101fe291201172a13011c2a1401302a1501492a16014e2a1701622a1801942a1901ad2a1a01b72a1b01df2a1c01f82a1d0100001e016400c98e",
 				createdAt: Date.now()
 			};
 			let packetSpy = sandbox.stub(mock.exchange.packetService, "extractData").resolves(null);
@@ -51,30 +52,36 @@ describe("UNIT - Components", async function() {
 			expect(dataServiceStub).to.have.been.calledOnce;
 		});
 
-		it("will return false if there is no created or id an incorrect format is supplied", async () => {
-			const msgObj = {
-				packet: "987139872391827398"
+		it("packet validation will fail if incorrect format is provided", async () => {
+			let msgObj = {
+				packet: "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac"
 			};
-			const warnSpy = sandbox.spy(mock.log, "warn");
 
-			await expect(queueService.processIncoming(mock, msgObj)).to.eventually.be.fulfilled.with
-				.false;
-
-			expect(warnSpy).to.have.been.calledOnceWith(
-				`Queue error: Packet ${msgObj} has and invalid date format`
+			await expect(queueService.validatePacket(mock, msgObj)).to.eventually.be.rejected.then(
+				value => {
+					expect(value.message).to.be.equal(`Packet ${msgObj} is missing Date property`);
+				}
 			);
-			warnSpy.resetHistory();
 
-			const msgObj2 = {
-				packet: "987139872391827398",
-				createdAt: 132123131212321312
+			msgObj = {
+				createdAt: null
 			};
 
-			await expect(queueService.processIncoming(mock, msgObj2)).to.eventually.be.fulfilled.with
-				.false;
+			await expect(queueService.validatePacket(mock, msgObj)).to.eventually.be.rejected.then(
+				value => {
+					expect(value.message).to.be.equal(`Packet ${msgObj} is missing Packet property`);
+				}
+			);
 
-			expect(warnSpy).to.have.been.calledOnceWith(
-				`Queue error: Packet ${msgObj} has and invalid date format`
+			msgObj = {
+				packet: "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac",
+				createdAt: null
+			};
+
+			await expect(queueService.validatePacket(mock, msgObj)).to.eventually.be.rejected.then(
+				value => {
+					expect(value.message).to.be.equal(`Packet ${msgObj} has and invalid date format`);
+				}
 			);
 		});
 	});

@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-vars */
 const chai = require("chai");
 const expect = chai.expect;
 chai.use(require("chai-match"));
 const PacketValidation = require("../../../lib/parsers/packetValidataion");
+const fs = require("fs");
+const path = require("path");
+//const util = require("../../helpers");
+const moment = require("moment");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(30000);
@@ -32,6 +37,7 @@ describe("UNIT - Parser", async function() {
 						isolationRelay: 0,
 						mains: 0,
 						lowBat: 0,
+						lfs: 1,
 						tooLowBat: 0,
 						dcSupplyVoltage: 1,
 						shaftFault: 0,
@@ -397,26 +403,58 @@ describe("UNIT - Parser", async function() {
 
 			const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
 
-			const testObj = {
-				packet: "aaaa1005001e010029290104a00f5acf",
-				createdAt: Date.now()
-			};
+			const p2 = [
+				{
+					packet: "aaaa0c05004d000d002a328c",
+					createdAt: 1567152123000
+				}
+			];
 
-			const valid = await validator.validatePacket(
-				testObj,
-				packetTemplate.incomingCommTemplate[5].chunk
-			);
+			// const testObj = {
+			// 	packet: "aaaa1805004d300029292e0964002f0996003009af002652",
+			// 	createdAt: Date.now()
+			// };
 
-			let parsedPacketArr = await parser.parse(valid);
-			let result = await parser.buildNodeData(parsedPacketArr);
+			let resArr = [];
 
-			let res = result.map(item => {
-				return {
-					itemType: item.constructor.name,
-					itemData: item.data
-				};
-			});
-			console.log("RESULT", res);
+			for (const packetOb of p2) {
+				packetOb.createdAt = moment(packetOb.createdAt).format("x");
+				console.log(packetOb);
+
+				const valid = await validator.validatePacket(
+					packetOb,
+					packetTemplate.incomingCommTemplate[5].chunk
+				);
+
+				let parsedPacketArr = await parser.parse(valid);
+				let result = await parser.buildNodeData(parsedPacketArr);
+
+				let res = result.map(item => {
+					return {
+						itemType: item.constructor.name,
+						itemData: item.data
+					};
+				});
+				//console.log(res);
+				resArr.push(res);
+			}
+
+			//fs.writeFileSync(path.resolve(__dirname, `./ALL.txt`), JSON.stringify(resArr, null, 2));
+			// const valid = await validator.validatePacket(
+			// 	testObj,
+			// 	packetTemplate.incomingCommTemplate[5].chunk
+			// );
+			//await util.timer(1000);
+			// let parsedPacketArr = await parser.parse(valid);
+			// let result = await parser.buildNodeData(parsedPacketArr);
+
+			// let res = result.map(item => {
+			// 	return {
+			// 		itemType: item.constructor.name,
+			// 		itemData: item.data
+			// 	};
+			// });
+			// console.log("RESULT", res);
 
 			//await assert.deepEqual(res, expected);
 		});

@@ -38,7 +38,7 @@ describe("INTEGRATION - Units", function() {
 		});
 
 		beforeEach(async () => {
-			client.exchange.nodeRepository.deleteAll();
+			client.exchange.nodeRepository.delete("*");
 		});
 
 		after(async () => {

@@ -17,13 +17,6 @@ describe("INTEGRATION - Units", async function() {
 		}, task.wait);
 	});
 
-	const holdAsync = () =>
-		new Promise(resolve => {
-			sendQueue.on("drain", () => {
-				return resolve();
-			});
-		});
-
 	const AsyncLogin = () =>
 		new Promise((resolve, reject) => {
 			client.on("login/allow", () => {
@@ -61,7 +54,7 @@ describe("INTEGRATION - Units", async function() {
 
 		beforeEach(async () => {
 			await client.exchange.logsRepository.delete("*");
-			await client.exchange.warningsRepository.deleteAll();
+			await client.exchange.warningsRepository.delete("*");
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.dataService.clearDataModel();
 
@@ -102,7 +95,7 @@ describe("INTEGRATION - Units", async function() {
 				wait: 300
 			});
 
-			await holdAsync();
+			await utils.holdTillDrained(sendQueue);
 			await utils.timer(2000);
 
 			let result = await client.exchange.nodeRepository.getAllNodes();
@@ -140,7 +133,7 @@ describe("INTEGRATION - Units", async function() {
 				wait: 300
 			});
 
-			await holdAsync();
+			await utils.holdTillDrained(sendQueue);
 			await utils.timer(1000);
 			let result = await client.exchange.nodeRepository.getAllNodes();
 

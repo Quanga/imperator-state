@@ -25,6 +25,7 @@ describe("UNIT - Parser", async function() {
 						blastArmed: null,
 						keySwitchStatus: null,
 						isolationRelay: null,
+						lfs: null,
 						mains: null,
 						lowBat: null,
 						tooLowBat: null,

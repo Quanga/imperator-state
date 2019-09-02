@@ -44,7 +44,7 @@ describe("IBS - 651 data test", async function() {
 	});
 
 	beforeEach("delete all current nodes", async function() {
-		client.exchange.nodeRepository.deleteAll();
+		client.exchange.nodeRepository.delete("*");
 	});
 
 	after("stop test server", async function() {
@@ -96,8 +96,7 @@ describe("IBS - 651 data test", async function() {
 			try {
 				let result = await client.exchange.nodeRepository.getAllNodes();
 
-				if (result == null || result.length == 0)
-					throw new Error("Empty result!");
+				if (result == null || result.length == 0) throw new Error("Empty result!");
 
 				var isc = null,
 					ib651_1 = null,

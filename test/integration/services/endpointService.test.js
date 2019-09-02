@@ -272,7 +272,7 @@ describe("INTEGRATION -- Services", async function() {
 				console.log("INITIALIZED");
 				expect(mesh._mesh.initialized).to.be.true;
 				const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
-				await mesh.exchange.logsRepository.deleteAll();
+				await mesh.exchange.logsRepository.delete("*");
 				await mesh.start();
 				console.log("STARTED");
 				expect(mesh._mesh.started).to.be.true;
@@ -386,7 +386,7 @@ describe("INTEGRATION -- Services", async function() {
 				console.log("INITIALIZED");
 				expect(mesh._mesh.initialized).to.be.true;
 				const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
-				await mesh.exchange.logsRepository.deleteAll();
+				await mesh.exchange.logsRepository.delete("*");
 				await mesh.start();
 				console.log("STARTED");
 				expect(mesh._mesh.started).to.be.true;
@@ -505,7 +505,7 @@ describe("INTEGRATION -- Services", async function() {
 				console.log("INITIALIZED");
 				expect(mesh._mesh.initialized).to.be.true;
 				const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
-				await mesh.exchange.logsRepository.deleteAll();
+				await mesh.exchange.logsRepository.delete("*");
 				await mesh.start();
 				console.log("STARTED");
 				expect(mesh._mesh.started).to.be.true;

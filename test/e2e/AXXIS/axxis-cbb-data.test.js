@@ -35,7 +35,7 @@ describe("INTEGRATION - Units", async function() {
 
 		beforeEach("delete all current nodes, logs, warnings", async function() {
 			await client.exchange.logsRepository.delete("*");
-			await client.exchange.warningsRepository.deleteAll();
+			await client.exchange.warningsRepository.delete("*");
 			await client.exchange.nodeRepository.delete("*");
 			await client.exchange.dataService.clearDataModel();
 
