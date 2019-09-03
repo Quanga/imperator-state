@@ -8,7 +8,8 @@ var MockHappn = function() {
 	this.emitter = new Events.EventEmitter();
 
 	this.emit = function(message) {
-		this.emitter.emit(message);
+		console.log("EMITTING", message);
+		//this.emitter.emit(message);
 	};
 
 	this.log = {
@@ -115,7 +116,7 @@ var MockHappn = function() {
 		logsRepository: {
 			set: function(arg) {
 				return new Promise((resolve, reject) => {
-					console.log("LOG CALLED");
+					console.log("LOG CALLED", arg);
 					resolve(arg);
 				});
 			}
@@ -131,7 +132,7 @@ var MockHappn = function() {
 			persistWarning: function(warn) {
 				console.log("Warning", warn);
 			},
-			logPacketError: function(error) {
+			processWarnings: function(error) {
 				return new Promise(resolve => {
 					resolve(error);
 				});
