@@ -5,6 +5,7 @@ chai.use(require("chai-match"));
 // const sinon = require("sinon");
 // const sinonChai = require("sinon-chai");
 // const chaiPromise = require("chai-as-promised");
+const PacketValidation = require("../../../lib/parsers/packetValidataion");
 
 describe("UNIT - Parser", async function() {
 	this.timeout(2000);
@@ -12,6 +13,8 @@ describe("UNIT - Parser", async function() {
 	const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
 	context("CBB500 LIST", async () => {
+		const validator = new PacketValidation();
+
 		it("can create a result array with nodes containing CBB and EDD data from a parsed packet", async function() {
 			const createdAt = Date.now();
 			var expected = [
@@ -29,6 +32,7 @@ describe("UNIT - Parser", async function() {
 						keySwitchStatus: null,
 						isolationRelay: null,
 						mains: null,
+						lfs: null,
 						lowBat: null,
 						tooLowBat: null,
 						dcSupplyVoltage: null,
@@ -49,13 +53,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 381
 					}
@@ -70,13 +74,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 382
 					}
@@ -91,13 +95,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 383
 					}
@@ -112,13 +116,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 384
 					}
@@ -133,13 +137,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 385
 					}
@@ -154,13 +158,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 386
 					}
@@ -175,13 +179,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 387
 					}
@@ -196,13 +200,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 388
 					}
@@ -217,13 +221,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 389
 					}
@@ -238,13 +242,13 @@ describe("UNIT - Parser", async function() {
 						createdAt,
 						modifiedAt: null,
 						path: "",
-						detonatorStatus: 0,
-						bridgeWire: 0,
-						calibration: 0,
-						program: 0,
-						boosterFired: 0,
-						tagged: 0,
-						logged: 0,
+						detonatorStatus: null,
+						bridgeWire: null,
+						calibration: null,
+						program: null,
+						boosterFired: null,
+						tagged: null,
+						logged: null,
 						delay: null,
 						windowId: 390
 					}
@@ -261,7 +265,12 @@ describe("UNIT - Parser", async function() {
 				createdAt
 			};
 
-			let parsedPacketArr = await parser.parse(testObj);
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[22].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
 
 			let result = await parser.buildNodeData(parsedPacketArr);
 			let res = result.map(item => {

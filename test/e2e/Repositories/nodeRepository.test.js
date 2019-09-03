@@ -1,67 +1,67 @@
 /* eslint-disable no-unused-vars */
-const expect = require("expect.js");
+/* eslint-disable no-unused-vars */
+const chai = require("chai");
+const expect = chai.expect;
+chai.use(require("chai-match"));
+const sinon = require("sinon");
+const sinonChai = require("sinon-chai");
+chai.use(sinonChai);
+
 var Mesh = require("happner-2");
-const ServerHelper = require("../../helpers/server_helper");
 const PacketConstructor = require("../../../lib/builders/packetConstructor");
 const util = require("../../helpers/utils");
 const Queue = require("better-queue");
-
+const Happner = require("happner-2");
+const Config = require("../../../config");
 describe("E2E - Repository", async function() {
 	this.timeout(10000);
 
-	let client = null;
-	const sendQueue = new Queue((task, cb) => {
-		setTimeout(() => {
-			client.exchange.queueService.processIncoming(task.message);
-			cb();
-		}, task.wait);
-	});
-
-	const holdAsync = () =>
-		new Promise(resolve => {
-			sendQueue.on("drain", () => {
-				return resolve();
-			});
-		});
-
-	const AsyncLogin = () =>
-		new Promise((resolve, reject) => {
-			client = new Mesh.MeshClient({
-				secure: true,
-				port: 55000
-			});
-
-			client.on("login/allow", () => resolve());
-			client.on("login/deny", () => reject());
-			client.on("login/error", () => reject());
-			client.login({
-				username: "_ADMIN",
-				password: "happn"
-			});
-		});
-
-	let serverHelper = new ServerHelper();
 	context("Node Repository", async () => {
-		before(async () => {
-			try {
-				// await serialPortHelper.initialise();
-				await serverHelper.startServer();
-				await AsyncLogin();
-			} catch (err) {
-				return Promise.reject(err);
-			}
+		let mesh, config;
+
+		const sendQueue = new Queue((task, cb) => {
+			setTimeout(() => {
+				mesh.exchange.queueService.processIncoming(task.message).then(() => cb());
+			}, task.wait);
 		});
+
+		const override = {
+			logLevel: "info",
+			name: "edge_state",
+			db: "./edge.db",
+			host: "0.0.0.0",
+			port: 55007,
+			logFile: "./test_edge.log",
+			useEndpoint: false,
+			endpointName: "edge_ssot",
+			endpointIP: "0.0.0.0",
+			endpointPort: 55008,
+			endpointCheckInterval: 3000,
+			endpointUsername: "UNIT001",
+			endpointPassword: "happn",
+			systemFiringTime: 120000,
+			systemReportTime: 180000,
+			communicationCheckInterval: 300000
+		};
 
 		beforeEach(async () => {
-			await client.exchange.logsRepository.delete("*");
-			await client.exchange.warningsRepository.delete("");
-			await client.exchange.nodeRepository.delete("*");
-			await client.exchange.dataService.clearDataModel();
+			config = new Config(override).configuration;
+			mesh = new Happner();
+
+			await mesh.initialize(config);
+			await mesh.start();
+
+			await mesh.exchange.nodeRepository.delete("*");
+			await mesh.exchange.logsRepository.delete("*");
+			await mesh.exchange.warningsRepository.delete("*");
+			await mesh.exchange.blastRepository.delete("*");
+			await mesh.exchange.dataService.clearDataModel();
+
+			expect(mesh._mesh.started).to.be.true;
 		});
 
 		after(async () => {
-			client.disconnect();
-			await serverHelper.stopServer();
+			await mesh.stop();
 		});
 
 		it("can get the dets for a cbb by using the path", async function() {
@@ -70,7 +70,7 @@ describe("E2E - Repository", async function() {
 					packet: new PacketConstructor(8, 8, {
 						data: [0, 0, 0, 0, 0, 0, 0, 1]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -80,7 +80,7 @@ describe("E2E - Repository", async function() {
 					packet: new PacketConstructor(4, 13, {
 						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -102,7 +102,7 @@ describe("E2E - Repository", async function() {
 							}
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
@@ -124,15 +124,16 @@ describe("E2E - Repository", async function() {
 							}
 						]
 					}).packet,
-					created: Date.now()
+					createdAt: Date.now()
 				},
 				wait: 300
 			});
 
-			await holdAsync();
+			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			const dets = await client.exchange.nodeRepository.getDetonators("3/13");
+			const dets = await mesh.exchange.nodeRepository.getPersisted("3/13/*");
+			console.log("DETS", dets);
 			expect(dets[1].logged).to.eql(1);
 			expect(dets[1].detonatorStatus).to.eql(0);
 		});

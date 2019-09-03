@@ -67,7 +67,7 @@ module.exports = {
 			key: process.env.HOME + "/id_deploy",
 			user: "admin",
 			host: "intelliblast-edge-001",
-			ref: "origin/stage-1.1",
+			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production001"
@@ -76,7 +76,7 @@ module.exports = {
 			key: process.env.HOME + "/id_deploy",
 			user: "admin",
 			host: "intelliblast-edge-002",
-			ref: "origin/stage-1.1",
+			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production002"
@@ -85,7 +85,7 @@ module.exports = {
 			key: process.env.HOME + "/id_deploy",
 			user: "admin",
 			host: "aece",
-			ref: "origin/stage-1.1",
+			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
@@ -94,7 +94,7 @@ module.exports = {
 			user: "ec2-user",
 			key: "~/aws_rsa.pem",
 			host: "ec2-18-222-47-118.us-east-2.compute.amazonaws.com",
-			ref: "origin/master",
+			ref: "origin/statge-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"

@@ -52,7 +52,7 @@ class ServerHelper {
 					console.log(`${data}`);
 					this.emitter.emit("data", data);
 					if (
-						data.toString().match(/STARTUP COMPLETE/) ||
+						data.toString().match(/::::: APP STARTUP COMPLETE ::::::/g) ||
 						data.toString().match(/SERVER SHUTDOWN/)
 					) {
 						resolve();

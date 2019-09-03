@@ -45,24 +45,23 @@ describe("UNIT - Models", async function() {
 			expect(insertCall).to.be.instanceOf(ControlUnitModel);
 		});
 
-		it("will throw if the control unit does not match the current", async function() {
+		it("will return an Object with an error if the control unit does not match the current", async () => {
 			const dataModel = new DataModel();
 
 			await expect(dataModel.upsertUnit(new ControlUnitModel(22)))
-				.to.eventually.be.have.property("action")
+				.to.eventually.have.property("action")
 				.to.be.equal("INSERT");
 
 			const errMsg =
 				"Control Unit 35 does not match current serial 22. Please re-initialise the system";
-			await expect(dataModel.upsertUnit(new ControlUnitModel(35))).to.eventually.be.rejectedWith(
-				Error,
-				errMsg
-			);
+			await expect(dataModel.upsertUnit(new ControlUnitModel(35)))
+				.to.eventually.have.property("action")
+				.to.be.equal("ERROR");
 
 			expect(dataModel.controlUnit.data.serial).to.equal(22);
 		});
 
-		it("can create a new  dataModel and add a ccb and then 2 cbbs to it", async function() {
+		it("can create a new  dataModel and add a ccb and then 2 cbbs to it", async () => {
 			const dataModel = new DataModel();
 			const insertSpy = sandbox.spy(dataModel, "insertUnit");
 
@@ -87,7 +86,7 @@ describe("UNIT - Models", async function() {
 			expect(insertSpy).to.have.been.calledThrice;
 		});
 
-		it("can create a new  dataModel and add a ccb and 2 cbbs and change value on ccb", async function() {
+		it("can create a new  dataModel and add a ccb and 2 cbbs and change value on ccb", async () => {
 			const dataModel = new DataModel();
 			const cu = new ControlUnitModel(22);
 			const cbb1 = new CBoosterModel(101);
@@ -107,7 +106,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["102"].data.serial).to.be.equal(102);
 		});
 
-		it("can create a new  dataModel and add a CCB and 2 CBBS and change value on CBB", async function() {
+		it("can create a new  dataModel and add a CCB and 2 CBBS and change value on CBB", async () => {
 			const dataModel = new DataModel();
 			const cu = new ControlUnitModel(22, null);
 			const cbb1 = new CBoosterModel(101, 22);
@@ -145,7 +144,7 @@ describe("UNIT - Models", async function() {
 			//console.log("CHANGE", changeObj);
 		});
 
-		it("can create a new  dataModel and add a CCB and 2 CBBS and add 2 EDDs", async function() {
+		it("can create a new  dataModel and add a CCB and 2 CBBS and add 2 EDDs", async () => {
 			const dataModel = new DataModel();
 			const cu = new ControlUnitModel(22);
 			const cbb1 = new CBoosterModel(101);
@@ -184,7 +183,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.detonatorStatusCount).to.be.equal(2);
 		});
 
-		it("can aggregate the cbb states into the control unit", async function() {
+		it("can aggregate the cbb states into the control unit", async () => {
 			const dataModel = new DataModel();
 
 			await dataModel.upsertUnit(new ControlUnitModel(22));
@@ -229,7 +228,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.controlUnit.units.communicationStatusCount).to.be.equal(1);
 		});
 
-		it("can aggregate the edd states into the CBB unit", async function() {
+		it("can aggregate the edd states into the CBB unit", async () => {
 			const dataModel = new DataModel();
 
 			await dataModel.upsertUnit(new ControlUnitModel(22));
@@ -265,7 +264,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.taggedCount).to.be.equal(1);
 		});
 
-		it("can correctly handle program counts", async function() {
+		it("can correctly handle program counts", async () => {
 			const dataModel = new DataModel();
 
 			await dataModel.upsertUnit(new ControlUnitModel(22));
@@ -316,7 +315,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.programCount).to.be.equal(2);
 		});
 
-		it("can correctly handle program counts larger scale", async function() {
+		it("can correctly handle program counts larger scale", async () => {
 			const dataModel = new DataModel();
 
 			await dataModel.upsertUnit(new ControlUnitModel(22));

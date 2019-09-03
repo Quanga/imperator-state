@@ -1,73 +1,74 @@
-//const expect = require("expect.js");
-const ServerHelper = require("../../helpers/server_helper");
-const Mesh = require("happner-2");
+/* eslint-disable no-unused-vars */
+const chai = require("chai");
+const expect = chai.expect;
+chai.use(require("chai-match"));
+const sinon = require("sinon");
+const sinonChai = require("sinon-chai");
+chai.use(sinonChai);
+
 const SimData = require("./blastMessages");
 const Queue = require("better-queue");
+const Happner = require("happner-2");
+const Config = require("../../../config");
 
 const utils = require("../../helpers/utils");
 describe("E2E - Services", async function() {
 	this.timeout(25000);
-	let serverHelper = new ServerHelper();
-	var client;
-
-	const sendQueue = new Queue((task, cb) => {
-		setTimeout(() => {
-			client.exchange.queueService.addToQueue(task.message);
-			cb();
-		}, task.wait);
-	});
-
 	const simData = new SimData();
 
-	const AsyncLogin = () =>
-		new Promise((resolve, reject) => {
-			client.on("login/allow", () => {
-				console.log("CLIENT CONNECTED:::::::::::::::::::::::::");
-				resolve();
-			});
+	context("Blast Service", async () => {
+		let mesh, config;
 
-			client.on("login/deny", () => reject());
-
-			client.on("login/error", () => {
-				console.log("CLIENT ISSUE::::::");
-			});
-
-			client.login({
-				username: "_ADMIN",
-				password: "happn"
-			});
+		const sendQueue = new Queue((task, cb) => {
+			setTimeout(() => {
+				mesh.exchange.queueService
+					.processIncoming(task.message)
+					.then(() => cb())
+					.catch(err => cb(err));
+			}, task.wait);
 		});
 
-	before("cleaning up db", async function() {
-		try {
-			await serverHelper.startServer();
+		beforeEach("delete all current nodes, logs, warnings and packets", async function() {
+			config = new Config(override).configuration;
+			mesh = new Happner();
 
-			client = await new Mesh.MeshClient({
-				secure: true,
-				port: 55000
-			});
+			await mesh.initialize(config);
+			await mesh.start();
 
-			await AsyncLogin();
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	});
+			await mesh.exchange.nodeRepository.delete("*");
+			await mesh.exchange.logsRepository.delete("*");
+			await mesh.exchange.warningsRepository.delete("*");
+			await mesh.exchange.blastRepository.delete("*");
+			expect(mesh._mesh.started).to.be.true;
+		});
 
-	beforeEach("delete all current nodes, logs, warnings and packets", async function() {
-		await client.exchange.nodeRepository.delete("*");
-		await client.exchange.logsRepository.delete("*");
-		await client.exchange.warningsRepository.delete("*");
-		await client.exchange.blastRepository.delete("*");
-	});
+		after(async () => {
+			await mesh.stop();
+		});
 
-	after("stop test server", async function() {
-		client.disconnect();
-		await serverHelper.stopServer();
-	});
-	context("Blast Service", async () => {
+		const override = {
+			logLevel: "info",
+			name: "edge_state",
+			db: "./edge.db",
+			host: "0.0.0.0",
+			port: 55007,
+			logFile: "./test_edge.log",
+			useEndpoint: false,
+			endpointName: "edge_ssot",
+			endpointIP: "0.0.0.0",
+			endpointPort: 55008,
+			endpointCheckInterval: 3000,
+			endpointUsername: "UNIT001",
+			endpointPassword: "happn",
+			systemFiringTime: 120000,
+			systemReportTime: 180000,
+			communicationCheckInterval: 300000
+		};
+
 		it("can create a new blast model from a snapshot", async function() {
 			const logs = [];
-			client.event.dataService.on("*", (data, meta) => {
+
+			mesh.event.dataService.on("*", (data, meta) => {
 				if (data.changes && data.changes.hasOwnProperty("communicationStatus")) {
 					logs.push({ data, meta });
 				}
@@ -76,26 +77,19 @@ describe("E2E - Services", async function() {
 			const thisData = simData.createBlast1();
 			thisData.forEach(messageObj => sendQueue.push(messageObj));
 
-			const holdAsync = () =>
-				new Promise(resolve => {
-					sendQueue.on("drain", () => {
-						return resolve();
-					});
-				});
-
-			await holdAsync();
-
+			await utils.holdTillDrained(sendQueue);
 			await utils.timer(6000);
-			let result = await client.exchange.blastRepository.get("index");
+
+			let result = await mesh.exchange.blastRepository.get("index");
 			delete result._meta;
 
 			let blastIds = Object.keys(result);
-			let firstBlastId = await client.exchange.blastRepository.get(blastIds[0]);
+			let firstBlastId = await mesh.exchange.blastRepository.get(blastIds[0]);
 			delete firstBlastId._meta;
 
-			//console.log(JSON.stringify(logs, null, 2));
-			//console.log(result);
-			//console.log(JSON.stringify(firstBlastId));
+			console.log(JSON.stringify(logs, null, 2));
+			console.log(result);
+			console.log(JSON.stringify(firstBlastId));
 			console.log("byte length", JSON.stringify(firstBlastId).length);
 		});
 	});

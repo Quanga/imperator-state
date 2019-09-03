@@ -19,7 +19,7 @@ describe("INTEGRATION -- Services", async function() {
 	const override = {
 		logLevel: "info",
 		name: "edge_state",
-		db: "./edge.db",
+		db: "./tester.db",
 		host: "0.0.0.0",
 		port: 55007,
 		logFile: "./test_edge.log",
@@ -99,132 +99,134 @@ describe("INTEGRATION -- Services", async function() {
 		});
 
 		it("can correctly start and stop the server with endpoint enabled and will connect", async () => {
-			try {
-				override.useEndpoint = true;
-				config = new Config(override).configuration;
+			override.useEndpoint = true;
+			config = new Config(override).configuration;
 
-				const securityModule = {
-					start: function($happn, callback) {
-						const testUser = {
-							username: "UNIT001",
-							password: "happn",
-							groups: { _ADMIN: true }
-						};
+			const securityModule = {
+				start: function($happn, callback) {
+					const testUser = {
+						username: "UNIT001",
+						password: "happn",
+						groups: { _ADMIN: true }
+					};
 
-						$happn.exchange.security.upsertUser(testUser, err => {
-							if (err) return console.log("User  Error", err);
-							console.log("User Upserted");
-						});
+					$happn.exchange.security.upsertUser(testUser, err => {
+						if (err) return console.log("User  Error", err);
+						console.log("User Upserted");
+					});
 
-						callback();
+					callback();
+				}
+			};
+
+			const queueModule = {
+				getActiveQueues: function($happn, callback) {
+					console.log("getActive called");
+
+					callback(null, []);
+				},
+				buildQueue: function($happn, user, from, callback) {
+					console.log("EP BuildQueue called", user);
+
+					callback();
+				},
+				size: function($happn, user, callback) {
+					console.log("size called", user);
+					callback(null, 0);
+				}
+			};
+
+			const epMesh = await Happner.create({
+				name: "edge_ssot",
+				happn: {
+					host: "0.0.0.0",
+					port: 55008,
+					secure: true,
+					adminPassword: "happn"
+				},
+				modules: {
+					securityService: {
+						instance: securityModule
+					},
+					queueService: {
+						instance: queueModule
 					}
-				};
-
-				const queueModule = {
-					getActiveQueues: function($happn, callback) {
-						console.log("getActive called");
-
-						callback(null, []);
+				},
+				components: {
+					securityService: {
+						startMethod: "start"
 					},
-					buildQueue: function($happn, user, from, callback) {
-						console.log("EP BuildQueue called", user);
+					queueService: {}
+				}
+			});
 
-						callback();
-					},
-					size: function($happn, user, callback) {
-						console.log("size called", user);
-						callback(null, 0);
-					}
-				};
+			mesh = new Happner();
 
-				const epMesh = await Happner.create({
-					name: "edge_ssot",
-					happn: {
-						host: "0.0.0.0",
-						port: 55008,
-						secure: true,
-						adminPassword: "happn"
-					},
-					modules: {
-						securityService: {
-							instance: securityModule
-						},
-						queueService: {
-							instance: queueModule
-						}
-					},
-					components: {
-						securityService: {
-							startMethod: "start"
-						},
-						queueService: {}
-					}
-				});
+			await mesh.initialize(config);
 
-				mesh = new Happner();
+			console.log("INITIALIZED");
+			expect(mesh._mesh.initialized).to.be.true;
+			const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
 
-				await mesh.initialize(config);
+			await mesh.start();
+			console.log("STARTED");
+			expect(mesh._mesh.started).to.be.true;
+			expect(endpointServiceSpy).to.have.been.calledOnce;
+			await util.timer(10000);
 
-				console.log("INITIALIZED");
-				expect(mesh._mesh.initialized).to.be.true;
-				const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
-
-				await mesh.start();
-				console.log("STARTED");
-				expect(mesh._mesh.started).to.be.true;
-				expect(endpointServiceSpy).to.have.been.calledOnce;
-				await util.timer(10000);
-
-				console.log("STOPPING");
-				epMesh.stop();
-				await mesh.stop();
-				expect(mesh._mesh.stopped).to.be.true;
-				console.log("COMPLETE");
-			} catch (err) {
-				throw new Error(err);
-			}
+			console.log("STOPPING");
+			epMesh.stop();
+			await mesh.stop();
+			expect(mesh._mesh.stopped).to.be.true;
+			console.log("COMPLETE");
 		});
 
 		it("can correctly connect to the endpoint and get 10 packets", async () => {
-			try {
-				override.useEndpoint = true;
-				config = new Config(override).configuration;
+			override.useEndpoint = true;
+			config = new Config(override).configuration;
 
-				const securityModule = {
-					start: function($happn, callback) {
-						const testUser = {
-							username: "UNIT001",
-							password: "happn",
-							groups: { _ADMIN: true }
-						};
+			const securityModule = {
+				start: function($happn, callback) {
+					const testUser = {
+						username: "UNIT001",
+						password: "happn",
+						groups: { _ADMIN: true }
+					};
 
-						$happn.exchange.security.upsertUser(testUser, err => {
-							if (err) return console.log("User  Error", err);
-							console.log("User Upserted");
-						});
+					$happn.exchange.security.upsertUser(testUser, err => {
+						if (err) return console.log("User  Error", err);
+						console.log("User Upserted");
+					});
 
-						callback();
-					}
-				};
+					callback();
+				}
+			};
 
-				const queueModule = {
-					queuesize: 10,
-					flip: 0,
-					getActiveQueues: function($happn, callback) {
-						console.log("getActive called");
+			const queueModule = {
+				queuesize: 10,
+				flip: 0,
+				getActiveQueues: function($happn, callback) {
+					console.log("getActive called");
 
-						callback(null, []);
-					},
-					buildQueue: function($happn, user, from, callback) {
-						console.log("EP BuildQueue called", user);
+					callback(null, []);
+				},
+				buildQueue: function($happn, user, from, callback) {
+					console.log("EP BuildQueue called", user);
 
-						callback();
-					},
-					size: function($happn, user, callback) {
+					callback();
+				},
+				processIncoming: function($happn, callback) {
+					console.log("WORKING");
+					callback();
+				},
+				size: function($happn, user) {
+					return new Promise((resolve, reject) => {
 						console.log("size called", user);
-						callback(null, this.queuesize);
-					},
-					dequeue: function($happn, user, callback) {
+						resolve(this.queuesize);
+					});
+				},
+				dequeue: function($happn, user) {
+					return new Promise((resolve, reject) => {
 						const packet = {
 							packet: new PacketConstructor(8, 8, {
 								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
@@ -237,66 +239,65 @@ describe("INTEGRATION -- Services", async function() {
 							this.flip = 0;
 						}
 						this.queuesize--;
-						callback(null, packet);
-					}
-				};
+						resolve(packet);
+					});
+				}
+			};
 
-				const epMesh = await Happner.create({
-					name: "edge_ssot",
-					happn: {
-						host: "0.0.0.0",
-						port: 55008,
-						secure: true,
-						adminPassword: "happn"
+			const epMesh = await Happner.create({
+				name: "edge_ssot",
+				happn: {
+					host: "0.0.0.0",
+					port: 55008,
+					secure: true,
+					adminPassword: "happn"
+				},
+				modules: {
+					securityService: {
+						instance: securityModule
 					},
-					modules: {
-						securityService: {
-							instance: securityModule
-						},
-						queueService: {
-							instance: queueModule
-						}
-					},
-					components: {
-						securityService: {
-							startMethod: "start"
-						},
-						queueService: {}
+					queueService: {
+						instance: queueModule
 					}
-				});
+				},
+				components: {
+					securityService: {
+						startMethod: "start"
+					},
+					queueService: {}
+				}
+			});
 
-				mesh = new Happner();
+			mesh = new Happner();
 
-				await mesh.initialize(config);
+			await mesh.initialize(config);
 
-				console.log("INITIALIZED");
-				expect(mesh._mesh.initialized).to.be.true;
-				const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
-				await mesh.exchange.logsRepository.delete("*");
-				await mesh.start();
-				console.log("STARTED");
-				expect(mesh._mesh.started).to.be.true;
-				expect(endpointServiceSpy).to.have.been.calledOnce;
+			console.log("INITIALIZED");
+			expect(mesh._mesh.initialized).to.be.true;
+			const endpointServiceSpy = sandbox.spy(mesh.exchange.endpointService, "start");
 
-				const adminClient = new Happner.MeshClient({ secure: true, port: 55007 });
-				await adminClient.login({ username: "OEM", password: "oem" });
-				await util.timer(8000);
+			await mesh.exchange.logsRepository.delete("*");
+			await mesh.start();
+			console.log("STARTED");
+			expect(mesh._mesh.started).to.be.true;
+			expect(endpointServiceSpy).to.have.been.calledOnce;
 
-				const result = await adminClient.exchange.dataService.getSnapShot();
-				const logs = await mesh.exchange.logsRepository.getAll();
-				console.log(result);
-				//console.log(logs);
-				expect(logs.length).to.be.equal(10);
-				await util.timer(2000);
+			const adminClient = new Happner.MeshClient({ secure: true, port: 55007 });
+			await adminClient.login({ username: "OEM", password: "oem" });
+			await util.timer(8000);
 
-				console.log("STOPPING");
-				epMesh.stop();
-				await mesh.stop();
-				expect(mesh._mesh.stopped).to.be.true;
-				console.log("COMPLETE");
-			} catch (err) {
-				throw new Error(err);
-			}
+			const result = await adminClient.exchange.dataService.getSnapShot();
+			const logs = await mesh.exchange.logsRepository.get("*");
+			console.log(result);
+			//console.log(logs);
+			expect(logs.length).to.be.equal(10);
+			await util.timer(2000);
+
+			console.log("STOPPING");
+			epMesh.stop();
+			await mesh.stop();
+			expect(mesh._mesh.stopped).to.be.true;
+			console.log("COMPLETE");
 		});
 
 		it("can correctly handle a disconnection from the endpoint", async () => {
@@ -401,7 +402,7 @@ describe("INTEGRATION -- Services", async function() {
 				await util.timer(4000);
 
 				const result = await adminClient.exchange.dataService.getSnapShot();
-				const logs = await mesh.exchange.logsRepository.getAll();
+				const logs = await mesh.exchange.logsRepository.get("*");
 				console.log(result);
 				//console.log(logs);
 				expect(logs.length).to.be.equal(10);
@@ -539,9 +540,9 @@ describe("INTEGRATION -- Services", async function() {
 				await util.timer(6000);
 
 				const result = await adminClient.exchange.dataService.getSnapShot();
-				const logs = await mesh.exchange.logsRepository.getAll();
+				const logs = await mesh.exchange.logsRepository.get("*");
 				console.log(result);
-				//console.log(logs);
+
 				expect(logs.length).to.be.equal(20);
 				await util.timer(2000);
 

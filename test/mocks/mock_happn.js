@@ -1,20 +1,19 @@
 /* eslint-disable no-unused-vars */
-require("dotenv").config({ path: "../../.env" });
-var EventEmitter = require("events");
-var util = require("util");
+var Events = require("events");
 
 var MockHappn = function() {
 	this.name;
 	this.__queueLength = 1;
 	this.nodes = [];
-	this.emitter = new EventEmitter.EventEmitter();
+	this.emitter = new Events.EventEmitter();
+
 	this.emit = function(message) {
 		this.emitter.emit(message);
 	};
+
 	this.log = {
 		error: function(message, err) {
 			console.log(message);
-			//throw err;
 		},
 		info: function(message) {
 			console.log(message);
@@ -23,6 +22,7 @@ var MockHappn = function() {
 			console.log(message);
 		}
 	};
+
 	this.exchange = {
 		incomingFileQueue: {
 			length: function() {
@@ -90,7 +90,6 @@ var MockHappn = function() {
 		},
 		messageHandler: {
 			MessageReceiveHandler: function() {
-				// eslint-disable-next-line no-unused-vars
 				return new Promise(function(resolve, reject) {
 					resolve(function() {
 						return true;
@@ -103,13 +102,6 @@ var MockHappn = function() {
 				const parserFactory = require("../../lib/parsers/parser_factory");
 				let newMock = new MockHappn();
 				return new parserFactory().getParser(newMock, packet);
-			}
-		},
-
-		dbConnectionService: {
-			getConnection: function() {
-				let newMock = new MockHappn();
-				return self.dbInst.getConnection(newMock);
 			}
 		},
 		nodeRepository: {
