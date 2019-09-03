@@ -58,6 +58,18 @@ module.exports = {
 				SYSTEM_REPORT_TIME: 840000,
 
 				COMMUNICATION_CHECK_INTERVAL: 600000
+			},
+			env_productionAWS: {
+				NODE_ENV: "production",
+				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				MODE: "AXXIS100_CFC",
+				USE_ENDPOINT: true,
+				ENDPOINT_NAME: "intelliblast-cloud-001",
+				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_PASSWORD: "ibstate",
+				SYSTEM_FIRING_TIME: 120000,
+				SYSTEM_REPORT_TIME: 300000,
+				COMMUNICATION_CHECK_INTERVAL: 600000
 			}
 		}
 	],
@@ -97,7 +109,7 @@ module.exports = {
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS"
 		},
 		production_aws2: {
 			user: "ec2-user",
@@ -106,7 +118,7 @@ module.exports = {
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS"
 		}
 	}
 };
