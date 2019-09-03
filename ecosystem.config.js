@@ -94,7 +94,7 @@ module.exports = {
 			user: "ec2-user",
 			key: "~/aws_rsa.pem",
 			host: "ec2-18-222-47-118.us-east-2.compute.amazonaws.com",
-			ref: "origin/statge-1.3",
+			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
@@ -103,7 +103,7 @@ module.exports = {
 			user: "ec2-user",
 			key: "~/aws_rsa.pem",
 			host: "ec2-18-222-93-135.us-east-2.compute.amazonaws.com",
-			ref: "origin/statge-1.3",
+			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
