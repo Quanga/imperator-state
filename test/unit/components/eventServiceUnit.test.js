@@ -23,7 +23,7 @@ describe("UNIT - Components", async function() {
 
 	context("Queue Service", async () => {
 		it("will emit the update log for an EDD_SIG", async () => {
-			let sig = { type: "EDD_SIG", typeId: 3, createdAt: Date.now, serial: 23 };
+			let sig = { type: "EDD_SIG", typeId: 3, createdAt: Date.now(), serial: 23 };
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
 			await eventService.handleEvent(mock, sig);
