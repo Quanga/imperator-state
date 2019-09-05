@@ -28,7 +28,7 @@ class Config {
 				host: overrideObj.host || process.env.EDGE_LOCAL_IP || "localhost",
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
-					timeout: 10000
+					timeout: 30000
 				},
 				persist: true,
 				secure: true,
