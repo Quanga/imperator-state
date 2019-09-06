@@ -54,6 +54,7 @@ App.prototype.componentStart = function($happn) {
 	return (async () => {
 		try {
 			security.deactivateSessionActivity(true, function(e) {});
+			security.deactivateSessionManagement(true, function(e) {});
 			await stateService.updateState({ service: name, state: "PENDING" });
 			await systemService.upsertHistory({ started: Date.now() });
 
