@@ -105,7 +105,7 @@ module.exports = {
 		production_aws: {
 			user: "ec2-user",
 			key: "~/aws_rsa.pem",
-			host: "ec2-18-222-47-118.us-east-2.compute.amazonaws.com",
+			host: "ec2-3-15-208-116.us-east-2.compute.amazonaws.com",
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
