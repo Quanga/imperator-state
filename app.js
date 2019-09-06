@@ -48,11 +48,12 @@ function App() {}
 				F -->|true| H[startRouter]
  */
 App.prototype.componentStart = function($happn) {
-	const { app, stateService, systemService } = $happn.exchange;
+	const { app, stateService, systemService, security } = $happn.exchange;
 	const { log, name } = $happn;
 
 	return (async () => {
 		try {
+			security.deactivateSessionActivity(true, function(e) {});
 			await stateService.updateState({ service: name, state: "PENDING" });
 			await systemService.upsertHistory({ started: Date.now() });
 
