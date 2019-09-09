@@ -129,6 +129,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(3000);
 
 			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 
@@ -445,6 +446,9 @@ describe("INTEGRATION - Units", async function() {
 
 			await util.holdTillDrained(sendQueue);
 			await util.timer(1000);
+
+			const logs = await client.exchange.logsRepository.get("*", 1000, Date.now());
+			console.log(JSON.stringify(logs, null, 2));
 
 			let resPersist = await client.exchange.nodeRepository.getAllNodes();
 			expect(resPersist).to.be.instanceOf(Array);
