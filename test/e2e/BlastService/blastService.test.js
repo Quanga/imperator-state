@@ -13,7 +13,7 @@ const Config = require("../../../config");
 
 const utils = require("../../helpers/utils");
 describe("E2E - Services", async function() {
-	this.timeout(25000);
+	this.timeout(60000);
 	const simData = new SimData();
 
 	context("Blast Service", async () => {
@@ -39,6 +39,7 @@ describe("E2E - Services", async function() {
 			await mesh.exchange.logsRepository.delete("*");
 			await mesh.exchange.warningsRepository.delete("*");
 			await mesh.exchange.blastRepository.delete("*");
+			await mesh.exchange.dataService.clearDataModel();
 			expect(mesh._mesh.started).to.be.true;
 		});
 
@@ -60,25 +61,17 @@ describe("E2E - Services", async function() {
 			endpointCheckInterval: 3000,
 			endpointUsername: "UNIT001",
 			endpointPassword: "happn",
-			systemFiringTime: 120000,
-			systemReportTime: 180000,
+			systemFiringTime: 20000,
+			systemReportTime: 30000,
 			communicationCheckInterval: 300000
 		};
 
 		it("can create a new blast model from a snapshot", async function() {
-			const logs = [];
-
-			mesh.event.dataService.on("*", (data, meta) => {
-				if (data.changes && data.changes.hasOwnProperty("communicationStatus")) {
-					logs.push({ data, meta });
-				}
-			});
-
 			const thisData = simData.createBlast1();
 			thisData.forEach(messageObj => sendQueue.push(messageObj));
 
 			await utils.holdTillDrained(sendQueue);
-			await utils.timer(6000);
+			await utils.timer(3000);
 
 			let result = await mesh.exchange.blastRepository.get("index");
 			delete result._meta;
@@ -87,10 +80,8 @@ describe("E2E - Services", async function() {
 			let firstBlastId = await mesh.exchange.blastRepository.get(blastIds[0]);
 			delete firstBlastId._meta;
 
-			console.log(JSON.stringify(logs, null, 2));
 			console.log(result);
 			console.log(JSON.stringify(firstBlastId));
-			console.log("byte length", JSON.stringify(firstBlastId).length);
 		});
 	});
 });

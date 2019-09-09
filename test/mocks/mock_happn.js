@@ -107,16 +107,23 @@ var MockHappn = function() {
 		},
 		nodeRepository: {
 			getAllNodes: function() {
-				// eslint-disable-next-line no-unused-vars
-				return new Promise(function(resolve, reject) {
+				return new Promise(function(resolve) {
 					resolve(self.nodes);
 				});
 			}
 		},
 		logsRepository: {
 			set: function(arg) {
-				return new Promise((resolve, reject) => {
+				return new Promise(resolve => {
 					console.log("LOG CALLED", arg);
+					resolve(arg);
+				});
+			}
+		},
+		warningsRepository: {
+			set: function(arg) {
+				return new Promise(resolve => {
+					console.log("WARNING CALLED WITH", arg);
 					resolve(arg);
 				});
 			}

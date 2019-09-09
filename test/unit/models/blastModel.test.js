@@ -33,144 +33,139 @@ describe("UNIT - Models", async function() {
 			}
 		};
 		it("will fail to create a BlastModel with no args", async () => {
-			expect(() => new BlastModel()).to.throw(Error, "Snapshot must be suppled as an Object");
+			expect(() => new BlastModel()).to.throw(
+				Error,
+				"All arguments must be specified to create a Blast Model"
+			);
 		});
 
-		it("can create a new blastModel with a 5second report time", async function() {
+		it("can create a new blastModel with a 5 second report time", async function() {
 			const createdAt = Date.now();
-			/***
-				 blastUnits: {},
-						excludedUnits: {},
-						disarmedUnits: {}
-				 */
+			const reportingDuration = 5000;
+			const firingDuration = 1000;
 
-			const reportTime = 5000;
-
-			const blastModel = new BlastModel(startSnapshot, createdAt, reportTime);
+			const blastModel = new BlastModel(
+				startSnapshot,
+				createdAt,
+				firingDuration,
+				reportingDuration
+			);
 
 			expect(blastModel.data.state).to.be.equal("BLAST_FIRING");
+			expect(blastModel.watchLists.count).to.be.equal(1);
+
 			expect(blastModel.data.snapshots.start.controlUnit.data.serial).to.be.equal(42);
 			expect(blastModel.data.snapshots.start.excludedUnits["115"].data.serial).to.be.equal(115);
 			expect(blastModel.data.snapshots.start.blastUnits["123"].data.serial).to.be.equal(123);
 			expect(blastModel.data.snapshots.start.disarmedUnits["156"].data.serial).to.be.equal(156);
 
-			await util.timer(6000);
+			await util.timer(7000);
 			expect(blastModel.data.state).to.eql("BLAST_TIMER_COMPLETE");
-			//console.log(JSON.stringify(blastModel, null, 4));
 		});
 
 		it("can stop a blast when all dets and units return and not use timeout", async function() {
 			const createdAt = Date.now();
-			const reportTime = 10000;
+			const reportingDuration = 10000;
+			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, reportTime);
+			const blastModel = new BlastModel(
+				startSnapshot,
+				createdAt,
+				firingDuration,
+				reportingDuration
+			);
+
+			await util.timer(500);
 
 			expect(blastModel.data.state).to.eql("BLAST_FIRING");
-			expect(blastModel.blastWatch.watchUnits[0]).to.eql("123");
-			expect(blastModel.blastWatch.watchDets["123"].length).to.be.equal(2);
+			expect(blastModel.watchLists.units).to.exist;
+
+			expect(blastModel.watchLists.units["123"]).to.exist;
+			expect(blastModel.watchLists.units["123"].length).to.be.equal(2);
 
 			await util.timer(500);
 
 			let logObj = {
+				logType: "UNIT_UPDATE",
 				serial: 123,
 				typeId: 3,
-				path: "0/123",
-				modifiedAt: Date.now(),
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: null
+				createdAt: Date.now(),
+				events: [{ communicationState: 1 }]
 			};
 
-			blastModel.addLog({ value: logObj });
+			blastModel.addLog(logObj);
 
-			expect(blastModel.blastWatch.watchUnits.length).to.be.equal(0);
-			expect(blastModel.blastWatch.watchDets["123"].length).to.be.equal(2);
+			expect(blastModel.watchLists.units["123"]).to.exist;
+			expect(blastModel.watchLists.units["123"].length).to.be.equal(2);
 
 			logObj = {
-				serial: null,
-				typeId: 4,
-				path: null,
-				parentSerial: 123,
-				modifiedAt: Date.now(),
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: 1
+				logType: "DET_UPDATE",
+				serial: 123,
+				typeId: 3,
+				createdAt: Date.now(),
+				events: [{ windowId: 1, communicationState: 1 }]
 			};
 
-			blastModel.addLog({ value: logObj });
+			blastModel.addLog(logObj);
 
 			await util.timer(300);
-			expect(blastModel.blastWatch.watchDets["123"].length).to.be.equal(1);
+			expect(blastModel.watchLists.units["123"].length).to.be.equal(1);
 
 			logObj = {
-				serial: null,
-				typeId: 4,
-				path: null,
-				parentSerial: 123,
-
-				modifiedAt: Date.now(),
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: 2
+				logType: "DET_UPDATE",
+				serial: 123,
+				typeId: 3,
+				createdAt: Date.now(),
+				events: [{ windowId: 2, communicationState: 1 }]
 			};
 
-			blastModel.addLog({ value: logObj });
+			blastModel.addLog(logObj);
 
 			await util.timer(300);
-			expect(blastModel.blastWatch.watchDets["123"]).to.be.undefined;
+			expect(blastModel.watchLists.units["123"]).to.be.undefined;
 
-			//console.log(JSON.stringify(await blastModel.getBlastReport(), null, 4));
+			//console.log(JSON.stringify(await blastModel.getBlastReport(), null, 2));
 			expect(blastModel.data.state).to.be.equal("BLAST_DATA_COMPLETE");
 		});
 
 		it("leaving one det it will cause report to use the timeout rather", async function() {
 			const createdAt = Date.now();
+			const reportingDuration = 10000;
+			const firingDuration = 1000;
 
-			const reportTime = 10000;
+			const blastModel = new BlastModel(
+				startSnapshot,
+				createdAt,
+				firingDuration,
+				reportingDuration
+			);
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, reportTime);
-
-			//console.log(blastModel.emitter.emit);
 			const holdUntil = () =>
 				new Promise(resolve => {
-					blastModel.event.on("BLAST_TIMER_COMPLETE", () => {
-						console.log("BLAST_DATA_COMPLETE");
-						resolve();
+					blastModel.event.on("BLASTMODEL_LOG", data => {
+						if (data === "BLAST_TIMER_COMPLETE") {
+							console.log("BLAST_DATA_COMPLETE");
+							resolve();
+						}
 					});
 				});
 
 			expect(blastModel.data.state).to.eql("BLAST_FIRING");
-			expect(blastModel.blastWatch.watchUnits[0]).to.eql("123");
+			expect(blastModel.watchLists.units).to.have.property("123");
 
 			await util.timer(1000);
 
 			let logObj = {
+				logType: "DET_UPDATE",
 				serial: 123,
 				typeId: 3,
-				path: "0/123",
-				modifiedAt: Date.now(),
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: null
+				createdAt: Date.now(),
+				events: [{ windowId: 1, communicationState: 1 }]
 			};
 
-			blastModel.addLog({ value: logObj });
+			blastModel.addLog(logObj);
 
-			expect(blastModel.blastWatch.watchUnits.length).to.eql(0);
-			expect(blastModel.blastWatch.watchDets[123].length).to.eql(2);
-
-			logObj = {
-				serial: null,
-				typeId: 4,
-				path: null,
-				parentSerial: 123,
-				modifiedAt: Date.now(),
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: 1
-			};
-
-			blastModel.addLog({ value: logObj });
+			expect(blastModel.watchLists.units["123"].length).to.eql(1);
 
 			await util.timer(1000);
 
@@ -181,57 +176,35 @@ describe("UNIT - Models", async function() {
 
 		it("a log with a modifiedAt time later than the blast completed will stop the blast", async function() {
 			const createdAt = Date.now();
+			const reportingDuration = 10000;
+			const firingDuration = 1000;
 
-			const reportTime = 10000;
-			const blastModel = new BlastModel(startSnapshot, createdAt, reportTime);
-
-			//console.log(blastModel.emitter.emit);
-			// const holdUntil = () =>
-			// 	new Promise(resolve => {
-			// 		blastModel.emitter.emitter.on("BLAST_TIMER_COMPLETE", () => {
-			// 			console.log("BLAST_DATA_COMPLETE");
-			// 			resolve();
-			// 		});
-			// 	});
+			const blastModel = new BlastModel(
+				startSnapshot,
+				createdAt,
+				firingDuration,
+				reportingDuration
+			);
 
 			expect(blastModel.data.state).to.eql("BLAST_FIRING");
-			expect(blastModel.blastWatch.watchUnits[0]).to.eql("123");
+			expect(blastModel.watchLists.units).to.have.property("123");
+			expect(blastModel.watchLists.units[123].length).to.eql(2);
 
 			await util.timer(1000);
 
 			let logObj = {
+				logType: "DET_UPDATE",
 				serial: 123,
 				typeId: 3,
-				path: "0/123",
-				modifiedAt: Date.now(),
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: null
+				createdAt: createdAt + 15000,
+				events: [{ windowId: 1, communicationState: 1 }]
 			};
 
-			blastModel.addLog({ value: logObj });
-
-			expect(blastModel.blastWatch.watchUnits.length).to.eql(0);
-			expect(blastModel.blastWatch.watchDets[123].length).to.eql(2);
-
-			logObj = {
-				serial: null,
-				typeId: 4,
-				path: null,
-				parentSerial: 123,
-				modifiedAt: Date.now() + 20000,
-				changes: { communicationState: 1 },
-				counts: {},
-				windowId: 1
-			};
-
-			blastModel.addLog({ value: logObj });
+			blastModel.addLog(logObj);
 
 			await util.timer(1000);
 
-			//await holdUntil();
-			console.log(JSON.stringify(await blastModel.getBlastReport(), null, 4));
-			expect(blastModel.data.state).to.eql("BLAST_TIMER_COMPLETE");
+			expect(blastModel.data.state).to.be.equal("BLAST_TIMER_COMPLETE");
 		});
 	});
 });

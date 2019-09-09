@@ -14,6 +14,11 @@ const EventService = require("../../../lib/services/event_service");
 
 const LogModel = require("../../../lib/models/logModel");
 
+const {
+	dataServiceEvents,
+	eventServiceLogTypes
+} = require("../../../lib/constants/eventConstants");
+
 describe("UNIT - Services", async function() {
 	context("EventService", async () => {
 		let mock, eventService, createdAt;
@@ -21,6 +26,7 @@ describe("UNIT - Services", async function() {
 		beforeEach(() => {
 			mock = new Mock();
 			eventService = new EventService();
+			eventService.emitQueue = [];
 			createdAt = Date.now();
 		});
 
@@ -30,7 +36,7 @@ describe("UNIT - Services", async function() {
 
 		it("can handle an EDD_SIG event sent from the DataService", async () => {
 			const send = {
-				type: "EDD_SIG",
+				type: dataServiceEvents.EDD_SIGNAL_DETECTED,
 				serial: 34,
 				createdAt,
 				typeId: 3
@@ -45,14 +51,14 @@ describe("UNIT - Services", async function() {
 				serial: 34,
 				typeId: 3,
 				createdAt,
-				logType: "EDD_SIG"
+				logType: eventServiceLogTypes.EDD_SIG
 			});
 			//console.log();
 		});
 
 		it("can handle a UNIT INSERT event sent from the DataService", async () => {
 			const send = {
-				type: "INSERT",
+				type: dataServiceEvents.UNITS_INSERTED,
 				serial: 22,
 				createdAt,
 				typeId: 3,
@@ -65,7 +71,7 @@ describe("UNIT - Services", async function() {
 
 			const sentLog = logSpy.getCall(0).args[0];
 			expect(sentLog).to.deep.equal({
-				logType: "UNIT_INSERT",
+				logType: eventServiceLogTypes.UNIT_INSERT,
 				serial: 22,
 				typeId: 3,
 				createdAt
@@ -75,7 +81,7 @@ describe("UNIT - Services", async function() {
 
 		it("can handle a UNIT INSERT event sent from the DataService with diff", async () => {
 			const send = {
-				type: "INSERT",
+				type: dataServiceEvents.UNITS_INSERTED,
 				serial: 22,
 				createdAt,
 				typeId: 3,
@@ -88,7 +94,7 @@ describe("UNIT - Services", async function() {
 
 			const sentLog = logSpy.getCall(0).args[0];
 			expect(sentLog).to.deep.equal({
-				logType: "UNIT_INSERT",
+				logType: eventServiceLogTypes.UNIT_INSERT,
 				serial: 22,
 				typeId: 3,
 				createdAt,
@@ -98,7 +104,7 @@ describe("UNIT - Services", async function() {
 
 		it("can handle a DET INSERT event sent from the DataService", async () => {
 			const send = {
-				type: "INSERT",
+				type: dataServiceEvents.UNITS_INSERTED,
 				serial: 22,
 				createdAt,
 				typeId: 3,
@@ -114,17 +120,20 @@ describe("UNIT - Services", async function() {
 
 			const sentLog = logSpy.getCall(0).args[0];
 			expect(sentLog).to.deep.equal({
-				logType: "DET_INSERT",
+				logType: eventServiceLogTypes.DET_INSERT,
 				serial: 22,
 				typeId: 3,
 				createdAt,
-				events: [{ serial: 44323344, windowId: 1, "ip": "2.164.82.16" }, { serial: 44323334, windowId: 2, "ip": "2.164.82.6" }]
+				events: [
+					{ serial: 44323344, windowId: 1, ip: "2.164.82.16" },
+					{ serial: 44323334, windowId: 2, ip: "2.164.82.6" }
+				]
 			});
 		});
 
 		it("can handle a UNIT UPDATE event sent from the DataService", async () => {
 			const send = {
-				type: "UPDATE",
+				type: dataServiceEvents.UNITS_UPDATED,
 				serial: 22,
 				createdAt,
 				typeId: 3,
@@ -137,7 +146,7 @@ describe("UNIT - Services", async function() {
 
 			const sentLog = logSpy.getCall(0).args[0];
 			expect(sentLog).to.deep.equal({
-				logType: "UNIT_UPDATE",
+				logType: eventServiceLogTypes.UNIT_UPDATE,
 				serial: 22,
 				typeId: 3,
 				createdAt,
@@ -148,7 +157,7 @@ describe("UNIT - Services", async function() {
 
 		it("can handle a DET UPDATE event sent from the DataService", async () => {
 			const send = {
-				type: "UPDATE",
+				type: dataServiceEvents.UNITS_UPDATED,
 				serial: 22,
 				createdAt,
 				typeId: 3,
@@ -164,24 +173,28 @@ describe("UNIT - Services", async function() {
 
 			const sentLog = logSpy.getCall(0).args[0];
 			expect(sentLog).to.deep.equal({
-				logType: "DET_UPDATE",
+				logType: eventServiceLogTypes.DET_UPDATE,
 				serial: 22,
 				typeId: 3,
 				createdAt,
 				events: [
-					{ serial: 44323344, windowId: 1, diff: { detonatorStatus: 0 } },
-					{ serial: 44323334, windowId: 2, diff: { detonatorStatus: 0 } }
+					{ serial: 44323344, windowId: 1, diff: { detonatorStatus: 0 }, ip: "2.164.82.16" },
+					{ serial: 44323334, windowId: 2, diff: { detonatorStatus: 0 }, ip: "2.164.82.6" }
 				]
 			});
 		});
 
 		it("can process a warning from an event object with 0 warnable events", async () => {
 			const logModel = new LogModel();
-			logModel.setType("UNIT_UPDATE");
-			logModel.setId({ serial: 22, typeId: 3, createdAt });
+			logModel.setId({
+				logType: eventServiceLogTypes.UNIT_UPDATE,
+				serial: 22,
+				typeId: 3,
+				createdAt
+			});
 			logModel.setEvents([{ diff: { keyswitchStatus: 1 } }]);
 
-			let persistWarnSpy = sandbox.spy(mock.exchange.eventService, "persistWarning");
+			let persistWarnSpy = sandbox.spy(mock.exchange.warningsRepository, "set");
 			await eventService.processWarnings(mock, logModel);
 
 			expect(persistWarnSpy).not.to.have.been.called;
@@ -191,11 +204,16 @@ describe("UNIT - Services", async function() {
 
 		it("can process a warning from an event object with 2 warnable events", async () => {
 			const logModel = new LogModel();
-			logModel.setType("UNIT_UPDATE");
-			logModel.setId({ serial: 22, typeId: 3, createdAt });
+			logModel.setId({
+				logType: eventServiceLogTypes.UNIT_UPDATE,
+				serial: 22,
+				typeId: 3,
+				createdAt
+			});
+
 			logModel.setEvents([{ diff: { keyswitchStatus: 1, cableFault: 1, earthLeakage: 1 } }]);
 
-			let persistWarnSpy = sandbox.spy(mock.exchange.eventService, "persistWarning");
+			let persistWarnSpy = sandbox.spy(mock.exchange.warningsRepository, "set");
 			await eventService.processWarnings(mock, logModel);
 
 			expect(persistWarnSpy).to.have.been.calledTwice;
@@ -205,11 +223,16 @@ describe("UNIT - Services", async function() {
 
 		it("can process a warning from an event object with 2 warnable events where one is 0", async () => {
 			const logModel = new LogModel();
-			logModel.setType("UNIT_UPDATE");
-			logModel.setId({ serial: 22, typeId: 3, createdAt });
+			logModel.setId({
+				logType: eventServiceLogTypes.UNIT_UPDATE,
+				serial: 22,
+				typeId: 3,
+				createdAt
+			});
+
 			logModel.setEvents([{ diff: { keyswitchStatus: 1, cableFault: 1, earthLeakage: 0 } }]);
 
-			let persistWarnSpy = sandbox.spy(mock.exchange.eventService, "persistWarning");
+			let persistWarnSpy = sandbox.spy(mock.exchange.warningsRepository, "set");
 			await eventService.processWarnings(mock, logModel);
 
 			expect(persistWarnSpy).to.have.been.calledOnce;
