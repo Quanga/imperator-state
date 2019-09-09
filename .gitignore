@@ -17,3 +17,4 @@ package-lock.json
 ttyV0
 ttyV1
 data.db
+app/config.json
