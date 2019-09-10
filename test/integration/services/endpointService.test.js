@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 const chai = require("chai");
 const expect = chai.expect;
@@ -205,28 +206,26 @@ describe("INTEGRATION -- Services", async function() {
 			const queueModule = {
 				queuesize: 10,
 				flip: 0,
-				getActiveQueues: function($happn, callback) {
+				getActiveQueues: ($happn, callback) => {
 					console.log("getActive called");
-
 					callback(null, []);
 				},
-				buildQueue: function($happn, user, from, callback) {
+				buildQueue: ($happn, user, from, callback) => {
 					console.log("EP BuildQueue called", user);
-
 					callback();
 				},
-				processIncoming: function($happn, callback) {
+				processIncoming: ($happn, callback) => {
 					console.log("WORKING");
 					callback();
 				},
 				size: function($happn, user) {
-					return new Promise((resolve, reject) => {
+					return new Promise(resolve => {
 						console.log("size called", user);
 						resolve(this.queuesize);
 					});
 				},
 				dequeue: function($happn, user) {
-					return new Promise((resolve, reject) => {
+					return new Promise(resolve => {
 						const packet = {
 							packet: new PacketConstructor(8, 8, {
 								data: [0, 0, 0, 0, 0, 0, 0, this.flip]

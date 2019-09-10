@@ -61,8 +61,7 @@ describe("INTEGRATION - Repositories", async function() {
 			for (let l = 0; l < 50; l++) {
 				let logmodel = new LogModel();
 				const sect = l * 1000;
-				logmodel.setId({ serial: 44, typeId: 3, createdAt: createdAt + sect });
-				logmodel.setType("TESTER");
+				logmodel.setId({ logType: "TESTER", serial: 44, typeId: 3, createdAt: createdAt + sect });
 				logmodel.setEvents[({ event: 1 }, { event: 2 })];
 
 				await mesh.exchange.logsRepository.set(logmodel);
@@ -98,8 +97,7 @@ describe("INTEGRATION - Repositories", async function() {
 			for (let l = 0; l < 50; l++) {
 				let logmodel = new LogModel();
 				const sect = l * 1000;
-				logmodel.setId({ serial: 44, typeId: 3, createdAt: createdAt + sect });
-				logmodel.setType("TESTER");
+				logmodel.setId({ logType: "TESTER", serial: 44, typeId: 3, createdAt: createdAt + sect });
 				logmodel.setEvents[({ event: 1 }, { event: 2 })];
 
 				await mesh.exchange.logsRepository.set(logmodel);
@@ -136,8 +134,7 @@ describe("INTEGRATION - Repositories", async function() {
 			for (let l = 0; l < 50; l++) {
 				let logmodel = new LogModel();
 				const sect = l * 1000;
-				logmodel.setId({ serial: 44, typeId: 3, createdAt: createdAt + sect });
-				logmodel.setType("TESTER");
+				logmodel.setId({ logType: "TESTER", serial: 44, typeId: 3, createdAt: createdAt + sect });
 				logmodel.setEvents[({ event: 1 }, { event: 2 })];
 
 				await mesh.exchange.logsRepository.set(logmodel);

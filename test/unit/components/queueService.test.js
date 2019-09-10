@@ -26,8 +26,6 @@ describe("UNIT - Components", async function() {
 			await expect(queueService.componentStart(mock)).to.eventually.be.fulfilled;
 		});
 
-		it("can stop the queueService - happn");
-
 		it("can queue an incoming packet and will resolve null if there is an error", async () => {
 			const messageObj = {
 				packet:

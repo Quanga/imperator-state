@@ -13,25 +13,24 @@ var MockHappn = function() {
 	};
 
 	this.log = {
-		error: function(message, err) {
+		error: message => {
 			console.log(message);
 		},
-		info: function(message) {
+		info: message => {
 			console.log(message);
 		},
-		warn: function(message) {
+		warn: message => {
 			console.log(message);
 		}
 	};
 
 	this.exchange = {
 		incomingFileQueue: {
-			length: function() {
-				return new Promise(function(resolve) {
+			length: () =>
+				new Promise(resolve => {
 					resolve(self.__queueLength);
 					self.__queueLength -= 1;
-				});
-			},
+				}),
 			pop: function() {
 				return new Promise(function(resolve) {
 					resolve("my incoming message");
@@ -44,157 +43,115 @@ var MockHappn = function() {
 			}
 		},
 		outgoingFileQueue: {
-			length: function(callback) {
+			length: callback => {
 				callback(null, self.__queueLength);
 				self.__queueLength -= 1;
 			},
-			pop: function(callback) {
+			pop: callback => {
 				callback(null, "my outgoing message");
 			},
-			push: function() {
-				return new Promise(function(resolve) {
+			push: () =>
+				new Promise(function(resolve) {
 					resolve();
-				});
-			}
+				})
 		},
 		dataService: {
-			insertPacketArr: function() {
-				return new Promise(function(resolve) {
+			insertPacketArr: () =>
+				new Promise(function(resolve) {
 					resolve(1);
-				});
-			},
-			upsertNodeDataArr: function() {
-				return new Promise(function(resolve) {
+				}),
+			upsertNodeDataArr: () =>
+				new Promise(function(resolve) {
 					resolve();
-				});
-			}
+				})
 		},
 		packetService: {
-			extractData: function(message) {
-				return new Promise(function(resolve) {
+			extractData: message =>
+				new Promise(function(resolve) {
 					resolve();
-				});
-			}
+				})
 		},
 		portUtil: {
-			getInstance: function() {
-				// eslint-disable-next-line no-unused-vars
-				return new Promise(function(resolve, reject) {
+			getInstance: () =>
+				new Promise(function(resolve) {
 					resolve({
-						// eslint-disable-next-line no-unused-vars
 						on: function(eventType, handler) {
 							return true;
 						}
 					});
-				});
-			}
+				})
 		},
 		messageHandler: {
-			MessageReceiveHandler: function() {
-				return new Promise(function(resolve, reject) {
-					resolve(function() {
+			MessageReceiveHandler: () =>
+				new Promise((resolve, reject) => {
+					resolve(() => {
 						return true;
 					});
-				});
-			}
+				})
 		},
 		parserFactory: {
-			getParser: function(packet) {
+			getParser: packet => {
 				const parserFactory = require("../../lib/parsers/parser_factory");
 				let newMock = new MockHappn();
 				return new parserFactory().getParser(newMock, packet);
 			}
 		},
 		nodeRepository: {
-			getAllNodes: function() {
-				return new Promise(function(resolve) {
+			getAllNodes: () =>
+				new Promise(resolve => {
 					resolve(self.nodes);
-				});
-			}
+				})
 		},
 		logsRepository: {
-			set: function(arg) {
-				return new Promise(resolve => {
+			set: arg =>
+				new Promise(resolve => {
 					console.log("LOG CALLED", arg);
 					resolve(arg);
-				});
-			}
+				})
 		},
 		warningsRepository: {
-			set: function(arg) {
-				return new Promise(resolve => {
+			set: arg =>
+				new Promise(resolve => {
 					console.log("WARNING CALLED WITH", arg);
 					resolve(arg);
-				});
-			}
+				})
 		},
 		dataMapper: {
-			mapInsertPacket: function(packet) {
+			mapInsertPacket: packet => {
 				const mapper = require("../../lib/mappers/data_mapper");
 				return new mapper().mapInsertPacket(packet);
 			}
 		},
 		data: {},
 		eventService: {
-			persistWarning: function(warn) {
-				console.log("Warning", warn);
-			},
-			processWarnings: function(error) {
-				return new Promise(resolve => {
+			persistWarning: warn => console.log("Warning", warn),
+			processWarnings: error =>
+				new Promise(resolve => {
 					resolve(error);
-				});
-			}
+				}),
+			logPacketError: error =>
+				new Promise(resolve => {
+					resolve(error);
+				})
 		},
 		stateService: {
-			updateState: function() {
-				return new Promise((resolve, reject) => {
+			updateState: () =>
+				new Promise(resolve => {
 					resolve();
-				});
-			}
+				})
 		},
 		queueService: {
-			validatePacket: function() {
-				return new Promise((resolve, reject) => {
+			validatePacket: () =>
+				new Promise(resolve => {
 					resolve();
-				});
-			}
+				})
 		}
 	};
 };
 
-//util.inherits(MockHappn, EventEmitter);
-
-// Object.defineProperty(MockHappn.prototype, "emit", {
-// 	get: function(message) {
-// 		return {
-// 			function(message, err) {
-// 				this.emitter.emit(message);
-// 			}
-// 		};
-// 	}
-// });
-
 Object.defineProperty(MockHappn.prototype, "config", {
 	get: function() {
-		return {
-			nodeEnv: process.env.NODE_ENV,
-			edgeIP: process.env.EDGE_IP,
-			edgePort: process.env.HAPPNER_EDGE_PORT,
-			localIP: process.env.HAPPNER_LOCAL_IP,
-			localPort: process.env.HAPPNER_LOCAL_PORT,
-			replicationEnabled: process.env.HAPPNER_REPLICATION_ENABLED,
-			serialPort: process.env.ROUTER_SERIAL_PORT,
-			baudRate: process.env.ROUTER_BAUD_RATE,
-			incomingQueueDir: process.env.ROUTER_INCOMING_QUEUE_DIR,
-			outgoingQueueDir: process.env.ROUTER_OUTGOING_QUEUE_DIR,
-			queueFetchInterval: process.env.ROUTER_QUEUE_FETCH_INTERVAL,
-			transmissionSendInterval: process.env.ROUTER_TRANSMISSION_SEND_INTERVAL,
-			mySqlHost: process.env.MYSQL_HOST,
-			mySqlUser: process.env.ROUTER_MYSQL_USER,
-			mySqlPassword: process.env.ROUTER_MYSQL_PASSWORD,
-			mySqlDb: process.env.ROUTER_MYSQL_DATABASE,
-			systemType: process.env.ROUTER_SYSYEM_TYPE
-		};
+		return {};
 	}
 });
 

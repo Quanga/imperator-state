@@ -3500,3 +3500,842 @@
 2019-09-08 09:44:53.289 [ INFO] -     0ms edge_state (Mesh) stopped component 'app'
 2019-09-08 09:44:53.291 [ INFO] -     2ms edge_state (HappnServer) released 0.0.0.0:55007
 2019-09-08 09:44:53.293 [ INFO] -     2ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:27:19.110 [ INFO] -    47ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:27:19.113 [ INFO] -     3ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:27:19.116 [ INFO] -     3ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:27:19.118 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:27:19.152 [ INFO] -    34ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:27:19.158 [ INFO] -     6ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:27:19.166 [ INFO] -     8ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:27:19.304 [ INFO] -   138ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:27:19.305 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:27:19.316 [ INFO] -    11ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:27:19.319 [ INFO] -     3ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:27:19.320 [ INFO] -     1ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:27:19.324 [ INFO] -     4ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:27:19.329 [ INFO] -     5ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:27:19.331 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:27:19.332 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:27:19.478 [ INFO] -   146ms edge_state (System) instance name: edge_state
+2019-09-10 06:27:19.580 [ INFO] -   101ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:27:19.594 [ INFO] -    15ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/e2e/Repositories
+2019-09-10 06:27:19.595 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:27:19.595 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:27:19.595 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9229
+2019-09-10 06:27:20.170 [ INFO] -   575ms edge_state (Mesh) initialized!
+2019-09-10 06:27:20.191 [ INFO] -    21ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:27:20.191 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:27:20.196 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:27:20.201 [ INFO] -     5ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:27:20.202 [ INFO] -     1ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:27:20.202 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:27:20.205 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:27:20.206 [ INFO] -     1ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:27:20.206 [ INFO] -     0ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:27:20.206 [ INFO] -     0ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:27:20.207 [ INFO] -     1ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:27:20.207 [ INFO] -     0ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:27:20.208 [ INFO] -     1ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:27:20.208 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:27:20.211 [ INFO] -     3ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:27:20.214 [ INFO] -     3ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:27:20.214 [ INFO] -     0ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:27:20.221 [ INFO] -     7ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:27:20.222 [ INFO] -     1ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:27:20.222 [ INFO] -     0ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:27:20.223 [ INFO] -     1ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:27:20.223 [ INFO] -     0ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:27:20.224 [ INFO] -     1ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:27:20.224 [ INFO] -     0ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:27:20.225 [ INFO] -     1ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:27:20.226 [ INFO] -     0ms edge_state (stateService) app - PENDING
+2019-09-10 06:27:20.238 [ WARN] -    13ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:27:20.269 [ INFO] -    30ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:27:20.277 [ INFO] -     9ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:27:20.284 [ INFO] -     7ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:27:20.286 [ WARN] -     2ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:27:20.288 [ WARN] -     2ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:27:20.290 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:27:20.292 [ INFO] -     3ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:27:20.293 [ WARN] -     1ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:27:20.293 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:27:20.296 [ INFO] -     3ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:27:20.296 [ INFO] -     0ms edge_state (dataService) Adding 4 boosters to the Data Model
+2019-09-10 06:27:20.296 [ INFO] -     0ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:27:20.296 [ INFO] -     0ms edge_state (dataService) Adding 14 to the Data Model
+2019-09-10 06:27:20.296 [ INFO] -     0ms edge_state (dataService) Adding 15 to the Data Model
+2019-09-10 06:27:20.297 [ INFO] -     1ms edge_state (dataService) Adding 16 to the Data Model
+2019-09-10 06:27:20.297 [ INFO] -     0ms edge_state (dataService) Adding 6 detonators to the Data Model
+2019-09-10 06:27:20.301 [ INFO] -     4ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:27:20.302 [ INFO] -     1ms edge_state (stateService) app - STARTED
+2019-09-10 06:27:20.302 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:27:20.305 [ INFO] -     3ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:27:20.311 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:27:20.311 [ INFO] -     1ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:27:20.311 [ INFO] -     0ms edge_state (Mesh) started!
+2019-09-10 06:27:20.314 [ INFO] -     3ms edge_state (nodeRepository) All Nodes successfully removed
+2019-09-10 06:27:20.315 [ INFO] -     1ms edge_state (nodeRepository) All Nodes successfully removed
+2019-09-10 06:27:20.317 [ INFO] -     2ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:27:20.319 [ INFO] -     2ms edge_state (blastRepository) All Logs successfully removed
+2019-09-10 06:27:20.634 [ INFO] -   315ms edge_state (queueService) Queued - << 10-09-2019 06:27:20.3220 - 1568089640322 - aaaa0a08000800809fe5 >>
+2019-09-10 06:27:20.639 [ INFO] -     5ms edge_state (dataService) DATA INSERTS: 1 new unit
+2019-09-10 06:27:20.949 [ INFO] -   310ms edge_state (queueService) Queued - << 10-09-2019 06:27:20.3230 - 1568089640323 - aaaa1204000d00437eff01004505aa02458f >>
+2019-09-10 06:27:20.952 [ INFO] -     3ms edge_state (dataService) DATA INSERTS: 3 new units
+2019-09-10 06:27:21.266 [ INFO] -   314ms edge_state (queueService) Queued - << 10-09-2019 06:27:20.3240 - 1568089640324 - aaaa1005000d029962410281d00783a6 >>
+2019-09-10 06:27:21.269 [ INFO] -     3ms edge_state (dataService) DATA UPDATE: 2 existing units
+2019-09-10 06:27:21.273 [ INFO] -     4ms edge_state (eventService) Warning: Unit 13 - lowBat has been issued
+2019-09-10 06:27:21.583 [ INFO] -   310ms edge_state (queueService) Queued - << 10-09-2019 06:27:20.3240 - 1568089640324 - aaaa1005000d0299624702e1b80baff9 >>
+2019-09-10 06:27:21.585 [ INFO] -     2ms edge_state (dataService) DATA UPDATE: 2 existing units
+2019-09-10 06:27:21.588 [ INFO] -     3ms edge_state (eventService) Warning: Unit 13 - cableFault has been issued
+2019-09-10 06:27:21.588 [ INFO] -     0ms edge_state (eventService) Warning: Unit 13 - earthLeakage has been issued
+2019-09-10 06:27:23.606 [ INFO] -  2017ms edge_state (Mesh) stopped component 'uiService'
+2019-09-10 06:27:23.606 [ INFO] -     1ms edge_state (Mesh) stopped component 'packetService'
+2019-09-10 06:27:23.607 [ INFO] -     1ms edge_state (Mesh) stopped component 'dataService'
+2019-09-10 06:27:23.608 [ INFO] -     1ms edge_state (Mesh) stopped component 'endpointService'
+2019-09-10 06:27:23.608 [ INFO] -     0ms edge_state (Mesh) stopped component 'nodeRepository'
+2019-09-10 06:27:23.609 [ INFO] -     1ms edge_state (Mesh) stopped component 'blastRepository'
+2019-09-10 06:27:23.609 [ INFO] -     0ms edge_state (Mesh) stopped component 'logsRepository'
+2019-09-10 06:27:23.609 [ INFO] -     0ms edge_state (Mesh) stopped component 'warningsRepository'
+2019-09-10 06:27:23.610 [ INFO] -     1ms edge_state (Mesh) stopped component 'eventService'
+2019-09-10 06:27:23.610 [ INFO] -     0ms edge_state (Mesh) stopped component 'blastService'
+2019-09-10 06:27:23.611 [ INFO] -     1ms edge_state (Mesh) stopped component 'queueService'
+2019-09-10 06:27:23.615 [ INFO] -     4ms edge_state (stateService) uiService - STOPPED
+2019-09-10 06:27:23.617 [ INFO] -     2ms edge_state (stateService) packetService - STOPPED
+2019-09-10 06:27:23.617 [ INFO] -     0ms edge_state (stateService) dataService - STOPPED
+2019-09-10 06:27:23.618 [ INFO] -     1ms edge_state (stateService) endpointService - STOPPED
+2019-09-10 06:27:23.620 [ INFO] -     2ms edge_state (stateService) nodeRepository - STOPPED
+2019-09-10 06:27:23.620 [ INFO] -     0ms edge_state (stateService) blastRepository - STOPPED
+2019-09-10 06:27:23.621 [ INFO] -     1ms edge_state (stateService) logsRepository - STOPPED
+2019-09-10 06:27:23.622 [ INFO] -     1ms edge_state (stateService) warningsRepository - STOPPED
+2019-09-10 06:27:23.622 [ INFO] -     0ms edge_state (stateService) eventService - STOPPED
+2019-09-10 06:27:23.623 [ INFO] -     1ms edge_state (stateService) blastService - STOPPED
+2019-09-10 06:27:23.623 [ INFO] -     0ms edge_state (stateService) queueService - STOPPED
+2019-09-10 06:27:23.627 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:27:23.627 [ INFO] -     0ms edge_state (Mesh) stopped component 'app'
+2019-09-10 06:27:23.630 [ INFO] -     3ms edge_state (HappnServer) released 0.0.0.0:55007
+2019-09-10 06:27:23.632 [ INFO] -     2ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:27:23.632 [ INFO] -     0ms edge_state (Mesh) stopped!
+2019-09-10 06:27:33.230 [ INFO] -    40ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:27:33.234 [ INFO] -     4ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:27:33.236 [ INFO] -     2ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:27:33.238 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:27:33.269 [ INFO] -    31ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:27:33.274 [ INFO] -     5ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:27:33.283 [ INFO] -     9ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:27:33.426 [ INFO] -   143ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:27:33.427 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:27:33.439 [ INFO] -    12ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:27:33.441 [ INFO] -     2ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:27:33.443 [ INFO] -     2ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:27:33.446 [ INFO] -     3ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:27:33.452 [ INFO] -     6ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:27:33.454 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:27:33.454 [ INFO] -     0ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:27:33.585 [ INFO] -   131ms edge_state (System) instance name: edge_state
+2019-09-10 06:27:33.693 [ INFO] -   108ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:27:33.706 [ INFO] -    13ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/Repositories
+2019-09-10 06:27:33.707 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:27:33.707 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:27:33.707 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9244
+2019-09-10 06:27:34.314 [ INFO] -   607ms edge_state (Mesh) initialized!
+2019-09-10 06:27:34.340 [ INFO] -    26ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:27:34.340 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:27:34.345 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:27:34.350 [ INFO] -     5ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:27:34.350 [ INFO] -     0ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:27:34.350 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:27:34.353 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:27:34.354 [ INFO] -     1ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:27:34.354 [ INFO] -     0ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:27:34.354 [ INFO] -     0ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:27:34.356 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:27:34.356 [ INFO] -     0ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:27:34.357 [ INFO] -     1ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:27:34.357 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:27:34.359 [ INFO] -     2ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:27:34.362 [ INFO] -     3ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:27:34.363 [ INFO] -     1ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:27:34.367 [ INFO] -     4ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:27:34.367 [ INFO] -     0ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:27:34.368 [ INFO] -     1ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:27:34.368 [ INFO] -     0ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:27:34.369 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:27:34.369 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:27:34.370 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:27:34.370 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:27:34.371 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:27:34.377 [ WARN] -     6ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:27:34.418 [ INFO] -    41ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:27:34.431 [ INFO] -    13ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:27:34.442 [ INFO] -    11ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:27:34.444 [ WARN] -     2ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:27:34.446 [ WARN] -     2ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:27:34.447 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:27:34.452 [ INFO] -     5ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:27:34.453 [ WARN] -     1ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:27:34.453 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:27:34.456 [ INFO] -     3ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:27:34.457 [ INFO] -     1ms edge_state (dataService) Adding 1 boosters to the Data Model
+2019-09-10 06:27:34.457 [ INFO] -     0ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:27:34.457 [ INFO] -     0ms edge_state (dataService) Adding 2 detonators to the Data Model
+2019-09-10 06:27:34.460 [ INFO] -     3ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:27:34.462 [ INFO] -     2ms edge_state (dataService) Communication lost for unit - 13
+2019-09-10 06:27:34.465 [ INFO] -     3ms edge_state (dataService) DATA UPDATE: 1 existing unit
+2019-09-10 06:27:34.472 [ INFO] -     7ms edge_state (stateService) app - STARTED
+2019-09-10 06:27:34.473 [ INFO] -     1ms edge_state (Mesh) started component 'app'
+2019-09-10 06:27:34.477 [ INFO] -     4ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:27:34.482 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:27:34.482 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:27:34.483 [ INFO] -     1ms edge_state (Mesh) started!
+2019-09-10 06:27:34.489 [ INFO] -     6ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:27:34.496 [ INFO] -     7ms edge_state (Mesh) exit 0
+2019-09-10 06:27:35.150 [ INFO] -    42ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:27:35.154 [ INFO] -     5ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:27:35.156 [ INFO] -     2ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:27:35.158 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:27:35.189 [ INFO] -    31ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:27:35.193 [ INFO] -     4ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:27:35.201 [ INFO] -     8ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:27:35.361 [ INFO] -   160ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:27:35.362 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:27:35.376 [ INFO] -    14ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:27:35.380 [ INFO] -     4ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:27:35.382 [ INFO] -     2ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:27:35.386 [ INFO] -     4ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:27:35.392 [ INFO] -     6ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:27:35.393 [ INFO] -     1ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:27:35.394 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:27:35.529 [ INFO] -   134ms edge_state (System) instance name: edge_state
+2019-09-10 06:27:35.629 [ INFO] -   101ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:27:35.643 [ INFO] -    14ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/Repositories
+2019-09-10 06:27:35.644 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:27:35.644 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:27:35.644 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9245
+2019-09-10 06:27:36.264 [ INFO] -   620ms edge_state (Mesh) initialized!
+2019-09-10 06:27:36.288 [ INFO] -    24ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:27:36.288 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:27:36.293 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:27:36.298 [ INFO] -     5ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:27:36.299 [ INFO] -     1ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:27:36.299 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:27:36.302 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:27:36.303 [ INFO] -     0ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:27:36.303 [ INFO] -     1ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:27:36.303 [ INFO] -     0ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:27:36.305 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:27:36.305 [ INFO] -     0ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:27:36.306 [ INFO] -     1ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:27:36.306 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:27:36.308 [ INFO] -     2ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:27:36.311 [ INFO] -     3ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:27:36.312 [ INFO] -     1ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:27:36.316 [ INFO] -     4ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:27:36.317 [ INFO] -     1ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:27:36.317 [ INFO] -     0ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:27:36.318 [ INFO] -     1ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:27:36.319 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:27:36.320 [ INFO] -     1ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:27:36.320 [ INFO] -     0ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:27:36.321 [ INFO] -     1ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:27:36.321 [ INFO] -     0ms edge_state (stateService) app - PENDING
+2019-09-10 06:27:36.329 [ WARN] -     8ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:27:36.369 [ INFO] -    39ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:27:36.378 [ INFO] -    10ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:27:36.387 [ INFO] -     9ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:27:36.389 [ WARN] -     2ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:27:36.390 [ WARN] -     1ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:27:36.391 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:27:36.394 [ INFO] -     3ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:27:36.395 [ WARN] -     1ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:27:36.395 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:27:36.398 [ INFO] -     3ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:27:36.398 [ INFO] -     0ms edge_state (dataService) Adding 1 boosters to the Data Model
+2019-09-10 06:27:36.398 [ INFO] -     0ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:27:36.398 [ INFO] -     0ms edge_state (dataService) Adding 2 detonators to the Data Model
+2019-09-10 06:27:36.402 [ INFO] -     4ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:27:36.403 [ INFO] -     1ms edge_state (stateService) app - STARTED
+2019-09-10 06:27:36.403 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:27:36.407 [ INFO] -     4ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:27:36.412 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:27:36.412 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:27:36.413 [ INFO] -     1ms edge_state (Mesh) started!
+2019-09-10 06:27:36.415 [ INFO] -     2ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:27:36.421 [ INFO] -     6ms edge_state (Mesh) exit 0
+2019-09-10 06:27:37.063 [ INFO] -    39ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:27:37.066 [ INFO] -     3ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:27:37.068 [ INFO] -     2ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:27:37.071 [ INFO] -     3ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:27:37.105 [ INFO] -    34ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:27:37.110 [ INFO] -     5ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:27:37.120 [ INFO] -    10ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:27:37.261 [ INFO] -   141ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:27:37.261 [ INFO] -     0ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:27:37.272 [ INFO] -    11ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:27:37.275 [ INFO] -     3ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:27:37.276 [ INFO] -     1ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:27:37.279 [ INFO] -     3ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:27:37.285 [ INFO] -     6ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:27:37.287 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:27:37.288 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:27:37.430 [ INFO] -   142ms edge_state (System) instance name: edge_state
+2019-09-10 06:27:37.523 [ INFO] -    93ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:27:37.538 [ INFO] -    15ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/Repositories
+2019-09-10 06:27:37.539 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:27:37.539 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:27:37.539 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9246
+2019-09-10 06:27:38.143 [ INFO] -   604ms edge_state (Mesh) initialized!
+2019-09-10 06:27:38.170 [ INFO] -    27ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:27:38.170 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:27:38.176 [ INFO] -     6ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:27:38.181 [ INFO] -     5ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:27:38.181 [ INFO] -     0ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:27:38.181 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:27:38.185 [ INFO] -     4ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:27:38.186 [ INFO] -     1ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:27:38.186 [ INFO] -     0ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:27:38.186 [ INFO] -     0ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:27:38.188 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:27:38.189 [ INFO] -     1ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:27:38.189 [ INFO] -     0ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:27:38.189 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:27:38.191 [ INFO] -     2ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:27:38.195 [ INFO] -     4ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:27:38.196 [ INFO] -     1ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:27:38.201 [ INFO] -     5ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:27:38.202 [ INFO] -     1ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:27:38.203 [ INFO] -     1ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:27:38.203 [ INFO] -     0ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:27:38.204 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:27:38.204 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:27:38.205 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:27:38.205 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:27:38.206 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:27:38.213 [ WARN] -     7ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:27:38.257 [ INFO] -    44ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:27:38.301 [ INFO] -    44ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:27:38.314 [ INFO] -    13ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:27:38.315 [ WARN] -     1ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:27:38.318 [ WARN] -     3ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:27:38.320 [ WARN] -     2ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:27:38.324 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:27:38.324 [ WARN] -     0ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:27:38.324 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:27:38.327 [ INFO] -     3ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:27:38.328 [ INFO] -     1ms edge_state (dataService) Adding 1 boosters to the Data Model
+2019-09-10 06:27:38.328 [ INFO] -     0ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:27:38.328 [ INFO] -     0ms edge_state (dataService) Adding 2 detonators to the Data Model
+2019-09-10 06:27:38.331 [ INFO] -     3ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:27:38.332 [ INFO] -     1ms edge_state (dataService) Communication lost for unit - 13
+2019-09-10 06:27:38.335 [ INFO] -     3ms edge_state (dataService) DATA UPDATE: 1 existing unit
+2019-09-10 06:27:38.338 [ INFO] -     3ms edge_state (stateService) app - STARTED
+2019-09-10 06:27:38.338 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:27:38.343 [ INFO] -     5ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:27:38.349 [ INFO] -     6ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:27:38.349 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:27:38.349 [ INFO] -     0ms edge_state (Mesh) started!
+2019-09-10 06:27:38.357 [ INFO] -     8ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:27:38.363 [ INFO] -     6ms edge_state (Mesh) exit 0
+2019-09-10 06:28:13.553 [ INFO] -    36ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:28:13.556 [ INFO] -     3ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:28:13.558 [ INFO] -     2ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:28:13.560 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:28:13.597 [ INFO] -    37ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:28:13.601 [ INFO] -     4ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:28:13.612 [ INFO] -    11ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:28:13.747 [ INFO] -   135ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:28:13.747 [ INFO] -     0ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:28:13.759 [ INFO] -    12ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:28:13.761 [ INFO] -     2ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:28:13.763 [ INFO] -     1ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:28:13.766 [ INFO] -     4ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:28:13.772 [ INFO] -     6ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:28:13.774 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:28:13.775 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:28:13.882 [ INFO] -   107ms edge_state (System) instance name: edge_state
+2019-09-10 06:28:13.975 [ INFO] -    93ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:28:13.990 [ INFO] -    15ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/Repositories
+2019-09-10 06:28:13.991 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:28:13.991 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:28:13.991 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9278
+2019-09-10 06:28:14.592 [ INFO] -   601ms edge_state (Mesh) initialized!
+2019-09-10 06:28:14.615 [ INFO] -    23ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:28:14.615 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:28:14.620 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:28:14.624 [ INFO] -     4ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:28:14.625 [ INFO] -     1ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:28:14.625 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:28:14.628 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:28:14.628 [ INFO] -     0ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:28:14.629 [ INFO] -     1ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:28:14.629 [ INFO] -     0ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:28:14.631 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:28:14.631 [ INFO] -     0ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:28:14.631 [ INFO] -     0ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:28:14.631 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:28:14.634 [ INFO] -     3ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:28:14.636 [ INFO] -     2ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:28:14.637 [ INFO] -     1ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:28:14.641 [ INFO] -     4ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:28:14.641 [ INFO] -     0ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:28:14.642 [ INFO] -     1ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:28:14.642 [ INFO] -     0ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:28:14.643 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:28:14.643 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:28:14.644 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:28:14.644 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:28:14.645 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:28:14.652 [ WARN] -     7ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:28:14.687 [ INFO] -    35ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:28:14.697 [ INFO] -    10ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:28:14.707 [ INFO] -     9ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:28:14.709 [ WARN] -     3ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:28:14.711 [ WARN] -     2ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:28:14.712 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:28:14.715 [ INFO] -     3ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:28:14.716 [ WARN] -     1ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:28:14.716 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:28:14.719 [ INFO] -     3ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:28:14.719 [ INFO] -     0ms edge_state (dataService) Adding 1 boosters to the Data Model
+2019-09-10 06:28:14.719 [ INFO] -     0ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:28:14.719 [ INFO] -     0ms edge_state (dataService) Adding 2 detonators to the Data Model
+2019-09-10 06:28:14.723 [ INFO] -     4ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:28:14.724 [ INFO] -     1ms edge_state (stateService) app - STARTED
+2019-09-10 06:28:14.724 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:28:14.728 [ INFO] -     4ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:28:14.733 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:28:14.733 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:28:14.733 [ INFO] -     0ms edge_state (Mesh) started!
+2019-09-10 06:28:14.736 [ INFO] -     3ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:28:14.788 [ INFO] -    52ms edge_state (Mesh) stopped component 'uiService'
+2019-09-10 06:28:14.788 [ INFO] -     0ms edge_state (Mesh) stopped component 'packetService'
+2019-09-10 06:28:14.789 [ INFO] -     1ms edge_state (Mesh) stopped component 'dataService'
+2019-09-10 06:28:14.790 [ INFO] -     1ms edge_state (Mesh) stopped component 'endpointService'
+2019-09-10 06:28:14.791 [ INFO] -     1ms edge_state (Mesh) stopped component 'nodeRepository'
+2019-09-10 06:28:14.791 [ INFO] -     0ms edge_state (Mesh) stopped component 'blastRepository'
+2019-09-10 06:28:14.792 [ INFO] -     1ms edge_state (Mesh) stopped component 'logsRepository'
+2019-09-10 06:28:14.792 [ INFO] -     0ms edge_state (Mesh) stopped component 'warningsRepository'
+2019-09-10 06:28:14.792 [ INFO] -     0ms edge_state (Mesh) stopped component 'eventService'
+2019-09-10 06:28:14.793 [ INFO] -     1ms edge_state (Mesh) stopped component 'blastService'
+2019-09-10 06:28:14.793 [ INFO] -     0ms edge_state (Mesh) stopped component 'queueService'
+2019-09-10 06:28:14.797 [ INFO] -     4ms edge_state (stateService) uiService - STOPPED
+2019-09-10 06:28:14.798 [ INFO] -     1ms edge_state (stateService) packetService - STOPPED
+2019-09-10 06:28:14.799 [ INFO] -     1ms edge_state (stateService) dataService - STOPPED
+2019-09-10 06:28:14.799 [ INFO] -     0ms edge_state (stateService) endpointService - STOPPED
+2019-09-10 06:28:14.800 [ INFO] -     1ms edge_state (stateService) nodeRepository - STOPPED
+2019-09-10 06:28:14.801 [ INFO] -     1ms edge_state (stateService) blastRepository - STOPPED
+2019-09-10 06:28:14.802 [ INFO] -     0ms edge_state (stateService) logsRepository - STOPPED
+2019-09-10 06:28:14.802 [ INFO] -     1ms edge_state (stateService) warningsRepository - STOPPED
+2019-09-10 06:28:14.802 [ INFO] -     0ms edge_state (stateService) eventService - STOPPED
+2019-09-10 06:28:14.803 [ INFO] -     1ms edge_state (stateService) blastService - STOPPED
+2019-09-10 06:28:14.803 [ INFO] -     0ms edge_state (stateService) queueService - STOPPED
+2019-09-10 06:28:14.807 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:28:14.808 [ INFO] -     1ms edge_state (Mesh) stopped component 'app'
+2019-09-10 06:28:14.810 [ INFO] -     2ms edge_state (HappnServer) released 0.0.0.0:55007
+2019-09-10 06:28:14.812 [ INFO] -     2ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:28:14.812 [ INFO] -     0ms edge_state (Mesh) stopped!
+2019-09-10 06:28:38.850 [ INFO] -    37ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:28:38.853 [ INFO] -     3ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:28:38.855 [ INFO] -     2ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:28:38.857 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:28:38.890 [ INFO] -    33ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:28:38.895 [ INFO] -     5ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:28:38.907 [ INFO] -    12ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:28:39.038 [ INFO] -   131ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:28:39.039 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:28:39.051 [ INFO] -    11ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:28:39.053 [ INFO] -     3ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:28:39.054 [ INFO] -     1ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:28:39.058 [ INFO] -     4ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:28:39.063 [ INFO] -     5ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:28:39.065 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:28:39.066 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:28:39.186 [ INFO] -   120ms edge_state (System) instance name: edge_state
+2019-09-10 06:28:39.290 [ INFO] -   104ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:28:39.304 [ INFO] -    14ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/Repositories
+2019-09-10 06:28:39.305 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:28:39.305 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:28:39.305 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9296
+2019-09-10 06:28:39.879 [ INFO] -   574ms edge_state (Mesh) initialized!
+2019-09-10 06:28:39.904 [ INFO] -    25ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:28:39.904 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:28:39.909 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:28:39.915 [ INFO] -     6ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:28:39.916 [ INFO] -     1ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:28:39.916 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:28:39.920 [ INFO] -     4ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:28:39.920 [ INFO] -     0ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:28:39.920 [ INFO] -     0ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:28:39.921 [ INFO] -     1ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:28:39.923 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:28:39.923 [ INFO] -     0ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:28:39.923 [ INFO] -     0ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:28:39.924 [ INFO] -     1ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:28:39.926 [ INFO] -     2ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:28:39.929 [ INFO] -     3ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:28:39.930 [ INFO] -     1ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:28:39.934 [ INFO] -     4ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:28:39.934 [ INFO] -     0ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:28:39.935 [ INFO] -     1ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:28:39.935 [ INFO] -     0ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:28:39.936 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:28:39.936 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:28:39.937 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:28:39.937 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:28:39.938 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:28:39.945 [ WARN] -     7ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:28:39.978 [ INFO] -    33ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:28:39.986 [ INFO] -     8ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:28:39.993 [ INFO] -     7ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:28:39.995 [ WARN] -     2ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:28:39.996 [ WARN] -     1ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:28:39.997 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:28:40.001 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:28:40.001 [ WARN] -     0ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:28:40.001 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:28:40.004 [ INFO] -     3ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:28:40.004 [ INFO] -     0ms edge_state (dataService) Adding 1 boosters to the Data Model
+2019-09-10 06:28:40.004 [ INFO] -     0ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:28:40.004 [ INFO] -     0ms edge_state (dataService) Adding 2 detonators to the Data Model
+2019-09-10 06:28:40.007 [ INFO] -     3ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:28:40.009 [ INFO] -     1ms edge_state (dataService) Communication lost for unit - 13
+2019-09-10 06:28:40.011 [ INFO] -     3ms edge_state (dataService) DATA UPDATE: 1 existing unit
+2019-09-10 06:28:40.016 [ INFO] -     5ms edge_state (stateService) app - STARTED
+2019-09-10 06:28:40.016 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:28:40.020 [ INFO] -     4ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:28:40.025 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:28:40.025 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:28:40.025 [ INFO] -     0ms edge_state (Mesh) started!
+2019-09-10 06:28:40.031 [ INFO] -     6ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:28:40.086 [ INFO] -    55ms edge_state (Mesh) stopped component 'uiService'
+2019-09-10 06:28:40.086 [ INFO] -     0ms edge_state (Mesh) stopped component 'packetService'
+2019-09-10 06:28:40.087 [ INFO] -     1ms edge_state (Mesh) stopped component 'dataService'
+2019-09-10 06:28:40.088 [ INFO] -     1ms edge_state (Mesh) stopped component 'endpointService'
+2019-09-10 06:28:40.088 [ INFO] -     0ms edge_state (Mesh) stopped component 'nodeRepository'
+2019-09-10 06:28:40.088 [ INFO] -     0ms edge_state (Mesh) stopped component 'blastRepository'
+2019-09-10 06:28:40.089 [ INFO] -     1ms edge_state (Mesh) stopped component 'logsRepository'
+2019-09-10 06:28:40.089 [ INFO] -     0ms edge_state (Mesh) stopped component 'warningsRepository'
+2019-09-10 06:28:40.089 [ INFO] -     0ms edge_state (Mesh) stopped component 'eventService'
+2019-09-10 06:28:40.090 [ INFO] -     1ms edge_state (Mesh) stopped component 'blastService'
+2019-09-10 06:28:40.090 [ INFO] -     0ms edge_state (Mesh) stopped component 'queueService'
+2019-09-10 06:28:40.094 [ INFO] -     3ms edge_state (stateService) uiService - STOPPED
+2019-09-10 06:28:40.095 [ INFO] -     2ms edge_state (stateService) packetService - STOPPED
+2019-09-10 06:28:40.097 [ INFO] -     1ms edge_state (stateService) dataService - STOPPED
+2019-09-10 06:28:40.097 [ INFO] -     1ms edge_state (stateService) endpointService - STOPPED
+2019-09-10 06:28:40.098 [ INFO] -     1ms edge_state (stateService) nodeRepository - STOPPED
+2019-09-10 06:28:40.099 [ INFO] -     1ms edge_state (stateService) blastRepository - STOPPED
+2019-09-10 06:28:40.100 [ INFO] -     1ms edge_state (stateService) logsRepository - STOPPED
+2019-09-10 06:28:40.102 [ INFO] -     2ms edge_state (stateService) warningsRepository - STOPPED
+2019-09-10 06:28:40.103 [ INFO] -     1ms edge_state (stateService) eventService - STOPPED
+2019-09-10 06:28:40.104 [ INFO] -     1ms edge_state (stateService) blastService - STOPPED
+2019-09-10 06:28:40.104 [ INFO] -     0ms edge_state (stateService) queueService - STOPPED
+2019-09-10 06:28:40.113 [ INFO] -     9ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:28:40.113 [ INFO] -     0ms edge_state (Mesh) stopped component 'app'
+2019-09-10 06:28:40.117 [ INFO] -     4ms edge_state (HappnServer) released 0.0.0.0:55007
+2019-09-10 06:28:40.119 [ INFO] -     2ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:28:40.119 [ INFO] -     0ms edge_state (Mesh) stopped!
+2019-09-10 06:29:05.232 [ INFO] -    39ms edge_state (Happn) persisting ./edge.db
+2019-09-10 06:29:05.235 [ INFO] -     4ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:29:05.236 [ INFO] -     1ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:29:05.238 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:29:05.269 [ INFO] -    31ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:29:05.276 [ INFO] -     7ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:29:05.287 [ INFO] -    11ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:29:05.420 [ INFO] -   133ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:29:05.421 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:29:05.432 [ INFO] -    11ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:29:05.435 [ INFO] -     3ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:29:05.437 [ INFO] -     2ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:29:05.442 [ INFO] -     4ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:29:05.448 [ INFO] -     7ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:29:05.450 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:29:05.451 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:29:05.571 [ INFO] -   120ms edge_state (System) instance name: edge_state
+2019-09-10 06:29:05.665 [ INFO] -    94ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:29:05.678 [ INFO] -    13ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/Repositories
+2019-09-10 06:29:05.679 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:29:05.679 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:29:05.679 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9335
+2019-09-10 06:29:06.294 [ INFO] -   615ms edge_state (Mesh) initialized!
+2019-09-10 06:29:06.320 [ INFO] -    26ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:29:06.321 [ INFO] -     1ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:29:06.326 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:29:06.333 [ INFO] -     7ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:29:06.334 [ INFO] -     1ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:29:06.334 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:29:06.337 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:29:06.338 [ INFO] -     1ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:29:06.338 [ INFO] -     0ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:29:06.339 [ INFO] -     1ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:29:06.341 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:29:06.342 [ INFO] -     1ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:29:06.342 [ INFO] -     0ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:29:06.342 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:29:06.345 [ INFO] -     3ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:29:06.348 [ INFO] -     3ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:29:06.349 [ INFO] -     1ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:29:06.353 [ INFO] -     4ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:29:06.353 [ INFO] -     0ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:29:06.354 [ INFO] -     1ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:29:06.354 [ INFO] -     0ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:29:06.355 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:29:06.355 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:29:06.356 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:29:06.356 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:29:06.357 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:29:06.363 [ WARN] -     6ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:29:06.402 [ INFO] -    39ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:29:06.409 [ INFO] -     7ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:29:06.418 [ INFO] -     9ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:29:06.420 [ WARN] -     2ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:29:06.421 [ WARN] -     1ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:29:06.423 [ WARN] -     2ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:29:06.427 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:29:06.427 [ WARN] -     0ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:29:06.428 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:29:06.431 [ INFO] -     4ms edge_state (dataService) Adding Control Unit 8
+2019-09-10 06:29:06.431 [ INFO] -     0ms edge_state (dataService) Adding 1 boosters to the Data Model
+2019-09-10 06:29:06.432 [ INFO] -     1ms edge_state (dataService) Adding 13 to the Data Model
+2019-09-10 06:29:06.432 [ INFO] -     0ms edge_state (dataService) Adding 2 detonators to the Data Model
+2019-09-10 06:29:06.435 [ INFO] -     3ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:29:06.437 [ INFO] -     2ms edge_state (dataService) Communication lost for unit - 13
+2019-09-10 06:29:06.439 [ INFO] -     2ms edge_state (dataService) DATA UPDATE: 1 existing unit
+2019-09-10 06:29:06.444 [ INFO] -     5ms edge_state (stateService) app - STARTED
+2019-09-10 06:29:06.445 [ INFO] -     1ms edge_state (Mesh) started component 'app'
+2019-09-10 06:29:06.449 [ INFO] -     4ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:29:06.454 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:29:06.454 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:29:06.454 [ INFO] -     0ms edge_state (Mesh) started!
+2019-09-10 06:29:06.460 [ INFO] -     6ms edge_state (logsRepository) All Logs successfully removed
+2019-09-10 06:29:06.518 [ INFO] -    58ms edge_state (Mesh) stopped component 'uiService'
+2019-09-10 06:29:06.518 [ INFO] -     0ms edge_state (Mesh) stopped component 'packetService'
+2019-09-10 06:29:06.519 [ INFO] -     1ms edge_state (Mesh) stopped component 'dataService'
+2019-09-10 06:29:06.520 [ INFO] -     1ms edge_state (Mesh) stopped component 'endpointService'
+2019-09-10 06:29:06.520 [ INFO] -     0ms edge_state (Mesh) stopped component 'nodeRepository'
+2019-09-10 06:29:06.520 [ INFO] -     0ms edge_state (Mesh) stopped component 'blastRepository'
+2019-09-10 06:29:06.521 [ INFO] -     1ms edge_state (Mesh) stopped component 'logsRepository'
+2019-09-10 06:29:06.521 [ INFO] -     0ms edge_state (Mesh) stopped component 'warningsRepository'
+2019-09-10 06:29:06.521 [ INFO] -     0ms edge_state (Mesh) stopped component 'eventService'
+2019-09-10 06:29:06.522 [ INFO] -     1ms edge_state (Mesh) stopped component 'blastService'
+2019-09-10 06:29:06.522 [ INFO] -     0ms edge_state (Mesh) stopped component 'queueService'
+2019-09-10 06:29:06.526 [ INFO] -     4ms edge_state (stateService) uiService - STOPPED
+2019-09-10 06:29:06.528 [ INFO] -     2ms edge_state (stateService) packetService - STOPPED
+2019-09-10 06:29:06.529 [ INFO] -     1ms edge_state (stateService) dataService - STOPPED
+2019-09-10 06:29:06.529 [ INFO] -     0ms edge_state (stateService) endpointService - STOPPED
+2019-09-10 06:29:06.531 [ INFO] -     2ms edge_state (stateService) nodeRepository - STOPPED
+2019-09-10 06:29:06.532 [ INFO] -     1ms edge_state (stateService) blastRepository - STOPPED
+2019-09-10 06:29:06.533 [ INFO] -     1ms edge_state (stateService) logsRepository - STOPPED
+2019-09-10 06:29:06.534 [ INFO] -     1ms edge_state (stateService) warningsRepository - STOPPED
+2019-09-10 06:29:06.534 [ INFO] -     0ms edge_state (stateService) eventService - STOPPED
+2019-09-10 06:29:06.536 [ INFO] -     2ms edge_state (stateService) blastService - STOPPED
+2019-09-10 06:29:06.537 [ INFO] -     1ms edge_state (stateService) queueService - STOPPED
+2019-09-10 06:29:06.540 [ INFO] -     3ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:29:06.540 [ INFO] -     0ms edge_state (Mesh) stopped component 'app'
+2019-09-10 06:29:06.543 [ INFO] -     3ms edge_state (HappnServer) released 0.0.0.0:55007
+2019-09-10 06:29:06.549 [ INFO] -     6ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:29:06.549 [ INFO] -     0ms edge_state (Mesh) stopped!
+2019-09-10 06:29:22.252 [ INFO] -    43ms edge_state (Happn) persisting ./tester.db
+2019-09-10 06:29:22.256 [ INFO] -     4ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:29:22.257 [ INFO] -     1ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:29:22.259 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:29:22.290 [ INFO] -    31ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:29:22.295 [ INFO] -     5ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:29:22.305 [ INFO] -    10ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:29:22.442 [ INFO] -   136ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:29:22.442 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:29:22.457 [ INFO] -    15ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:29:22.460 [ INFO] -     3ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:29:22.461 [ INFO] -     1ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:29:22.465 [ INFO] -     4ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:29:22.472 [ INFO] -     7ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:29:22.474 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:29:22.475 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:29:22.631 [ INFO] -   156ms edge_state (System) instance name: edge_state
+2019-09-10 06:29:22.762 [ INFO] -   131ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:29:22.769 [ INFO] -     7ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/services
+2019-09-10 06:29:22.770 [ INFO] -     1ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:29:22.770 [ INFO] -     0ms edge_state (Mesh) config v..
+2019-09-10 06:29:22.770 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9356
+2019-09-10 06:29:23.375 [ INFO] -   605ms edge_state (Mesh) initialized!
+2019-09-10 06:29:23.391 [ INFO] -    16ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:29:23.392 [ INFO] -     1ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:29:23.396 [ INFO] -     4ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:29:23.404 [ INFO] -     8ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:29:23.405 [ INFO] -     1ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:29:23.405 [ INFO] -     0ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:29:23.408 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:29:23.409 [ INFO] -     0ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:29:23.409 [ INFO] -     1ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:29:23.409 [ INFO] -     0ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:29:23.411 [ INFO] -     2ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:29:23.411 [ INFO] -     0ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:29:23.411 [ INFO] -     0ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:29:23.412 [ INFO] -     1ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:29:23.414 [ INFO] -     2ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:29:23.418 [ INFO] -     4ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:29:23.418 [ INFO] -     0ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:29:23.419 [ INFO] -     1ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:29:23.419 [ INFO] -     0ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:29:23.420 [ INFO] -     1ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:29:23.420 [ INFO] -     0ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:29:23.421 [ INFO] -     1ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:29:23.421 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:29:23.422 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:29:23.422 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:29:23.423 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:29:23.433 [ WARN] -    10ms edge_state (systemService) No configuration data found........
+2019-09-10 06:29:23.433 [ WARN] -     0ms edge_state (systemService) Setting Default Configuration.........
+2019-09-10 06:29:23.437 [ WARN] -     4ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:29:23.481 [ INFO] -    44ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:29:23.496 [ INFO] -    15ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:29:23.509 [ INFO] -    13ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:29:23.510 [ WARN] -     1ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:29:23.538 [ INFO] -    28ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:29:23.546 [ INFO] -     7ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:29:23.553 [ INFO] -     8ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:29:23.554 [ WARN] -     1ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:29:23.556 [ WARN] -     2ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:29:23.557 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:29:23.559 [ INFO] -     2ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:29:23.560 [ WARN] -     1ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:29:23.560 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:29:23.562 [ WARN] -     2ms edge_state (dataService) No Control Unit found...
+2019-09-10 06:29:23.563 [ INFO] -     1ms edge_state (dataService) No Boosters found in the Data Store.
+2019-09-10 06:29:23.563 [ INFO] -     0ms edge_state (dataService) No Detonators found in the Data Store.
+2019-09-10 06:29:23.563 [ WARN] -     0ms edge_state (dataService) No Units found in Node Repository.... DataModel is empty
+2019-09-10 06:29:23.563 [ INFO] -     0ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:29:23.564 [ INFO] -     1ms edge_state (stateService) app - STARTED
+2019-09-10 06:29:23.564 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:29:23.569 [ INFO] -     5ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:29:23.574 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:29:23.574 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:29:23.574 [ INFO] -     0ms edge_state (Mesh) started!
+2019-09-10 06:29:25.578 [ INFO] -  2004ms edge_state (Mesh) stopped component 'uiService'
+2019-09-10 06:29:25.579 [ INFO] -     1ms edge_state (Mesh) stopped component 'packetService'
+2019-09-10 06:29:25.581 [ INFO] -     2ms edge_state (Mesh) stopped component 'dataService'
+2019-09-10 06:29:25.582 [ INFO] -     1ms edge_state (Mesh) stopped component 'endpointService'
+2019-09-10 06:29:25.582 [ INFO] -     0ms edge_state (Mesh) stopped component 'nodeRepository'
+2019-09-10 06:29:25.583 [ INFO] -     1ms edge_state (Mesh) stopped component 'blastRepository'
+2019-09-10 06:29:25.584 [ INFO] -     1ms edge_state (Mesh) stopped component 'logsRepository'
+2019-09-10 06:29:25.584 [ INFO] -     0ms edge_state (Mesh) stopped component 'warningsRepository'
+2019-09-10 06:29:25.585 [ INFO] -     1ms edge_state (Mesh) stopped component 'eventService'
+2019-09-10 06:29:25.585 [ INFO] -     0ms edge_state (Mesh) stopped component 'blastService'
+2019-09-10 06:29:25.585 [ INFO] -     0ms edge_state (Mesh) stopped component 'queueService'
+2019-09-10 06:29:25.591 [ INFO] -     6ms edge_state (stateService) uiService - STOPPED
+2019-09-10 06:29:25.592 [ INFO] -     1ms edge_state (stateService) packetService - STOPPED
+2019-09-10 06:29:25.593 [ INFO] -     1ms edge_state (stateService) dataService - STOPPED
+2019-09-10 06:29:25.593 [ INFO] -     0ms edge_state (stateService) endpointService - STOPPED
+2019-09-10 06:29:25.594 [ INFO] -     1ms edge_state (stateService) nodeRepository - STOPPED
+2019-09-10 06:29:25.595 [ INFO] -     1ms edge_state (stateService) blastRepository - STOPPED
+2019-09-10 06:29:25.595 [ INFO] -     0ms edge_state (stateService) logsRepository - STOPPED
+2019-09-10 06:29:25.596 [ INFO] -     1ms edge_state (stateService) warningsRepository - STOPPED
+2019-09-10 06:29:25.596 [ INFO] -     0ms edge_state (stateService) eventService - STOPPED
+2019-09-10 06:29:25.597 [ INFO] -     1ms edge_state (stateService) blastService - STOPPED
+2019-09-10 06:29:25.597 [ INFO] -     0ms edge_state (stateService) queueService - STOPPED
+2019-09-10 06:29:25.601 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:29:25.601 [ INFO] -     0ms edge_state (Mesh) stopped component 'app'
+2019-09-10 06:29:25.604 [ INFO] -     3ms edge_state (HappnServer) released 0.0.0.0:55007
+2019-09-10 06:29:25.606 [ INFO] -     2ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:29:25.607 [ INFO] -     1ms edge_state (Mesh) stopped!
+2019-09-10 06:29:26.248 [ INFO] -    36ms edge_state (Happn) persisting ./tester.db
+2019-09-10 06:29:26.251 [ INFO] -     4ms edge_state (HappnServer) utils service loaded.
+2019-09-10 06:29:26.252 [ INFO] -     1ms edge_state (HappnServer) error service loaded.
+2019-09-10 06:29:26.254 [ INFO] -     2ms edge_state (HappnServer) log service loaded.
+2019-09-10 06:29:26.287 [ INFO] -    33ms edge_state (HappnServer) data service loaded.
+2019-09-10 06:29:26.292 [ INFO] -     5ms edge_state (HappnServer) system service loaded.
+2019-09-10 06:29:26.303 [ INFO] -    11ms edge_state (HappnServer) cache service loaded.
+2019-09-10 06:29:26.443 [ INFO] -   140ms edge_state (HappnServer) connect service loaded.
+2019-09-10 06:29:26.444 [ INFO] -     1ms edge_state (HappnServer) crypto service loaded.
+2019-09-10 06:29:26.458 [ INFO] -    14ms edge_state (HappnServer) transport service loaded.
+2019-09-10 06:29:26.461 [ INFO] -     3ms edge_state (HappnServer) session service loaded.
+2019-09-10 06:29:26.462 [ INFO] -     1ms edge_state (HappnServer) protocol service loaded.
+2019-09-10 06:29:26.467 [ INFO] -     5ms edge_state (HappnServer) security service loaded.
+2019-09-10 06:29:26.474 [ INFO] -     7ms edge_state (HappnServer) subscription service loaded.
+2019-09-10 06:29:26.476 [ INFO] -     2ms edge_state (HappnServer) publisher service loaded.
+2019-09-10 06:29:26.477 [ INFO] -     1ms edge_state (HappnServer) stats service loaded.
+2019-09-10 06:29:26.611 [ INFO] -   134ms edge_state (System) instance name: edge_state
+2019-09-10 06:29:26.708 [ INFO] -    96ms edge_state (Happn) '_ADMIN' connected
+2019-09-10 06:29:26.721 [ INFO] -    14ms edge_state (Mesh) home /Users/timbewsey1/Desktop/Current/AECE/aece_state/test/integration/services
+2019-09-10 06:29:26.721 [ INFO] -     0ms edge_state (Mesh) happner v10.4.0
+2019-09-10 06:29:26.722 [ INFO] -     1ms edge_state (Mesh) config v..
+2019-09-10 06:29:26.722 [ INFO] -     0ms edge_state (Mesh) localnode 'edge_state' at pid 9364
+2019-09-10 06:29:27.322 [ INFO] -   600ms edge_state (Mesh) initialized!
+2019-09-10 06:29:27.349 [ INFO] -    27ms edge_state (Mesh) initialized component 'security'
+2019-09-10 06:29:27.349 [ INFO] -     0ms edge_state (Mesh) initialized component 'system'
+2019-09-10 06:29:27.354 [ INFO] -     5ms edge_state (Mesh) initialized component 'rest'
+2019-09-10 06:29:27.358 [ INFO] -     4ms edge_state (Mesh) started component 'uiService'
+2019-09-10 06:29:27.358 [ INFO] -     0ms edge_state (Mesh) started component 'packetService'
+2019-09-10 06:29:27.359 [ INFO] -     1ms edge_state (Mesh) started component 'dataService'
+2019-09-10 06:29:27.362 [ INFO] -     3ms edge_state (Mesh) started component 'nodeRepository'
+2019-09-10 06:29:27.362 [ INFO] -     0ms edge_state (Mesh) started component 'blastRepository'
+2019-09-10 06:29:27.362 [ INFO] -     0ms edge_state (Mesh) started component 'logsRepository'
+2019-09-10 06:29:27.363 [ INFO] -     1ms edge_state (Mesh) started component 'warningsRepository'
+2019-09-10 06:29:27.364 [ INFO] -     1ms edge_state (Mesh) started component 'eventService'
+2019-09-10 06:29:27.365 [ INFO] -     1ms edge_state (Mesh) started component 'transmissionService'
+2019-09-10 06:29:27.365 [ INFO] -     0ms edge_state (Mesh) started component 'blastService'
+2019-09-10 06:29:27.365 [ INFO] -     0ms edge_state (Mesh) started component 'queueService'
+2019-09-10 06:29:27.367 [ INFO] -     2ms edge_state (stateService) uiService - STARTED
+2019-09-10 06:29:27.370 [ INFO] -     3ms edge_state (stateService) packetService - STARTED
+2019-09-10 06:29:27.370 [ INFO] -     0ms edge_state (stateService) dataService - INITIALIZED
+2019-09-10 06:29:27.371 [ INFO] -     1ms edge_state (stateService) nodeRepository - STARTED
+2019-09-10 06:29:27.372 [ INFO] -     1ms edge_state (stateService) blastRepository - STARTED
+2019-09-10 06:29:27.372 [ INFO] -     0ms edge_state (stateService) logsRepository - STARTED
+2019-09-10 06:29:27.373 [ INFO] -     1ms edge_state (stateService) warningsRepository - STARTED
+2019-09-10 06:29:27.373 [ INFO] -     0ms edge_state (stateService) eventService - STARTED
+2019-09-10 06:29:27.373 [ INFO] -     0ms edge_state (stateService) transmissionService - STARTED
+2019-09-10 06:29:27.374 [ INFO] -     1ms edge_state (stateService) blastService - STARTED
+2019-09-10 06:29:27.374 [ INFO] -     0ms edge_state (stateService) queueService - STARTED
+2019-09-10 06:29:27.375 [ INFO] -     1ms edge_state (stateService) app - PENDING
+2019-09-10 06:29:27.383 [ WARN] -     8ms edge_state (securityService) Setting up temporary users....ensure that these are changed using the UI
+2019-09-10 06:29:27.419 [ INFO] -    36ms edge_state (securityService) User = OEM upserted.....>>>>
+2019-09-10 06:29:27.428 [ INFO] -     9ms edge_state (securityService) User = ADMIN upserted.....>>>>
+2019-09-10 06:29:27.437 [ INFO] -     9ms edge_state (securityService) User = GUEST upserted.....>>>>
+2019-09-10 06:29:27.439 [ WARN] -     2ms edge_state (securityService) User OEM is not secure.  Please urgently change password in UI
+2019-09-10 06:29:27.440 [ WARN] -     1ms edge_state (securityService) User ADMIN is not secure.  Please urgently change password in UI
+2019-09-10 06:29:27.441 [ WARN] -     1ms edge_state (securityService) User GUEST is not secure.  Please urgently change password in UI
+2019-09-10 06:29:27.443 [ INFO] -     2ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:29:27.443 [ WARN] -     0ms edge_state (app) Setup available but incomplete - run ui to complete
+2019-09-10 06:29:27.443 [ WARN] -     0ms edge_state (app) Then restart the process for changes to take effect!
+2019-09-10 06:29:27.446 [ WARN] -     3ms edge_state (dataService) No Control Unit found...
+2019-09-10 06:29:27.446 [ INFO] -     0ms edge_state (dataService) No Boosters found in the Data Store.
+2019-09-10 06:29:27.446 [ INFO] -     0ms edge_state (dataService) No Detonators found in the Data Store.
+2019-09-10 06:29:27.446 [ WARN] -     0ms edge_state (dataService) No Units found in Node Repository.... DataModel is empty
+2019-09-10 06:29:27.448 [ INFO] -     2ms edge_state (app) ::::: APP STARTUP COMPLETE ::::::
+2019-09-10 06:29:27.449 [ INFO] -     1ms edge_state (stateService) endpointService - STARTED
+2019-09-10 06:29:27.450 [ INFO] -     1ms edge_state (stateService) app - STARTED
+2019-09-10 06:29:27.450 [ INFO] -     0ms edge_state (Mesh) started component 'app'
+2019-09-10 06:29:27.454 [ INFO] -     4ms edge_state (HappnServer) port available, about to listen
+2019-09-10 06:29:27.459 [ INFO] -     5ms edge_state (HappnServer) listening at 0.0.0.0:55007
+2019-09-10 06:29:27.460 [ INFO] -     0ms edge_state (HappnServer) happn version 10.2.2
+2019-09-10 06:29:27.460 [ INFO] -     1ms edge_state (Mesh) started!
+2019-09-10 06:29:30.450 [ INFO] -  2990ms edge_state (endpointService) Checking for Endpoint edge_ssot - 0.0.0.0:55008
+2019-09-10 06:29:32.452 [ WARN] -  2002ms edge_state (endpointService) 0.0.0.0:55008 not available
+2019-09-10 06:29:33.450 [ INFO] -   998ms edge_state (endpointService) Checking for Endpoint edge_ssot - 0.0.0.0:55008
+2019-09-10 06:29:35.456 [ WARN] -  2006ms edge_state (endpointService) 0.0.0.0:55008 not available
+2019-09-10 06:29:36.450 [ INFO] -   994ms edge_state (endpointService) Checking for Endpoint edge_ssot - 0.0.0.0:55008
+2019-09-10 06:29:37.465 [ INFO] -  1015ms edge_state (Mesh) stopped component 'uiService'
+2019-09-10 06:29:37.466 [ INFO] -     1ms edge_state (Mesh) stopped component 'packetService'
+2019-09-10 06:29:37.468 [ INFO] -     2ms edge_state (Mesh) stopped component 'dataService'
+2019-09-10 06:29:37.469 [ INFO] -     1ms edge_state (Mesh) stopped component 'endpointService'
+2019-09-10 06:29:37.470 [ INFO] -     1ms edge_state (Mesh) stopped component 'nodeRepository'
+2019-09-10 06:29:37.470 [ INFO] -     0ms edge_state (Mesh) stopped component 'blastRepository'
+2019-09-10 06:29:37.470 [ INFO] -     0ms edge_state (Mesh) stopped component 'logsRepository'
+2019-09-10 06:29:37.471 [ INFO] -     1ms edge_state (Mesh) stopped component 'warningsRepository'
+2019-09-10 06:29:37.471 [ INFO] -     0ms edge_state (Mesh) stopped component 'eventService'
+2019-09-10 06:29:37.472 [ INFO] -     1ms edge_state (Mesh) stopped component 'blastService'
+2019-09-10 06:29:37.472 [ INFO] -     0ms edge_state (Mesh) stopped component 'queueService'
+2019-09-10 06:29:37.477 [ INFO] -     5ms edge_state (stateService) uiService - STOPPED
+2019-09-10 06:29:37.478 [ INFO] -     1ms edge_state (stateService) packetService - STOPPED
+2019-09-10 06:29:37.479 [ INFO] -     1ms edge_state (stateService) dataService - STOPPED
+2019-09-10 06:29:37.480 [ INFO] -     1ms edge_state (stateService) endpointService - STOPPED
+2019-09-10 06:29:37.481 [ INFO] -     1ms edge_state (stateService) nodeRepository - STOPPED
+2019-09-10 06:29:37.481 [ INFO] -     0ms edge_state (stateService) blastRepository - STOPPED
+2019-09-10 06:29:37.482 [ INFO] -     1ms edge_state (stateService) logsRepository - STOPPED
+2019-09-10 06:29:37.483 [ INFO] -     1ms edge_state (stateService) warningsRepository - STOPPED
+2019-09-10 06:29:37.484 [ INFO] -     1ms edge_state (stateService) eventService - STOPPED
+2019-09-10 06:29:37.485 [ INFO] -     1ms edge_state (stateService) blastService - STOPPED
+2019-09-10 06:29:37.485 [ INFO] -     0ms edge_state (stateService) queueService - STOPPED
+2019-09-10 06:29:37.489 [ INFO] -     4ms edge_state (stateService) app - INCOMPLETE
+2019-09-10 06:29:37.489 [ INFO] -     0ms edge_state (Mesh) stopped component 'app'
+2019-09-10 06:29:37.492 [ INFO] -     3ms edge_state (HappnServer) released 0.0.0.0:55007
+2019-09-10 06:29:37.494 [ INFO] -     2ms edge_state (Mesh) unsubscribed from process events
+2019-09-10 06:29:37.494 [ INFO] -     0ms edge_state (Mesh) stopped!

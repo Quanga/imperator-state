@@ -10,6 +10,8 @@ const sandbox = sinon.createSandbox();
 
 chai.use(sinonChai);
 
+const { dataServiceEvents } = require("../../../lib/constants/eventConstants");
+
 describe("UNIT - Components", async function() {
 	const EventService = require("../../../lib/services/event_service");
 	const eventService = new EventService();
@@ -21,9 +23,14 @@ describe("UNIT - Components", async function() {
 		sandbox.restore();
 	});
 
-	context("Queue Service", async () => {
-		it("will emit the update log for an EDD_SIG", async () => {
-			let sig = { type: "EDD_SIG", typeId: 3, createdAt: Date.now(), serial: 23 };
+	context("EventService", async () => {
+		it("will emit the update log for an EDD_SIG from DataService", async () => {
+			let sig = {
+				type: dataServiceEvents.EDD_SIGNAL_DETECTED,
+				typeId: 3,
+				createdAt: Date.now(),
+				serial: 23
+			};
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
 			await eventService.handleEvent(mock, sig);
@@ -31,7 +38,7 @@ describe("UNIT - Components", async function() {
 			expect(logRepoSpy).to.have.been.called;
 		});
 
-		it("will emit the update log for an UNIT_UPDATE", async () => {
+		it("will emit the update log for an UNIT_UPDATE from dataService", async () => {
 			let payload = [
 				{
 					data: {
@@ -154,7 +161,13 @@ describe("UNIT - Components", async function() {
 				}
 			];
 
-			let sig = { type: "UPDATE", typeId: 3, createdAt: Date.now(), serial: 13, payload };
+			let sig = {
+				type: dataServiceEvents.UNITS_UPDATED,
+				typeId: 3,
+				createdAt: Date.now(),
+				serial: 13,
+				payload
+			};
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
 			await eventService.handleEvent(mock, sig);
@@ -162,7 +175,7 @@ describe("UNIT - Components", async function() {
 			expect(logRepoSpy).to.have.been.called;
 		});
 
-		it("will emit the INSERT log", async () => {
+		it("will emit the INSERT log from the dataService", async () => {
 			let payload = [
 				{
 					data: {
@@ -229,7 +242,13 @@ describe("UNIT - Components", async function() {
 				}
 			];
 
-			let sig = { type: "INSERT", typeId: 3, createdAt: Date.now(), serial: 13, payload };
+			let sig = {
+				type: dataServiceEvents.UNITS_INSERTED,
+				typeId: 3,
+				createdAt: Date.now(),
+				serial: 13,
+				payload
+			};
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
 			await eventService.handleEvent(mock, sig);
