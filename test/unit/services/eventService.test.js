@@ -235,7 +235,25 @@ describe("UNIT - Services", async function() {
 			let persistWarnSpy = sandbox.spy(mock.exchange.warningsRepository, "set");
 			await eventService.processWarnings(mock, logModel);
 
+			const resp = {
+				createdAt,
+				serial: 22,
+				typeId: 3,
+				ack: false,
+				//id: "ddda6273-1df5-4544-a0df-b54cbfe2f410",
+				warning: "cableFault",
+				ackDate: null,
+				ackBy: null,
+				ackType: null
+			};
+
 			expect(persistWarnSpy).to.have.been.calledOnce;
+			let persistWarnResp = persistWarnSpy.getCall(0).args[0];
+			delete persistWarnResp.id;
+
+			expect(persistWarnResp).to.deep.equal(resp);
+
+			console.log();
 
 			//expect(warnResult).to.deep.equal({});
 		});
