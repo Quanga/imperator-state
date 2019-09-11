@@ -61,7 +61,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ fireButton: 0 }]
+				events: [{ diff: { fireButton: 0 } }]
 			};
 			await util.timer(1000);
 			blastModel.addLog(logObj);
@@ -104,7 +104,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ fireButton: 0 }]
+				events: [{ diff: { fireButton: 0 } }]
 			};
 
 			await util.timer(1000);
@@ -125,7 +125,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 1000,
-				events: [{ communicationState: 1 }]
+				events: [{ diff: { communicationState: 1 } }]
 			};
 
 			blastModel.addLog(logObj);
@@ -138,7 +138,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 2000,
-				events: [{ windowId: 1, communicationState: 1 }]
+				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }]
 			};
 
 			blastModel.addLog(logObj);
@@ -151,7 +151,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 3000,
-				events: [{ windowId: 2, communicationState: 1 }]
+				events: [{ windowId: 2, diff: { detonatorStatus: 1 } }]
 			};
 
 			blastModel.addLog(logObj);
@@ -195,7 +195,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ fireButton: 0 }]
+				events: [{ diff: { fireButton: 0 } }]
 			};
 
 			await util.timer(1000);
@@ -207,7 +207,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 2000,
-				events: [{ windowId: 1, communicationState: 1 }]
+				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }]
 			};
 
 			blastModel.addLog(logObj);
@@ -244,7 +244,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ fireButton: 0 }]
+				events: [{ diff: { fireButton: 0 } }]
 			};
 
 			await util.timer(1000);
@@ -257,14 +257,14 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 15000,
-				events: [{ windowId: 1, communicationState: 1 }]
+				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }]
 			};
 
 			blastModel.addLog(logObj);
 
 			await util.timer(1000);
 
-			expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_TIMER_COMPLETE);
+			expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_TIMER_COMPLETE_BYPACKET);
 			expect(blastModel.data.blastClosed).to.be.equal(createdAt + 15000);
 			expect(blastModel.data.blastReturnTime).to.be.equal(14000);
 			expect(blastModel.timer).to.be.null;
