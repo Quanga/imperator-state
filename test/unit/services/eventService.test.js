@@ -53,7 +53,7 @@ describe("UNIT - Services", async function() {
 				createdAt,
 				logType: eventServiceLogTypes.EDD_SIG
 			});
-			//console.log();
+			console.log();
 		});
 
 		it("can handle a UNIT INSERT event sent from the DataService", async () => {

@@ -57,6 +57,7 @@ describe("INTEGRATION - Repositories", async function() {
 
 			const createdAt = 10000;
 			await mesh.exchange.logsRepository.delete("*");
+			await util.timer(1000);
 
 			for (let l = 0; l < 50; l++) {
 				let logmodel = new LogModel();
