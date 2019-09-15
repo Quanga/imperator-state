@@ -76,7 +76,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			let resultPresist = await client.exchange.nodeRepository.getAllNodes();
+			let resultPresist = await client.exchange.nodeRepository.get("*");
 			let resultDataService = await client.exchange.dataService.getSnapShot();
 			expect(resultPresist).to.be.instanceOf(Array);
 			expect(resultPresist.length).to.be.equal(2);
@@ -128,7 +128,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(3000);
 
-			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+			const resultPersist = await client.exchange.nodeRepository.get("*");
 
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
@@ -203,7 +203,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			const resultPersist = await client.exchange.nodeRepository.getAllNodes();
+			const resultPersist = await client.exchange.nodeRepository.get("*");
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 
@@ -267,7 +267,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			let resPersist = await client.exchange.nodeRepository.get("*");
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.equal(3);
 
@@ -359,7 +359,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(1000);
 
-			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			let resPersist = await client.exchange.nodeRepository.get("*");
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.greaterThan(3);
 
@@ -450,7 +450,7 @@ describe("INTEGRATION - Units", async function() {
 			const logs = await client.exchange.logsRepository.get("*", 1000, Date.now());
 			console.log(JSON.stringify(logs, null, 2));
 
-			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			let resPersist = await client.exchange.nodeRepository.get("*");
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.greaterThan(3);
 
@@ -520,7 +520,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(3000);
 
-			let resPersist = await client.exchange.nodeRepository.getAllNodes();
+			let resPersist = await client.exchange.nodeRepository.get("*");
 
 			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
 
@@ -555,7 +555,7 @@ describe("INTEGRATION - Units", async function() {
 
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
-			resPersist = await client.exchange.nodeRepository.getAllNodes();
+			resPersist = await client.exchange.nodeRepository.get("*");
 
 			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
 
@@ -591,7 +591,7 @@ describe("INTEGRATION - Units", async function() {
 
 			await util.timer(2000);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 
 			expect(result.length).to.eql(2);
 			expect(result[1].childCount).to.eql(0);
@@ -655,7 +655,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(1000);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 
 			if (result == null || result.length == 0) throw new Error("Empty result!");
 
@@ -690,7 +690,7 @@ describe("INTEGRATION - Units", async function() {
 
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
-			result = await client.exchange.nodeRepository.getAllNodes();
+			result = await client.exchange.nodeRepository.get("*");
 			const snapshot = await client.exchange.dataService.getSnapShot();
 
 			if (result == null || result.length == 0) throw new Error("Empty result!");

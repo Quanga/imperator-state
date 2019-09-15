@@ -98,7 +98,7 @@ describe("INTEGRATION - Units", async function() {
 			await utils.holdTillDrained(sendQueue);
 			await utils.timer(2000);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 
 			if (result == null || result.length == 0) {
 				throw new Error("Empty result!");
@@ -135,7 +135,7 @@ describe("INTEGRATION - Units", async function() {
 
 			await utils.holdTillDrained(sendQueue);
 			await utils.timer(1000);
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 
 			if (result == null || result.length == 0) {
 				throw new Error("Empty result!");

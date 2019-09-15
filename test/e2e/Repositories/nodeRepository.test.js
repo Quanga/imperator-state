@@ -132,7 +132,7 @@ describe("E2E - Repository", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			const dets = await mesh.exchange.nodeRepository.getPersisted("3/13/*");
+			const dets = await mesh.exchange.nodeRepository.get("3/13/*");
 			console.log("DETS", dets);
 			expect(dets[1].logged).to.eql(1);
 			expect(dets[1].detonatorStatus).to.eql(0);

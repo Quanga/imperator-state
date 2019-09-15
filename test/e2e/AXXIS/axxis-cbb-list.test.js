@@ -68,7 +68,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			const result = await client.exchange.nodeRepository.getAllNodes();
+			const result = await client.exchange.nodeRepository.get("*");
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(0);
 
@@ -90,7 +90,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
@@ -131,7 +131,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
@@ -187,7 +187,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			let result = await client.exchange.nodeRepository.getAllNodes();
+			let result = await client.exchange.nodeRepository.get("*");
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
@@ -253,7 +253,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			const result = await client.exchange.nodeRepository.getAllNodes();
+			const result = await client.exchange.nodeRepository.get("*");
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
@@ -325,7 +325,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
 
-			let resPersisted = await nodeRepository.getAllNodes();
+			let resPersisted = await nodeRepository.get("*");
 			let resData = await dataService.getSnapShot();
 
 			let mappedNodes = resPersisted.map(node => {
@@ -348,7 +348,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
-			resPersisted = await nodeRepository.getAllNodes();
+			resPersisted = await nodeRepository.get("*");
 			resData = await dataService.getSnapShot();
 
 			mappedNodes = resPersisted.map(node => {

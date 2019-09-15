@@ -34,7 +34,7 @@ describe("UNIT - Components", async function() {
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
 			await eventService.handleEvent(mock, sig);
-			console.log(JSON.stringify(eventService.emitQueue, null, 2));
+			//console.log(JSON.stringify(eventService.emitQueue, null, 2));
 			expect(logRepoSpy).to.have.been.called;
 		});
 
@@ -77,9 +77,6 @@ describe("UNIT - Components", async function() {
 						_eventsCount: 0
 					},
 					children: {},
-					meta: {
-						_lastCommunication: null
-					},
 					dataType: "data",
 					diff: {
 						blastArmed: 0,

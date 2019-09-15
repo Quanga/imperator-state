@@ -3759,9 +3759,6 @@ module.exports = {
 							},
 							dataType: "list"
 						}
-					},
-					meta: {
-						_lastCommunication: null
 					}
 				}
 			},
@@ -3797,10 +3794,7 @@ module.exports = {
 						detectedCount: 0,
 						detonatorStatusCount: 0
 					},
-					children: {},
-					meta: {
-						_lastCommunication: null
-					}
+					children: {}
 				}
 			}
 		},
@@ -5959,9 +5953,6 @@ module.exports = {
 							},
 							dataType: "list"
 						}
-					},
-					meta: {
-						_lastCommunication: null
 					}
 				}
 			},
@@ -5997,10 +5988,7 @@ module.exports = {
 						detectedCount: 0,
 						detonatorStatusCount: 0
 					},
-					children: {},
-					meta: {
-						_lastCommunication: null
-					}
+					children: {}
 				}
 			}
 		}

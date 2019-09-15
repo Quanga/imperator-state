@@ -3546,9 +3546,6 @@ module.exports = {
 							},
 							dataType: "list"
 						}
-					},
-					meta: {
-						_lastCommunication: null
 					}
 				}
 			},
@@ -3605,9 +3602,6 @@ module.exports = {
 							},
 							dataType: "list"
 						}
-					},
-					meta: {
-						_lastCommunication: null
 					}
 				}
 			},
@@ -5768,9 +5762,6 @@ module.exports = {
 							},
 							dataType: "list"
 						}
-					},
-					meta: {
-						_lastCommunication: null
 					}
 				}
 			},
@@ -5827,9 +5818,6 @@ module.exports = {
 							},
 							dataType: "list"
 						}
-					},
-					meta: {
-						_lastCommunication: null
 					}
 				}
 			},

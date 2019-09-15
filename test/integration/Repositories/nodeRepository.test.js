@@ -133,7 +133,7 @@ describe("INTEGRATION - Repositories", async function() {
 				});
 
 			await loadData();
-			let res = await nodeRepository.getAllNodes();
+			let res = await nodeRepository.get("*");
 			expect(res.length).to.eql(1);
 			expect(res[0].data.serial).to.eql(12);
 		});
