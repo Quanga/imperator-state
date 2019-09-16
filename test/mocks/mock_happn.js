@@ -7,8 +7,8 @@ var MockHappn = function() {
 	this.nodes = [];
 	this.emitter = new Events.EventEmitter();
 
-	this.emit = function(message) {
-		console.log("EMITTING", message);
+	this.emit = (message, val) => {
+		console.log(`EMITTING-${message} ---${val}`);
 		//this.emitter.emit(message);
 	};
 
