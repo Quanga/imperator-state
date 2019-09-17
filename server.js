@@ -27,20 +27,17 @@ const Server = async () => {
 
 	start();
 };
+// process.stdin.resume();
 
-process.on("SIGTERM", async () => {
-	console.info("SIGTERM signal received.");
-	await stop();
-});
+// process.on("SIGTERM" () => {
+// 	console.info("SIGTERM signal received.");
+// 	 stop();
+// });
 
-process.on("SIGINT", async () => {
+process.on("SIGINT", () => {
 	console.info("SIGINT signal received.");
-	await stop();
-});
-
-const stop = () =>
-	new Promise(resolve => {
-		this.mesh.stop(
+	this.mesh
+		.stop(
 			{
 				kill: true,
 				wait: 10000,
@@ -49,10 +46,27 @@ const stop = () =>
 			},
 			data => {
 				console.warn("stopped", data);
-				resolve();
 			}
-		);
-	});
+		)
+		.then(() => console.warn("stopped"));
+});
+
+// const stop = () =>
+// 	new Promise(resolve => {
+// 		this.mesh
+// 			.stop(
+// 				{
+// 					kill: true,
+// 					wait: 10000,
+// 					exitCode: 1,
+// 					reconnect: false
+// 				},
+// 				data => {
+// 					console.warn("stopped", data);
+// 				}
+// 			)
+// 			.then(() => resolve());
+// 	});
 
 /**
  *
