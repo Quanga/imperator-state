@@ -28,29 +28,31 @@ const Server = async () => {
 	start();
 };
 
-process.on("SIGTERM", () => {
+process.on("SIGTERM", async () => {
 	console.info("SIGTERM signal received.");
-	stop();
+	await stop();
 });
 
-process.on("SIGINT", () => {
+process.on("SIGINT", async () => {
 	console.info("SIGINT signal received.");
-	stop();
+	await stop();
 });
 
-const stop = () => {
-	this.mesh.stop(
-		{
-			kill: true,
-			wait: 10000,
-			exitCode: 1,
-			reconnect: false
-		},
-		data => {
-			console.warn("stopped", data);
-		}
-	);
-};
+const stop = () =>
+	new Promise(resolve => {
+		this.mesh.stop(
+			{
+				kill: true,
+				wait: 10000,
+				exitCode: 1,
+				reconnect: false
+			},
+			data => {
+				console.warn("stopped", data);
+				resolve();
+			}
+		);
+	});
 
 /**
  *
