@@ -34,19 +34,11 @@ const override = {
 };
 
 describe("INTEGRATION - Repositories", async function() {
-	this.timeout(5000);
+	this.timeout(10000);
 	context("LogsRepository Tests", async () => {
 		let config, mesh;
 
-		beforeEach(() => {
-			sandbox.reset();
-		});
-
-		afterEach(() => {
-			sandbox.restore();
-		});
-
-		it("it can add logs to the Logs Repository and get with no TO or FROM", async function() {
+		beforeEach(async () => {
 			config = new Config(override).configuration;
 			mesh = new Happner();
 
@@ -54,10 +46,21 @@ describe("INTEGRATION - Repositories", async function() {
 			expect(mesh._mesh.initialized).to.be.true;
 			await mesh.start();
 			expect(mesh._mesh.started).to.be.true;
+			await mesh.exchange.nodeRepository.delete("*");
+			await mesh.exchange.logsRepository.delete("*");
+			await mesh.exchange.warningsRepository.delete("*");
+			await mesh.exchange.blastRepository.delete("*");
+			console.log("SATRTED");
+		});
 
+		afterEach(() => {
+			sandbox.restore();
+		});
+
+		it("it can add logs to the Logs Repository and get with no TO or FROM", async () => {
 			const createdAt = 10000;
 			await mesh.exchange.logsRepository.delete("*");
-			await util.timer(1000);
+			await util.timer(5000);
 
 			for (let l = 0; l < 50; l++) {
 				let logmodel = new LogModel();
@@ -83,15 +86,7 @@ describe("INTEGRATION - Repositories", async function() {
 			expect(mesh._mesh.stopped).to.be.true;
 		});
 
-		it("it can add logs to the Logs Repository and get with only FROM", async function() {
-			config = new Config(override).configuration;
-			mesh = new Happner();
-
-			await mesh.initialize(config);
-			expect(mesh._mesh.initialized).to.be.true;
-			await mesh.start();
-			expect(mesh._mesh.started).to.be.true;
-
+		it("it can add logs to the Logs Repository and get with only FROM", async () => {
 			const createdAt = 10000;
 			await mesh.exchange.logsRepository.delete("*");
 
@@ -104,7 +99,7 @@ describe("INTEGRATION - Repositories", async function() {
 				await mesh.exchange.logsRepository.set(logmodel);
 			}
 
-			let get = await mesh.exchange.logsRepository.get("*", createdAt);
+			let get = await mesh.exchange.logsRepository.get("*", createdAt, Date.now());
 
 			expect(get.length).to.be.equal(50);
 			expect(get[0].createdAt).to.be.equal(createdAt);
@@ -120,15 +115,7 @@ describe("INTEGRATION - Repositories", async function() {
 			expect(mesh._mesh.stopped).to.be.true;
 		});
 
-		it("it can add logs to the Logs Repository and get them with TO and FROM", async function() {
-			config = new Config(override).configuration;
-			mesh = new Happner();
-
-			await mesh.initialize(config);
-			expect(mesh._mesh.initialized).to.be.true;
-			await mesh.start();
-			expect(mesh._mesh.started).to.be.true;
-
+		it("it can add logs to the Logs Repository and get them with TO and FROM", async () => {
 			const createdAt = 10000;
 			await mesh.exchange.logsRepository.delete("*");
 
