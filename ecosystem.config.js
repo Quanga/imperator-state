@@ -5,6 +5,7 @@ module.exports = {
 			script: "server.js",
 			instances: 1,
 			autorestart: true,
+			kill_timeout: 10000,
 			watch: false,
 			max_memory_restart: "1G",
 			env: {
