@@ -37,17 +37,9 @@ const Server = async () => {
 process.on("SIGINT", () => {
 	console.info("SIGINT signal received.");
 	this.mesh
-		.stop(
-			{
-				kill: false,
-				wait: 1000,
-				exitCode: 1,
-				reconnect: false
-			},
-			data => {
-				console.warn("stopped", data);
-			}
-		)
+		.stop({
+			reconnect: false
+		})
 		.then(() => console.warn("stopped"));
 });
 
