@@ -39,8 +39,8 @@ process.on("SIGINT", () => {
 	this.mesh
 		.stop(
 			{
-				kill: true,
-				wait: 10000,
+				kill: false,
+				wait: 1000,
 				exitCode: 1,
 				reconnect: false
 			},
