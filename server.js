@@ -2,6 +2,7 @@
  * @category System
  * @module server
  */
+const pmx = require("@pm2/io");
 
 if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
@@ -43,28 +44,32 @@ process.on("SIGINT", () => {
 		.then(() => console.warn("stopped"));
 });
 
-// const stop = () =>
-// 	new Promise(resolve => {
-// 		this.mesh
-// 			.stop(
-// 				{
-// 					kill: true,
-// 					wait: 10000,
-// 					exitCode: 1,
-// 					reconnect: false
-// 				},
-// 				data => {
-// 					console.warn("stopped", data);
-// 				}
-// 			)
-// 			.then(() => resolve());
-// 	});
+const stop = () =>
+	new Promise(resolve => {
+		this.mesh
+			.stop(
+				{
+					kill: true,
+					wait: 10000,
+					exitCode: 2,
+					reconnect: false
+				},
+				data => {
+					console.warn("stopped", data);
+				}
+			)
+			.then(() => resolve());
+	});
 
 /**
  *
  * @function start
  */
 const start = () => {
+	pmx.action("stop", () => {
+		stop();
+	});
+
 	const Mesh = require("happner-2");
 	this.mesh = new Mesh();
 
