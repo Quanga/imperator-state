@@ -33,6 +33,11 @@ process.on("SIGTERM", () => {
 	stop();
 });
 
+process.on("SIGINT", () => {
+	console.info("SIGINT signal received.");
+	stop();
+});
+
 const stop = () => {
 	this.mesh.stop(
 		{
