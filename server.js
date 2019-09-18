@@ -66,8 +66,8 @@ const stop = () =>
  * @function start
  */
 const start = () => {
-	pmx.action("stop", () => {
-		stop();
+	pmx.action("stop", reply => {
+		stop().then(() => reply("stopping"));
 	});
 
 	const Mesh = require("happner-2");
