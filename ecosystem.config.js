@@ -26,7 +26,7 @@ module.exports = {
 			env_production002: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS100_CFC",
+				MODE: "AXXIS500_WIFI",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
@@ -87,8 +87,8 @@ module.exports = {
 		},
 		"production-intelliblast-edge-002": {
 			key: process.env.HOME + "/id_deploy",
-			user: "aece",
-			host: "intelliblast-edge-002",
+			user: "admin",
+			host: "aece",
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
