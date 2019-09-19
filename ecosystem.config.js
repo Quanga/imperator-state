@@ -38,13 +38,13 @@ module.exports = {
 			env_production003: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS100_CFC",
+				MODE: "AXXIS500",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-edge-003",
+				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 120000,
-				SYSTEM_REPORT_TIME: 300000,
+				SYSTEM_FIRING_TIME: 420000,
+				SYSTEM_REPORT_TIME: 600000,
 				COMMUNICATION_CHECK_INTERVAL: 800000
 			},
 			env_production500: {
@@ -100,7 +100,7 @@ module.exports = {
 			host: "aece",
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
-			path: "/home/admin/state",
+			path: "/home/edge/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
 		},
 		production_aws: {
@@ -123,5 +123,3 @@ module.exports = {
 		}
 	}
 };
-
-//1.tcp.ngrok.io:25833
