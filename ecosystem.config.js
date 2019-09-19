@@ -31,8 +31,8 @@ module.exports = {
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 120000,
-				SYSTEM_REPORT_TIME: 300000,
+				SYSTEM_FIRING_TIME: 420000,
+				SYSTEM_REPORT_TIME: 600000,
 				COMMUNICATION_CHECK_INTERVAL: 600000
 			},
 			env_production003: {
