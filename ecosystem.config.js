@@ -96,8 +96,8 @@ module.exports = {
 		},
 		"production-intelliblast-edge-003": {
 			key: process.env.HOME + "/id_deploy",
-			user: "admin",
-			host: "aece",
+			user: "edge",
+			host: "aece2",
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
