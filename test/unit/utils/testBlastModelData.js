@@ -1,5 +1,5 @@
 module.exports = {
-	firingTime: 125595,
+	firingTime: 1561905800695,
 	blastClosed: 1561905941889,
 	createdAt: 1561905800695,
 	firingComplete: 1561905926290,

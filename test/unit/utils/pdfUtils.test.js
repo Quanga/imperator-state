@@ -13,7 +13,7 @@ describe("UNIT -Utils", async function() {
 			await pdfUtils.createPdf(reportData);
 			const pdfUtils2 = new PdfUtils();
 			pdfUtils2.createContent(reportData2);
-			await pdfUtils2.createPdf(reportData2);
+			await pdfUtils2.createPdf(reportData2); 
 		});
 	});
 });
