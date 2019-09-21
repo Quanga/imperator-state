@@ -44,7 +44,9 @@ describe("UNIT - Parser", async function() {
 						cableFault: 0,
 						earthLeakage: 0,
 						ledState: 8,
-						childCount: 100
+						childCount: 100,
+						lostPackets: null,
+						packetSinceLastFiring: null
 					}
 				},
 				{

@@ -5,8 +5,9 @@ chai.use(require("chai-match"));
 const util = require("../../helpers/utils");
 
 const BlastModel = require("../../../lib/models/blastModel");
-const { blastModelEvents, eventServiceLogTypes } = require("../../../lib/constants/eventConstants");
+const { blastModelEvents } = require("../../../lib/constants/eventConstants");
 const { blastModelStates } = require("../../../lib/constants/stateConstants");
+const { eventServiceLogTypes } = require("../../../lib/constants/typeConstants");
 
 describe("UNIT - Models", async function() {
 	this.timeout(25000);

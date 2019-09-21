@@ -14,10 +14,8 @@ const EventService = require("../../../lib/services/event_service");
 
 const LogModel = require("../../../lib/models/logModel");
 
-const {
-	dataServiceEvents,
-	eventServiceLogTypes
-} = require("../../../lib/constants/eventConstants");
+const { dataServiceEvents } = require("../../../lib/constants/eventConstants");
+const { eventServiceLogTypes } = require("../../../lib/constants/typeConstants");
 
 describe("UNIT - Services", async function() {
 	context("EventService", async () => {
