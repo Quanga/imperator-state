@@ -26,7 +26,7 @@ class Config {
 				logger: null
 			},
 			happn: {
-				host: "0.0.0.0" || overrideObj.host || process.env.EDGE_LOCAL_IP,
+				host: "192.168.1.128" || overrideObj.host || process.env.EDGE_LOCAL_IP,
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
 					timeout: 30000
@@ -114,7 +114,7 @@ class Config {
 				endpointService: {
 					stopMethod: "componentStop",
 					env: {
-						endpointIP: overrideObj.endpointIP || process.env.ENDPOINT_IP || "localhost",
+						endpointIP: overrideObj.endpointIP || process.env.ENDPOINT_IP || "0.0.0.0",
 						endpointPort: overrideObj.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
 						endpointCheckInterval:
 							overrideObj.endpointCheckInterval ||
