@@ -41,7 +41,7 @@ module.exports = {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
 				MODE: systemModeTypes.HYDRA,
-				EDGE_LOCAL_IP: "127.0.0.1",
+				EDGE_LOCAL_IP: "0.0.0.0",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
