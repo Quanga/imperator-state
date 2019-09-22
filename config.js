@@ -114,7 +114,7 @@ class Config {
 				endpointService: {
 					stopMethod: "componentStop",
 					env: {
-						endpointIP: "0.0.0.0",
+						endpointIP: overrideObj.endpointIP || process.env.ENDPOINT_IP || "localhost",
 						endpointPort: overrideObj.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
 						endpointCheckInterval:
 							overrideObj.endpointCheckInterval ||
