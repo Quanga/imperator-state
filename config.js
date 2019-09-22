@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const path = require("path");
 const os = require("os");
+const { systemModeTypes } = require("./lib/constants/typeConstants");
 
 class Config {
 	constructor(overrideObj = {}) {
@@ -99,12 +100,15 @@ class Config {
 					startMethod: "start",
 					stopMethod: "stop",
 					env: {
-						mode: overrideObj.mode || process.env.MODE || "AXXIS100"
+						mode: overrideObj.mode || process.env.MODE || systemModeTypes.AXXIS100
 					}
 				},
 				dataService: {
 					startMethod: "componentStart",
-					stopMethod: "componentStop"
+					stopMethod: "componentStop",
+					env: {
+						systemMode: overrideObj.systemMode || process.env.MODE || systemModeTypes.AXXIS100
+					}
 				},
 				dataMapper: {},
 				endpointService: {

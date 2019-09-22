@@ -206,40 +206,36 @@ describe("INTEGRATION -- Services", async function() {
 			const queueModule = {
 				queuesize: 10,
 				flip: 0,
-				getActiveQueues: ($happn, callback) => {
+				getActiveQueues: function($happn, callback) {
 					console.log("getActive called");
 					callback(null, []);
 				},
-				buildQueue: ($happn, user, from, callback) => {
+				buildQueue: function($happn, user, from, callback) {
 					console.log("EP BuildQueue called", user);
 					callback();
 				},
-				processIncoming: ($happn, callback) => {
+				processIncoming: function($happn, callback) {
 					console.log("WORKING");
 					callback();
 				},
-				size: function($happn, user) {
-					return new Promise(resolve => {
-						console.log("size called", user);
-						resolve(this.queuesize);
-					});
+				size: function($happn, user, callback) {
+					console.log("size called", user);
+					callback(this.queuesize);
 				},
-				dequeue: function($happn, user) {
-					return new Promise(resolve => {
-						const packet = {
-							packet: new PacketConstructor(8, 8, {
-								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
-							}).packet,
-							createdAt: Date.now()
-						};
-						if (this.flip === 0) {
-							this.flip = 1;
-						} else {
-							this.flip = 0;
-						}
-						this.queuesize--;
-						resolve(packet);
-					});
+				dequeue: function($happn, user, callback) {
+					const packet = {
+						packet: new PacketConstructor(8, 8, {
+							data: [0, 0, 0, 0, 0, 0, 0, this.flip]
+						}).packet,
+						createdAt: Date.now()
+					};
+					if (this.flip === 0) {
+						this.flip = 1;
+					} else {
+						this.flip = 0;
+					}
+					this.queuesize--;
+					callback( packet);
 				}
 			};
 
@@ -286,7 +282,7 @@ describe("INTEGRATION -- Services", async function() {
 			await util.timer(8000);
 
 			const result = await adminClient.exchange.dataService.getSnapShot();
-			const logs = await mesh.exchange.logsRepository.get("*");
+			const logs = await mesh.exchange.logsRepository.get("*", 0, Date.now());
 			console.log(result);
 			//console.log(logs);
 			expect(logs.length).to.be.equal(10);

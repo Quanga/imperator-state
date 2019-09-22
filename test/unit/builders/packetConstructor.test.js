@@ -409,7 +409,10 @@ describe("UNIT - Utils", async () => {
 						cableFault: null,
 						earthLeakage: null,
 						ledState: null,
-						childCount: null
+						childCount: null,
+						lostPackets: null,
+						packetSinceLastFiring:null,
+
 					}
 				},
 				{
@@ -508,7 +511,10 @@ describe("UNIT - Utils", async () => {
 						cableFault: 0,
 						earthLeakage: 0,
 						ledState: 6,
-						childCount: 33
+						childCount: 33,
+						packetSinceLastFiring: null,
+						lostPackets:null,
+
 					}
 				},
 				{
@@ -613,7 +619,9 @@ describe("UNIT - Utils", async () => {
 						cableFault: 0,
 						earthLeakage: 0,
 						ledState: 6,
-						childCount: 33
+						childCount: 33,
+						lostPackets: null,
+						packetSinceLastFiring: null
 					}
 				}
 			];

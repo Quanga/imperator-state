@@ -1,3 +1,5 @@
+const { systemModeTypes } = require("./lib/constants/typeConstants");
+
 module.exports = {
 	apps: [
 		{
@@ -14,7 +16,7 @@ module.exports = {
 			env_production001: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS100_CFC",
+				MODE: systemModeTypes.AXXIS100_CFC,
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-001",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
@@ -26,7 +28,7 @@ module.exports = {
 			env_production002: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS500_WIFI",
+				MODE: systemModeTypes.AXXIS500_WIFI,
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
@@ -38,13 +40,13 @@ module.exports = {
 			env_production003: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS500",
+				MODE: systemModeTypes.HYDRA,
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 420000,
-				SYSTEM_REPORT_TIME: 600000,
+				SYSTEM_FIRING_TIME: 120000,
+				SYSTEM_REPORT_TIME: 300000,
 				COMMUNICATION_CHECK_INTERVAL: 800000
 			},
 			env_production500: {
@@ -79,11 +81,11 @@ module.exports = {
 		"production-intelliblast-edge-001": {
 			key: process.env.HOME + "/id_deploy",
 			user: "admin",
-			host: "aece",
+			host: "intelliblast-edge-001",
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production001"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
 		},
 		"production-intelliblast-edge-002": {
 			key: process.env.HOME + "/id_deploy",
@@ -101,6 +103,15 @@ module.exports = {
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/edge/state",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
+		},
+		"production-intelliblast-edge-004": {
+			key: process.env.HOME + "/id_deploy",
+			user: "admin",
+			host: "intelliblast-edge-003",
+			ref: "origin/stage-1.3",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
 		},
 		production_aws: {
