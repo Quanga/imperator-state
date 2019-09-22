@@ -110,7 +110,7 @@ module.exports = {
 			key: process.env.HOME + "/id_deploy",
 			user: "admin",
 			host: "intelliblast-edge-003",
-			ref: "origin/stage-1.3",
+			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
