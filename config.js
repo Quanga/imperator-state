@@ -26,7 +26,7 @@ class Config {
 				logger: null
 			},
 			happn: {
-				host: overrideObj.host || process.env.EDGE_LOCAL_IP || "0.0.0.0",
+				host: "0.0.0.0" || overrideObj.host || process.env.EDGE_LOCAL_IP,
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
 					timeout: 30000
