@@ -66,7 +66,7 @@ module.exports = {
 			env_productionAWS: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "AXXIS100_CFC",
+				MODE: "HYDRA",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-cloud-001",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
