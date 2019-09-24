@@ -165,7 +165,7 @@ class Config {
 						theme:
 							this.getTheme(overrideObj.mode) ||
 							this.getTheme(process.env.MODE) ||
-							this.getTheme(themes.HYDRA)
+							this.getTheme(themes.AXXIS)
 					}
 				},
 				queueService: {
@@ -194,6 +194,7 @@ class Config {
 	}
 
 	getTheme(themeName) {
+		if (!themeName) return null;
 		const theme = modes[themeName].theme;
 		return styles[theme];
 	}
