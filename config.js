@@ -1,7 +1,8 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const path = require("path");
 const os = require("os");
-const { systemModeTypes } = require("./lib/constants/typeConstants");
+const { systemModeTypes, styles, themes } = require("./lib/constants/typeConstants");
+const modes = require("./lib/constants/modeTemplates");
 
 class Config {
 	constructor(overrideObj = {}) {
@@ -158,7 +159,13 @@ class Config {
 							parseInt(process.env.SYSTEM_FIRING_TIME, 10) ||
 							120000,
 						systemReportTime:
-							overrideObj.systemReportTime || parseInt(process.env.SYSTEM_REPORT_TIME, 10) || 180000
+							overrideObj.systemReportTime ||
+							parseInt(process.env.SYSTEM_REPORT_TIME, 10) ||
+							180000,
+						theme:
+							this.getTheme(overrideObj.mode) ||
+							this.getTheme(process.env.MODE) ||
+							this.getTheme(themes.AXXIS)
 					}
 				},
 				queueService: {
@@ -184,6 +191,11 @@ class Config {
 				stateService: {}
 			}
 		};
+	}
+
+	getTheme(themeName) {
+		const theme = modes[themeName].theme;
+		return styles[theme];
 	}
 
 	getPath(subFolder, envParam) {
