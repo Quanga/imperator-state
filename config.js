@@ -47,7 +47,7 @@ class Config {
 								overrideObj.db ||
 								this.getPath("db", process.env.EDGE_DB) ||
 								this.getPath("db", "./edge.db"),
-							compactInterval: 3000
+							compactInterval: 5000
 						}
 					}
 				}
