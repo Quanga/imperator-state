@@ -108,11 +108,11 @@ module.exports = {
 		},
 		"production-intelliblast-edge-004": {
 			user: "admin",
-			host: "192.168.1.101",
+			host: ["192.168.1.101", "192.168.1.102"],
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production001 && pm2 save"
 		},
 		production_aws: {
 			user: "ec2-user",
