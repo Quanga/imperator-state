@@ -16,6 +16,7 @@ module.exports = {
 			env_production001: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_LOCAL_IP: "0.0.0.0",
 				MODE: systemModeTypes.AXXIS100_CFC,
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-001",
@@ -41,6 +42,19 @@ module.exports = {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
 				MODE: systemModeTypes.HYDRA,
+				EDGE_LOCAL_IP: "0.0.0.0",
+				USE_ENDPOINT: true,
+				ENDPOINT_NAME: "intelliblast-edge-002",
+				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_PASSWORD: "ibstate",
+				SYSTEM_FIRING_TIME: 120000,
+				SYSTEM_REPORT_TIME: 300000,
+				COMMUNICATION_CHECK_INTERVAL: 800000
+			},
+			env_production004: {
+				NODE_ENV: "production",
+				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				MODE: systemModeTypes.AXXIS500_WIFI,
 				EDGE_LOCAL_IP: "0.0.0.0",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
@@ -108,11 +122,19 @@ module.exports = {
 		},
 		"production-intelliblast-edge-004": {
 			user: "admin",
-			host: ["192.168.1.101", "192.168.1.102"],
+			host: ["nick1"],
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003 && pm2 save"
+		},
+		"production-intelliblast-edge-005": {
+			user: "admin",
+			host: ["nick2"],
+			ref: "origin/stage-1.4",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/admin/state",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save"
 		},
 		production_aws: {
 			user: "ec2-user",
