@@ -29,7 +29,7 @@ module.exports = {
 			env_production002: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: systemModeTypes.AXXIS500_WIFI,
+				MODE: systemModeTypes.AXXIS100,
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-edge-002",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
