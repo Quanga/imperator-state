@@ -1,8 +1,11 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const path = require("path");
 const os = require("os");
-const { systemModeTypes, styles, themes } = require("./lib/constants/typeConstants");
-const modes = require("./lib/constants/modeTemplates");
+const { systemModeTypes, styles } = require(path.resolve(
+	__dirname,
+	"./lib/constants/typeConstants"
+));
+const modes = require(path.resolve(__dirname, "./lib/constants/modeTemplates"));
 const fs = require("fs");
 
 class Config {
@@ -102,8 +105,8 @@ class Config {
 					stopMethod: "stop",
 					env: {
 						systemMode:
-							this.getDotMode() ||
 							overrideObj.systemMode ||
+							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100
 					}
@@ -113,8 +116,8 @@ class Config {
 					stopMethod: "componentStop",
 					env: {
 						systemMode:
-							this.getDotMode() ||
 							overrideObj.systemMode ||
+							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100
 					}
@@ -171,9 +174,10 @@ class Config {
 							parseInt(process.env.SYSTEM_REPORT_TIME, 10) ||
 							180000,
 						theme:
+							this.getTheme(this.getDotMode()) ||
 							this.getTheme(overrideObj.mode) ||
 							this.getTheme(process.env.MODE) ||
-							this.getTheme(themes.AXXIS)
+							this.getTheme(systemModeTypes.AXXIS100)
 					}
 				},
 				queueService: {
@@ -195,8 +199,8 @@ class Config {
 					env: {
 						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT || false,
 						systemMode:
-							this.getDotMode() ||
 							overrideObj.systemMode ||
+							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100
 					}
@@ -207,22 +211,21 @@ class Config {
 	}
 
 	getDotMode() {
-		const modeFile = path.resolve(__dirname, "/.mode.json");
-		fs.exists(modeFile, error => {
-			if (error) return null;
+		const modeFile = path.resolve(__dirname, ".mode.json");
+		let valid = fs.existsSync(modeFile);
 
-			fs.readFile(modeFile, (err, resp) => {
-				if (err) return null;
-
-				return JSON.parse(resp);
-			});
-		});
+		if (valid) {
+			let file = JSON.parse(fs.readFileSync(modeFile, "utf8"));
+			return file.systemMode;
+		}
+		return null;
 	}
 
+	// TODO this is dangerous, add validation
 	getTheme(themeName) {
 		if (!themeName) return null;
-		const theme = modes[themeName].theme;
-		return styles[theme];
+		const foundTheme = modes[themeName].theme;
+		return styles[foundTheme];
 	}
 
 	getPath(subFolder, envParam) {
