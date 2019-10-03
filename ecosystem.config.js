@@ -122,7 +122,7 @@ module.exports = {
 		},
 		"production-intelliblast-edge-004": {
 			user: "admin",
-			host: ["192.168.1.14"],
+			host: ["nick2"],
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
