@@ -120,7 +120,9 @@ App.prototype.startRouter = function($happn) {
 			await dataService.initialise();
 			if (env.useEndpoint) await endpointService.start();
 
+			log.info(`System Mode: ${env.sysMode}`);
 			log.info("::::: APP STARTUP COMPLETE ::::::");
+
 			await stateService.updateState({ service: name, state: "STARTED" });
 		} catch (err) {
 			log.error("start error", err);

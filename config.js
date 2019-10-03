@@ -3,6 +3,7 @@ const path = require("path");
 const os = require("os");
 const { systemModeTypes, styles, themes } = require("./lib/constants/typeConstants");
 const modes = require("./lib/constants/modeTemplates");
+const fs = require("fs");
 
 class Config {
 	constructor(overrideObj = {}) {
@@ -27,7 +28,7 @@ class Config {
 				logger: null
 			},
 			happn: {
-				//host: "0.0.0.0",
+				host: "0.0.0.0",
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
 					timeout: 30000
@@ -57,7 +58,6 @@ class Config {
 				blastService: { path: `${__dirname}/lib/services/blast_service.js` },
 				dataService: { path: `${__dirname}/lib/services/data_service.js` },
 				dataMapper: { path: `${__dirname}/lib/mappers/data_mapper.js` },
-
 				endpointService: { path: `${__dirname}/lib/services/endpointService.js` },
 				eventService: { path: `${__dirname}/lib/services/event_service.js` },
 				logsRepository: { path: `${__dirname}/lib/repositories/logsRepository.js` },
@@ -101,14 +101,22 @@ class Config {
 					startMethod: "start",
 					stopMethod: "stop",
 					env: {
-						mode: overrideObj.mode || process.env.MODE || systemModeTypes.AXXIS100
+						systemMode:
+							this.getDotMode() ||
+							overrideObj.systemMode ||
+							process.env.MODE ||
+							systemModeTypes.AXXIS100
 					}
 				},
 				dataService: {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
 					env: {
-						systemMode: overrideObj.systemMode || process.env.MODE || systemModeTypes.AXXIS100
+						systemMode:
+							this.getDotMode() ||
+							overrideObj.systemMode ||
+							process.env.MODE ||
+							systemModeTypes.AXXIS100
 					}
 				},
 				dataMapper: {},
@@ -185,12 +193,29 @@ class Config {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
 					env: {
-						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT || false
+						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT || false,
+						systemMode:
+							this.getDotMode() ||
+							overrideObj.systemMode ||
+							process.env.MODE ||
+							systemModeTypes.AXXIS100
 					}
 				},
 				stateService: {}
 			}
 		};
+	}
+
+	getDotMode() {
+		const modeFile = path.resolve(__dirname, "/.mode");
+		fs.exists(modeFile, error => {
+			if (error) return;
+
+			fs.readFile(modeFile, (err, resp) => {
+				if (err) return;
+				return JSON.parse(resp);
+			});
+		});
 	}
 
 	getTheme(themeName) {
