@@ -207,12 +207,13 @@ class Config {
 	}
 
 	getDotMode() {
-		const modeFile = path.resolve(__dirname, "/.mode");
+		const modeFile = path.resolve(__dirname, "/.mode.json");
 		fs.exists(modeFile, error => {
-			if (error) return;
+			if (error) return null;
 
 			fs.readFile(modeFile, (err, resp) => {
-				if (err) return;
+				if (err) return null;
+
 				return JSON.parse(resp);
 			});
 		});
