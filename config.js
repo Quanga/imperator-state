@@ -33,9 +33,9 @@ class Config {
 			happn: {
 				host: "0.0.0.0",
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
-				setOptions: {
-					timeout: 30000
-				},
+				// setOptions: {
+				// 	timeout: 30000
+				// },
 				persist: true,
 				secure: true,
 				adminPassword: "happn",
