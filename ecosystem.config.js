@@ -80,6 +80,7 @@ module.exports = {
 			env_productionAWS: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_LOCAL_IP: "0.0.0.0",
 				MODE: "AXXIS100",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-sim-001",
@@ -144,7 +145,7 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save"
 		},
 		production_aws2: {
 			user: "ec2-user",
