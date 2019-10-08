@@ -11,7 +11,7 @@ module.exports = {
 			watch: false,
 			max_memory_restart: "500M",
 			env: {
-				NODE_ENV: "development"
+				NODE_ENV: "production"
 			},
 			env_production001: {
 				NODE_ENV: "production",
@@ -81,6 +81,7 @@ module.exports = {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
 				EDGE_LOCAL_IP: "0.0.0.0",
+				EDGE_LOCAL_PORT: 55000,
 				MODE: "AXXIS100",
 				USE_ENDPOINT: true,
 				ENDPOINT_NAME: "intelliblast-sim-001",
