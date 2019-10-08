@@ -80,11 +80,12 @@ module.exports = {
 			env_productionAWS: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "intelliblast-state-001",
-				MODE: "HYDRA",
+				MODE: "AXXIS100",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-cloud-001",
+				ENDPOINT_NAME: "intelliblast-sim-001",
 				ENDPOINT_USERNAME: "intelliblast-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
+				ENDPOINT_PORT: 55014,
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
 				COMMUNICATION_CHECK_INTERVAL: 800000

@@ -36,7 +36,7 @@ class Config {
 				// setOptions: {
 				// 	timeout: 30000
 				// },
-				//persist: true,
+				persist: true,
 				compactInterval: 60000,
 				secure: true,
 				adminPassword: "happn",
