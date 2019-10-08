@@ -23,7 +23,7 @@ class Config {
 				logLayout: null,
 				logFile:
 					overrideObj.logFile ||
-					this.getPath("logs", process.env.EDGE_LOCAL_LOG_FILE) ||
+					//this.getPath("logs", process.env.EDGE_LOCAL_LOG_FILE) ||
 					this.getPath("logs", "./edge.log"),
 				logFileMaxSize: 1048576, // 1mb
 				logFileBackups: 5,

@@ -146,15 +146,6 @@ module.exports = {
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save"
-		},
-		production_aws2: {
-			user: "ec2-user",
-			key: "~/aws_rsa.pem",
-			host: "ec2-18-222-93-135.us-east-2.compute.amazonaws.com",
-			ref: "origin/stage-1.3",
-			repo: "git@github.com:aecelectronics/Happner3_State.git",
-			path: "/home/ec2-user/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS"
 		}
 	}
 };
