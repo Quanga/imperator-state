@@ -6,7 +6,7 @@ module.exports = {
 			name: "edge_state",
 			script: "server.js",
 			instances: 1,
-			autorestart: true,
+			autorestart: false,
 			kill_timeout: 10000,
 			watch: false,
 			max_memory_restart: "500M",

@@ -14,7 +14,7 @@ class Config {
 			name: overrideObj.name || process.env.EDGE_INSTANCE_NAME,
 			util: {
 				logCacheSize: 1000,
-				logLevel: overrideObj.logLevel || process.env.LOG_LEVEL || "info",
+				logLevel: overrideObj.logLevel || process.env.LOG_LEVEL || "debug",
 				logTimeDelta: true,
 				logStackTraces: true, // if last arg to logger is instanceof Error
 				logComponents: [],
