@@ -14,7 +14,7 @@ class Config {
 			name: overrideObj.name || process.env.EDGE_INSTANCE_NAME,
 			util: {
 				logCacheSize: 1000,
-				logLevel: overrideObj.logLevel || process.env.LOG_LEVEL || "debug",
+				logLevel: overrideObj.logLevel || process.env.LOG_LEVEL || "info",
 				logTimeDelta: true,
 				logStackTraces: true, // if last arg to logger is instanceof Error
 				logComponents: [],
@@ -23,7 +23,7 @@ class Config {
 				logLayout: null,
 				logFile:
 					overrideObj.logFile ||
-					//this.getPath("logs", process.env.EDGE_LOCAL_LOG_FILE) ||
+					this.getPath("logs", process.env.EDGE_LOCAL_LOG_FILE) ||
 					this.getPath("logs", "./edge.log"),
 				logFileMaxSize: 1048576, // 1mb
 				logFileBackups: 5,
