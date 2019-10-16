@@ -36,7 +36,7 @@ class Config {
 				// setOptions: {
 				// 	timeout: 30000
 				// },
-				persist: true,
+				//persist: true,
 				compactInterval: 60000,
 				secure: true,
 				adminPassword: "happn",
@@ -46,12 +46,44 @@ class Config {
 							pbkdf2Iterations: 1000
 						}
 					},
+					// data: {
+					// 	config: {
+					// 		filename:
+					// 			overrideObj.db ||
+					// 			this.getPath("db", process.env.EDGE_DB) ||
+					// 			this.getPath("db", "./edge.db")
+					// 	}
+					// }
 					data: {
 						config: {
-							filename:
-								overrideObj.db ||
-								this.getPath("db", process.env.EDGE_DB) ||
-								this.getPath("db", "./edge.db")
+							datastores: [
+								{
+									name: "nodes",
+									settings: {
+										filename: "./nodes.db"
+									},
+									patterns: ["/_data/data/persist/nodes/*"]
+								},
+								{
+									name: "logs",
+									settings: {
+										filename: "./logs.db"
+									},
+									patterns: ["/_data/data/persist/logs/*"]
+								},
+								{
+									name: "persist",
+									isDefault: true,
+									settings: {
+										filename: "./default.db"
+									},
+									patterns: ["/_data/data/persist/*"]
+								},
+								{
+									name: "mem",
+									patterns: ["/_data/data/mem/*"]
+								}
+							]
 						}
 					}
 				}
@@ -88,14 +120,7 @@ class Config {
 				},
 				systemRepository: {},
 				statsService: {},
-				data: {
-					data: {
-						routes: {
-							"persist/*": "persist",
-							"mem/*": "mem"
-						}
-					}
-				},
+				data: {},
 				uiService: {
 					startMethod: "start",
 					stopMethod: "stop"
