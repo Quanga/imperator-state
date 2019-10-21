@@ -46,46 +46,46 @@ class Config {
 							pbkdf2Iterations: 1000
 						}
 					},
-					// data: {
-					// 	config: {
-					// 		filename:
-					// 			overrideObj.db ||
-					// 			this.getPath("db", process.env.EDGE_DB) ||
-					// 			this.getPath("db", "./edge.db")
-					// 	}
-					// }
 					data: {
 						config: {
-							datastores: [
-								{
-									name: "nodes",
-									settings: {
-										filename: "./nodes.db"
-									},
-									patterns: ["/_data/data/persist/nodes/*"]
-								},
-								{
-									name: "logs",
-									settings: {
-										filename: "./logs.db"
-									},
-									patterns: ["/_data/data/persist/logs/*"]
-								},
-								{
-									name: "persist",
-									isDefault: true,
-									settings: {
-										filename: "./default.db"
-									},
-									patterns: ["/_data/data/persist/*"]
-								},
-								{
-									name: "mem",
-									patterns: ["/_data/data/mem/*"]
-								}
-							]
+							filename:
+								overrideObj.db ||
+								this.getPath("db", process.env.EDGE_DB) ||
+								this.getPath("db", "./edge.db")
 						}
 					}
+					// data: {
+					// 	config: {
+					// 		datastores: [
+					// 			{
+					// 				name: "nodes",
+					// 				settings: {
+					// 					filename: "./nodes.db"
+					// 				},
+					// 				patterns: ["/_data/data/persist/nodes/*"]
+					// 			},
+					// 			{
+					// 				name: "logs",
+					// 				settings: {
+					// 					filename: "./logs.db"
+					// 				},
+					// 				patterns: ["/_data/data/persist/logs/*"]
+					// 			},
+					// 			{
+					// 				name: "persist",
+					// 				isDefault: true,
+					// 				settings: {
+					// 					filename: "./default.db"
+					// 				},
+					// 				patterns: ["/_data/data/persist/*"]
+					// 			},
+					// 			{
+					// 				name: "mem",
+					// 				patterns: ["/_data/data/mem/*"]
+					// 			}
+					// 		]
+					// 	}
+					// }
 				}
 			},
 			modules: {
