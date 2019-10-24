@@ -33,59 +33,97 @@ class Config {
 			happn: {
 				//host: "0.0.0.0",
 				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
-				// setOptions: {
-				// 	timeout: 30000
-				// },
-				//persist: true,
-				compactInterval: 60000,
+				setOptions: {
+					timeout: 30000
+				},
+				compactInterval: 180000,
 				secure: true,
 				adminPassword: "happn",
 				services: {
 					security: {
 						config: {
-							pbkdf2Iterations: 1000
+							pbkdf2Iterations: 300
 						}
 					},
-					data: {
-						config: {
-							filename:
-								overrideObj.db ||
-								this.getPath("db", process.env.EDGE_DB) ||
-								this.getPath("db", "./edge.db")
-						}
-					}
 					// data: {
 					// 	config: {
-					// 		datastores: [
-					// 			{
-					// 				name: "nodes",
-					// 				settings: {
-					// 					filename: "./nodes.db"
-					// 				},
-					// 				patterns: ["/_data/data/persist/nodes/*"]
-					// 			},
-					// 			{
-					// 				name: "logs",
-					// 				settings: {
-					// 					filename: "./logs.db"
-					// 				},
-					// 				patterns: ["/_data/data/persist/logs/*"]
-					// 			},
-					// 			{
-					// 				name: "persist",
-					// 				isDefault: true,
-					// 				settings: {
-					// 					filename: "./default.db"
-					// 				},
-					// 				patterns: ["/_data/data/persist/*"]
-					// 			},
-					// 			{
-					// 				name: "mem",
-					// 				patterns: ["/_data/data/mem/*"]
-					// 			}
-					// 		]
+					// 		filename:
+					// 			overrideObj.db ||
+					// 			this.getPath("db", process.env.EDGE_DB) ||
+					// 			this.getPath("db", "./edge.db")
 					// 	}
 					// }
+					data: {
+						config: {
+							datastores: [
+								{
+									name: "nodes",
+									settings: {
+										filename:
+											overrideObj.logsdb ||
+											this.getPath("db", process.env.LOGS_DB) ||
+											this.getPath("db", "./nodes.db")
+									},
+									patterns: ["/_data/data/persist/nodes/*"]
+								},
+								{
+									name: "logs",
+									settings: {
+										filename:
+											overrideObj.logsdb ||
+											this.getPath("db", process.env.LOGS_DB) ||
+											this.getPath("db", "./logs.db")
+									},
+									patterns: ["/_data/data/persist/logs/*"]
+								},
+								{
+									name: "warnings",
+									settings: {
+										filename:
+											overrideObj.warningsdb ||
+											this.getPath("db", process.env.WARNINGS_DB) ||
+											this.getPath("db", "./warnings.db")
+									},
+									patterns: ["/_data/data/persist/warnings/*"]
+								},
+								{
+									name: "blasts",
+									settings: {
+										filename:
+											overrideObj.warningsdb ||
+											this.getPath("db", process.env.WARNINGS_DB) ||
+											this.getPath("db", "./warnings.db")
+									},
+									patterns: ["/_data/data/persist/blasts/*"]
+								},
+								{
+									name: "ui",
+									settings: {
+										filename:
+											overrideObj.warningsdb ||
+											this.getPath("db", process.env.WARNINGS_DB) ||
+											this.getPath("db", "./ui.db")
+									},
+									patterns: ["/_data/data/persist/system/*"]
+								},
+								{
+									name: "persist",
+									isDefault: true,
+									settings: {
+										filename:
+											overrideObj.db ||
+											this.getPath("db", process.env.EDGE_DB) ||
+											this.getPath("db", "./edge.db")
+									},
+									patterns: ["/_data/data/persist/*"]
+								},
+								{
+									name: "mem",
+									patterns: ["/_data/data/mem/*"]
+								}
+							]
+						}
+					}
 				}
 			},
 			modules: {
