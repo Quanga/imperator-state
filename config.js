@@ -92,7 +92,7 @@ class Config {
 										filename:
 											overrideObj.warningsdb ||
 											this.getPath("db", process.env.WARNINGS_DB) ||
-											this.getPath("db", "./warnings.db")
+											this.getPath("db", "./blasts.db")
 									},
 									patterns: ["/_data/data/persist/blasts/*"]
 								},
