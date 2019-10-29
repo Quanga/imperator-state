@@ -146,8 +146,7 @@ class Config {
 				systemService: { path: `${__dirname}/lib/services/systemService.js` },
 				transmissionService: { path: `${__dirname}/lib/services/transmission_service.js` },
 				uiService: { path: `${__dirname}/lib/services/ui_service.js` },
-				warningsRepository: { path: `${__dirname}/lib/repositories/warningsRepository.js` },
-				wifiService: { path: `${__dirname}/lib/services/wifiService.js` }
+				warningsRepository: { path: `${__dirname}/lib/repositories/warningsRepository.js` }
 			},
 			components: {
 				systemService: {},
@@ -253,9 +252,6 @@ class Config {
 							"state/*": "mem"
 						}
 					}
-				},
-				wifiService: {
-					//startMethod: "start"
 				},
 				app: {
 					startMethod: "componentStart",
