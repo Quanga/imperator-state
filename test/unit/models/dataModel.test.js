@@ -149,9 +149,9 @@ describe("UNIT - Models", async function() {
 			const cu = new ControlUnitModel(22);
 			const cbb1 = new CBoosterModel(101);
 			const cbb2 = new CBoosterModel(102);
-			const edd1 = new EDDModel(null, 101, 1, 3000);
+			const edd1 = new EDDModel('272.0.234.33', 101, 1, 3000);
 
-			const edd2 = new EDDModel(null, 101, 2, 3000);
+			const edd2 = new EDDModel('272.0.234.33', 101, 2, 3000);
 
 			await dataModel.upsertUnit(cu);
 			await dataModel.upsertUnit(cbb1);
@@ -166,13 +166,13 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.programCount).to.be.equal(0);
 			expect(dataModel.units["101"].units.loggedCount).to.be.equal(0);
 
-			const edd1Change = new EDDModel(null, 101, 1, 2000);
+			const edd1Change = new EDDModel('272.0.234.33', 101, 1, 2000);
 			edd1Change.data.detonatorStatus = 1;
 			edd1Change.data.logged = 1;
 			edd1Change.data.serial = 2342342;
 			await dataModel.upsertUnit(edd1Change);
 
-			const edd2Change = new EDDModel(null, 101, 2, 5000);
+			const edd2Change = new EDDModel('272.0.234.33', 101, 2, 5000);
 			edd2Change.data.detonatorStatus = 1;
 			edd2Change.data.logged = 1;
 			edd2Change.data.serial = 3424234;
@@ -233,17 +233,17 @@ describe("UNIT - Models", async function() {
 
 			await dataModel.upsertUnit(new ControlUnitModel(22));
 			await dataModel.upsertUnit(new CBoosterModel(101));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 1, 1000));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 2, 2000));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 3, 3000));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 4, 4000));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.22", 101, 1, 1000));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.23", 101, 2, 2000));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.24", 101, 3, 3000));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.25", 101, 4, 4000));
 
 			//console.log("CHANGE", JSON.stringify(dataModel));
 			expect(dataModel.controlUnit.units.unitsCount).to.be.equal(1);
 			expect(dataModel.controlUnit.units.keySwitchStatusCount).to.be.equal(0);
 			expect(dataModel.units["101"].units.unitsCount).to.be.equal(4);
 
-			let eddUpdate = new EDDModel(null, 101, 1);
+			let eddUpdate = new EDDModel("272.0.234.22", 101, 1);
 			eddUpdate.data.detonatorStatus = 1;
 			eddUpdate.data.logged = 1;
 			await dataModel.upsertUnit(eddUpdate);
@@ -252,7 +252,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.detonatorStatusCount).to.be.equal(1);
 			expect(dataModel.units["101"].units.loggedCount).to.be.equal(1);
 
-			eddUpdate = new EDDModel(null, 101, 1);
+			eddUpdate = new EDDModel("272.0.234.22", 101, 1);
 			eddUpdate.data.detonatorStatus = 0;
 			eddUpdate.data.logged = 0;
 			eddUpdate.data.tagged = 1;
@@ -269,20 +269,20 @@ describe("UNIT - Models", async function() {
 
 			await dataModel.upsertUnit(new ControlUnitModel(22));
 			await dataModel.upsertUnit(new CBoosterModel(101));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 1, null));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 2, null));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 3, null));
-			await dataModel.upsertUnit(new EDDModel(null, 101, 4, null));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.22", 101, 1, null));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.23", 101, 2, null));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.24", 101, 3, null));
+			await dataModel.upsertUnit(new EDDModel("272.0.234.25", 101, 4, null));
 
 			expect(dataModel.controlUnit.units.unitsCount).to.be.equal(1);
 			expect(dataModel.controlUnit.units.keySwitchStatusCount).to.be.equal(0);
 			expect(dataModel.units["101"].units.unitsCount).to.be.equal(4);
 
-			let eddUpdate1 = new EDDModel(null, 101, 1);
+			let eddUpdate1 = new EDDModel("272.0.234.22", 101, 1);
 			eddUpdate1.data.program = 0;
 			eddUpdate1.data.logged = 1;
 
-			let eddUpdate2 = new EDDModel(null, 101, 2);
+			let eddUpdate2 = new EDDModel("272.0.234.22", 101, 2);
 			eddUpdate2.data.program = 1;
 			eddUpdate2.data.logged = 1;
 
@@ -296,11 +296,11 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.loggedCount).to.be.equal(2);
 			expect(dataModel.units["101"].units.programCount).to.be.equal(1);
 
-			eddUpdate1 = new EDDModel(null, 101, 1);
+			eddUpdate1 = new EDDModel("272.0.234.22", 101, 1);
 			eddUpdate1.data.program = 1;
 			eddUpdate1.data.logged = 1;
 
-			eddUpdate2 = new EDDModel(null, 101, 2);
+			eddUpdate2 = new EDDModel("272.0.234.22", 101, 2);
 			eddUpdate2.data.program = 1;
 			eddUpdate2.data.logged = 1;
 
@@ -322,7 +322,7 @@ describe("UNIT - Models", async function() {
 			await dataModel.upsertUnit(new CBoosterModel(101));
 
 			for (let i = 1; i < 101; i++) {
-				await dataModel.upsertUnit(new EDDModel(null, 101, i, null));
+				await dataModel.upsertUnit(new EDDModel(`272.0.234.${i}`, 101, i, null));
 			}
 
 			expect(dataModel.controlUnit.units.unitsCount).to.be.equal(1);
@@ -330,7 +330,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.unitsCount).to.be.equal(100);
 
 			for (let i = 1; i <= 100; i++) {
-				let eddUpdate1 = new EDDModel(null, 101, i);
+				let eddUpdate1 = new EDDModel(`272.0.234.${i}`, 101, i);
 				eddUpdate1.data.program = 1;
 				eddUpdate1.data.logged = 1;
 				await dataModel.upsertUnit(eddUpdate1);
@@ -344,7 +344,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.programCount).to.be.equal(100);
 
 			for (let i = 1; i <= 100; i++) {
-				let eddUpdate1 = new EDDModel(null, 101, i);
+				let eddUpdate1 = new EDDModel(`272.0.234.${i}`, 101, i);
 				//eddUpdate1.data.program = 1;
 				eddUpdate1.data.program = i >= 1 && i <= 90 ? 1 : 0;
 				eddUpdate1.data.logged = 1;
@@ -357,7 +357,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units["101"].units.programCount).to.be.equal(90);
 
 			for (let i = 1; i <= 100; i++) {
-				let eddUpdate1 = new EDDModel(null, 101, i);
+				let eddUpdate1 = new EDDModel(`272.0.234.${i}`, 101, i);
 				eddUpdate1.data.program = i >= 11 && i <= 100 ? 1 : 0;
 				eddUpdate1.data.logged = 1;
 				await dataModel.upsertUnit(eddUpdate1);
@@ -370,7 +370,7 @@ describe("UNIT - Models", async function() {
 
 			let numbers = [1, 20, 15, 19, 36, 67, 87];
 			for (let i = 1; i <= 100; i++) {
-				let eddUpdate1 = new EDDModel(null, 101, i);
+				let eddUpdate1 = new EDDModel(`272.0.234.${i}`, 101, i);
 				if (numbers.includes(i)) {
 					eddUpdate1.data.program = 0;
 				} else {
@@ -387,7 +387,7 @@ describe("UNIT - Models", async function() {
 
 			numbers = [12, 24, 78, 97, 34, 67, 87];
 			for (let i = 1; i <= 100; i++) {
-				let eddUpdate1 = new EDDModel(null, 101, i);
+				let eddUpdate1 = new EDDModel(`272.0.234.${i}`, 101, i);
 				if (numbers.includes(i)) {
 					eddUpdate1.data.program = 0;
 				} else {

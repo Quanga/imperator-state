@@ -10,6 +10,7 @@ describe("UNIT - Parser", async function() {
 	context("CBB500 DATA", async () => {
 		const validator = new PacketValidation();
 		let createdAt = Date.now();
+		process.env.MODE = "HYDRA";
 		it("can create a result array with nodes containing CBB & EDD data from a parsed packet", async function() {
 			const expected = [
 				{
@@ -34,7 +35,9 @@ describe("UNIT - Parser", async function() {
 						cableFault: null,
 						earthLeakage: null,
 						ledState: null,
-						childCount: 0
+						childCount: 0,
+						lostPackets: null,
+						packetSinceLastFiring: null
 					}
 				},
 				{
@@ -238,6 +241,69 @@ describe("UNIT - Parser", async function() {
 			});
 
 			await expect(res).to.deep.equal(expected);
+		});
+
+		it("can correctly handle an 05 on the cbb500 system", async function() {
+			const createTime = Date.now();
+
+			const expected = [
+				{
+					itemType: "CBoosterModel",
+					itemData: {
+						serial: 4,
+						typeId: 3,
+						parentType: 0,
+						createdAt: createTime,
+						modifiedAt: null,
+						path: "",
+						communicationStatus: 1,
+						blastArmed: 1,
+						keySwitchStatus: 1,
+						isolationRelay: 0,
+						mains: 1,
+						lowBat: 0,
+						lfs: 0,
+						tooLowBat: 0,
+						dcSupplyVoltage: 1,
+						shaftFault: 0,
+						cableFault: 0,
+						earthLeakage: 0,
+						ledState: 1,
+						childCount: 500,
+						lostPackets: null,
+						packetSinceLastFiring: null
+					}
+				}
+			];
+			process.env.MODE = "HYDRA";
+			const DataParser = require("../../../lib/parsers/deviceDataParser");
+			const PacketTemplate = require("../../../lib/constants/packetTemplates");
+
+			const packetTemplate = new PacketTemplate();
+
+			const parser = new DataParser(packetTemplate.incomingCommTemplate[5]);
+
+			const testObj = {
+				packet: "aaaa0c050004f401192902cc",
+				createdAt: createTime
+			};
+
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[5].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
+			let result = await parser.buildNodeData(parsedPacketArr);
+
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
+				};
+			});
+
+			expect(res).to.deep.equal(expected);
 		});
 	});
 });

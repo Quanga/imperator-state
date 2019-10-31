@@ -88,8 +88,8 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultDataService.units["13"].data.communicationStatus).to.be.equal(1);
 			expect(resultDataService.units["13"].data.childCount).to.be.equal(0);
 
-			//let snapshot = await client.exchange.dataService.getSnapShot();
-			//console.log(JSON.stringify(snapshot));
+			let snapshot = await client.exchange.dataService.getSnapShot();
+			console.log(JSON.stringify(snapshot));
 		});
 
 		it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
@@ -215,11 +215,11 @@ describe("INTEGRATION - Units", async function() {
 			expect(edd1.windowId).to.equal(2);
 			expect(edd1.delay).to.equal(3000);
 
-			// let snapshot = await client.exchange.dataService.getSnapShot();
-			// console.log(JSON.stringify(snapshot));
+			let snapshot = await client.exchange.dataService.getSnapShot();
+			console.log(JSON.stringify(snapshot));
 		});
 
-		it("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
+		xit("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(5, 13, {
@@ -269,7 +269,7 @@ describe("INTEGRATION - Units", async function() {
 
 			let resPersist = await client.exchange.nodeRepository.get("*");
 			expect(resPersist).to.be.instanceOf(Array);
-			expect(resPersist.length).to.be.equal(3);
+			expect(resPersist.length).to.be.equal(1);
 
 			let cbb = resPersist.find(x => x.typeId === 3);
 			expect(cbb.communicationStatus).to.equal(1); // communication status
@@ -283,7 +283,7 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [{ serial: "4423423", windowId: 1 }, { serial: "4523434", windowId: 2 }]
 					}).packet,
 					createdAt: Date.now()
 				},

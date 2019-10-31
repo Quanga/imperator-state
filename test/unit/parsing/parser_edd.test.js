@@ -365,7 +365,7 @@ describe("UNIT - Parser", async function() {
 					}
 				}
 			];
-
+			process.env.MODE = "AXXIS100";
 			const DataListParser = require("../../../lib/parsers/deviceDataParser");
 			const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
@@ -402,6 +402,7 @@ describe("UNIT - Parser", async function() {
 			const PacketTemplate = require("../../../lib/constants/packetTemplates");
 
 			const packetTemplate = new PacketTemplate();
+			process.env.MODE = "AXXIS100";
 
 			const parser = new DataListParser(packetTemplate.incomingCommTemplate[5]);
 

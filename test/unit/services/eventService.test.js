@@ -117,6 +117,7 @@ describe("UNIT - Services", async function() {
 			expect(logSpy).to.have.been.calledOnce;
 
 			const sentLog = logSpy.getCall(0).args[0];
+
 			expect(sentLog).to.deep.equal({
 				logType: eventServiceLogTypes.DET_INSERT,
 				serial: 22,
@@ -143,7 +144,8 @@ describe("UNIT - Services", async function() {
 			expect(logSpy).to.have.been.calledOnce;
 
 			const sentLog = logSpy.getCall(0).args[0];
-			expect(sentLog).to.deep.equal({
+
+			expect(JSON.parse(sentLog)).to.deep.equal({
 				logType: eventServiceLogTypes.UNIT_UPDATE,
 				serial: 22,
 				typeId: 3,
@@ -170,7 +172,7 @@ describe("UNIT - Services", async function() {
 			expect(logSpy).to.have.been.calledOnce;
 
 			const sentLog = logSpy.getCall(0).args[0];
-			expect(sentLog).to.deep.equal({
+			expect(JSON.parse(sentLog)).to.deep.equal({
 				logType: eventServiceLogTypes.DET_UPDATE,
 				serial: 22,
 				typeId: 3,
