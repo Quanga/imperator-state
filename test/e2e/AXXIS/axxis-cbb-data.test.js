@@ -283,7 +283,7 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: "4423423", windowId: 1 }, { serial: "4523434", windowId: 2 }]
+						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
 					}).packet,
 					createdAt: Date.now()
 				},
@@ -370,6 +370,9 @@ describe("INTEGRATION - Units", async function() {
 			const edd1 = resPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
 			expect(edd1.windowId).to.equal(2);
 			expect(edd1.delay).to.equal(3000);
+			
+			const x = await client.exchange.logsRepository.get("*");
+			console.log(x);
 		});
 
 		it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database3", async function() {
