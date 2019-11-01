@@ -42,15 +42,12 @@ class Config {
 				services: {
 					security: {
 						config: {
-							pbkdf2Iterations: 300
+							pbkdf2Iterations: 1000
 						}
 					},
 					// data: {
 					// 	config: {
-					// 		filename:
-					// 			overrideObj.db ||
-					// 			this.getPath("db", process.env.EDGE_DB) ||
-					// 			this.getPath("db", "./edge.db")
+					// 		filename: path.resolve(__dirname, "./db/edge.db")
 					// 	}
 					// }
 					data: {
