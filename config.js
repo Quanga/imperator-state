@@ -268,7 +268,7 @@ class Config {
 	}
 
 	getDotMode() {
-		const modeFile = path.resolve(__dirname, ".mode.json");
+		const modeFile = path.resolve(os.homedir(), `./edge/`, ".mode.json");
 		let valid = fs.existsSync(modeFile);
 
 		if (valid) {
