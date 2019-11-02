@@ -35,17 +35,17 @@ const Server = async () => {
 // 	 stop();
 // });
 
-process.on("SIGINT", () => {
-	console.info("SIGINT signal received.");
-	this.mesh
-		.stop({
-			reconnect: false
-		})
-		.then(() => console.warn("stopped"));
-});
+// process.on("SIGINT", () => {
+// 	console.info("SIGINT signal received.");
+// 	this.mesh
+// 		.stop({
+// 			reconnect: false
+// 		})
+// 		.then(() => console.warn("stopped"));
+// });
 
 const stop = () =>
-	new Promise(resolve => {
+	new Promise((resolve, reject) => {
 		this.mesh
 			.stop(
 				{
@@ -54,8 +54,10 @@ const stop = () =>
 					exitCode: 2,
 					reconnect: false
 				},
-				data => {
-					console.warn("stopped", data);
+				(err, data) => {
+					if (err) console.log(err);
+					console.log("stopped", data);
+					return reject(err);
 				}
 			)
 			.then(() => resolve());
@@ -67,7 +69,9 @@ const stop = () =>
  */
 const start = () => {
 	pmx.action("stop", reply => {
-		stop().then(() => reply("stopping"));
+		stop()
+			.then(() => reply({ done: "stopping" }))
+			.catch(err => reply({ err: err }));
 	});
 
 	const Mesh = require("happner-2");
