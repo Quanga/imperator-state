@@ -305,5 +305,39 @@ describe("UNIT - Parser", async function() {
 
 			expect(res).to.deep.equal(expected);
 		});
+
+		it("can decrypt a 17 packet", async function() {
+			const DataListParser = require("../../../lib/parsers/deviceDataParser");
+			const PacketTemplate = require("../../../lib/constants/packetTemplates");
+
+			const packetTemplate = new PacketTemplate();
+
+			const parser = new DataListParser(packetTemplate.incomingCommTemplate[23]);
+
+			const testObj = {
+				packet:
+					"aaaa44170004010073a411020073a10f030073b40d040073b90b0500738a09060073cf07070073db05080073e703090073f3010a007300000b007300000c0073f4013e4e",
+				createdAt
+			};
+
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[23].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
+
+			let result = await parser.buildNodeData(parsedPacketArr);
+			console.log(result);
+
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
+				};
+			});
+			console.log(JSON.stringify(res, null, 2));
+			//await expect(res).to.deep.equal(expected);
+		});
 	});
 });

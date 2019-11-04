@@ -284,5 +284,37 @@ describe("UNIT - Parser", async function() {
 
 			expect(res).to.deep.equal(expected);
 		});
+
+		it("can do a 16 packet", async function() {
+			const createdAt = Date.now();
+
+			const packetTemplate = new PacketTemplate();
+
+			const parser = new DataListParser(packetTemplate.incomingCommTemplate[22]);
+
+			var testObj = {
+				packet:
+					"aaaa4416000455983903e70050983903e80068983903e90073983903ea0076983903eb0052983903ec0069983903ed0056983903ee0029963903ef0026983903f000ba8b",
+				createdAt
+			};
+
+			const valid = await validator.validatePacket(
+				testObj,
+				packetTemplate.incomingCommTemplate[22].chunk
+			);
+
+			let parsedPacketArr = await parser.parse(valid);
+
+			let result = await parser.buildNodeData(parsedPacketArr);
+			let res = result.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemData: item.data
+				};
+			});
+
+			console.log(res);
+			//expect(res).to.deep.equal(expected);
+		});
 	});
 });
