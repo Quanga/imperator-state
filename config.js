@@ -156,8 +156,7 @@ class Config {
 				statsService: {},
 				data: {},
 				uiService: {
-					startMethod: "start",
-					stopMethod: "stop"
+					startMethod: "start"
 				},
 				parserFactory: {},
 				packetService: {

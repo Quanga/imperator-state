@@ -56,7 +56,14 @@ describe("INTEGRATION - Service", async function() {
 			await serverHelper.stopServer();
 		});
 
-		it("can add units to the ui object", async function() {
+		it("can get an empty ui object from the system", async () => {
+			const { uiService } = client.exchange;
+			let get = await uiService.getAxxisDash();
+			delete get._meta;
+			expect(get).to.deep.equal({ units: {} });
+		});
+
+		it("can add units to the ui object", async () => {
 			const { uiService, data } = client.exchange;
 			let set = await uiService.setAxxisDash({ id: 23, x: 345, y: 322 });
 			let set2 = await uiService.setAxxisDash({ id: 24, x: 345, y: 322 });
@@ -64,7 +71,7 @@ describe("INTEGRATION - Service", async function() {
 			expect(units).to.deep.equal({ "23": { x: 345, y: 322 }, "24": { x: 345, y: 322 } });
 		});
 
-		it("can remove an item from the ui object", async function() {
+		it("can remove an item from the ui object", async () => {
 			const { uiService, data } = client.exchange;
 			let set = await uiService.setAxxisDash({ id: 23, x: 345, y: 322 });
 			let set2 = await uiService.setAxxisDash({ id: 24, x: 345, y: 322 });
