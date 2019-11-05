@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <title>JSDoc: models/dataModel.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -58,7 +60,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-myModule.html">myModule</a></li></ul><h3>Classes</h3><ul><li><a href="DataModel.html">DataModel</a></li><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:snowball">snowball</a></li><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -76,14 +78,21 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
+            <pre class="prettyprint source linenums"><code>/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+
 const DataMapper = require("../mappers/data_mapper");
 const { ControlUnitModel } = require("../models/unitModels");
 const EventEmitter = require("events").EventEmitter;
-
 const clone = require("clone");
+
+const { dataModelEvents, unitModelEvents } = require("../constants/eventConstants");
+const { unitTypes, systemModeTypes } = require("../constants/typeConstants");
+
 /**
- * Class representing a dot.
+ * @category Models
+ * @class
+ * @summary The DataModel which represents the state of the Data.
  * @extends EventEmitter
  */
 class DataModel extends EventEmitter {
@@ -91,196 +100,332 @@ class DataModel extends EventEmitter {
 		super();
 		this.controlUnit = null;
 		this.units = {};
+		this.auxUnits = {};
 
 		this.mapper = new DataMapper();
+		this.mode = null;
+		this.pseudoTime = null;
 	}
+
+	setMode(mode) {
+		if (!mode) throw new Error("Mode cannot be empty - check ENV");
+		this.mode = mode;
+	}
+
+	setPseudoTime(time) {
+		this.pseudoTime = time;
+		const allUnits = Object.keys(this.units);
+		allUnits.forEach(unit => this.units[unit].updatePseudoTime(time));
+	}
+
 	/**
-	 *
-	 *
-	 * @param {*} unit
+	 * @summary Upsert unit data
+	 * @param {unitObj} nextState
+	 * @param {boolean} forceFlag force an update even if there are no diffs
+	 * @returns {Promise} void
+	 * @todo Check that this is functioning correctly
+	 * @mermaid graph LR
+	 * 				subgraph incoming
+						A[dataService]
+					end
+					subgraph upsertUnit
+					A[dataService] -.->|nextState|getUnit
+						getUnit -->|true|diff{diff}
+					end
+					subgraph external
+						diff -->|false|insertUnit
+						diff -->|true|updateUnit
+					end
+
+	 */
+	async upsertUnit(nextState, forceFlag) {
+		try {
+			const { serial, typeId, createdAt } = nextState.data;
+
+			this.setPseudoTime(createdAt);
+			let prevState = this.getUnit(nextState);
+
+			if (!prevState &amp;&amp; !serial &amp;&amp; typeId === 4) {
+				throw new Error("cannot add this detonator as it does not exist in the model");
+			}
+
+			if (!prevState) {
+				let inserted = await this.insertUnit(nextState);
+				if (!inserted) throw new Error(inserted);
+				return { action: "INSERT", value: { ...nextState } };
+			}
+
+			//check if the Control Unit matches.
+			//TODO need to work out solution for no control unit when ccb is there
+			if (
+				typeId === unitTypes.CONTROL_UNIT &amp;&amp;
+				serial !== prevState.data.serial &amp;&amp;
+				prevState.data.serial !== null
+			) {
+				throw new Error(
+					`Control Unit ${serial} does not match current serial ${prevState.data.serial}. Please re-initialise the system`
+				);
+			}
+
+			if (typeId === unitTypes.BOOSTER_T2) {
+				prevState.setLastCommunication();
+			}
+
+			let diffs = null;
+			diffs = await this.mapper.getUpdates(nextState, prevState);
+
+			if (!diffs &amp;&amp; forceFlag !== true) {
+				return { action: "NONE", value: { ...nextState } };
+			}
+
+			await this.updateUnit(prevState, nextState, diffs, forceFlag);
+
+			return { action: "UPDATE", value: { ...nextState, diff: diffs } };
+		} catch (error) {
+			console.log(error);
+			return { action: "ERROR", error };
+		}
+	}
+
+	/**
+	 * @summary Insert a unit into the model if it is not found
+	 * @param {unitObj} unit
 	 * @returns {Promise}
-	 * @memberof DataModel
+	 * @todo Need to work out solution for the main comms issue with the cbb with timeout.
 	 */
 	async insertUnit(unit) {
-		const { typeId, serial } = unit.data;
+		const { typeId, serial, createdAt } = unit.data;
 
-		try {
-			switch (typeId) {
-			case 0:
-				this.controlUnit = unit;
-				break;
-			case 3:
-				{
-					const { keySwitchStatus, communicationStatus } = unit.data;
-					this.units[serial] = unit;
+		switch (typeId) {
+		case unitTypes.CONTROL_UNIT:
+			this.controlUnit = unit;
+			break;
 
-					this.units[serial].event.on("COMMS_LOST", () => {
-						let clonedUnit = clone(unit);
-						clonedUnit.data.communicationStatus = 0;
-						clonedUnit.data.modified = Date.now();
-						this.emit("UNIT_COMMS_LOST", [clonedUnit]);
-					});
+		case unitTypes.BOOSTER_T2:
+			{
+				const { keySwitchStatus, communicationStatus } = unit.data;
+				this.units[serial] = unit;
 
-					if (!this.controlUnit) {
-						this.controlUnit = new ControlUnitModel(null, null);
-					}
+				// set up event to send lost comms to dataservice
+				this.units[serial].event.on(unitModelEvents.UNIT_COMM_LOST, (boosterUnit, createdAt) => {
+					const { serial, typeId } = boosterUnit.data;
+					this.emit(dataModelEvents.UNIT_COMMS_LOST, { serial, typeId, createdAt });
+				});
 
-					this.controlUnit.units.unitsCount++;
-					await this.updateBoosterCounts({
-						keySwitchStatus,
-						communicationStatus
-					});
+				if (!this.controlUnit) {
+					this.controlUnit = new ControlUnitModel(null, null);
+					this.controlUnit.data.createdAt = createdAt;
+				}
 
-					unit.setLastCommunication(unit.data.created);
+				this.controlUnit.units.unitsCount++;
+				await this.updateBoosterCounts({
+					keySwitchStatus,
+					communicationStatus
+				});
 
-					this.emit("UNITCOUNT", {
-						serial: unit.data.parentSerial,
-						typeId: 0,
+				unit.setLastCommunication(unit.data.createdAt);
+
+				this.emitUnitCountUpdate({
+					serial: unit.data.parentSerial,
+					typeId: unitTypes.CONTROL_UNIT,
+					createdAt,
+					counts: this.controlUnit.units
+				});
+			}
+			break;
+
+		case unitTypes.EDD:
+			{
+				const { tagged, logged, detonatorStatus } = unit.data;
+				const { program, parentSerial } = unit.data;
+
+				const { windowId } = unit.data;
+				if (windowId === null) throw new Error("Window ID cannot be null");
+
+				switch (this.mode) {
+				case systemModeTypes.AXXIS100 || systemModeTypes.AXXIS100_CFC:
+					if (windowId > 101) throw new Error("Window ID cannot be higher that 101");
+					break;
+
+				case systemModeTypes.AXXIS500 ||
+							systemModeTypes.AXXIS500_CFC ||
+							systemModeTypes.AXXIS500_WIFI:
+					if (windowId > 501) throw new Error("Window ID cannot be higher that 101");
+					break;
+
+				case systemModeTypes.HYDRA:
+					if (windowId > 501) throw new Error("Window ID cannot be higher that 101");
+					break;
+				}
+
+				this.units[parentSerial].children[windowId] = unit;
+				this.units[parentSerial].units.unitsCount++;
+
+				await this.updateEddCounts(null, unit, {
+					tagged,
+					logged,
+					detonatorStatus,
+					program
+				});
+
+				this.emitUnitCountUpdate({
+					serial: parentSerial,
+					typeId: unitTypes.BOOSTER_T2,
+					createdAt,
+					counts: this.units[parentSerial].units
+				});
+			}
+			break;
+		case unitTypes.CFC:
+			{
+				this.auxUnits[serial] = unit;
+			}
+			break;
+
+		default:
+			return false;
+		}
+
+		await unit.setPath();
+		return true;
+	}
+
+	/**
+	 * @summary Update a unit that is found
+	 * @param {unitObj} prevState state found in the model
+	 * @param {unitObj} nextState incoming state
+	 * @param {diffObj} diffs found diffs
+	 * @returns {Promise}
+	 */
+	async updateUnit(prevState, nextState, diffs, forceFlag) {
+		const { typeId, serial, createdAt } = nextState.data;
+
+		this.updateUnitState(nextState);
+
+		switch (typeId) {
+		case unitTypes.CONTROL_UNIT:
+			nextState.data = await this.applyUpdate(prevState.data, diffs, createdAt, forceFlag);
+			this.controlUnit.data = nextState.data;
+			break;
+
+		case unitTypes.BOOSTER_T2:
+			{
+				let countUpdate = await this.updateBoosterCounts(diffs);
+				nextState.data = await this.applyUpdate(prevState.data, diffs, createdAt, forceFlag);
+
+				this.units[serial].data = nextState.data;
+
+				if (countUpdate) {
+					this.emitUnitCountUpdate({
+						serial: this.controlUnit.data.serial,
+						createdAt,
+						typeId: unitTypes.CONTROL_UNIT,
 						counts: this.controlUnit.units
 					});
 				}
-				break;
-			case 4:
-				{
-					const { tagged, logged, detonatorStatus } = unit.data;
-					const { program, parentSerial } = unit.data;
+			}
+			break;
 
-					const { windowId } = unit.data;
-					this.units[parentSerial].children[windowId] = unit;
-					this.units[parentSerial].units.unitsCount++;
+		case unitTypes.EDD:
+			{
+				const { windowId, parentSerial, delay } = nextState.data;
 
-					await this.updateEddCounts(unit, {
-						tagged,
-						logged,
-						detonatorStatus,
-						program
-					});
+				if (windowId === null) throw new Error("Window ID cannot be null");
 
-					this.emit("UNITCOUNT", {
+				switch (this.mode) {
+				case systemModeTypes.AXXIS100 || systemModeTypes.AXXIS100_CFC:
+					if (windowId > 101) throw new Error("Window ID cannot be higher that 101");
+					if (delay > 15000) throw new Error("Invalid Delay Packet discarded");
+					break;
+
+				case systemModeTypes.AXXIS500 ||
+							systemModeTypes.AXXIS500_CFC ||
+							systemModeTypes.AXXIS500_WIFI:
+					if (windowId > 600) throw new Error("Window ID cannot be higher that 101");
+					if (delay > 15000) throw new Error("Invalid Delay Packet discarded");
+					break;
+
+				case systemModeTypes.HYDRA:
+					if (windowId > 600) throw new Error("Window ID cannot be higher that 101");
+					if (delay > 40000) throw new Error(`Invalid Delay Packet discarded - ${delay}`);
+					break;
+				}
+
+				let countUpdate = await this.updateEddCounts(prevState, nextState, diffs);
+
+				nextState.data = await this.applyUpdate(prevState.data, diffs, createdAt, forceFlag);
+				this.units[parentSerial].children[windowId].data = nextState.data;
+
+				if (countUpdate) {
+					this.emitUnitCountUpdate({
 						serial: parentSerial,
-						typeId: 3,
+						typeId: unitTypes.BOOSTER_T2,
+						createdAt,
 						counts: this.units[parentSerial].units
 					});
 				}
-				break;
-			default:
-				return false;
 			}
+			break;
 
-			await unit.setPath();
-			return true;
-		} catch (err) {
-			this.emit("error", "Error insering unit", err);
+		case unitTypes.CFC:
+			nextState.data = await this.applyUpdate(prevState.data, diffs, createdAt, forceFlag);
+			this.auxUnits[serial].data = nextState.data;
+			break;
+
+		default:
+			return;
+		}
+
+		if (!nextState.data.path || nextState.data.path === "") {
+			await nextState.setPath();
+		}
+		return true;
+	}
+
+	/**
+	 * @summary getUnit using its state
+	 * @param {unitObj} nextState
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
+	getUnit(nextState) {
+		const { typeId, serial } = nextState.data;
+
+		switch (typeId) {
+		case unitTypes.CONTROL_UNIT: {
+			return this.controlUnit;
+		}
+
+		case unitTypes.BOOSTER_T2: {
+			return this.units[serial];
+		}
+
+		case unitTypes.EDD: {
+			const { parentSerial, windowId } = nextState.data;
+
+			if (!this.units[parentSerial])
+				throw new Error(`Unit ${parentSerial} does not exist. Cannot get information.`);
+
+			return this.units[parentSerial].children[windowId];
+		}
+
+		case unitTypes.CFC: {
+			return this.auxUnits[serial];
+		}
+
+		default:
+			return null;
 		}
 	}
 
-	async upsertUnit(nextState, force) {
-		try {
-			const { typeId, serial } = nextState.data;
-
-			let diffs = null;
-
-			let prevState = await this.getUnit(nextState);
-
-			if (!prevState) {
-				await this.insertUnit(nextState);
-				return { action: "INSERT", value: nextState };
-			}
-
-			diffs = await this.mapper.getUpdates(nextState, prevState);
-			if (!diffs &amp;&amp; force !== true) {
-				return { action: "NONE", value: nextState };
-			}
-
-			this.updateUnitState(nextState);
-
-			switch (typeId) {
-			case 0:
-				{
-					nextState.data = await this.applyUpdate(prevState.data, diffs, nextState.data.created);
-
-					this.controlUnit.data = nextState.data;
-				}
-				break;
-
-			case 3:
-				{
-					let countUpdate = await this.updateBoosterCounts(diffs);
-					nextState.data = await this.applyUpdate(prevState.data, diffs, nextState.data.created);
-					this.units[serial].data = nextState.data;
-
-					if (nextState.data.communicationStatus) {
-						this.units[serial].setLastCommunication(nextState.data.modified);
-					}
-
-					if (countUpdate) {
-						this.emit("UNITCOUNT", {
-							serial: this.controlUnit.data.serial,
-							typeId: 0,
-							counts: this.controlUnit.units
-						});
-					}
-				}
-				break;
-
-			case 4:
-				{
-					const { windowId, parentSerial } = nextState.data;
-					let countUpdate = await this.updateEddCounts(nextState, diffs);
-
-					nextState.data = await this.applyUpdate(prevState.data, diffs, nextState.data.created);
-					this.units[parentSerial].children[windowId].data = nextState.data;
-
-					if (countUpdate) {
-						this.emit("UNITCOUNT", {
-							serial: parentSerial,
-							typeId: 3,
-							counts: this.units[parentSerial].units
-						});
-					}
-				}
-				break;
-
-			default:
-				return;
-			}
-
-			if (!nextState.data.path || nextState.data.path === "") {
-				await nextState.setPath();
-			}
-
-			return { action: "UPDATE", value: nextState, diff: diffs };
-		} catch (err) {
-			console.log(err);
-			this.emit("error", "Error upserting unit", err);
-		}
-	}
-
-	async getUnit(nextState) {
-		try {
-			const { typeId, serial } = nextState.data;
-			switch (typeId) {
-			case 0: {
-				return this.controlUnit;
-			}
-			case 3: {
-				return this.units[serial];
-			}
-			case 4: {
-				const { parentSerial, windowId } = nextState.data;
-				return this.units[parentSerial].children[windowId];
-			}
-			default:
-				return null;
-			}
-		} catch (err) {
-			this.emit("error", "Error getting unit", err);
-		}
-	}
-
-	async applyUpdate(state, diff, modified) {
-		try {
-			if (!diff) return state;
+	/**
+	 * @summary Applies the diffs to the State
+	 * @param {unitObj} state
+	 * @param {diffObj} diffs the diffs between the current state and previous state
+	 * @param {number} modifiedAt timestamp on modifiedAt
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
+	async applyUpdate(state, diff, modifiedAt, forceFlag) {
+		if (diff) {
 			for (const key in diff) {
 				if (state.hasOwnProperty(key)) {
 					if (diff[key] !== null) {
@@ -288,19 +433,26 @@ class DataModel extends EventEmitter {
 					}
 				}
 			}
-			state.modified = modified;
-
-			return state;
-		} catch (err) {
-			this.emit("error", "Error applying state", err);
+			state.modifiedAt = modifiedAt;
 		}
+
+		if (forceFlag === true) state.modifiedAt = modifiedAt;
+
+		return state;
 	}
 
+	/**
+	 * @summary Applies the diffs to the State
+	 * @param {unitObj} state
+	 * @param {diffObj} diffs the diffs between the current state and previous state
+	 * @param {number} modifiedAt timestamp on modifiedAt
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
 	updateUnitState(unit) {
 		const { typeId } = unit.data;
 		try {
 			switch (typeId) {
-			case 0:
+			case unitTypes.CONTROL_UNIT:
 				{
 					const { keySwitchStatus, fireButton } = unit.data;
 					if (keySwitchStatus === 1 &amp;&amp; fireButton === 1) {
@@ -315,136 +467,176 @@ class DataModel extends EventEmitter {
 				break;
 
 			default:
-				return null;
+				return unit;
 			}
 			return unit;
 		} catch (err) {
-			this.emit("error", "Error updating state", err);
+			console.log(err);
 		}
 	}
 
+	/**
+	 * @summary Uppdate the booster counts on the control unit
+	 * @param {diffObj} diffs the diffs between the current state and previous state
+	 * @returns {Promise&lt;unitObj>} return found unit or null
+	 */
 	async updateBoosterCounts(diffs) {
-		if (!diffs) return false;
-		//take the incoming state and check is you need to add or remove item in the count on the control unit
-		const items = ["keySwitchStatus", "communicationStatus"];
+		try {
+			if (!diffs) return false;
+			//take the incoming state and check is you need to add or remove item in the count on the control unit
+			const items = ["keySwitchStatus", "communicationStatus"];
 
-		for (const item of items) {
-			if (diffs.hasOwnProperty(item)) {
-				let objKey = this.controlUnit.units[`${item}Count`];
+			for (const item of items) {
+				if (diffs.hasOwnProperty(item)) {
+					let objKey = this.controlUnit.units[`${item}Count`];
 
-				if (diffs[item] === 1) {
-					objKey++;
-				} else {
-					if (objKey > 0) {
-						if (diffs[item] == 0) {
-							objKey--;
+					if (diffs[item] === 1) {
+						objKey++;
+					} else {
+						if (objKey > 0) {
+							if (diffs[item] == 0) {
+								objKey--;
+							}
 						}
 					}
+					this.controlUnit.units[`${item}Count`] = objKey;
 				}
-				this.controlUnit.units[`${item}Count`] = objKey;
 			}
+			return true;
+		} catch (err) {
+			console.log(err);
 		}
-		return true;
 	}
 
-	async updateBoosterConnections(modified) {
-		let resultArr = [];
+	/**
+	 * @summary Update the booster connections
+	 * @param {number} modifiedAt
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async updateBoosterConnections(modifiedAt) {
+		try {
+			let resultArr = [];
 
-		const boosterKey = Object.keys(this.units);
+			const boosterKey = Object.keys(this.units);
 
-		for (const unit of boosterKey) {
-			const booster = clone(this.units[unit]);
-			booster.data.communicationStatus = 0;
-			booster.data.modified = modified;
+			for (const unit of boosterKey) {
+				const booster = clone(this.units[unit]);
+				booster.data.communicationStatus = 0;
+				booster.data.modifiedAt = modifiedAt;
 
-			resultArr.push(booster);
+				resultArr.push(booster);
+			}
+
+			return resultArr;
+		} catch (err) {
+			console.error(err);
 		}
-
-		return resultArr;
 	}
 
-	async updateEddCounts(nextState, diffs) {
-		if (!diffs) return false;
+	/**
+	 * @summary Update the EDD counts
+	 * @param {nextState} nextState object
+	 * @param {diffObj} diffs
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async updateEddCounts(prevState, nextState, diffs) {
+		try {
+			if (!diffs) return false;
 
-		//take the incoming state and check is you need to add or remove item in the count on the control unit
-		const { parentSerial } = nextState.data;
-		const parent = this.units[parentSerial];
+			//take the incoming state and check is you need to add or remove item in the count on the control unit
+			const { parentSerial } = nextState.data;
+			const parent = this.units[parentSerial];
 
-		const items = ["detonatorStatus", "logged", "tagged", "program"];
+			const items = ["detonatorStatus", "logged", "tagged", "program"];
 
-		for (const item of items) {
-			if (diffs.hasOwnProperty(item)) {
-				let objKey = parent.units[`${item}Count`];
+			for (const item of items) {
+				if (diffs.hasOwnProperty(item)) {
+					let objKey = parent.units[`${item}Count`];
 
-				if (diffs[item] === 1) {
-					//console.log("adding to", item, objKey);
-					objKey++;
-				} else if (diffs[item] === 0) {
-					if (objKey > 0) {
-						if (diffs[item] === 0) {
-							//console.log("diffs", diffs);
-							//console.log("removing from", item, objKey);
-							objKey--;
+					if (diffs[item] === 1) {
+						objKey++;
+					} else if (diffs[item] === 0) {
+						if (objKey > 0) {
+							if (diffs[item] === 0 &amp;&amp; prevState &amp;&amp; prevState.data[item] !== null) {
+								objKey--;
+							}
 						}
 					}
+					this.units[parentSerial].units[`${item}Count`] = objKey;
 				}
-				this.units[parentSerial].units[`${item}Count`] = objKey;
 			}
+			return true;
+		} catch (err) {
+			console.error(err);
 		}
-		return true;
 	}
 
-	async updateEDDConnections(serial, modified) {
-		let resultArr = [];
-
-		const eddKeys = Object.keys(this.units[serial].children);
-
-		for (const unit of eddKeys) {
-			const edd = clone(this.units[serial].children[unit]);
-			edd.data.detonatorStatus = 0;
-			edd.data.modified = modified;
-
-			let updateRes = await this.upsertUnit(edd);
-			resultArr.push(updateRes);
-		}
-
-		return resultArr;
-	}
-
+	/**
+	 * @summary Reset the child counts to 0
+	 * @param {object} nextState object
+	 * @returns {Promise&lt;units>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
 	async resetChildCount(nextState) {
-		const { serial } = nextState.data;
-		this.units[serial].children = {};
-		this.units[serial].units = {
-			unitsCount: 0,
-			taggedCount: 0,
-			loggedCount: 0,
-			programCount: 0,
-			detectedCount: 0,
-			detonatorStatusCount: 0
-		};
+		try {
+			const { serial, createdAt } = nextState.data;
+			if (this.units[serial]) {
+				this.units[serial].children = {};
+				this.units[serial].units = {
+					unitsCount: 0,
+					taggedCount: 0,
+					loggedCount: 0,
+					programCount: 0,
+					detectedCount: 0,
+					detonatorStatusCount: 0
+				};
 
-		const unit = await clone(this.units[serial]);
-		unit.data.childCount = 0;
-
-		this.emit("UNITCOUNT", {
-			serial,
-			typeId: 3,
-			counts: this.units[serial].units
-		});
-
-		return [unit];
+				this.emitUnitCountUpdate({
+					serial,
+					typeId: unitTypes.BOOSTER_T2,
+					createdAt,
+					counts: this.units[serial].units
+				});
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
-	async snapShot() {
-		let controlUnit = clone(this.controlUnit);
-		let units = clone(this.units);
-		const unitsKeys = Object.keys(units);
-		unitsKeys.forEach(u => {
-			delete units[u].event;
-			delete units[u].meta;
-		});
+	emitUnitCountUpdate(obj) {
+		this.emit(dataModelEvents.UNIT_COUNT_UPDATED, obj);
+	}
 
-		return { controlUnit, units };
+	/**
+	 * @summary Take a snapshot of the state
+	 * @returns {Promise&lt;object>} return array of boosters
+	 * @todo Check if this should be moved out of the model and into a service
+	 */
+	async snapShot() {
+		try {
+			let controlUnit = clone(this.controlUnit);
+			let units = clone(this.units);
+			let auxUnits = clone(this.auxUnits);
+
+			const unitsKeys = Object.keys(units);
+			unitsKeys.forEach(u => {
+				delete units[u].event;
+				delete units[u].meta;
+			});
+
+			const auxUnitsKeys = Object.keys(auxUnits);
+			auxUnitsKeys.forEach(u => {
+				delete auxUnits[u].event;
+				delete auxUnits[u].meta;
+			});
+			//console.log(JSON.stringify({ controlUnit, units, auxUnits }));
+
+			return { controlUnit, units, auxUnits };
+		} catch (err) {
+			console.log(err);
+		}
 	}
 }
 
@@ -463,15 +655,14 @@ module.exports = DataModel;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Jul 21 2019 08:26:40 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:38:15 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>

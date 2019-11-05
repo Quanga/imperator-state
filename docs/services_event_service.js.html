@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <title>JSDoc: services/event_service.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -58,7 +60,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-myModule.html">myModule</a></li></ul><h3>Classes</h3><ul><li><a href="DataModel.html">DataModel</a></li><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:snowball">snowball</a></li><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -79,130 +81,333 @@
             <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
 var Queue = require("better-queue");
 const PacketTemplate = require("../constants/packetTemplates");
+const EventLog = require("../models/logModel");
+const WarningModel = require("../models/warningModel");
+const ipInt = require("ip-to-int");
+
+const {
+	eventServiceEvents,
+	blastServiceEvents,
+	dataServiceEvents
+} = require("../constants/eventConstants");
+
+const { eventServiceLogTypes } = require("../constants/typeConstants");
+const { componentStates } = require("../constants/stateConstants");
 
 function EventService() {
 	this.__constants = new PacketTemplate();
-
-	this.__logConstants = this.__constants.loggables;
-	this.__warnConstants = this.__constants.warnables;
-
-	this.dataModel = [];
-	this.activeBlast = null;
-	this.blastModels = [];
-	this.eventRef = null;
 }
 
-EventService.prototype.startAsync = function($happn) {
-	const { eventService } = $happn.exchange;
-	const { dataService } = $happn.event;
-	const { error: logError, info: logInfo } = $happn.log;
-	const { emit } = $happn;
+EventService.prototype.componentStart = function($happn) {
+	const { stateService } = $happn.exchange;
+	const { emit, name } = $happn;
 
-	const initAsync = async () => {
-		logInfo("initialise Event Service .................. STARTED");
-		this.emitQueue = new Queue(
-			(task, cb) => {
-				task.forEach(taskItem => {
-					emit(taskItem.path, taskItem.value);
-				});
-				cb(task);
-			},
-			{
-				merge: (oldTask, newTask, cb) => {
-					oldTask.value = oldTask.value.concat(newTask.value);
-					cb(null, oldTask);
-				},
-				batchSize: 10,
-				batchDelay: 100,
-				batchDelayTimeout: 1000
-			}
-		);
+	return (async () => {
+		stateService.updateState({ service: name, state: componentStates.STARTED });
 
-		dataService.on(
-			"UNIT_UPDATED",
-			async data => {
-				await eventService.processLogs(data);
-			},
-			(err, eventRef) => {
-				if (err) return logError("Cannot subscribe to the data service", err);
-
-				this.eventRef = eventRef;
-			}
-		);
-	};
-	return initAsync();
+		this.emitQueue = new Queue((task, cb) => {
+			emit(task.path, task.eventLog || task.warning);
+			cb(task);
+		});
+	})();
 };
 
-EventService.prototype.stopAsync = function($happn) {
-	const { error: logError, info: logInfo } = $happn.log;
-	const { nodeRepository } = $happn.exchange;
+EventService.prototype.componentStop = function($happn) {
+	const { stateService } = $happn.exchange;
+	const { name } = $happn;
 
-	const initAsync = async () => {};
-
-	return initAsync();
+	return (async () => {
+		stateService.updateState({ service: name, state: componentStates.STOPPED });
+	})();
 };
 
-EventService.prototype.processLogs = function($happn, obj) {
-	const { eventService } = $happn.exchange;
+/**
+ * @summary Handles the emitting of the Data Service Events to other services
+ * @param {$happn} $happn
+ * @param {object} updates - eventObj
+ */
+EventService.prototype.handleEvent = function($happn, eventObj) {
+	const { logsRepository, eventService } = $happn.exchange;
+	const { log } = $happn;
 
-	let processAsync = async () => {
-		const { logsRepository } = $happn.exchange;
+	return (async () => {
+		try {
+			const { payload, typeId, createdAt, serial, type } = eventObj;
 
-		if (obj.typeId !== 4) {
-			await logsRepository.insertLog(obj);
+			const reducedLogs = eventObj.hasOwnProperty("payload") ? this.reduceLogs(payload) : null;
 
-			this.emitQueue.push({
-				id: "log",
-				path: "UPDATE_LOG",
-				value: [obj]
-			});
+			switch (type) {
+			case blastServiceEvents.BLAST_LOG:
+				{
+					let eventLog = new EventLog();
+					eventLog.setId({
+						logType: eventServiceLogTypes.BLAST_EVENT,
+						serial,
+						typeId,
+						createdAt
+					});
 
-			await eventService.processWarnings(obj);
-		} else {
-			this.emitQueue.push({
-				id: "det",
-				path: "UPDATE_DET",
-				value: [obj]
-			});
+					eventLog.setBlastLog({ logType: eventObj.logType, msg: eventObj.msg });
+					await logsRepository.set(eventLog);
+
+					this.emitQueue.push({ path: eventServiceLogTypes.BLAST_EVENT, eventLog });
+				}
+				break;
+			case dataServiceEvents.UNIT_COUNT_CHANGED:
+				{
+					let eventLog = new EventLog();
+					eventLog.setId({ logType: eventServiceLogTypes.UNIT_COUNT, serial, typeId, createdAt });
+					eventLog.setCounts(eventObj.counts);
+					this.emitQueue.push({ path: eventServiceEvents.UPDATE_LOG, eventLog });
+				}
+				break;
+			case dataServiceEvents.EDD_SIGNAL_DETECTED:
+				{
+					let eventLog = new EventLog();
+					eventLog.setId({ logType: eventServiceLogTypes.EDD_SIG, serial, typeId, createdAt });
+					await logsRepository.set(eventLog);
+					this.emitQueue.push({ path: eventServiceEvents.UPDATE_LOG, eventLog });
+				}
+				break;
+			case dataServiceEvents.UNITS_INSERTED:
+				{
+					const { result, resultKeys } = reducedLogs;
+
+					for (const rKey of resultKeys) {
+						let eventLog = new EventLog();
+						switch (rKey) {
+						case "4":
+							eventLog.setId({
+								logType: eventServiceLogTypes.DET_INSERT,
+								serial,
+								typeId,
+								createdAt
+							});
+							eventLog.setEvents(
+								result[rKey].map(d => {
+									return {
+										serial: d.data.serial,
+										windowId: d.data.windowId,
+										ip: d.data.serial ? ipInt(d.data.serial).toIP() : null
+										//ip: d.data.serial
+									};
+								})
+							);
+							break;
+						default:
+							eventLog.setId({
+								logType: eventServiceLogTypes.UNIT_INSERT,
+								serial,
+								typeId,
+								createdAt
+							});
+							if (result[rKey].length > 0) {
+								const diffs = result[rKey].filter(u => u.hasOwnProperty("diff"));
+								if (diffs.length > 0) {
+									eventLog.setEvents(
+										diffs.map(d => {
+											return { diff: d.diff };
+										})
+									);
+								}
+							}
+							break;
+						}
+						this.emitQueue.push({ path: eventServiceEvents.UPDATE_LOG, eventLog });
+
+						await logsRepository.set(eventLog);
+						await eventService.processWarnings(eventLog);
+					}
+				}
+				break;
+			case dataServiceEvents.UNITS_UPDATED:
+				{
+					const { result, resultKeys } = reducedLogs;
+
+					for (const rKey of resultKeys) {
+						let eventLog = new EventLog();
+						switch (rKey) {
+						case "4":
+							eventLog.setId({
+								logType: eventServiceLogTypes.DET_UPDATE,
+								serial,
+								typeId,
+								createdAt
+							});
+							eventLog.setEvents(
+								result[rKey].map(d => {
+									return {
+										serial: d.data.serial,
+										windowId: d.data.windowId,
+										diff: d.diff,
+										ip: d.data.serial ? ipInt(d.data.serial).toIP() : "none"
+										//ip: d.data.serial
+									};
+								})
+							);
+							break;
+						default:
+							eventLog.setId({
+								logType: eventServiceLogTypes.UNIT_UPDATE,
+								serial,
+								typeId,
+								createdAt
+							});
+							eventLog.setEvents(
+								result[rKey].map(d => {
+									return { serial: d.data.serial, diff: d.diff };
+								})
+							);
+							break;
+						}
+
+						this.emitQueue.push({ path: eventServiceEvents.UPDATE_LOG, eventLog });
+						await logsRepository.set(eventLog);
+						await eventService.processWarnings(eventLog);
+					}
+				}
+				break;
+
+			default:
+				log.error("HandleEvent called with unknown TYPE", eventObj.type);
+			}
+		} catch (err) {
+			log.error(err);
 		}
-	};
-
-	return processAsync();
+	})();
 };
 
-EventService.prototype.processWarnings = function($happn, changeEvents) {
+EventService.prototype.processWarnings = function($happn, eventObj) {
 	const { warningsRepository } = $happn.exchange;
-	/**
-	 * let changedObject = {
-						serial: node.data.serial,
-						typeId: node.data.typeId,
-						modified: node.meta.storedPacketDate,
-						changes: node.meta.dirty,
-						number: this.emitCount
-					};
-	 */
+	const { log } = $happn;
 
-	let processWarningsAsync = async () => {
-		//will process here
-		const { changes } = changeEvents;
-		const changeKey = Object.keys(changes);
-		//const warnings = this.__constants.getWarnables();
+	const warnings = this.__constants.warnables;
 
-		//const loggableWarnings = changeKey.filter(x => x.indexOf(warnings) === -1);
+	return (async () => {
+		try {
+			if (eventObj.hasOwnProperty("events") &amp;&amp; eventObj.events.length > 0) {
+				for (const event of eventObj.events) {
+					if (event.hasOwnProperty("diff") &amp;&amp; event.diff !== null) {
+						const diffKeys = Object.keys(event.diff);
+						const warnKeys = Object.keys(warnings);
+						const loggableWarnings = diffKeys.filter(x => warnKeys.indexOf(x) !== -1);
 
-		// 	for (let index = 0; index &lt; filterOut.length; index++) {
-		//   const element = filterOut[index];
-		//   delete differences[element];
-	};
+						if (loggableWarnings &amp;&amp; loggableWarnings.length > 0) {
+							loggableWarnings.forEach(warn => {
+								if (event.diff[warn] === warnings[warn]) {
+									const warning = new WarningModel(eventObj);
+									warning.setWarning(warn);
+									log.info(`Warning: Unit ${warning.serial} - ${warning.warning} has been issued`);
+									this.emitQueue.push({ path: eventServiceEvents.WARNING_LOG, warning });
+									warningsRepository.set(warning);
+								}
+							});
+						}
+					}
+				}
+			}
+		} catch (error) {
+			log.error(error);
+		}
+	})();
+};
 
-	//3. compare which warnings need to be logged
-	//4. send them to the warnings repository
-	//5. emit an event for the ui to get the warnings
+EventService.prototype.reduceLogs = function(payload) {
+	let result = payload.reduce((acc, cur) => {
+		if (!acc.hasOwnProperty(cur.data.typeId)) {
+			acc[cur.data.typeId] = [];
+		}
 
-	//return processWarningsAsync();
+		acc[cur.data.typeId].push(cur);
+		return acc;
+	}, {});
+
+	return { result, resultKeys: Object.keys(result) };
+};
+
+EventService.prototype.getLogs = function($happn, path, from, to) {
+	const { log } = $happn;
+	const { logsRepository } = $happn.exchange;
+
+	return (async () => {
+		//const results =
+	})();
+};
+
+EventService.prototype.logPacketError = function($happn, errorObj) {
+	const { logsRepository } = $happn.exchange;
+
+	return (async () => {
+		return;
+		// const { msgObj, error } = errorObj;
+		// const { createdAt } = msgObj;
+		// await logsRepository.setPacketLog({
+		// 	createdAt: createdAt ? createdAt : Date.now(),
+		// 	msgObj,
+		// 	error
+		// });
+	})();
+};
+
+EventService.prototype.getPacketError = function($happn, path, from, to) {
+	const { logsRepository } = $happn.exchange;
+
+	return (async () => {
+		let res = await logsRepository.getPacketLog(path);
+		return res;
+	})();
+};
+
+/*
+this.client.exchange.eventService.acknowledgeWarning(
+	id,
+	username,
+	createdAt,
+  ),
+  */
+
+EventService.prototype.acknowledgeWarning = function($happn, id, username, createdAt) {
+	const { log } = $happn;
+	const { warningsRepository } = $happn.exchange;
+
+	return (async () => {
+		let rec;
+		const record = await warningsRepository.getById(id);
+		if (!Array.isArray(record) &amp;&amp; rec.length === 0) throw new Error("no record found");
+		rec = record[0];
+
+		rec.ack = true;
+		rec.ackBy = username;
+		rec.ackDate = createdAt;
+		rec.ackType = "user";
+		delete record._meta;
+		//console.log("GETTING", rec);
+
+		let response = await warningsRepository.set(rec);
+		return response;
+	})();
 };
 
 module.exports = EventService;
+
+/*
+class WarningModel {
+	constructor(eventObj) {
+		this.createdAt = eventObj.createdAt;
+		this.serial = eventObj.serial;
+		this.typeId = eventObj.typeId;
+		this.ack = false;
+	}
+
+	setWarning(warning) {
+		this.id = uuid.v4();
+		this.warning = warning;
+		this.ackDate = null;
+		this.ackBy = null;
+		this.ackType = null;
+	}
+}
+*/
 </code></pre>
         </article>
     </section>
@@ -217,15 +422,14 @@ module.exports = EventService;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Jul 21 2019 08:26:40 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:38:15 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>

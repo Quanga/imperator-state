@@ -141,7 +141,6 @@ class Config {
 				statsService: { path: `${__dirname}/lib/services/statsService.js` },
 				systemRepository: { path: `${__dirname}/lib/repositories/systemRepository.js` },
 				systemService: { path: `${__dirname}/lib/services/systemService.js` },
-				transmissionService: { path: `${__dirname}/lib/services/transmission_service.js` },
 				uiService: { path: `${__dirname}/lib/services/ui_service.js` },
 				warningsRepository: { path: `${__dirname}/lib/repositories/warningsRepository.js` }
 			},
@@ -217,9 +216,7 @@ class Config {
 					startMethod: "componentStart",
 					stopMethod: "componentStop"
 				},
-				transmissionService: {
-					startMethod: "componentStart"
-				},
+
 				blastService: {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",

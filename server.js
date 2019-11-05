@@ -1,7 +1,3 @@
-/**
- * @category System
- * @module server
- */
 const pmx = require("@pm2/io");
 
 if (process.env.NODE_ENV === "test") {
@@ -11,6 +7,7 @@ if (process.env.NODE_ENV === "test") {
 this.mesh;
 
 /**
+ * @module Server
  * @function Server
  * @summary Entry Point
  */
@@ -64,7 +61,6 @@ const stop = () =>
 	});
 
 /**
- *
  * @function start
  */
 const start = () => {

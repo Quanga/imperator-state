@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <title>JSDoc: services/blast_service.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -58,7 +60,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-myModule.html">myModule</a></li></ul><h3>Classes</h3><ul><li><a href="DataModel.html">DataModel</a></li><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:snowball">snowball</a></li><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -77,157 +79,165 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
-
+const Timer = require("tiny-timer");
 const BlastModel = require("../models/blastModel");
 const PdfUtil = require("../utils/pdfUtils");
-/**
- * @category Blast Service
- *  @module lib/services/blastService
- */
+const clone = require("clone");
+
+const { blastModelStates, componentStates } = require("../constants/stateConstants");
+const {
+	blastModelEvents,
+	blastServiceEvents,
+	eventServiceEvents
+} = require("../constants/eventConstants");
 
 /**
+ * @category Services
  * @class BlastService
- *  @requires class:BlastModel
+ * @requires class:BlastModel
  * @requires pdfUtils
+ * @property {object} this.currentBlast  The active current Blast
  */
 function BlastService() {
 	this.currentBlast = null;
-
 	this.eventRefLog = null;
-	this.eventRefDet = null;
 }
 
-/*************************************************************************
- *   COMPONENT FUNCTION
- *************************************************************************/
-
 /**
- *  Start the component when Happner starts.  Starts a listener for a BLAST_STARTED
- * event emitted from the dataService
- * @param {*} $happn
+ *  &lt;ul>&lt;li>Start the component when Happner starts.&lt;/li>
+ * &lt;li> Starts a listener for a BLAST_STARTED event emitted from the dataService&lt;/li>&lt;/ul>&lt;br>
+ * @param {$happn} $happn
  * @returns {Promise}
  */
-BlastService.prototype.start = function($happn) {
-	const { log } = $happn;
-	const { dataService } = $happn.event;
-	const { blastService } = $happn.exchange;
+BlastService.prototype.componentStart = function($happn) {
+	const { stateService } = $happn.exchange;
+	const { name } = $happn;
 
 	return (async () => {
 		try {
-			log.info("BlastService Started.......");
-
-			dataService.on(
-				"BLAST_STARTED",
-				data => {
-					blastService.createNewBlast(data.created, data.snapShot);
-				},
-				(err, eventRef) => {
-					if (err) return log.error("Cannot subscribe to dataService");
-
-					this.eventRef = eventRef;
-				}
-			);
-		} catch (err) {
-			log.error("Error starting Blast Service", err);
+			stateService.updateState({ service: name, state: componentStates.STARTED });
+		} catch (error) {
+			stateService.updateState({ service: name, state: componentStates.FAILED, error });
 		}
 	})();
 };
 
-/** @function
+/**
  * @summary Stop the component when Happner stops
- * @param {*} $happn
+ * @param {$happn} $happn
  * @returns {Promise}
  */
-BlastService.prototype.stop = function($happn) {
-	const { log } = $happn;
-	const { dataService } = $happn.event;
+BlastService.prototype.componentStop = function($happn) {
+	const { stateService } = $happn.exchange;
+	const { name } = $happn;
 
 	return (async () => {
-		log.info("BlastService Stopped");
-		dataService.off(this.eventRef);
+		stateService.updateState({ service: name, state: componentStates.STOPPED });
 	})();
 };
 
-/*************************************************************************
- *   BLAST START AND STOP FUNCTIONS
- *************************************************************************/
-
-/** @function
+/**
  * @summary Create a new blast
- * @param {*} $happn
- * @param {*} created
+ * @param {$happn} $happn
+ * @param {number} createdAt
  * @param {*} snapShot
  * @returns {Promise}
  */
-BlastService.prototype.createNewBlast = function($happn, created, snapShot) {
+BlastService.prototype.createNewBlast = function($happn, createdAt, snapShot) {
 	const { blastService, blastRepository } = $happn.exchange;
-	const { event, log } = $happn;
 	const { env } = $happn.config;
-
-	const subscribeToLogs = async () => {
-		this.currentBlast.blastEvent.event.on("BLAST_DATA_COMPLETE", () => {
-			blastService.closeBlast();
-		});
-
-		this.currentBlast.blastEvent.event.on("BLAST_TIMER_COMPLETE", () => {
-			blastService.closeBlast();
-		});
-
-		event.eventService.on(
-			"UPDATE_LOG",
-			async data => {
-				await blastService.updateBlast(data);
-			},
-			(err, evRef) => {
-				if (err) return log.error("Error subscribing to eventService", err);
-
-				this.eventRefLog = evRef;
-			}
-		);
-
-		event.eventService.on(
-			"UPDATE_DET",
-			data => {
-				blastService.updateBlast(data);
-			},
-			(err, evRef) => {
-				if (err) return log.error("Error subscribing to eventService", err);
-
-				this.eventRefDet = evRef;
-			}
-		);
-	};
+	const { log } = $happn;
 
 	return (async () => {
 		try {
-			if (this.currentBlast) return log.error("Blast in progress - another fire button detected");
+			if (this.currentBlast) {
+				const msg = "Blast Creation error: Blast in progress - another fire button detected";
+				await blastService.logEvent("BLAST_ERROR_LOG", createdAt, msg);
+				log.warn(msg);
+				return false;
+			}
 
 			this.currentBlast = {
-				created: created,
-				blastEvent: new BlastModel(snapShot, created, env.systemReportTime)
+				createdAt: createdAt,
+				blastEvent: new BlastModel(snapShot, createdAt, env.systemFiringTime, env.systemReportTime)
 			};
 
-			const currentBlast = { ...this.currentBlast };
-			delete currentBlast.event;
+			const { blastEvent } = this.currentBlast;
+			log.info(`Creating new blast - ${blastEvent.data.id} - ${blastEvent.data.createdAt}`);
 
-			log.info(
-				`Creating new blast - ${currentBlast.blastEvent.data.id} - ${currentBlast.blastEvent.data.created}`
+			await blastRepository.upsertIndex(this.currentBlast);
+			await blastRepository.set(this.currentBlast);
+			await blastService.subscribeToBlastEvents();
+
+			blastService.startTimer("firing", "BLAST_TIMER", env.systemFiringTime, () => {
+				blastService.startTimer("reporting", "REPORT_TIMER", env.systemReportTime);
+			});
+
+			await blastService.logEvent(
+				"BLAST_STARTED",
+				this.currentBlast.blastEvent.data.createdAt,
+				null
 			);
 
-			await blastRepository.upsertIndex(currentBlast);
-			await blastRepository.set(currentBlast);
-			blastService.blastTimer(true);
-
-			await subscribeToLogs();
+			return true;
 		} catch (err) {
-			log.error("Error writing new blast object", err);
+			log.error("Cannot create new Blast Model", err);
 		}
 	})();
 };
 
-/** @function
+/**
+ * @summary Subcribe to the blast events
+ * @param {$happn} $happn
+ * @returns {Promise} void
+ */
+BlastService.prototype.subscribeToBlastEvents = function($happn) {
+	const { blastService } = $happn.exchange;
+	const { log, event } = $happn;
+	const { blastEvent } = this.currentBlast;
+
+	return (async () => {
+		try {
+			blastEvent.event.on(blastModelEvents.BLASTMODEL_LOG, async data => {
+				const {
+					BLAST_TIMER_COMPLETE,
+					BLAST_DATA_COMPLETE,
+					BLAST_TIMER_COMPLETE_BYPACKET,
+					BLAST_TERMINATED
+				} = blastModelStates;
+
+				if (
+					data === BLAST_TIMER_COMPLETE ||
+					data === BLAST_DATA_COMPLETE ||
+					data === BLAST_TIMER_COMPLETE_BYPACKET ||
+					data === BLAST_TERMINATED
+				) {
+					await blastService.closeBlast(data);
+				}
+			});
+
+			event.eventService.on(
+				eventServiceEvents.UPDATE_LOG,
+				data => {
+					if (this.currentBlast) {
+						blastService.updateBlast(data);
+					}
+				},
+				(err, evRef) => {
+					if (err) throw new Error("Error subscribing to eventService", err);
+
+					this.eventRefLog = evRef;
+				}
+			);
+		} catch (err) {
+			log.error(err);
+		}
+	})();
+};
+
+/**
  * @summary Function used to update the blast with any logs
- * @param {*} $happn
+ * @param {$happn} $happn
  * @param {*} logObj
  * @returns {Promise}
  */
@@ -237,80 +247,101 @@ BlastService.prototype.updateBlast = function($happn, logObj) {
 
 	return (async () => {
 		try {
-			await this.currentBlast.blastEvent.addLog(logObj);
-
-			const currentBlast = { ...this.currentBlast };
-			delete currentBlast.event;
-			await blastRepository.set(currentBlast);
+			this.currentBlast.blastEvent.addLog(logObj);
+			//await blastRepository.set(this.currentBlast);
 		} catch (err) {
 			log.error("Error writing new blast object", err);
 		}
 	})();
 };
 
-/** @function
+/**
  * @summary Close off the Blast - works off this.currentBlast
- * @param {*} $happn
+ * @param {$happn} $happn
  * @returns {Promise}
  */
-BlastService.prototype.closeBlast = function($happn) {
+BlastService.prototype.closeBlast = function($happn, closeProc) {
 	const { blastRepository, dataService, blastService } = $happn.exchange;
-	const { emit, event, log } = $happn;
-
-	if (!this.currentBlast) return null;
+	const { log, emit } = $happn;
 
 	return (async () => {
 		try {
-			log.info("Closing blast", this.currentBlast.blastEvent.data.id);
+			if (!this.currentBlast) throw new Error("No current blast event to close");
+			if (!this.currentBlast.blastEvent) throw new Error("No blast event to close");
+
+			this.currentBlast.blastEvent.event.removeAllListeners(blastModelEvents.BLASTMODEL_LOG);
+
+			log.info(`Closing blast ${this.currentBlast.blastEvent.data.id} with proc(${closeProc})`);
 
 			const snapShot = await dataService.getSnapShot();
-			await this.currentBlast.blastEvent.endBlast(snapShot);
+			this.currentBlast.blastEvent.setSnapshot(snapShot, "end");
 
-			const currentBlast = { ...this.currentBlast };
-			delete currentBlast.event;
-			await blastRepository.set(currentBlast);
+			const cloneBlast = clone(this.currentBlast);
+			await blastRepository.set(cloneBlast);
+			await blastRepository.upsertIndex(cloneBlast);
 
-			blastService.reportTimer(false);
-			emit("BLAST_COMPLETED", currentBlast);
-			if (this.eventRefDet !== null) {
-				event.eventService.off(this.eventRefDet, err => {
-					if (err) {
-						log.error("failed to unsubscribe from blast event", err);
-						return;
-					}
-
-					this.eventRefDet = null;
-				});
+			if (this["firing"]) {
+				emit("firing", 0);
+				this["firing"].stop();
+				this["firing"] = null;
 			}
 
-			if (this.eventRefLog !== null) {
-				event.eventService.off(this.eventRefLog, err => {
-					if (err) return log.error("failed to unsubscribe from blast event", err);
-
-					this.eventRefLog = null;
-				});
+			if (this["reporting"]) {
+				emit("reporting", 0);
+				this["reporting"].stop();
+				this["firing"] = null;
 			}
 
-			this.currentBlast.blastEvent.event.removeAllListeners("BLAST_DATA_COMPLETE");
-			this.currentBlast.blastEvent.event.removeAllListeners("BLAST_TIMER_COMPLETE");
-
-			await blastRepository.upsertIndex(this.currentBlast);
-
-			this.currentBlast = null;
+			if (this.currentBlast.state === blastModelStates.BLAST_TERMINATED) {
+				await blastService.logEvent(
+					"BLAST_TERMINATED",
+					this.currentBlast.blastEvent.data.blastClosed,
+					closeProc
+				);
+			} else {
+				await blastService.logEvent(
+					"BLAST_COMPLETED",
+					this.currentBlast.blastEvent.data.blastClosed,
+					closeProc
+				);
+			}
+			delete this.currentBlast.blastEvent;
+			delete this.currentBlast;
 		} catch (err) {
-			log.error("Error writing new blast object", err);
+			log.error("Error closing Blast Event", err);
 		}
 	})();
 };
 
-/*************************************************************************
- *   BLAST REPORT UTILITIES
- *************************************************************************/
+/**
+ * @summary Sends an event to the event service
+ * @param {$happn} $happn
+ * @param {string} logType
+ * @param {number} createdAt
+ * @returns {Promise} void
+ */
+BlastService.prototype.logEvent = function($happn, logType, createdAt, msg) {
+	const { eventService } = $happn.exchange;
 
-/** @function
- * @summary Utility function to remove the Blast ID from the index and the Blast Object in the Blast Repo.
- * @param {*} $happn
- * @param {*} id The blast ID to be sent to the PDF utility
+	return (async () => {
+		await eventService.handleEvent({
+			type: blastServiceEvents.BLAST_LOG,
+			logType,
+			serial: this.currentBlast.blastEvent.data.serial,
+			createdAt,
+			typeId: 0,
+			msg
+		});
+	})();
+};
+
+//#region BLAST REPORT UTILITIES
+
+/**
+ * @summary Utility function to remove the Blast ID from
+ * the index and the Blast Object in the Blast Repo.
+ * @param {$happn} $happn
+ * @param {string} id The blast ID to be sent to the PDF utility
  * @returns {promise}
  */
 BlastService.prototype.deleteBlast = function($happn, id) {
@@ -322,21 +353,23 @@ BlastService.prototype.deleteBlast = function($happn, id) {
 			log.info("Removing Blast Report", id);
 			await blastRepository.delete(id);
 			await blastRepository.deleteIndex(id);
+			return true;
 		} catch (err) {
 			log.error("Error deleting blast Report", err);
 		}
 	})();
 };
 
-/** @function
+/**
  * @summary Function to get a Blast JSON Object and send it to the PDF Utility.
- * @param {*} $happn
- * @param {*} id The blast ID to be sent to the PDF utility
+ * @param {$happn} $happn
+ * @param {string} id The blast ID to be sent to the PDF utility
  * @returns {promise}
  */
 BlastService.prototype.pdfBlast = function($happn, id) {
 	const { blastRepository } = $happn.exchange;
-	const { error: logError } = $happn.log;
+	const { env } = $happn.config;
+	const { log } = $happn;
 
 	return (async () => {
 		try {
@@ -344,89 +377,35 @@ BlastService.prototype.pdfBlast = function($happn, id) {
 			const blastReport = await blastRepository.get(id);
 			delete blastReport._meta;
 
-			pdfUtils.createContent(blastReport);
+			pdfUtils.createContent(blastReport, env.theme);
 			let pdfFile = await pdfUtils.createPdf(blastReport);
 			return pdfFile;
-		} catch (err) {
-			logError("Error creating PDF", err);
+		} catch (error) {
+			log.error("Error creating PDF", error);
 		}
 	})();
 };
 
-/*************************************************************************
- *   TIMERS USED BY UI
- *************************************************************************/
-
-/** @function
- * @summary Timer used by UI to display the current Firing Time.
- *
- * @param {*} $happn
- * @param {boolean} start - true to start - false to stop
- */
-BlastService.prototype.blastTimer = function($happn, start) {
+BlastService.prototype.startTimer = function($happn, timer, event, duration, callback) {
 	const { emit, log } = $happn;
-	const { env } = $happn.config;
-	const { blastService } = $happn.exchange;
 
-	let countdown = env.systemFiringTime;
-	emit("BLAST_TIMER", countdown);
-	log.info(`Blast Timer Started at ${countdown}ms`);
+	log.info(`${timer} Started at ${duration}ms`);
 
-	if (start) {
-		this.timer = setInterval(() => {
-			if (countdown > 0) {
-				countdown = countdown - 1000;
-				emit("BLAST_TIMER", countdown);
-			} else {
-				clearInterval(this.timer);
-				emit("BLAST_TIMER", 0);
-				blastService.reportTimer(true);
-			}
-		}, 1000);
-	} else {
-		if (this.timer) {
-			emit("BLAST_TIMER", 0);
+	this[timer] = new Timer({ stopwatch: false });
 
-			clearInterval(this.timer);
-			this.timer = null;
-		}
-	}
+	this[timer].on("tick", ms => emit(event, Math.round(ms / 1000) * 1000));
+	this[timer].on("done", () => {
+		log.info(`${timer} stopped`);
+		emit(event, 0);
+		//this[timer].removeAllListeners();
+		delete this[timer];
+		callback();
+	});
+
+	this[timer].start(duration);
 };
 
-/** @function
- * @summary Timer used by UI to display the current time left to compile the report if there is no return data from the
- * units which will close it off before that.
- *
- * @param {*} $happn
- * @param {*} start
- */
-BlastService.prototype.reportTimer = function($happn, start) {
-	const { emit, log } = $happn;
-	const { env } = $happn.config;
-
-	let countdown = env.systemReportTime - env.systemFiringTime;
-	emit("REPORT_TIMER", countdown);
-	log.info(`Blast Timer Started at ${countdown}ms`);
-
-	if (start) {
-		this.reportTimer = setInterval(() => {
-			if (countdown > 0) {
-				countdown = countdown - 1000;
-				emit("REPORT_TIMER", countdown);
-			} else {
-				clearInterval(this.reportTimer);
-				emit("REPORT_TIMER", 0);
-				this.reportTimer = null;
-			}
-		}, 1000);
-	} else {
-		if (this.reportTimer) {
-			emit("REPORT_TIMER", 0);
-			clearInterval(this.reportTimer);
-			this.reportTimer = null;
-		}
-	}
-};
+//#endregion
 
 module.exports = BlastService;
 </code></pre>
@@ -443,15 +422,14 @@ module.exports = BlastService;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Jul 21 2019 08:26:40 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:38:15 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>

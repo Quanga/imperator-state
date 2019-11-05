@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: services/securityService.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>services/securityService.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { defaultGroups, defaultUsers } = require("../constants/defaultAppConstants");
+
+/**
+ * @category Services
+ * @class
+ * @summary System service to upsert or remove users for the UI and Mesh
+ */
+function SecurityService() {}
+
+/**
+ * @summary Happner Component Start.
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @return {Promise}
+ */
+SecurityService.prototype.start = function($happn) {
+	const { securityService, stateService } = $happn.exchange;
+	const { name } = $happn;
+
+	return (async () => {
+		try {
+			await securityService.checkUsers();
+			stateService.updateState({ service: name, state: "STARTED" });
+		} catch (error) {
+			stateService.updateState({ service: name, state: "FAILED", error });
+		}
+	})();
+};
+
+/**
+ * @summary Happner Component Stop.
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @return {Promise}
+ */
+SecurityService.prototype.stop = function($happn) {
+	const { stateService } = $happn;
+	const { name } = $happn;
+
+	return (async () => {
+		stateService.updateState({ service: name, state: "STOPPED" });
+	})();
+};
+
+/**
+ * @summary Initial user and group setup for an empty database
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise} void
+ * @mermaid graph LR
+ 				A[App]-.->B(entry)
+				subgraph setStartupUsers
+				B-->C[upsertGroups]
+				C-->D[upsertUsers]
+				end
+ */
+SecurityService.prototype.setStartupUsers = function($happn) {
+	const { security } = $happn.exchange;
+	const { log } = $happn;
+
+	const upsertUser = user =>
+		new Promise(resolve => {
+			security.upsertUser(user, err => {
+				if (err) {
+					log.error("cannot create user", err);
+				}
+				log.info(`User = ${user.username} upserted.....>>>>`);
+				resolve();
+			});
+		});
+
+	const upsertGroup = group =>
+		new Promise(resolve => {
+			security.upsertGroup(group, { overwritePermissions: true }, err => {
+				if (err) {
+					log.error("cannot create group", err);
+				}
+				resolve();
+			});
+		});
+
+	return (async () => {
+		try {
+			log.warn("Setting up temporary users....ensure that these are changed using the UI");
+
+			for (const group of defaultGroups) {
+				await upsertGroup(group);
+			}
+
+			for (const user of defaultUsers) {
+				await upsertUser(user);
+			}
+		} catch (err) {
+			log.error("Error setting up default users and groups", err);
+		}
+	})();
+};
+
+/**
+ * @summary check that the initail user password has been modified from the default
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @returns {Promise&lt;boolean>} bool
+ * @mermaid graph LR
+				defaultUsers-->|get|B[application_data.state]
+				B-->|INSECURE|E[resultArray]
+				B-->|SECURE|null
+				E -->|return|R[resultArray >0]
+				
+ */
+SecurityService.prototype.checkStartUpUsers = function($happn) {
+	const { security, securityService } = $happn.exchange;
+	const { log } = $happn;
+
+	const listUser = user =>
+		new Promise(resolve => {
+			security.listUsers(user.username).then(user => {
+				if (user.length > 0) {
+					resolve(user[0]);
+				} else {
+					resolve(null);
+				}
+			});
+		});
+
+	return (async () => {
+		await securityService.setStartupUsers();
+
+		let result = [];
+		for (const user of defaultUsers) {
+			const systemUser = await listUser(user);
+
+			if (
+				systemUser &amp;&amp;
+				systemUser.application_data &amp;&amp;
+				systemUser.application_data.state === "INSECURE"
+			) {
+				log.warn(
+					`User ${systemUser.username} is not secure.  Please urgently change password in UI`
+				);
+				result.push(systemUser);
+			}
+		}
+
+		return result.length === 0;
+	})();
+};
+
+/**
+ * @summary Utility function to return the users that are already listed on the system.
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @param {string} userName
+ * @return {Promise&lt;any>} List of users
+ */
+SecurityService.prototype.listUsers = function($happn, userName) {
+	const { security } = $happn.echange;
+
+	return async () => {
+		let users = await security.listUsers(userName);
+		return users;
+	};
+};
+
+/**
+ * @summary Upsert user for UI system.
+ * @param {$happn} $happn Dependancy Injection of the Happner Framework
+ * @param {userObj} user User Object as per Happner User Format
+ * @return {Promise} result
+ */
+SecurityService.prototype.upsertUiUser = function($happn, user) {
+	const { security } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		await security.upsertUser(user, err => {
+			if (err) return log.error("Cannot Upset user ", err);
+
+			log.info(`User ${user.username} added to group ${user.group}`);
+			return `User added - ${user.username} to group ${user.group}`;
+		});
+	})();
+};
+
+SecurityService.prototype.deleteGroup = function($happn, group) {
+	const { security } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		await security.deleteGroup(group, err => {
+			if (err) return log.error("Cannot delete group ", err);
+
+			log.info(`Group Removed ${group}`);
+			return `Group Removed - ${group}`;
+		});
+	})();
+};
+
+SecurityService.prototype.deleteUser = function($happn, user) {
+	const { security } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		await security.deleteUser(user, err => {
+			if (err) return log.error("Cannot delete group ", err);
+
+			log.info(`User Removed ${user}`);
+			return `User Removed - ${user}`;
+		});
+	})();
+};
+
+module.exports = SecurityService;
+
+/**
+ * @typedef userObj
+ * @summary Happner User Object
+ * @property {string}  username Case sensitive string for username
+ * @property {string}  password Case sensitive string for password
+ * @property {object}  custom_data 
+ * @property {object}  application_data 
+ * @property {object}  groups Group KVP where key is Group name and pair boolean
+ * 
+ * @example 
+  const testUpsertUser = {
+	username: 'USERNAME',
+	password: 'PASSWORD',
+	custom_data: { something: 'useful' },
+	application_data: { something: 'untouchable by the user' },
+	groups:{}
+	};
+ */
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:38:15 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

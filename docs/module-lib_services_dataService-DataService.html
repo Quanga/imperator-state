@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <title>JSDoc: DataService</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -56,7 +58,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNIT_COUNT">UNIT_COUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNIT_COUNT">UNIT_COUNT</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="uiService.html">uiService</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -91,11 +93,14 @@
                 <div class="members">
                     <div class="member">
 
+
     
     <h4 class="name" id="DataService">
         
         <span class="code-name">
-            new DataService<span class="signature">()</span><span class="type-signature"></span>
+            
+                new DataService<span class="signature">()</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -307,7 +312,7 @@
         
     
     </div>
-
+    
     
 
     
@@ -329,11 +334,14 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id="clearDataModel">
         
         <span class="code-name">
-            clearDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                clearDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -443,7 +451,7 @@
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line258">line 258</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line262">line 262</a>
             </span>
         </p>
     
@@ -496,11 +504,14 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id="componentStart">
         
         <span class="code-name">
-            componentStart<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                componentStart<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -665,11 +676,14 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id="componentStop">
         
         <span class="code-name">
-            componentStop<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                componentStop<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -836,11 +850,14 @@
             
                 <div class="member">
 
+
     
     <h4 class="name" id="createDataModel">
         
         <span class="code-name">
-            createDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                createDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -1007,11 +1024,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="createDataModelListeners">
         
         <span class="code-name">
-            createDataModelListeners<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                createDataModelListeners<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -1121,7 +1141,7 @@ D-->|populate units|A</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line140">line 140</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line144">line 144</a>
             </span>
         </p>
     
@@ -1198,11 +1218,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="getControlUnit">
         
         <span class="code-name">
-            getControlUnit<span class="signature">($happn)</span><span class="type-signature"></span>
+            
+                getControlUnit<span class="signature">($happn)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -1313,7 +1336,7 @@ D-->|populate units|A</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line599">line 599</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line576">line 576</a>
             </span>
         </p>
     
@@ -1343,11 +1366,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="getUnits">
         
         <span class="code-name">
-            getUnits<span class="signature">($happn, withChildren)</span><span class="type-signature"></span>
+            
+                getUnits<span class="signature">($happn, withChildren)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -1483,7 +1509,7 @@ D-->|populate units|A</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line618">line 618</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line599">line 599</a>
             </span>
         </p>
     
@@ -1513,11 +1539,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="initialise">
         
         <span class="code-name">
-            initialise<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                initialise<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -1681,11 +1710,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="persistUnits">
         
         <span class="code-name">
-            persistUnits<span class="signature">($happn, updates)</span><span class="type-signature"></span>
+            
+                persistUnits<span class="signature">($happn, updates)</span><span class="type-signature"></span>
+            
         </span>
     </h4>
     
@@ -1821,7 +1853,7 @@ D-->|populate units|A</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line578">line 578</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line555">line 555</a>
             </span>
         </p>
     
@@ -1851,11 +1883,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="postProcess">
         
         <span class="code-name">
-            postProcess<span class="signature">($happn, updatesArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
+            
+                postProcess<span class="signature">($happn, updatesArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
+            
         </span>
     </h4>
     
@@ -1991,7 +2026,7 @@ D-->|populate units|A</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line489">line 489</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line488">line 488</a>
             </span>
         </p>
     
@@ -2046,11 +2081,14 @@ D-->|populate units|A</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="preProcess">
         
         <span class="code-name">
-            preProcess<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
+            
+                preProcess<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
+            
         </span>
     </h4>
     
@@ -2191,7 +2229,7 @@ updateState->>__insertNewNodes: insert</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line440">line 440</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line444">line 444</a>
             </span>
         </p>
     
@@ -2246,11 +2284,14 @@ updateState->>__insertNewNodes: insert</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="unlisten">
         
         <span class="code-name">
-            unlisten<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                unlisten<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -2359,7 +2400,7 @@ updateState->>__insertNewNodes: insert</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line178">line 178</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line182">line 182</a>
             </span>
         </p>
     
@@ -2412,11 +2453,14 @@ updateState->>__insertNewNodes: insert</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="updateState">
         
         <span class="code-name">
-            updateState<span class="signature">($happn, nodeArr, force)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                updateState<span class="signature">($happn, nodeArr, force)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -2581,7 +2625,7 @@ updateState->>__insertNewNodes: insert</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line348">line 348</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line352">line 352</a>
             </span>
         </p>
     
@@ -2634,11 +2678,14 @@ updateState->>__insertNewNodes: insert</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="upsertNodeDataArr">
         
         <span class="code-name">
-            upsertNodeDataArr<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+                upsertNodeDataArr<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
         </span>
     </h4>
     
@@ -2780,7 +2827,7 @@ updateState-->postProcess</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line280">line 280</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line284">line 284</a>
             </span>
         </p>
     
@@ -2833,11 +2880,14 @@ updateState-->postProcess</div>
             
                 <div class="member">
 
+
     
     <h4 class="name" id="validatePersisted">
         
         <span class="code-name">
-            validatePersisted<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;units>>|Promise.&lt;null>}</span>
+            
+                validatePersisted<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;units>>|Promise.&lt;null>}</span>
+            
         </span>
     </h4>
     
@@ -2946,7 +2996,7 @@ updateState-->postProcess</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line197">line 197</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line201">line 201</a>
             </span>
         </p>
     
@@ -3149,7 +3199,7 @@ updateState-->postProcess</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line670">line 670</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line652">line 652</a>
             </span>
         </p>
     
@@ -3161,7 +3211,9 @@ updateState-->postProcess</div>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>{ type: "FILTERED", value: result }</code></pre>
+    
+        <pre class="prettyprint"><code>{ type: "FILTERED", value: result }</code></pre>
+    
 
 
 </div>
@@ -3171,16 +3223,29 @@ updateState-->postProcess</div>
     
 
     
-        <h3 class="subsection-title">Events</h3>
-
-        
+        <div class='vertical-section'>
+            <h3 class="title"><span>Events</span></h3>
+            <div class="members">
             
+                <div class="member">
+                    
+
+    <p class="method-parameter is-pulled-right">
+        <label>Type: </label>
+        
+<span class="param-type">object</span>
+
+
+    </p>
+
 
     
     <h4 class="name" id=".event:EDDSIG">
         
         <span class="code-name">
-            EDDSIG
+            
+                EDDSIG
+            
         </span>
     </h4>
     
@@ -3197,14 +3262,6 @@ updateState-->postProcess</div>
 
 
 
-
-    <p class="method-parameter">
-    <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </p>
 
 
 
@@ -3301,7 +3358,7 @@ updateState-->postProcess</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line661">line 661</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line643">line 643</a>
             </span>
         </p>
     
@@ -3328,14 +3385,27 @@ updateState-->postProcess</div>
 
 
 
-        
+                </div>
             
+                <div class="member">
+                    
+
+    <p class="method-parameter is-pulled-right">
+        <label>Type: </label>
+        
+<span class="param-type">object</span>
+
+
+    </p>
+
 
     
     <h4 class="name" id="event:UNIT_COUNT">
         
         <span class="code-name">
-            UNIT_COUNT
+            
+                UNIT_COUNT
+            
         </span>
     </h4>
     
@@ -3350,14 +3420,6 @@ updateState-->postProcess</div>
 
 
 
-
-    <p class="method-parameter">
-    <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </p>
 
 
 
@@ -3461,7 +3523,7 @@ updateState-->postProcess</div>
         <p class="tag-source">
             <a href="lib_services_data_service.js.html" class="button">View Source</a>
             <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line653">line 653</a>
+                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line635">line 635</a>
             </span>
         </p>
     
@@ -3488,7 +3550,10 @@ updateState-->postProcess</div>
 
 
 
-        
+                </div>
+            
+            </div>
+        </div>
     
 </article>
 
@@ -3504,15 +3569,14 @@ updateState-->postProcess</div>
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Sep 15 2019 06:30:24 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Nov 05 2019 12:04:51 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>

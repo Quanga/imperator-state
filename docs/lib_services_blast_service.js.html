@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <title>JSDoc: lib/services/blast_service.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -58,7 +60,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNIT_COUNT">UNIT_COUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Classes</h3><ul><li><a href="DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -80,6 +82,7 @@
 const Timer = require("tiny-timer");
 const BlastModel = require("../models/blastModel");
 const PdfUtil = require("../utils/pdfUtils");
+const clone = require("clone");
 
 const { blastModelStates, componentStates } = require("../constants/stateConstants");
 const {
@@ -87,13 +90,9 @@ const {
 	blastServiceEvents,
 	eventServiceEvents
 } = require("../constants/eventConstants");
-/**
- * @category Blast Service
- * @module lib/services/blastService
- */
 
 /**
- * @category Blast Service
+ * @category Services
  * @class BlastService
  * @requires class:BlastModel
  * @requires pdfUtils
@@ -199,19 +198,21 @@ BlastService.prototype.subscribeToBlastEvents = function($happn) {
 
 	return (async () => {
 		try {
-			blastEvent.event.on(blastModelEvents.BLASTMODEL_LOG, data => {
+			blastEvent.event.on(blastModelEvents.BLASTMODEL_LOG, async data => {
 				const {
 					BLAST_TIMER_COMPLETE,
 					BLAST_DATA_COMPLETE,
-					BLAST_TIMER_COMPLETE_BYPACKET
+					BLAST_TIMER_COMPLETE_BYPACKET,
+					BLAST_TERMINATED
 				} = blastModelStates;
 
 				if (
 					data === BLAST_TIMER_COMPLETE ||
 					data === BLAST_DATA_COMPLETE ||
-					data === BLAST_TIMER_COMPLETE_BYPACKET
+					data === BLAST_TIMER_COMPLETE_BYPACKET ||
+					data === BLAST_TERMINATED
 				) {
-					blastService.closeBlast(data);
+					await blastService.closeBlast(data);
 				}
 			});
 
@@ -247,7 +248,7 @@ BlastService.prototype.updateBlast = function($happn, logObj) {
 	return (async () => {
 		try {
 			this.currentBlast.blastEvent.addLog(logObj);
-			await blastRepository.set(this.currentBlast);
+			//await blastRepository.set(this.currentBlast);
 		} catch (err) {
 			log.error("Error writing new blast object", err);
 		}
@@ -261,11 +262,12 @@ BlastService.prototype.updateBlast = function($happn, logObj) {
  */
 BlastService.prototype.closeBlast = function($happn, closeProc) {
 	const { blastRepository, dataService, blastService } = $happn.exchange;
-	const { log } = $happn;
+	const { log, emit } = $happn;
 
 	return (async () => {
 		try {
-			if (!this.currentBlast) throw new Error("No blast event to close");
+			if (!this.currentBlast) throw new Error("No current blast event to close");
+			if (!this.currentBlast.blastEvent) throw new Error("No blast event to close");
 
 			this.currentBlast.blastEvent.event.removeAllListeners(blastModelEvents.BLASTMODEL_LOG);
 
@@ -274,23 +276,37 @@ BlastService.prototype.closeBlast = function($happn, closeProc) {
 			const snapShot = await dataService.getSnapShot();
 			this.currentBlast.blastEvent.setSnapshot(snapShot, "end");
 
-			await blastRepository.set(this.currentBlast);
-			await blastRepository.upsertIndex(this.currentBlast);
+			const cloneBlast = clone(this.currentBlast);
+			await blastRepository.set(cloneBlast);
+			await blastRepository.upsertIndex(cloneBlast);
 
 			if (this["firing"]) {
+				emit("firing", 0);
 				this["firing"].stop();
+				this["firing"] = null;
 			}
 
 			if (this["reporting"]) {
+				emit("reporting", 0);
 				this["reporting"].stop();
+				this["firing"] = null;
 			}
 
-			await blastService.logEvent(
-				"BLAST_COMPLETED",
-				this.currentBlast.blastEvent.data.blastClosed,
-				closeProc
-			);
-			this.currentBlast = null;
+			if (this.currentBlast.state === blastModelStates.BLAST_TERMINATED) {
+				await blastService.logEvent(
+					"BLAST_TERMINATED",
+					this.currentBlast.blastEvent.data.blastClosed,
+					closeProc
+				);
+			} else {
+				await blastService.logEvent(
+					"BLAST_COMPLETED",
+					this.currentBlast.blastEvent.data.blastClosed,
+					closeProc
+				);
+			}
+			delete this.currentBlast.blastEvent;
+			delete this.currentBlast;
 		} catch (err) {
 			log.error("Error closing Blast Event", err);
 		}
@@ -308,7 +324,7 @@ BlastService.prototype.logEvent = function($happn, logType, createdAt, msg) {
 	const { eventService } = $happn.exchange;
 
 	return (async () => {
-		eventService.handleEvent({
+		await eventService.handleEvent({
 			type: blastServiceEvents.BLAST_LOG,
 			logType,
 			serial: this.currentBlast.blastEvent.data.serial,
@@ -319,9 +335,7 @@ BlastService.prototype.logEvent = function($happn, logType, createdAt, msg) {
 	})();
 };
 
-/*************************************************************************
- *   BLAST REPORT UTILITIES
- *************************************************************************/
+//#region BLAST REPORT UTILITIES
 
 /**
  * @summary Utility function to remove the Blast ID from
@@ -354,7 +368,8 @@ BlastService.prototype.deleteBlast = function($happn, id) {
  */
 BlastService.prototype.pdfBlast = function($happn, id) {
 	const { blastRepository } = $happn.exchange;
-	const { error: logError } = $happn.log;
+	const { env } = $happn.config;
+	const { log } = $happn;
 
 	return (async () => {
 		try {
@@ -362,11 +377,11 @@ BlastService.prototype.pdfBlast = function($happn, id) {
 			const blastReport = await blastRepository.get(id);
 			delete blastReport._meta;
 
-			pdfUtils.createContent(blastReport);
+			pdfUtils.createContent(blastReport, env.theme);
 			let pdfFile = await pdfUtils.createPdf(blastReport);
 			return pdfFile;
-		} catch (err) {
-			logError("Error creating PDF", err);
+		} catch (error) {
+			log.error("Error creating PDF", error);
 		}
 	})();
 };
@@ -376,18 +391,21 @@ BlastService.prototype.startTimer = function($happn, timer, event, duration, cal
 
 	log.info(`${timer} Started at ${duration}ms`);
 
-	this[timer] = new Timer({ interval: 1000, stopwatch: false });
+	this[timer] = new Timer({ stopwatch: false });
 
-	this[timer].on("tick", ms => emit(event, ms));
+	this[timer].on("tick", ms => emit(event, Math.round(ms / 1000) * 1000));
 	this[timer].on("done", () => {
 		log.info(`${timer} stopped`);
+		emit(event, 0);
 		//this[timer].removeAllListeners();
 		delete this[timer];
 		callback();
 	});
 
-	this[timer].start(5000);
+	this[timer].start(duration);
 };
+
+//#endregion
 
 module.exports = BlastService;
 </code></pre>
@@ -404,15 +422,14 @@ module.exports = BlastService;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Sep 15 2019 06:30:24 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:53:59 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>

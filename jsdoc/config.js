@@ -14,7 +14,7 @@ module.exports = {
 	opts: {
 		encoding: "utf8",
 		destination: "docs/",
-		readme: "readme.md",
+		//readme: "readme.md",
 		recurse: true,
 		verbose: true,
 		template: "node_modules/better-docs"

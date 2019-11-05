@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: services/queue_service.js</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">State Management Server</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>services/queue_service.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+
+const moment = require("moment");
+const CRC = require("../utils/crc");
+
+/**
+ * @category Services
+ * @class QueueService
+ * @requires better-queue
+ * @requires server.js
+ */
+function QueueService() {
+	this._eventRef = null;
+	this._epRef = null;
+}
+
+/**
+ *  &lt;ul>&lt;li>Start the component when Happner starts.&lt;/li>
+ * &lt;li> Starts a listener for a BLAST_STARTED event emitted from the dataService&lt;/li>&lt;/ul>&lt;br>
+ * @param {$happn} $happn
+ * @returns {Promise}
+ */
+QueueService.prototype.componentStart = function($happn) {
+	const { stateService } = $happn.exchange;
+	const { name } = $happn;
+
+	return (async () => {
+		try {
+			stateService.updateState({ service: name, state: "STARTED" });
+		} catch (err) {
+			stateService.updateState({ service: name, state: "FAILED" });
+		}
+	})();
+};
+
+/**
+ *  &lt;ul>&lt;li>Stop the component when Happner starts.&lt;/li>
+ * &lt;li> &lt;/li>&lt;/ul>&lt;br>
+ * @param {$happn} $happn
+ * @returns {Promise}
+ */
+QueueService.prototype.componentStop = function($happn) {
+	const { stateService } = $happn.exchange;
+	const { name } = $happn;
+
+	return (async () => {
+		stateService.updateState({ service: name, state: "STOPPED" });
+	})();
+};
+
+/**
+ * @summary Process the incoming item
+ * @param {$happn} $happn
+ * @param {object} msgObj
+ * @example { message, createdAt }
+ */
+QueueService.prototype.processIncoming = function($happn, msgObj) {
+	const { packetService, dataService, eventService, queueService } = $happn.exchange;
+	const { log } = $happn;
+
+	return (async () => {
+		try {
+			//will throw on structure and format issues
+			await queueService.validatePacket(msgObj);
+
+			const createdTime = moment(msgObj.createdAt, "x").format("DD-MM-YYYY HH:mm:ss.SSSS");
+			log.info(`Queued - &lt;&lt; ${createdTime} - ${msgObj.createdAt} - ${msgObj.packet} >>`);
+
+			//Extract the packet to an array of Unit Models
+			const unitsArr = await packetService.extractData(msgObj); //returns array of unit objects
+
+			if (!unitsArr || !Array.isArray(unitsArr) || unitsArr.length === 0)
+				throw new Error(`Packet could not be processed - no data will be sent to DataService`);
+
+			const dataUpserted = await dataService.upsertNodeDataArr(unitsArr);
+
+			if (dataUpserted instanceof Error)
+				throw new Error(
+					`Error upserting processed packet - ${msgObj.createdAt} - ${msgObj.packet} : ${dataUpserted.message}`
+				);
+
+			return true;
+		} catch (error) {
+			log.warn(`Queue error: ${error.message}`);
+			await eventService.logPacketError({ msgObj, error: error.message });
+			return false;
+		}
+	})();
+};
+
+/**
+ * @summary Pre-validation of the incoming packet
+ * Will throw if there is an error
+ * @param {$happn} $happn
+ * @param {object} msgObj
+ * @returns {promise}
+ * @example { packet, createdAt }
+ */
+QueueService.prototype.validatePacket = function($happn, msgObj) {
+	return (async () => {
+		// if in TEST env, check the CRC of the file
+
+		if (!msgObj.hasOwnProperty("packet"))
+			throw new TypeError(`Packet ${msgObj} is missing Packet property`);
+
+		if (!msgObj.hasOwnProperty("createdAt"))
+			throw new TypeError(`Packet ${msgObj} is missing Date property`);
+
+		if (!moment(msgObj.createdAt, "x").isValid())
+			throw new TypeError(`Packet ${msgObj} has and invalid date format`);
+
+		if (process.env.NODE_ENV === "test") {
+			const preCrc = msgObj.packet.substring(0, msgObj.packet.length - 4);
+
+			const crcCalc = CRC.generateCRC(preCrc)
+				.toString(16)
+				.padStart(4, "0");
+
+			const packetCRC = msgObj.packet.substring(msgObj.packet.length - 4, msgObj.packet.length);
+
+			if (crcCalc !== packetCRC) throw new Error(`Packet ${msgObj} has and invalid CRC format`);
+		}
+	})();
+};
+
+/**
+ * @summary Add an item to the outgoing queue
+ * @param {$happn} $happn
+ * @param {string} packet
+ * @todo THIS IS NOT FLESHED OUT YET
+ */
+QueueService.prototype.addToQueue = function($happn, packet) {
+	const { log } = $happn;
+
+	return (async () => {
+		log.info(`packet - ${JSON.stringify(packet)} added to outgoing queue`);
+		this.incomingQueue.push(packet);
+	})();
+};
+
+module.exports = QueueService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:38:15 GMT+0200 (South Africa Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

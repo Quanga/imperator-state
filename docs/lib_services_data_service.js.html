@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <title>JSDoc: lib/services/data_service.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
 <body>
@@ -58,7 +60,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li><li><a href="module-lib_services_blastService.html">lib/services/blastService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li><li><a href="module-lib_services_blastService-BlastService.html">BlastService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNIT_COUNT">UNIT_COUNT</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Classes</h3><ul><li><a href="DataMapper.html">DataMapper</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -77,16 +79,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/* eslint-disable no-unused-vars */
-/**
- * @category Data Service
- * @module lib/services/dataService
- * @requires PacketTemplate
- * @requires module:lib/models/dataModel
- * @requires module:DataMapper
- * @requires clone
- * @requires pdfUtils
- * @requires better-queue
- */
+
 const PacketTemplate = require("../constants/packetTemplates");
 const DataModel = require("../models/dataModel");
 const DataMapper = require("../mappers/data_mapper");
@@ -96,8 +89,14 @@ const { componentStates } = require("../constants/stateConstants");
 const { dataModelEvents, dataServiceEvents } = require("../constants/eventConstants");
 
 /**
- * @category Data Service
+ * @category Services
  * @class DataService
+ * @requires PacketTemplate
+ * @requires module:lib/models/dataModel
+ * @requires module:DataMapper
+ * @requires clone
+ * @requires pdfUtils
+ * @requires better-queue
  * @prop {DataModel} this.dataModel The Core State DataModel
  * @prop {object} this.__constants Constants
  * @prop {DataMapper} this.dataMapper The Diff mapper
@@ -176,18 +175,21 @@ DataService.prototype.initialise = function($happn) {
  * @param {$happn} $happn Dependancy Injection of the Happner Framework
  * @returns {Promise}
  * @mermaid graph LR
- * A[New DataModel]-->B[createListeners]
- * B-.->C[getAllPersisted]
- * C-->D[validateUnits]
- * D-->|populate units|A
+ * 		A[New DataModel]-->B[createListeners]
+ * 		B-.->C[getAllPersisted]
+ * 		C-->D[validateUnits]
+ * 		D-->|populate units|A
  */
 DataService.prototype.createDataModel = function($happn) {
 	const { nodeRepository, dataService } = $happn.exchange;
 	const { log } = $happn;
+	const { env } = $happn.config;
 
 	return (async () => {
 		try {
 			this.dataModel = new DataModel();
+			this.dataModel.setMode(env.systemMode);
+
 			const units = await nodeRepository.get("*");
 
 			const validatedUnits = await dataService.validatePersisted(units);
@@ -201,6 +203,7 @@ DataService.prototype.createDataModel = function($happn) {
 			}
 		} catch (error) {
 			log.error(error);
+			throw new Error(`Data Model creation error: ${error.message}`);
 		}
 	})();
 };
@@ -213,7 +216,6 @@ DataService.prototype.createDataModel = function($happn) {
  * @listens DataModel#UNIT_COUNT - Brokers emits and hands to Happn Emit
  * @listens DataModel#UNIT_COMMS_LOST - Handles the timer for Comms lost on timed units
  * @listens DataModel#error Handles the error logging inside the data model to the Happn Logger
- * @fires module:lib/services/dataService~DataService#UNIT_COUNT
  */
 DataService.prototype.createDataModelListeners = function($happn) {
 	const { eventService } = $happn.exchange;
@@ -233,14 +235,14 @@ DataService.prototype.createDataModelListeners = function($happn) {
 
 			//send a unit update to the events service to notify changes
 			this.dataModel.on(dataModelEvents.UNIT_COMMS_LOST, val => {
-				log.info(`Communication lost for unit - ${val.data.serial}`);
-				eventService.handleEvent({
-					type: dataServiceEvents.UNITS_UPDATED,
-					serial: val.serial,
-					createdAt: val.createdAt,
-					typeId: val.typeId,
-					events: [{ serial: val.serial, diff: { communicationStatus: 0 } }]
-				});
+				//log.info(`Communication lost for unit - ${val.serial}`);
+				// eventService.handleEvent({
+				// 	type: dataServiceEvents.UNITS_UPDATED,
+				// 	serial: val.serial,
+				// 	createdAt: val.createdAt,
+				// 	typeId: val.typeId,
+				// 	payload: [{ serial: val.serial, diff: { communicationStatus: 0 } }]
+				// });
 			});
 		} catch (err) {
 			log.error(err);
@@ -509,11 +511,11 @@ DataService.prototype.updateState = function($happn, nodeArr) {
  * @returns {Promise&lt;action>} Action
  
  * @mermaid sequenceDiagram
- * updateState->>dataModel: upsertUnit
- * dataModel->>updateState: return action
- * Note left of updateState: INSERT or UPDATE
- * updateState->>__updateExistingNodes: update
- * updateState->>__insertNewNodes: insert
+ * 			updateState->>dataModel: upsertUnit
+ * 			dataModel->>updateState: return action
+ * 			Note left of updateState: INSERT or UPDATE
+ * 			updateState->>__updateExistingNodes: update
+ * 			updateState->>__insertNewNodes: insert
  */
 DataService.prototype.preProcess = function($happn, nodeArr) {
 	const { log } = $happn;
@@ -541,11 +543,6 @@ DataService.prototype.preProcess = function($happn, nodeArr) {
 					) {
 						result = result.slice(0, 1);
 					}
-
-					//edge case - turn off edds if the cbb goes from on to off
-					//////////////const checkedArr = await dataService.checkCBBKeyOff(result);
-					//if (checkedArr) return { type: "DETS_OFF", value: checkedArr };
-
 					return { type: "FILTERED", value: result };
 				}
 			}
@@ -570,24 +567,19 @@ DataService.prototype.postProcess = function($happn, parent, updatesArr) {
 
 	return (async () => {
 		try {
-			const { data, dataType } = parent;
+			const { keySwitchStatus, fireButton, typeId, modifiedAt, serial } = parent.data;
 			const { diff } = updatesArr[0];
 
-			switch (data.typeId) {
+			switch (typeId) {
 			case 0:
 				{
-					if (
-						data.keySwitchStatus === 1 &amp;&amp;
-							data.fireButton === 1 &amp;&amp;
-							diff &amp;&amp;
-							diff.fireButton === 1
-					) {
+					if (keySwitchStatus === 1 &amp;&amp; fireButton === 1 &amp;&amp; diff &amp;&amp; diff.fireButton === 1) {
 						const snapShot = await this.dataModel.snapShot();
 
-						let blastCreated = await blastService.createNewBlast(data.modifiedAt, snapShot);
+						let blastCreated = await blastService.createNewBlast(modifiedAt, snapShot);
 
 						if (blastCreated) {
-							let boosters = await this.dataModel.updateBoosterConnections(data.modifiedAt);
+							let boosters = await this.dataModel.updateBoosterConnections(modifiedAt);
 
 							if (boosters.length > 0) {
 								for (let booster of boosters) {
@@ -602,39 +594,22 @@ DataService.prototype.postProcess = function($happn, parent, updatesArr) {
 				break;
 			case 3:
 				{
-					if (
-						dataType === "data" &amp;&amp;
-							data.keySwitchStatus === 0 &amp;&amp;
-							diff &amp;&amp;
-							diff.keySwitchStatus === 0
-					) {
-						log.info(`Turning off Detonators for unit ${data.serial}`);
-						const childDets = await this.dataModel.updateEDDConnections(
-							data.serial,
-							data.modifiedAt
-						);
-						if (childDets.length > 0) {
-							await dataService.persistUnits(childDets);
-						}
+					if (keySwitchStatus === 0 &amp;&amp; diff &amp;&amp; diff.keySwitchStatus === 0) {
+						log.info(`Turning off Detonators for unit ${serial}`);
+						const unit = await this.dataModel.getUnit(parent);
+
+						const childKeys = Object.keys(unit.children);
+
+						const resent = [];
+						childKeys.forEach(child => {
+							let det = clone(unit.children[child]);
+							det.data.created = modifiedAt;
+							det.data.detonatorStatus = 0;
+							resent.push(det);
+						});
+
+						await dataService.updateState(resent);
 					}
-
-					// if (data.keySwitchStatus === 1) {
-					// 	const edds = updatesArr.filter(x => x.data.typeId === 4);
-					// 	const eddfields = [];
-					// 	edds.forEach(e => {
-					// 		let edddiffs =
-					// 				e.hasOwnProperty("diff") &amp;&amp; e.diff !== null ? Object.keys(e.diff).length : 0;
-					// 		eddfields.push(edddiffs);
-					// 	});
-
-					// 	eddfields.forEach((d, i) => {
-					// 		if (i > 0) {
-					// 			if (eddfields[i] !== eddfields[i - 1]) {
-					// 				console.log("EDD ISSUE DETECTED", d, eddfields[i], eddfields[i - 1]);
-					// 			}
-					// 		}
-					// 	});
-					// }
 				}
 
 				break;
@@ -679,7 +654,11 @@ DataService.prototype.getControlUnit = function($happn) {
 
 	return (async () => {
 		try {
-			const cu = clone(this.dataModel.controlUnit);
+			const controlUnit = this.dataModel.controlUnit;
+			if (!controlUnit) return null;
+
+			const cu = clone(controlUnit);
+
 			delete cu.event;
 			return cu;
 		} catch (err) {
@@ -701,13 +680,14 @@ DataService.prototype.getUnits = function($happn, withChildren) {
 			let result = clone(this.dataModel.units);
 			let unitKeys = Object.keys(result);
 
-			if (!withChildren) {
-				for (let i = 0; i &lt; unitKeys.length; i++) {
-					delete result[unitKeys[i]].event;
-					delete result[unitKeys[i]].meta;
+			for (let i = 0; i &lt; unitKeys.length; i++) {
+				delete result[unitKeys[i]].event;
+				delete result[unitKeys[i]].meta;
+				if (!withChildren) {
 					delete result[unitKeys[i]].children;
 				}
 			}
+
 			return result;
 		} catch (err) {
 			log.error("Error getting units", err);
@@ -729,28 +709,29 @@ DataService.prototype.getSnapShot = function($happn) {
 };
 
 /**
- * @category Data Service
- * @event module:lib/services/dataService~DataService#UNIT_COUNT
+ * @category Services
+ * @event DataService
  * @type {object}
  * @prop {object} Value to deine
  * @todo Document this object correctly
  */
 
 /**
- * @category Data Service
+ * @category Services
  * @event EDDSIG
  * @summary Fires the Clear signal for a booster
  * @type {object}
  * @prop {string} parent.data.path the path of the unit the EDDSIG is from
- * @memberof module:lib/services/dataService~DataService
+ * @memberof DataService#
  */
 
 /**
+ * @category Services
  * @typedef {object} action
  * @prop {string} action.type Type of action
  * @prop {object} action.value Value of action
  * @example { type: "FILTERED", value: result }
- * @memberof module:lib/services/dataService~DataService
+ * @memberof DataService#
  *
  */
 
@@ -769,15 +750,14 @@ module.exports = DataService;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun Sep 15 2019 06:30:24 GMT+0200 (South Africa Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:53:59 GMT+0200 (South Africa Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
         </p>
     </div>
 </footer>
 
-<script> prettyPrint(); </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
