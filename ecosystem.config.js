@@ -5,7 +5,7 @@ module.exports = {
 		{
 			name: "edge_state",
 			script: "server.js",
-			instances: 1,
+			exec_mode: "fork",
 			autorestart: true,
 			exp_backoff_restart_delay: 100,
 			kill_timeout: 10000,
@@ -148,6 +148,14 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save"
+		},
+		nickvm: {
+			user: "hydrasim",
+			host: "nickvm",
+			ref: "origin/stage-1.4",
+			repo: "git@github.com:aecelectronics/Happner3_State.git",
+			path: "/home/hydrasim/state",
 			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save"
 		}
 	}
