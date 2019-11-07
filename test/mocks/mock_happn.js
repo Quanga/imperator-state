@@ -134,12 +134,6 @@ var MockHappn = function() {
 					resolve(error);
 				})
 		},
-		stateService: {
-			updateState: () =>
-				new Promise(resolve => {
-					resolve();
-				})
-		},
 		queueService: {
 			validatePacket: () =>
 				new Promise(resolve => {

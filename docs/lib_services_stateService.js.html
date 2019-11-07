@@ -3,82 +3,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <meta charset="utf-8">
-    <title>JSDoc: lib/services/stateService.js</title>
 
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      lib/services/stateService.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+  <link type="text/css" rel="stylesheet" href="styles/collapse.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
 </head>
 
 <body>
-    <div id="stickyNavbarOverlay"></div>
-    <div class="top-navbar">
-        <div class="container">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    
-                     
-                        <h1 class="navbar-item">State Management Server</h1>
-                    
-                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-                 
-                <div class="navbar-menu">
-                    <div class="navbar-end">
-                    
-                        <div class="navbar-item">
-                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
-                        </div>
-                    
-                        <div class="navbar-item">
-                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
-                        </div>
-                    
-                    </div>
-                </div>
-                
-            </nav>
-        </div>
-    </div>
-    <div class="container">
-        <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
-                    <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Classes</h3><ul><li><a href="DataMapper.html">DataMapper</a></li></ul></div>
-                    </nav>
-                </div>
-            </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Source</p>
-                        <h1>lib/services/stateService.js</h1>
-                    </header>
-                    
-                    
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
 
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
 
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      My SDK Name
+    </h3>
 
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>function StateService() {}
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="https://www.google.com/">google</a>
+      
+    
+
+    <h3>Classes</h3><ul><li id="BlastModel-nav"><a href="BlastModel.html">BlastModel</a><ul class='methods'><li data-type="method" id="BlastModel-addLog-nav"><a href="BlastModel.html#addLog">addLog</a></li><li data-type="method" id="BlastModel-createSnapshot-nav"><a href="BlastModel.html#createSnapshot">createSnapshot</a></li><li data-type="method" id="BlastModel-setState-nav"><a href="BlastModel.html#setState">setState</a></li><li data-type="method" id="BlastModel-setTotalTimer-nav"><a href="BlastModel.html#setTotalTimer">setTotalTimer</a></li><li data-type="method" id="BlastModel-validate-nav"><a href="BlastModel.html#validate">validate</a></li></ul></li><li id="BlastRepository-nav"><a href="BlastRepository.html">BlastRepository</a><ul class='methods'><li data-type="method" id="BlastRepository-componentStart-nav"><a href="BlastRepository.html#componentStart">componentStart</a></li><li data-type="method" id="BlastRepository-componentStop-nav"><a href="BlastRepository.html#componentStop">componentStop</a></li><li data-type="method" id="BlastRepository-set-nav"><a href="BlastRepository.html#set">set</a></li></ul></li><li id="BlastService-nav"><a href="BlastService.html">BlastService</a><ul class='methods'><li data-type="method" id="BlastService-closeBlast-nav"><a href="BlastService.html#closeBlast">closeBlast</a></li><li data-type="method" id="BlastService-componentStart-nav"><a href="BlastService.html#componentStart">componentStart</a></li><li data-type="method" id="BlastService-componentStop-nav"><a href="BlastService.html#componentStop">componentStop</a></li><li data-type="method" id="BlastService-createNewBlast-nav"><a href="BlastService.html#createNewBlast">createNewBlast</a></li><li data-type="method" id="BlastService-deleteBlast-nav"><a href="BlastService.html#deleteBlast">deleteBlast</a></li><li data-type="method" id="BlastService-logEvent-nav"><a href="BlastService.html#logEvent">logEvent</a></li><li data-type="method" id="BlastService-pdfBlast-nav"><a href="BlastService.html#pdfBlast">pdfBlast</a></li><li data-type="method" id="BlastService-subscribeToBlastEvents-nav"><a href="BlastService.html#subscribeToBlastEvents">subscribeToBlastEvents</a></li><li data-type="method" id="BlastService-updateBlast-nav"><a href="BlastService.html#updateBlast">updateBlast</a></li></ul></li><li id="ControlUnitModel-nav"><a href="ControlUnitModel.html">ControlUnitModel</a></li><li id="DataMapper-nav"><a href="DataMapper.html">DataMapper</a><ul class='methods'><li data-type="method" id="DataMapper-mapToUnits-nav"><a href="DataMapper.html#mapToUnits">mapToUnits</a></li></ul></li><li id="DataModel-nav"><a href="DataModel.html">DataModel</a><ul class='methods'><li data-type="method" id="DataModel-applyUpdate-nav"><a href="DataModel.html#applyUpdate">applyUpdate</a></li><li data-type="method" id="DataModel-getUnit-nav"><a href="DataModel.html#getUnit">getUnit</a></li><li data-type="method" id="DataModel-insertUnit-nav"><a href="DataModel.html#insertUnit">insertUnit</a></li><li data-type="method" id="DataModel-resetChildCount-nav"><a href="DataModel.html#resetChildCount">resetChildCount</a></li><li data-type="method" id="DataModel-snapShot-nav"><a href="DataModel.html#snapShot">snapShot</a></li><li data-type="method" id="DataModel-updateBoosterConnections-nav"><a href="DataModel.html#updateBoosterConnections">updateBoosterConnections</a></li><li data-type="method" id="DataModel-updateBoosterCounts-nav"><a href="DataModel.html#updateBoosterCounts">updateBoosterCounts</a></li><li data-type="method" id="DataModel-updateEddCounts-nav"><a href="DataModel.html#updateEddCounts">updateEddCounts</a></li><li data-type="method" id="DataModel-updateUnit-nav"><a href="DataModel.html#updateUnit">updateUnit</a></li><li data-type="method" id="DataModel-updateUnitState-nav"><a href="DataModel.html#updateUnitState">updateUnitState</a></li><li data-type="method" id="DataModel-upsertUnit-nav"><a href="DataModel.html#upsertUnit">upsertUnit</a></li></ul></li><li id="App-nav"><a href="module-app-App.html">App</a><ul class='methods'><li data-type="method" id="App-checkStartupArgs-nav"><a href="module-app-App.html#checkStartupArgs">checkStartupArgs</a></li><li data-type="method" id="App-componentStart-nav"><a href="module-app-App.html#componentStart">componentStart</a></li><li data-type="method" id="App-componentStop-nav"><a href="module-app-App.html#componentStop">componentStop</a></li><li data-type="method" id="App-reset-nav"><a href="module-app-App.html#reset">reset</a></li><li data-type="method" id="App-startPM2Actions-nav"><a href="module-app-App.html#startPM2Actions">startPM2Actions</a></li><li data-type="method" id="App-startRouter-nav"><a href="module-app-App.html#startRouter">startRouter</a></li></ul></li><li id="DataService-nav"><a href="module-DataService-DataService.html">DataService</a><ul class='methods'><li data-type="method" id="DataService-clearDataModel-nav"><a href="module-DataService-DataService.html#clearDataModel">clearDataModel</a></li><li data-type="method" id="DataService-componentStart-nav"><a href="module-DataService-DataService.html#componentStart">componentStart</a></li><li data-type="method" id="DataService-componentStop-nav"><a href="module-DataService-DataService.html#componentStop">componentStop</a></li><li data-type="method" id="DataService-createDataModel-nav"><a href="module-DataService-DataService.html#createDataModel">createDataModel</a></li><li data-type="method" id="DataService-createDataModelListeners-nav"><a href="module-DataService-DataService.html#createDataModelListeners">createDataModelListeners</a></li><li data-type="method" id="DataService-getControlUnit-nav"><a href="module-DataService-DataService.html#getControlUnit">getControlUnit</a></li><li data-type="method" id="DataService-getUnits-nav"><a href="module-DataService-DataService.html#getUnits">getUnits</a></li><li data-type="method" id="DataService-initialise-nav"><a href="module-DataService-DataService.html#initialise">initialise</a></li><li data-type="method" id="DataService-persistUnits-nav"><a href="module-DataService-DataService.html#persistUnits">persistUnits</a></li><li data-type="method" id="DataService-postProcess-nav"><a href="module-DataService-DataService.html#postProcess">postProcess</a></li><li data-type="method" id="DataService-preProcess-nav"><a href="module-DataService-DataService.html#preProcess">preProcess</a></li><li data-type="method" id="DataService-unlisten-nav"><a href="module-DataService-DataService.html#unlisten">unlisten</a></li><li data-type="method" id="DataService-updateState-nav"><a href="module-DataService-DataService.html#updateState">updateState</a></li><li data-type="method" id="DataService-upsertNodeDataArr-nav"><a href="module-DataService-DataService.html#upsertNodeDataArr">upsertNodeDataArr</a></li><li data-type="method" id="DataService-validatePersisted-nav"><a href="module-DataService-DataService.html#validatePersisted">validatePersisted</a></li></ul></li><li id="QueueService-nav"><a href="QueueService.html">QueueService</a><ul class='methods'><li data-type="method" id="QueueService-addToQueue-nav"><a href="QueueService.html#addToQueue">addToQueue</a></li><li data-type="method" id="QueueService-componentStart-nav"><a href="QueueService.html#componentStart">componentStart</a></li><li data-type="method" id="QueueService-componentStop-nav"><a href="QueueService.html#componentStop">componentStop</a></li><li data-type="method" id="QueueService-processIncoming-nav"><a href="QueueService.html#processIncoming">processIncoming</a></li><li data-type="method" id="QueueService-validatePacket-nav"><a href="QueueService.html#validatePacket">validatePacket</a></li></ul></li><li id="SecurityService-nav"><a href="SecurityService.html">SecurityService</a><ul class='methods'><li data-type="method" id="SecurityService-checkStartUpUsers-nav"><a href="SecurityService.html#checkStartUpUsers">checkStartUpUsers</a></li><li data-type="method" id="SecurityService-listUsers-nav"><a href="SecurityService.html#listUsers">listUsers</a></li><li data-type="method" id="SecurityService-setStartupUsers-nav"><a href="SecurityService.html#setStartupUsers">setStartupUsers</a></li><li data-type="method" id="SecurityService-start-nav"><a href="SecurityService.html#start">start</a></li><li data-type="method" id="SecurityService-stop-nav"><a href="SecurityService.html#stop">stop</a></li><li data-type="method" id="SecurityService-upsertUiUser-nav"><a href="SecurityService.html#upsertUiUser">upsertUiUser</a></li></ul></li><li id="SystemService-nav"><a href="SystemService.html">SystemService</a><ul class='methods'><li data-type="method" id="SystemService-checkConfiguration-nav"><a href="SystemService.html#checkConfiguration">checkConfiguration</a></li><li data-type="method" id="SystemService-deleteConfig-nav"><a href="SystemService.html#deleteConfig">deleteConfig</a></li><li data-type="method" id="SystemService-getConfigData-nav"><a href="SystemService.html#getConfigData">getConfigData</a></li><li data-type="method" id="SystemService-resetRouterData-nav"><a href="SystemService.html#resetRouterData">resetRouterData</a></li><li data-type="method" id="SystemService-resetUsers-nav"><a href="SystemService.html#resetUsers">resetUsers</a></li><li data-type="method" id="SystemService-setConfigData-nav"><a href="SystemService.html#setConfigData">setConfigData</a></li><li data-type="method" id="SystemService-upsertHistory-nav"><a href="SystemService.html#upsertHistory">upsertHistory</a></li></ul></li><li id="uiService-nav"><a href="uiService.html">uiService</a><ul class='methods'><li data-type="method" id="uiService-delete-nav"><a href="uiService.html#delete">delete</a></li><li data-type="method" id="uiService-get-nav"><a href="uiService.html#get">get</a></li><li data-type="method" id="uiService-getAxxisDash-nav"><a href="uiService.html#getAxxisDash">getAxxisDash</a></li><li data-type="method" id="uiService-set-nav"><a href="uiService.html#set">set</a></li><li data-type="method" id="uiService-setAxxisDash-nav"><a href="uiService.html#setAxxisDash">setAxxisDash</a></li></ul></li><li id="UnitModel-nav"><a href="UnitModel.html">UnitModel</a></li></ul><h3>Modules</h3><ul><li id="app-nav"><a href="module-app.html">app</a></li><li id="DataService-nav"><a href="module-DataService.html">DataService</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        lib/services/stateService.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>function StateService() {}
 
 /**
  * payload: {service: "App", state: "STOPPED", message: null};
@@ -141,28 +162,24 @@ StateService.prototype.setState = function($happn, payload) {
 
 module.exports = StateService;
 </code></pre>
-        </article>
-    </section>
+  </article>
+</section>
+
+    
 
 
+  </div>
 
+  <br class="clear">
 
-                </div>
-            </div>
-        </div>
-    </div>
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+  </footer>
 
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:53:59 GMT+0200 (South Africa Standard Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
-    </div>
-</footer>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
 
-<script src="scripts/app.min.js"></script>
-<script src="scripts/linenumber.js"> </script>
+  
+
 </body>
 </html>

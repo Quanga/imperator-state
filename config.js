@@ -137,8 +137,6 @@ class Config {
 				parserFactory: { path: `${__dirname}/lib/parsers/parser_factory.js` },
 				queueService: { path: `${__dirname}/lib/services/queue_service.js` },
 				securityService: { path: `${__dirname}/lib/services/securityService.js` },
-				stateService: { path: `${__dirname}/lib/services/stateService.js` },
-				statsService: { path: `${__dirname}/lib/services/statsService.js` },
 				systemRepository: { path: `${__dirname}/lib/repositories/systemRepository.js` },
 				systemService: { path: `${__dirname}/lib/services/systemService.js` },
 				uiService: { path: `${__dirname}/lib/services/ui_service.js` },
@@ -152,15 +150,12 @@ class Config {
 					}
 				},
 				systemRepository: {},
-				statsService: {},
 				data: {},
 				uiService: {
 					startMethod: "start"
 				},
 				parserFactory: {},
 				packetService: {
-					startMethod: "start",
-					stopMethod: "stop",
 					env: {
 						systemMode:
 							overrideObj.systemMode ||
@@ -170,8 +165,6 @@ class Config {
 					}
 				},
 				dataService: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop",
 					env: {
 						systemMode:
 							overrideObj.systemMode ||
@@ -196,30 +189,15 @@ class Config {
 						endpointPassword: overrideObj.endpointPassword || process.env.ENDPOINT_PASSWORD || ""
 					}
 				},
-				nodeRepository: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop"
-				},
-				blastRepository: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop"
-				},
-				logsRepository: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop"
-				},
-				warningsRepository: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop"
-				},
+				nodeRepository: {},
+				blastRepository: {},
+				logsRepository: {},
+				warningsRepository: {},
 				eventService: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop"
+					startMethod: "componentStart"
 				},
 
 				blastService: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop",
 					env: {
 						systemFiringTime:
 							overrideObj.systemFiringTime ||
@@ -236,16 +214,7 @@ class Config {
 							this.getTheme(systemModeTypes.AXXIS100)
 					}
 				},
-				queueService: {
-					startMethod: "componentStart",
-					stopMethod: "componentStop",
-					data: {
-						routes: {
-							"persist/*": "persist",
-							"state/*": "mem"
-						}
-					}
-				},
+				queueService: {},
 				app: {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
@@ -257,8 +226,7 @@ class Config {
 							process.env.MODE ||
 							systemModeTypes.AXXIS100
 					}
-				},
-				stateService: {}
+				}
 			}
 		};
 	}

@@ -10,7 +10,7 @@ describe("UNIT - Constants", async function() {
 		it("can get all incoming packet constants", async function() {
 			let allIncoming = await packetConstants.incomingCommTemplate;
 			let incomingKeys = await Array.from(Object.keys(allIncoming));
-			expect(incomingKeys.length).to.be.equal(9);
+			expect(incomingKeys.length).to.be.equal(10);
 		});
 
 		it("can get all the unitBitTemplates", async function() {

@@ -1,119 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <meta charset="utf-8">
-    <title>JSDoc: DataService</title>
 
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      DataService - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
 </head>
 
 <body>
-    <div id="stickyNavbarOverlay"></div>
-    <div class="top-navbar">
-        <div class="container">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    
-                     
-                        <h1 class="navbar-item">State Management Server</h1>
-                    
-                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-                 
-                <div class="navbar-menu">
-                    <div class="navbar-end">
-                    
-                        <div class="navbar-item">
-                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
-                        </div>
-                    
-                        <div class="navbar-item">
-                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
-                        </div>
-                    
-                    </div>
-                </div>
-                
-            </nav>
-        </div>
-    </div>
-    <div class="container">
-        <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
-                    <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Blast Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_blastModel.html">lib/models/blastModel</a></li><li><a href="module-lib_repositories_blastRepository.html">lib/repositories/blastRepository</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html">BlastModel</a></li><li><a href="module-lib_repositories_blastRepository-BlastRepository.html">BlastRepository</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_models_blastModel.BlastModel.html#event:state">state</a></li></ul></div><div class="category"><h2>Data Service</h2><h3>Modules</h3><ul><li><a href="module-lib_models_dataModel.html">lib/models/dataModel</a></li><li><a href="module-lib_services_dataService.html">lib/services/dataService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_dataModel-DataModel.html">DataModel</a></li><li><a href="module-lib_services_dataService-DataService.html">DataService</a></li></ul><h3>Events</h3><ul><li><a href="module-lib_services_dataService-DataService.html#.event:EDDSIG">EDDSIG</a></li><li><a href="module-lib_services_dataService-DataService.html#event:UNIT_COUNT">UNIT_COUNT</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="uiService.html">uiService</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li><li><a href="module-lib_services_securityService.html">lib/services/securityService</a></li><li><a href="module-lib_services_systemService.html">lib/services/systemService</a></li><li><a href="module-server.html">server</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li><li><a href="module-lib_services_securityService-SecurityService.html">SecurityService</a></li><li><a href="module-lib_services_systemService-SystemService.html">SystemService</a></li></ul></div><div class="category"><h2>Transport</h2><h3>Modules</h3><ul><li><a href="module-lib_services_queueService.html">lib/services/queueService</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_services_queueService-QueueService.html">QueueService</a></li></ul></div><div class="category"><h2>Unit Models</h2><h3>Modules</h3><ul><li><a href="module-lib_models_unitsModels.html">lib/models/unitsModels</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_models_unitsModels.ControlUnitModel.html">ControlUnitModel</a></li><li><a href="module-lib_models_unitsModels.UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Modules</h3><ul><li><a href="module-lib_mappers_data_mapper.html">lib/mappers/data_mapper</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_mappers_data_mapper-DataMapper.html">DataMapper</a></li></ul></div>
-                    </nav>
-                </div>
-            </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Class</p>
-                        <h1>DataService</h1>
-                    </header>
-                    
-                    
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
 
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
 
+  <label for="nav-trigger" class="overlay"></label>
 
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      State Server API
+    </h3>
+
+    
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="https://github.com/happner/happner-2">happner-2</a>
+      
+    
+
+    <h3>Classes</h3><ul><li id="BlastRepository-nav"><a href="BlastRepository.html">BlastRepository</a><ul class='methods'><li data-type="method" id="BlastRepository-set-nav"><a href="BlastRepository.html#set">set</a></li></ul></li><li id="ControlUnitModel-nav"><a href="ControlUnitModel.html">ControlUnitModel</a></li><li id="App-nav"><a href="module-App-App.html">App</a><ul class='methods'><li data-type="method" id="App-componentStart-nav"><a href="module-App-App.html#componentStart">componentStart</a></li><li data-type="method" id="App-componentStop-nav"><a href="module-App-App.html#componentStop">componentStop</a></li><li data-type="method" id="App-startRouter-nav"><a href="module-App-App.html#startRouter">startRouter</a></li></ul></li><li id="DataMapper-nav"><a href="module-lib_mappers_DataMapper-DataMapper.html">DataMapper</a><ul class='methods'><li data-type="method" id="DataMapper-getUpdates-nav"><a href="module-lib_mappers_DataMapper-DataMapper.html#getUpdates">getUpdates</a></li><li data-type="method" id="DataMapper-mapProps-nav"><a href="module-lib_mappers_DataMapper-DataMapper.html#mapProps">mapProps</a></li><li data-type="method" id="DataMapper-mapToUnits-nav"><a href="module-lib_mappers_DataMapper-DataMapper.html#mapToUnits">mapToUnits</a></li></ul></li><li id="BlastService-nav"><a href="module-lib_services_BlastService-BlastService.html">BlastService</a><ul class='methods'><li data-type="method" id="BlastService-closeBlast-nav"><a href="module-lib_services_BlastService-BlastService.html#closeBlast">closeBlast</a></li><li data-type="method" id="BlastService-createNewBlast-nav"><a href="module-lib_services_BlastService-BlastService.html#createNewBlast">createNewBlast</a></li><li data-type="method" id="BlastService-deleteBlast-nav"><a href="module-lib_services_BlastService-BlastService.html#deleteBlast">deleteBlast</a></li><li data-type="method" id="BlastService-logEvent-nav"><a href="module-lib_services_BlastService-BlastService.html#logEvent">logEvent</a></li><li data-type="method" id="BlastService-pdfBlast-nav"><a href="module-lib_services_BlastService-BlastService.html#pdfBlast">pdfBlast</a></li><li data-type="method" id="BlastService-subscribeToBlastEvents-nav"><a href="module-lib_services_BlastService-BlastService.html#subscribeToBlastEvents">subscribeToBlastEvents</a></li><li data-type="method" id="BlastService-updateBlast-nav"><a href="module-lib_services_BlastService-BlastService.html#updateBlast">updateBlast</a></li></ul></li><li id="DataService-nav"><a href="module-lib_services_DataService-DataService.html">DataService</a><ul class='methods'><li data-type="method" id="DataService-clearDataModel-nav"><a href="module-lib_services_DataService-DataService.html#clearDataModel">clearDataModel</a></li><li data-type="method" id="DataService-createDataModel-nav"><a href="module-lib_services_DataService-DataService.html#createDataModel">createDataModel</a></li><li data-type="method" id="DataService-createDataModelListeners-nav"><a href="module-lib_services_DataService-DataService.html#createDataModelListeners">createDataModelListeners</a></li><li data-type="method" id="DataService-getControlUnit-nav"><a href="module-lib_services_DataService-DataService.html#getControlUnit">getControlUnit</a></li><li data-type="method" id="DataService-getUnits-nav"><a href="module-lib_services_DataService-DataService.html#getUnits">getUnits</a></li><li data-type="method" id="DataService-initialise-nav"><a href="module-lib_services_DataService-DataService.html#initialise">initialise</a></li><li data-type="method" id="DataService-persistUnits-nav"><a href="module-lib_services_DataService-DataService.html#persistUnits">persistUnits</a></li><li data-type="method" id="DataService-postProcess-nav"><a href="module-lib_services_DataService-DataService.html#postProcess">postProcess</a></li><li data-type="method" id="DataService-preProcess-nav"><a href="module-lib_services_DataService-DataService.html#preProcess">preProcess</a></li><li data-type="method" id="DataService-unlisten-nav"><a href="module-lib_services_DataService-DataService.html#unlisten">unlisten</a></li><li data-type="method" id="DataService-updateState-nav"><a href="module-lib_services_DataService-DataService.html#updateState">updateState</a></li><li data-type="method" id="DataService-upsertNodeDataArr-nav"><a href="module-lib_services_DataService-DataService.html#upsertNodeDataArr">upsertNodeDataArr</a></li><li data-type="method" id="DataService-validatePersisted-nav"><a href="module-lib_services_DataService-DataService.html#validatePersisted">validatePersisted</a></li></ul></li><li id="EndpointService-nav"><a href="module-lib_services_EndpointService-EndpointService.html">EndpointService</a><ul class='methods'><li data-type="method" id="EndpointService-checkForEndpoint-nav"><a href="module-lib_services_EndpointService-EndpointService.html#checkForEndpoint">checkForEndpoint</a></li><li data-type="method" id="EndpointService-componentStop-nav"><a href="module-lib_services_EndpointService-EndpointService.html#componentStop">componentStop</a></li><li data-type="method" id="EndpointService-start-nav"><a href="module-lib_services_EndpointService-EndpointService.html#start">start</a></li></ul></li><li id="EventService-nav"><a href="module-lib_services_PacketService-EventService.html">EventService</a><ul class='methods'><li data-type="method" id="EventService-handleEvent-nav"><a href="module-lib_services_PacketService-EventService.html#handleEvent">handleEvent</a></li></ul></li><li id="PacketService-nav"><a href="module-lib_services_PacketService-PacketService.html">PacketService</a></li><li id="QueueService-nav"><a href="module-lib_services_QueueService-QueueService.html">QueueService</a><ul class='methods'><li data-type="method" id="QueueService-addToQueue-nav"><a href="module-lib_services_QueueService-QueueService.html#addToQueue">addToQueue</a></li><li data-type="method" id="QueueService-processIncoming-nav"><a href="module-lib_services_QueueService-QueueService.html#processIncoming">processIncoming</a></li><li data-type="method" id="QueueService-validatePacket-nav"><a href="module-lib_services_QueueService-QueueService.html#validatePacket">validatePacket</a></li></ul></li><li id="SecurityService-nav"><a href="module-lib_services_SecurityService-SecurityService.html">SecurityService</a><ul class='methods'><li data-type="method" id="SecurityService-checkStartUpUsers-nav"><a href="module-lib_services_SecurityService-SecurityService.html#checkStartUpUsers">checkStartUpUsers</a></li><li data-type="method" id="SecurityService-listUsers-nav"><a href="module-lib_services_SecurityService-SecurityService.html#listUsers">listUsers</a></li><li data-type="method" id="SecurityService-setStartupUsers-nav"><a href="module-lib_services_SecurityService-SecurityService.html#setStartupUsers">setStartupUsers</a></li><li data-type="method" id="SecurityService-start-nav"><a href="module-lib_services_SecurityService-SecurityService.html#start">start</a></li><li data-type="method" id="SecurityService-upsertUiUser-nav"><a href="module-lib_services_SecurityService-SecurityService.html#upsertUiUser">upsertUiUser</a></li></ul></li><li id="SystemService-nav"><a href="module-lib_services_SystemServices-SystemService.html">SystemService</a><ul class='methods'><li data-type="method" id="SystemService-checkConfiguration-nav"><a href="module-lib_services_SystemServices-SystemService.html#checkConfiguration">checkConfiguration</a></li><li data-type="method" id="SystemService-deleteConfig-nav"><a href="module-lib_services_SystemServices-SystemService.html#deleteConfig">deleteConfig</a></li><li data-type="method" id="SystemService-getConfigData-nav"><a href="module-lib_services_SystemServices-SystemService.html#getConfigData">getConfigData</a></li><li data-type="method" id="SystemService-resetRouterData-nav"><a href="module-lib_services_SystemServices-SystemService.html#resetRouterData">resetRouterData</a></li><li data-type="method" id="SystemService-resetUsers-nav"><a href="module-lib_services_SystemServices-SystemService.html#resetUsers">resetUsers</a></li><li data-type="method" id="SystemService-setConfigData-nav"><a href="module-lib_services_SystemServices-SystemService.html#setConfigData">setConfigData</a></li><li data-type="method" id="SystemService-upsertHistory-nav"><a href="module-lib_services_SystemServices-SystemService.html#upsertHistory">upsertHistory</a></li></ul></li><li id="BlastModel-nav"><a href="module-models_BlastModel-BlastModel.html">BlastModel</a><ul class='methods'><li data-type="method" id="BlastModel-addLog-nav"><a href="module-models_BlastModel-BlastModel.html#addLog">addLog</a></li><li data-type="method" id="BlastModel-aggregateUnits-nav"><a href="module-models_BlastModel-BlastModel.html#aggregateUnits">aggregateUnits</a></li><li data-type="method" id="BlastModel-createSnapshot-nav"><a href="module-models_BlastModel-BlastModel.html#createSnapshot">createSnapshot</a></li><li data-type="method" id="BlastModel-extractWatchLists-nav"><a href="module-models_BlastModel-BlastModel.html#extractWatchLists">extractWatchLists</a></li><li data-type="method" id="BlastModel-setState-nav"><a href="module-models_BlastModel-BlastModel.html#setState">setState</a></li><li data-type="method" id="BlastModel-setTotalTimer-nav"><a href="module-models_BlastModel-BlastModel.html#setTotalTimer">setTotalTimer</a></li><li data-type="method" id="BlastModel-validate-nav"><a href="module-models_BlastModel-BlastModel.html#validate">validate</a></li></ul></li><li id="DataModel-nav"><a href="module-models_DataModel-DataModel.html">DataModel</a><ul class='methods'><li data-type="method" id="DataModel-applyUpdate-nav"><a href="module-models_DataModel-DataModel.html#applyUpdate">applyUpdate</a></li><li data-type="method" id="DataModel-getUnit-nav"><a href="module-models_DataModel-DataModel.html#getUnit">getUnit</a></li><li data-type="method" id="DataModel-insertUnit-nav"><a href="module-models_DataModel-DataModel.html#insertUnit">insertUnit</a></li><li data-type="method" id="DataModel-resetChildCount-nav"><a href="module-models_DataModel-DataModel.html#resetChildCount">resetChildCount</a></li><li data-type="method" id="DataModel-snapShot-nav"><a href="module-models_DataModel-DataModel.html#snapShot">snapShot</a></li><li data-type="method" id="DataModel-updateBoosterConnections-nav"><a href="module-models_DataModel-DataModel.html#updateBoosterConnections">updateBoosterConnections</a></li><li data-type="method" id="DataModel-updateBoosterCounts-nav"><a href="module-models_DataModel-DataModel.html#updateBoosterCounts">updateBoosterCounts</a></li><li data-type="method" id="DataModel-updateEddCounts-nav"><a href="module-models_DataModel-DataModel.html#updateEddCounts">updateEddCounts</a></li><li data-type="method" id="DataModel-updateUnit-nav"><a href="module-models_DataModel-DataModel.html#updateUnit">updateUnit</a></li><li data-type="method" id="DataModel-updateUnitState-nav"><a href="module-models_DataModel-DataModel.html#updateUnitState">updateUnitState</a></li><li data-type="method" id="DataModel-upsertUnit-nav"><a href="module-models_DataModel-DataModel.html#upsertUnit">upsertUnit</a></li></ul></li><li id="Extractors-nav"><a href="module-models_Extractors-Extractors.html">Extractors</a><ul class='methods'><li data-type="method" id="Extractors-convertRaw-nav"><a href="module-models_Extractors-Extractors.html#convertRaw">convertRaw</a></li><li data-type="method" id="Extractors-extractCbbRawData-nav"><a href="module-models_Extractors-Extractors.html#extractCbbRawData">extractCbbRawData</a></li><li data-type="method" id="Extractors-extractCFC-nav"><a href="module-models_Extractors-Extractors.html#extractCFC">extractCFC</a></li><li data-type="method" id="Extractors-extractControlUnit-nav"><a href="module-models_Extractors-Extractors.html#extractControlUnit">extractControlUnit</a></li><li data-type="method" id="Extractors-extractEDDListData-nav"><a href="module-models_Extractors-Extractors.html#extractEDDListData">extractEDDListData</a></li><li data-type="method" id="Extractors-extractEddRawData-nav"><a href="module-models_Extractors-Extractors.html#extractEddRawData">extractEddRawData</a></li><li data-type="method" id="Extractors-extractIBS-nav"><a href="module-models_Extractors-Extractors.html#extractIBS">extractIBS</a></li><li data-type="method" id="Extractors-extractWifi-nav"><a href="module-models_Extractors-Extractors.html#extractWifi">extractWifi</a></li><li data-type="method" id="Extractors-reverseSerialBytes-nav"><a href="module-models_Extractors-Extractors.html#reverseSerialBytes">reverseSerialBytes</a></li></ul></li><li id="uiService-nav"><a href="uiService.html">uiService</a><ul class='methods'><li data-type="method" id="uiService-delete-nav"><a href="uiService.html#delete">delete</a></li><li data-type="method" id="uiService-get-nav"><a href="uiService.html#get">get</a></li><li data-type="method" id="uiService-getAxxisDash-nav"><a href="uiService.html#getAxxisDash">getAxxisDash</a></li><li data-type="method" id="uiService-set-nav"><a href="uiService.html#set">set</a></li><li data-type="method" id="uiService-setAxxisDash-nav"><a href="uiService.html#setAxxisDash">setAxxisDash</a></li></ul></li><li id="UnitModel-nav"><a href="UnitModel.html">UnitModel</a></li></ul><h3>Modules</h3><ul><li id="App-nav"><a href="module-App.html">App</a></li><li id="lib_mappers/DataMapper-nav"><a href="module-lib_mappers_DataMapper.html">lib/mappers/DataMapper</a></li><li id="lib_services/BlastService-nav"><a href="module-lib_services_BlastService.html">lib/services/BlastService</a></li><li id="lib_services/DataService-nav"><a href="module-lib_services_DataService.html">lib/services/DataService</a></li><li id="lib_services/EndpointService-nav"><a href="module-lib_services_EndpointService.html">lib/services/EndpointService</a></li><li id="lib_services/PacketService-nav"><a href="module-lib_services_PacketService.html">lib/services/PacketService</a></li><li id="lib_services/QueueService-nav"><a href="module-lib_services_QueueService.html">lib/services/QueueService</a></li><li id="lib_services/SecurityService-nav"><a href="module-lib_services_SecurityService.html">lib/services/SecurityService</a></li><li id="lib_services/SystemServices-nav"><a href="module-lib_services_SystemServices.html">lib/services/SystemServices</a></li><li id="models_BlastModel-nav"><a href="module-models_BlastModel.html">models/BlastModel</a></li><li id="models_DataModel-nav"><a href="module-models_DataModel.html">models/DataModel</a></li><li id="models_Extractors-nav"><a href="module-models_Extractors.html">models/Extractors</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        DataService
+      </h1>
+    
+
+    
 
 <section>
-
-<header>
+  <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-lib_services_dataService.html">lib/services/dataService</a>~</span>DataService<span class="signature">()</span><span class="type-signature"></span></h2>
+      <h2>
         
-    
-</header>
+          <span class="ancestors"><a href="module-lib_services_DataService.html">lib/services/DataService</a>~</span>
+        
+        DataService
+        
+      </h2>
 
-<article>
+      
+    
+  </header>
+
+  <article>
     <div class="container-overview">
-    
+      
         
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
 
 
-    
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#DataService">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="DataService">
-        
-        <span class="code-name">
-            
-                new DataService<span class="signature">()</span><span class="type-signature"></span>
-            
-        </span>
+      <span class="type-signature"></span>new DataService<span class="signature">()</span><span class="type-signature"></span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
 
 
 
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
@@ -124,122 +143,146 @@
 
 
 
-    <h5 class="subsection-title">Properties:</h5>
+  <h5 class="subsection-title">Properties:</h5>
 
-    
+  
 
 <table class="props">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
-        
-<tr class="deep-level-0">
-    
+
+    <tr>
+      
         <td class="name"><code>this.dataModel</code></td>
-    
+      
 
-    <td class="type">
-    
+      <td class="type">
         
-<span class="param-type">DataModel</span>
-
-
-    
-    </td>
-
-    
+          
+    <span class="param-type">
+      DataModel
+    </span>
 
     
 
-    <td class="description last"><p>The Core State DataModel</p></td>
-</tr>
 
-    
         
-<tr class="deep-level-0">
-    
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The Core State DataModel</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
         <td class="name"><code>this.__constants</code></td>
-    
+      
 
-    <td class="type">
-    
+      <td class="type">
         
-<span class="param-type">object</span>
-
-
-    
-    </td>
-
-    
+          
+    <span class="param-type">
+      object
+    </span>
 
     
 
-    <td class="description last"><p>Constants</p></td>
-</tr>
 
-    
         
-<tr class="deep-level-0">
-    
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Constants</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
         <td class="name"><code>this.dataMapper</code></td>
-    
+      
 
-    <td class="type">
-    
+      <td class="type">
         
-<span class="param-type">DataMapper</span>
-
-
-    
-    </td>
-
-    
+          
+    <span class="param-type">
+      DataMapper
+    </span>
 
     
 
-    <td class="description last"><p>The Diff mapper</p></td>
-</tr>
 
-    
         
-<tr class="deep-level-0">
-    
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The Diff mapper</p>
+          </td>
+    </tr>
+
+  
+
+    <tr>
+      
         <td class="name"><code>this._eventRefs</code></td>
-    
+      
 
-    <td class="type">
-    
+      <td class="type">
         
-<span class="param-type">array</span>
-
-
-    
-    </td>
-
-    
+          
+    <span class="param-type">
+      array
+    </span>
 
     
 
-    <td class="description last"><p>List of event refs required for removal on stop</p></td>
-</tr>
 
-    
-    </tbody>
+        
+      </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>List of event refs required for removal on stop</p>
+          </td>
+    </tr>
+
+  
+  </tbody>
 </table>
 
 
@@ -247,43 +290,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line19">line 19</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line20">line 20</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -299,21 +345,8 @@
 
 
 
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
+      
     </div>
-    
-    
 
     
 
@@ -321,38 +354,40 @@
 
     
 
-    
+     
 
     
 
     
 
     
-        <div class='vertical-section'>
-            <h3 class="title"><span>Methods</span></h3>
-            <div class="members">
-            
-                <div class="member">
+      <h3 class="subsection-title">Methods</h3>
+
+      
+        
 
 
-    
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#clearDataModel">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="clearDataModel">
-        
-        <span class="code-name">
-            
-                clearDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>clearDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Clears the DataModel by creating a new DataModel instance.</li>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Clears the DataModel by creating a new DataModel instance.</li>
 <li>Utiliity method for now</li></ul>
-    </div>
-    
+  </div>
 
 
 
@@ -360,56 +395,58 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -418,43 +455,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line220">line 220</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line262">line 262</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -470,409 +510,35 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="componentStart">
-        
-        <span class="code-name">
-            
-                componentStart<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
-<li>Start the component when Happner starts.</li>
-<li>Creates a new DataModel and Emit Queue.</li>
-<li>Starts the listners for the Data Model</li></ul><br>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line43">line 43</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="componentStop">
-        
-        <span class="code-name">
-            
-                componentStop<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
-<li>Stops the component when Happner stops.</li>
-<li>Stops the listners.</li>
-<li>Starts the listners for the Data Model</li></ul><br>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
         
 
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
 
   
 
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line64">line 64</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>void</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#createDataModel">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="createDataModel">
-        
-        <span class="code-name">
-            
-                createDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>createDataModel<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Create and populate the DataModel on startup of this Service.</li>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Create and populate the DataModel on startup of this Service.</li>
 <li>Gets the persisted units from the datastore</li><div class="mermaid">graph LR
-A[New DataModel]-->B[createListeners]
-B-.->C[getAllPersisted]
-C-->D[validateUnits]
-D-->|populate units|A</div>
-    </div>
-    
+		A[New DataModel]-->B[createListeners]
+		B-.->C[getAllPersisted]
+		C-->D[validateUnits]
+		D-->|populate units|A</div>
+  </div>
 
 
 
@@ -880,56 +546,58 @@ D-->|populate units|A</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -938,43 +606,46 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line65">line 65</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line106">line 106</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -990,59 +661,31 @@ D-->|populate units|A</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#createDataModelListeners">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="createDataModelListeners">
-        
-        <span class="code-name">
-            
-                createDataModelListeners<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>createDataModelListeners<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Starts the listners for the Data Model.</li>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Starts the listners for the Data Model.</li>
 <li>Broker the events from the DataModel to the rest of the system.</li></ul><br>
-    </div>
-    
+  </div>
 
 
 
@@ -1050,56 +693,58 @@ D-->|populate units|A</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1108,193 +753,165 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line102">line 102</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line144">line 144</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
 
 
 
-    <div class="method-parameter columns">
-        <div class="column is-2"><label>Fires:</label></div>
-        <div class="column is-10">
-            <ul>
-                <li><a href="module-lib_services_dataService-DataService.html#event:UNIT_COUNT">module:lib/services/dataService~DataService#event:UNIT_COUNT</a></li>
-            </ul>
-        </div>
-    </div>
 
 
-
-
-    <div class="method-parameter columns">
-        <div class="column is-2"><label>Listens to Events:</label></div>
-        <div class="column is-10">
-            <ul>
-                <li>DataModel#event:UNIT_COUNT - Brokers emits and hands to Happn Emit</li>
-            
-                <li>DataModel#event:UNIT_COMMS_LOST - Handles the timer for Comms lost on timed units</li>
-            
-                <li>DataModel#event:error Handles the error logging inside the data model to the Happn Logger</li>
-            </ul>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
+  <h5>Listens to Events:</h5>
+  <ul>
     
-    <div class='param-desc column is-7'><p>void</p></div>
+      <li>
+        DataModel#event:UNIT_COUNT - Brokers emits and hands to Happn Emit
+      </li>
     
+      <li>
+        DataModel#event:UNIT_COMMS_LOST - Handles the timer for Comms lost on timed units
+      </li>
     
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      <li>
+        DataModel#event:error Handles the error logging inside the data model to the Happn Logger
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#getControlUnit">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="getControlUnit">
-        
-        <span class="code-name">
-            
-                getControlUnit<span class="signature">($happn)</span><span class="type-signature"></span>
-            
-        </span>
+      <span class="type-signature"></span>getControlUnit<span class="signature">($happn)</span><span class="type-signature"></span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Get the control unit</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Get the control unit</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1303,43 +920,46 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line534">line 534</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line576">line 576</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -1355,119 +975,122 @@ D-->|populate units|A</div>
 
 
 
+      
+        
 
 
+  
 
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#getUnits">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="getUnits">
-        
-        <span class="code-name">
-            
-                getUnits<span class="signature">($happn, withChildren)</span><span class="type-signature"></span>
-            
-        </span>
+      <span class="type-signature"></span>getUnits<span class="signature">($happn, withChildren)</span><span class="type-signature"></span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Get the booster units</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Get the booster units</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>withChildren</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Get the units with their children</p></td>
-</tr>
-
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>withChildren</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Get the units with their children</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1476,43 +1099,46 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line557">line 557</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line599">line 599</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -1528,37 +1154,32 @@ D-->|populate units|A</div>
 
 
 
+      
+        
 
 
+  
 
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#initialise">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="initialise">
-        
-        <span class="code-name">
-            
-                initialise<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>initialise<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
-<li>Called by <a href="module-app-App.html#startRouter">module:app~App#startRouter</a>.</li>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
+<li>Called by module:app~App#startRouter.</li>
 <li>Starts the listners for the Data Model</li></ul><br>
-    </div>
-    
+  </div>
 
 
 
@@ -1566,56 +1187,58 @@ D-->|populate units|A</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1624,43 +1247,46 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line40">line 40</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line81">line 81</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -1676,142 +1302,122 @@ D-->|populate units|A</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#persistUnits">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="persistUnits">
-        
-        <span class="code-name">
-            
-                persistUnits<span class="signature">($happn, updates)</span><span class="type-signature"></span>
-            
-        </span>
+      <span class="type-signature"></span>persistUnits<span class="signature">($happn, updates)</span><span class="type-signature"></span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Handle the node update from the CONTEXT.NEWNODES</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Handle the node update from the CONTEXT.NEWNODES</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>updates</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">Array.&lt;units></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>data context which stores context.newnodes</p></td>
-</tr>
-
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>updates</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      Array.&lt;units>
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>data context which stores context.newnodes</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1820,43 +1426,46 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line513">line 513</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line555">line 555</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -1872,37 +1481,32 @@ D-->|populate units|A</div>
 
 
 
-
-
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="postProcess">
+      
         
-        <span class="code-name">
-            
-                postProcess<span class="signature">($happn, updatesArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
-            
-        </span>
-    </h4>
-    
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#postProcess">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="postProcess">
+      <span class="type-signature"></span>postProcess<span class="signature">($happn, updatesArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
 <li>Post Process Actions to update certain states</li>
 <li>.....</li></ul><br>
-    </div>
-    
+  </div>
 
 
 
@@ -1910,81 +1514,87 @@ D-->|populate units|A</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>updatesArr</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">Array.&lt;object></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The incoming node array</p></td>
-</tr>
-
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>updatesArr</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      Array.&lt;object>
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The incoming node array</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1993,43 +1603,46 @@ D-->|populate units|A</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line446">line 446</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line488">line 488</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -2045,67 +1658,37 @@ D-->|populate units|A</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>Action</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;action></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#preProcess">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="preProcess">
-        
-        <span class="code-name">
-            
-                preProcess<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
-            
-        </span>
+      <span class="type-signature"></span>preProcess<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise.&lt;action>}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul>
 <li>Preprocess the nodeArray to see if any action is required before updating</li>
 <li>.....</li></ul><br><div class="mermaid">sequenceDiagram
-updateState->>dataModel: upsertUnit
-dataModel->>updateState: return action
-Note left of updateState: INSERT or UPDATE
-updateState->>__updateExistingNodes: update
-updateState->>__insertNewNodes: insert</div>
-    </div>
-    
+			updateState->>dataModel: upsertUnit
+			dataModel->>updateState: return action
+			Note left of updateState: INSERT or UPDATE
+			updateState->>__updateExistingNodes: update
+			updateState->>__insertNewNodes: insert</div>
+  </div>
 
 
 
@@ -2113,81 +1696,87 @@ updateState->>__insertNewNodes: insert</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nodeArr</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">Array.&lt;object></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The incoming node array</p></td>
-</tr>
-
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>nodeArr</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      Array.&lt;object>
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>The incoming node array</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -2196,43 +1785,46 @@ updateState->>__insertNewNodes: insert</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line402">line 402</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line444">line 444</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -2248,117 +1840,89 @@ updateState->>__insertNewNodes: insert</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>Action</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;action></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#unlisten">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="unlisten">
-        
-        <span class="code-name">
-            
-                unlisten<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>unlisten<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Removes the listners from the Data Model.</li></ul>
-    </div>
-    
+  
 
 
 
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Removes the listners from the Data Model.</li></ul>
+  </div>
 
 
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -2367,43 +1931,46 @@ updateState->>__insertNewNodes: insert</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line140">line 140</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line182">line 182</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -2419,64 +1986,36 @@ updateState->>__insertNewNodes: insert</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#updateState">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="updateState">
-        
-        <span class="code-name">
-            
-                updateState<span class="signature">($happn, nodeArr, force)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>updateState<span class="signature">($happn, nodeArr, force)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Update the state of the checked Array</li>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Update the state of the checked Array</li>
 <li>.....</li></ul><br><div class="mermaid">sequenceDiagram
 updateState->>dataModel: upsertUnit
 dataModel->>updateState: return action
 Note left of updateState: INSERT, UPDATE or NONE
 updateState->>__updateExistingNodes: update
 updateState->>__insertNewNodes: insert</div>
-    </div>
-    
+  </div>
 
 
 
@@ -2484,106 +2023,116 @@ updateState->>__insertNewNodes: insert</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nodeArr</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">Array.&lt;object></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The incoming node array</p></td>
-</tr>
-
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
 
     
+      <tr>
+        
+          <td class="name"><code>nodeArr</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      Array.&lt;object>
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>force</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
+        
 
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>force update flag</p></td>
-</tr>
-
+        <td class="description last">
+          <p>The incoming node array</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>force</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>force update flag</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -2592,43 +2141,46 @@ updateState->>__insertNewNodes: insert</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line310">line 310</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line352">line 352</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -2644,56 +2196,29 @@ updateState->>__insertNewNodes: insert</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#upsertNodeDataArr">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="upsertNodeDataArr">
-        
-        <span class="code-name">
-            
-                upsertNodeDataArr<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature"></span>upsertNodeDataArr<span class="signature">($happn, nodeArr)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Primary Pathway for the Node Array</li>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Primary Pathway for the Node Array</li>
 <li>Handles upserting and flow</li></ul><br><div class="mermaid">graph LR
 A[nodeArr]-.->|from queue|B[upsertNodeDataArr]
 B-->|check conditions|C{PreProcess}
@@ -2702,8 +2227,7 @@ resetChildCount-->|EDD_CLEARSIG|updateState
 C-->|FILTERED|updateState
 C-->|CLEAR|updateState
 updateState-->postProcess</div>
-    </div>
-    
+  </div>
 
 
 
@@ -2711,822 +2235,135 @@ updateState-->postProcess</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
-
+      <tr>
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
-
+          <td class="name"><code>$happn</code></td>
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nodeArr</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">Array.&lt;object></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The incoming node array</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line284">line 284</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
+        <td class="type">
+          
             
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="validatePersisted">
-        
-        <span class="code-name">
-            
-                validatePersisted<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;units>>|Promise.&lt;null>}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Validate the persisted Units and return to the create method</li></ul>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>$happn</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="global.html#$happn">$happn</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Dependancy Injection of the Happner Framework</p></td>
-</tr>
-
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line201">line 201</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>result Array or null</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise.&lt;Array.&lt;units>></span>
-|
-
-<span class="param-type">Promise.&lt;null></span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-        <div class='vertical-section'>
-            <h3 class="title"><span>Type Definitions</span></h3>
-            <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">object</span>
-
-
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
     </span>
 
-<h4 class="name" id=".action">
     
-    <span class="code-name">
-        action
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+      <tr>
+        
+          <td class="name"><code>nodeArr</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      Array.&lt;object>
     </span>
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-</div>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
 
     
 
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
 
-        <th>Type</th>
+          
+        </td>
 
         
 
         
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-        
-<tr class="deep-level-0">
-    
-        <td class="name"><code>action.type</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">string</span>
-
+        <td class="description last">
+          <p>The incoming node array</p>
+          
+        </td>
+      </tr>
 
     
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>Type of action</p></td>
-</tr>
-
-    
-        
-<tr class="deep-level-0">
-    
-        <td class="name"><code>action.value</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">object</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>Value of action</p></td>
-</tr>
-
-    
-    </tbody>
+  </tbody>
 </table>
+
 
 
 
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line652">line 652</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>{ type: "FILTERED", value: result }</code></pre>
-    
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-        <div class='vertical-section'>
-            <h3 class="title"><span>Events</span></h3>
-            <div class="members">
-            
-                <div class="member">
-                    
-
-    <p class="method-parameter is-pulled-right">
-        <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </p>
-
-
-    
-    <h4 class="name" id=".event:EDDSIG">
-        
-        <span class="code-name">
-            
-                EDDSIG
-            
-        </span>
-    </h4>
-    
-
-    
-    <p class="summary"><p>Fires the Clear signal for a booster</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-        
-<tr class="deep-level-0">
-    
-        <td class="name"><code>parent.data.path</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">string</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>the path of the unit the EDDSIG is from</p></td>
-</tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line643">line 643</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-            
-                <div class="member">
-                    
-
-    <p class="method-parameter is-pulled-right">
-        <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </p>
-
-
-    
-    <h4 class="name" id="event:UNIT_COUNT">
-        
-        <span class="code-name">
-            
-                UNIT_COUNT
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-        
-<tr class="deep-level-0">
-    
-        <td class="name"><code>Value</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">object</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>to deine</p></td>
-</tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Document this object correctly</li>
-        </ul>
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line242">line 242</a>
+        </li>
+      </ul>
     </dd>
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_services_data_service.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line635">line 635</a>
-            </span>
-        </p>
-    
+  
+
+  
+
+  
 </dl>
 
 
@@ -3542,6 +2379,30 @@ updateState-->postProcess</div>
 
 
 
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#validatePersisted">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="validatePersisted">
+      <span class="type-signature"></span>validatePersisted<span class="signature">($happn)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;units>>|Promise.&lt;null>}</span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><ul><li>Validate the persisted Units and return to the create method</li></ul>
+  </div>
 
 
 
@@ -3549,35 +2410,145 @@ updateState-->postProcess</div>
 
 
 
+  <h5>Parameters:</h5>
+  
 
-                </div>
-            
-            </div>
-        </div>
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
     
-</article>
+      <tr>
+        
+          <td class="name"><code>$happn</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      <a href="global.html#$happn">$happn</a>
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>Dependancy Injection of the Happner Framework</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_services_data_service.js.html">lib/services/data_service.js</a>, <a href="lib_services_data_service.js.html#line159">line 159</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    
+
+    
+
+    
+  </article>
 </section>
 
 
 
 
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Nov 05 2019 12:04:51 GMT+0200 (South Africa Standard Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
-    </div>
-</footer>
+  <br class="clear">
 
-<script src="scripts/app.min.js"></script>
-<script src="scripts/linenumber.js"> </script>
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
 </body>
 </html>

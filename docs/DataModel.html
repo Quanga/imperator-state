@@ -1,120 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <meta charset="utf-8">
-    <title>JSDoc: DataModel</title>
 
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      DataModel - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+  <link type="text/css" rel="stylesheet" href="styles/collapse.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
 </head>
 
 <body>
-    <div id="stickyNavbarOverlay"></div>
-    <div class="top-navbar">
-        <div class="container">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    
-                     
-                        <h1 class="navbar-item">State Management Server</h1>
-                    
-                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-                 
-                <div class="navbar-menu">
-                    <div class="navbar-end">
-                    
-                        <div class="navbar-item">
-                            <a href="https://github.com/SoftwareBrothers/admin-bro" target="_blank">Github</a>
-                        </div>
-                    
-                        <div class="navbar-item">
-                            <a href="https://admin-bro-example-app.herokuapp.com/admin" target="_blank">Example Application</a>
-                        </div>
-                    
-                    </div>
-                </div>
-                
-            </nav>
-        </div>
-    </div>
-    <div class="container">
-        <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
-                    <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul></div><div class="category"><h2>Models</h2><h3>Classes</h3><ul><li><a href="BlastModel.html">BlastModel</a></li><li><a href="ControlUnitModel.html">ControlUnitModel</a></li><li><a href="DataModel.html">DataModel</a></li><li><a href="UnitModel.html">UnitModel</a></li></ul></div><div class="category"><h2>Repositories</h2><h3>Classes</h3><ul><li><a href="BlastRepository.html">BlastRepository</a></li></ul></div><div class="category"><h2>Services</h2><h3>Classes</h3><ul><li><a href="BlastService.html">BlastService</a></li><li><a href="DataService.html">DataService</a></li><li><a href="QueueService.html">QueueService</a></li><li><a href="SecurityService.html">SecurityService</a></li><li><a href="SystemService.html">SystemService</a></li><li><a href="uiService.html">uiService</a></li></ul><h3>Events</h3><ul><li><a href="BlastModel.html#event:state">state</a></li><li><a href="DataService.html#event:EDDSIG">EDDSIG</a></li><li><a href="global.html#event:DataService">DataService</a></li></ul></div><div class="category"><h2>System</h2><h3>Modules</h3><ul><li><a href="module-app.html">app</a></li></ul><h3>Classes</h3><ul><li><a href="module-app-App.html">App</a></li></ul></div><div class="category"><h2>Utilities</h2><h3>Classes</h3><ul><li><a href="DataMapper.html">DataMapper</a></li></ul></div>
-                    </nav>
-                </div>
-            </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Class</p>
-                        <h1>DataModel</h1>
-                    </header>
-                    
-                    
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
 
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
 
+  <label for="nav-trigger" class="overlay"></label>
 
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      My SDK Name
+    </h3>
+
+    
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="https://www.google.com/">google</a>
+      
+    
+
+    <h3>Classes</h3><ul><li id="BlastRepository-nav"><a href="BlastRepository.html">BlastRepository</a><ul class='methods'><li data-type="method" id="BlastRepository-set-nav"><a href="BlastRepository.html#set">set</a></li></ul></li><li id="BlastService-nav"><a href="BlastService.html">BlastService</a><ul class='methods'><li data-type="method" id="BlastService-closeBlast-nav"><a href="BlastService.html#closeBlast">closeBlast</a></li><li data-type="method" id="BlastService-createNewBlast-nav"><a href="BlastService.html#createNewBlast">createNewBlast</a></li><li data-type="method" id="BlastService-deleteBlast-nav"><a href="BlastService.html#deleteBlast">deleteBlast</a></li><li data-type="method" id="BlastService-logEvent-nav"><a href="BlastService.html#logEvent">logEvent</a></li><li data-type="method" id="BlastService-pdfBlast-nav"><a href="BlastService.html#pdfBlast">pdfBlast</a></li><li data-type="method" id="BlastService-subscribeToBlastEvents-nav"><a href="BlastService.html#subscribeToBlastEvents">subscribeToBlastEvents</a></li><li data-type="method" id="BlastService-updateBlast-nav"><a href="BlastService.html#updateBlast">updateBlast</a></li></ul></li><li id="ControlUnitModel-nav"><a href="ControlUnitModel.html">ControlUnitModel</a></li><li id="DataModel-nav"><a href="DataModel.html">DataModel</a><ul class='methods'><li data-type="method" id="DataModel-applyUpdate-nav"><a href="DataModel.html#applyUpdate">applyUpdate</a></li><li data-type="method" id="DataModel-getUnit-nav"><a href="DataModel.html#getUnit">getUnit</a></li><li data-type="method" id="DataModel-insertUnit-nav"><a href="DataModel.html#insertUnit">insertUnit</a></li><li data-type="method" id="DataModel-resetChildCount-nav"><a href="DataModel.html#resetChildCount">resetChildCount</a></li><li data-type="method" id="DataModel-snapShot-nav"><a href="DataModel.html#snapShot">snapShot</a></li><li data-type="method" id="DataModel-updateBoosterConnections-nav"><a href="DataModel.html#updateBoosterConnections">updateBoosterConnections</a></li><li data-type="method" id="DataModel-updateBoosterCounts-nav"><a href="DataModel.html#updateBoosterCounts">updateBoosterCounts</a></li><li data-type="method" id="DataModel-updateEddCounts-nav"><a href="DataModel.html#updateEddCounts">updateEddCounts</a></li><li data-type="method" id="DataModel-updateUnit-nav"><a href="DataModel.html#updateUnit">updateUnit</a></li><li data-type="method" id="DataModel-updateUnitState-nav"><a href="DataModel.html#updateUnitState">updateUnitState</a></li><li data-type="method" id="DataModel-upsertUnit-nav"><a href="DataModel.html#upsertUnit">upsertUnit</a></li></ul></li><li id="EndpointService-nav"><a href="EndpointService.html">EndpointService</a><ul class='methods'><li data-type="method" id="EndpointService-checkForEndpoint-nav"><a href="EndpointService.html#checkForEndpoint">checkForEndpoint</a></li><li data-type="method" id="EndpointService-componentStop-nav"><a href="EndpointService.html#componentStop">componentStop</a></li><li data-type="method" id="EndpointService-start-nav"><a href="EndpointService.html#start">start</a></li></ul></li><li id="App-nav"><a href="module-App-App.html">App</a><ul class='methods'><li data-type="method" id="App-componentStart-nav"><a href="module-App-App.html#componentStart">componentStart</a></li><li data-type="method" id="App-componentStop-nav"><a href="module-App-App.html#componentStop">componentStop</a></li><li data-type="method" id="App-startRouter-nav"><a href="module-App-App.html#startRouter">startRouter</a></li></ul></li><li id="DataService-nav"><a href="module-lib_DataService-DataService.html">DataService</a><ul class='methods'><li data-type="method" id="DataService-clearDataModel-nav"><a href="module-lib_DataService-DataService.html#clearDataModel">clearDataModel</a></li><li data-type="method" id="DataService-createDataModel-nav"><a href="module-lib_DataService-DataService.html#createDataModel">createDataModel</a></li><li data-type="method" id="DataService-createDataModelListeners-nav"><a href="module-lib_DataService-DataService.html#createDataModelListeners">createDataModelListeners</a></li><li data-type="method" id="DataService-getControlUnit-nav"><a href="module-lib_DataService-DataService.html#getControlUnit">getControlUnit</a></li><li data-type="method" id="DataService-getUnits-nav"><a href="module-lib_DataService-DataService.html#getUnits">getUnits</a></li><li data-type="method" id="DataService-initialise-nav"><a href="module-lib_DataService-DataService.html#initialise">initialise</a></li><li data-type="method" id="DataService-persistUnits-nav"><a href="module-lib_DataService-DataService.html#persistUnits">persistUnits</a></li><li data-type="method" id="DataService-postProcess-nav"><a href="module-lib_DataService-DataService.html#postProcess">postProcess</a></li><li data-type="method" id="DataService-preProcess-nav"><a href="module-lib_DataService-DataService.html#preProcess">preProcess</a></li><li data-type="method" id="DataService-unlisten-nav"><a href="module-lib_DataService-DataService.html#unlisten">unlisten</a></li><li data-type="method" id="DataService-updateState-nav"><a href="module-lib_DataService-DataService.html#updateState">updateState</a></li><li data-type="method" id="DataService-upsertNodeDataArr-nav"><a href="module-lib_DataService-DataService.html#upsertNodeDataArr">upsertNodeDataArr</a></li><li data-type="method" id="DataService-validatePersisted-nav"><a href="module-lib_DataService-DataService.html#validatePersisted">validatePersisted</a></li></ul></li><li id="DataMapper-nav"><a href="module-mappers_DataMapper-DataMapper.html">DataMapper</a><ul class='methods'><li data-type="method" id="DataMapper-getUpdates-nav"><a href="module-mappers_DataMapper-DataMapper.html#getUpdates">getUpdates</a></li><li data-type="method" id="DataMapper-mapProps-nav"><a href="module-mappers_DataMapper-DataMapper.html#mapProps">mapProps</a></li><li data-type="method" id="DataMapper-mapToUnits-nav"><a href="module-mappers_DataMapper-DataMapper.html#mapToUnits">mapToUnits</a></li></ul></li><li id="BlastModel-nav"><a href="module-models_BlastModel-BlastModel.html">BlastModel</a><ul class='methods'><li data-type="method" id="BlastModel-addLog-nav"><a href="module-models_BlastModel-BlastModel.html#addLog">addLog</a></li><li data-type="method" id="BlastModel-aggregateUnits-nav"><a href="module-models_BlastModel-BlastModel.html#aggregateUnits">aggregateUnits</a></li><li data-type="method" id="BlastModel-createSnapshot-nav"><a href="module-models_BlastModel-BlastModel.html#createSnapshot">createSnapshot</a></li><li data-type="method" id="BlastModel-extractWatchLists-nav"><a href="module-models_BlastModel-BlastModel.html#extractWatchLists">extractWatchLists</a></li><li data-type="method" id="BlastModel-setState-nav"><a href="module-models_BlastModel-BlastModel.html#setState">setState</a></li><li data-type="method" id="BlastModel-setTotalTimer-nav"><a href="module-models_BlastModel-BlastModel.html#setTotalTimer">setTotalTimer</a></li><li data-type="method" id="BlastModel-validate-nav"><a href="module-models_BlastModel-BlastModel.html#validate">validate</a></li></ul></li><li id="SecurityService-nav"><a href="module-SecurityService-SecurityService.html">SecurityService</a><ul class='methods'><li data-type="method" id="SecurityService-checkStartUpUsers-nav"><a href="module-SecurityService-SecurityService.html#checkStartUpUsers">checkStartUpUsers</a></li><li data-type="method" id="SecurityService-listUsers-nav"><a href="module-SecurityService-SecurityService.html#listUsers">listUsers</a></li><li data-type="method" id="SecurityService-setStartupUsers-nav"><a href="module-SecurityService-SecurityService.html#setStartupUsers">setStartupUsers</a></li><li data-type="method" id="SecurityService-start-nav"><a href="module-SecurityService-SecurityService.html#start">start</a></li><li data-type="method" id="SecurityService-upsertUiUser-nav"><a href="module-SecurityService-SecurityService.html#upsertUiUser">upsertUiUser</a></li></ul></li><li id="QueueService-nav"><a href="QueueService.html">QueueService</a><ul class='methods'><li data-type="method" id="QueueService-addToQueue-nav"><a href="QueueService.html#addToQueue">addToQueue</a></li><li data-type="method" id="QueueService-processIncoming-nav"><a href="QueueService.html#processIncoming">processIncoming</a></li><li data-type="method" id="QueueService-validatePacket-nav"><a href="QueueService.html#validatePacket">validatePacket</a></li></ul></li><li id="SystemService-nav"><a href="SystemService.html">SystemService</a><ul class='methods'><li data-type="method" id="SystemService-checkConfiguration-nav"><a href="SystemService.html#checkConfiguration">checkConfiguration</a></li><li data-type="method" id="SystemService-deleteConfig-nav"><a href="SystemService.html#deleteConfig">deleteConfig</a></li><li data-type="method" id="SystemService-getConfigData-nav"><a href="SystemService.html#getConfigData">getConfigData</a></li><li data-type="method" id="SystemService-resetRouterData-nav"><a href="SystemService.html#resetRouterData">resetRouterData</a></li><li data-type="method" id="SystemService-resetUsers-nav"><a href="SystemService.html#resetUsers">resetUsers</a></li><li data-type="method" id="SystemService-setConfigData-nav"><a href="SystemService.html#setConfigData">setConfigData</a></li><li data-type="method" id="SystemService-upsertHistory-nav"><a href="SystemService.html#upsertHistory">upsertHistory</a></li></ul></li><li id="uiService-nav"><a href="uiService.html">uiService</a><ul class='methods'><li data-type="method" id="uiService-delete-nav"><a href="uiService.html#delete">delete</a></li><li data-type="method" id="uiService-get-nav"><a href="uiService.html#get">get</a></li><li data-type="method" id="uiService-getAxxisDash-nav"><a href="uiService.html#getAxxisDash">getAxxisDash</a></li><li data-type="method" id="uiService-set-nav"><a href="uiService.html#set">set</a></li><li data-type="method" id="uiService-setAxxisDash-nav"><a href="uiService.html#setAxxisDash">setAxxisDash</a></li></ul></li><li id="UnitModel-nav"><a href="UnitModel.html">UnitModel</a></li></ul><h3>Modules</h3><ul><li id="App-nav"><a href="module-App.html">App</a></li><li id="lib_DataService-nav"><a href="module-lib_DataService.html">lib/DataService</a></li><li id="mappers_DataMapper-nav"><a href="module-mappers_DataMapper.html">mappers/DataMapper</a></li><li id="models_BlastModel-nav"><a href="module-models_BlastModel.html">models/BlastModel</a></li><li id="SecurityService-nav"><a href="module-SecurityService.html">SecurityService</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#Server">Server</a></li><li><a href="global.html#start">start</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        DataModel
+      </h1>
+    
+
+    
 
 <section>
-
-<header>
+  <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>DataModel<span class="signature">()</span><span class="type-signature"></span></h2>
+      <h2>
         
-    
-</header>
+        DataModel
+        
+      </h2>
 
-<article>
+      
+    
+  </header>
+
+  <article>
     <div class="container-overview">
-    
+      
         
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
 
 
-    
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#DataModel">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="DataModel">
-        
-        <span class="code-name">
-            
-                new DataModel<span class="signature">()</span><span class="type-signature"></span>
-            
-        </span>
+      <span class="type-signature"></span>new DataModel<span class="signature">()</span><span class="type-signature"></span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>The DataModel which represents the state of the Data.</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>The DataModel which represents the state of the Data.</p>
+    </p>
+  
 
 
 
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
@@ -127,43 +149,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line19">line 19</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line19">line 19</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -179,183 +204,180 @@
 
 
 
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
+      
     </div>
-    
-    
-        <h3 class="subsection-title">Extends</h3>
 
+    
+      <h3 class="subsection-title">Extends</h3>
+
+      
+
+
+  <ul>
+    <li>EventEmitter</li>
+  </ul>
+
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+      <h3 class="subsection-title">Methods</h3>
+
+      
         
 
 
-    <ul>
-        <li>EventEmitter</li>
-    </ul>
+  
 
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h3 class="title"><span>Methods</span></h3>
-            <div class="members">
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#applyUpdate">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="applyUpdate">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                applyUpdate<span class="signature">(state, diffs, modifiedAt)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>applyUpdate<span class="signature">(state, diffs, modifiedAt)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Applies the diffs to the State</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Applies the diffs to the State</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>state</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>state</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">unitObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>diffs</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">diffObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the diffs between the current state and previous state</p></td>
-</tr>
-
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
 
     
+      <tr>
+        
+          <td class="name"><code>diffs</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      diffObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>modifiedAt</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
+        
 
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>timestamp on modifiedAt</p></td>
-</tr>
-
+        <td class="description last">
+          <p>the diffs between the current state and previous state</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>modifiedAt</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>timestamp on modifiedAt</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -364,43 +386,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line347">line 347</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line347">line 347</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -416,119 +441,93 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return found unit or null</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;unitObj></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#getUnit">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="getUnit">
-        
-        <span class="code-name">
-            
-                getUnit<span class="signature">(nextState)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
-            
-        </span>
+      <span class="type-signature"></span>getUnit<span class="signature">(nextState)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>getUnit using its state</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>getUnit using its state</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nextState</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type">unitObj</span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>nextState</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -537,43 +536,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line310">line 310</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line310">line 310</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -589,123 +591,93 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return found unit or null</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;unitObj></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#insertUnit">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="insertUnit">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                insertUnit<span class="signature">(unit)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>insertUnit<span class="signature">(unit)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Insert a unit into the model if it is not found</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Insert a unit into the model if it is not found</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>unit</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type">unitObj</span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>unit</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -714,50 +686,57 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line116">line 116</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
+
+  
+
+  
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
-        <ul>
-            <li>Need to work out solution for the main comms issue with the cbb with timeout.</li>
-        </ul>
+      <ul>
+        
+          <li>
+            Need to work out solution for the main comms issue with the cbb with timeout.
+          </li>
+        
+      </ul>
     </dd>
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line116">line 116</a>
-            </span>
-        </p>
-    
+  
 </dl>
 
 
@@ -773,121 +752,93 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#resetChildCount">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="resetChildCount">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                resetChildCount<span class="signature">(nextState)</span><span class="type-signature"> &rarr; {Promise.&lt;units>}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>resetChildCount<span class="signature">(nextState)</span><span class="type-signature"> &rarr; {Promise.&lt;units>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Reset the child counts to 0</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Reset the child counts to 0</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nextState</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type">object</span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>object</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>nextState</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      object
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>object</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -896,50 +847,57 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line502">line 502</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
+
+  
+
+  
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
-        <ul>
-            <li>Check if this should be moved out of the model and into a service</li>
-        </ul>
+      <ul>
+        
+          <li>
+            Check if this should be moved out of the model and into a service
+          </li>
+        
+      </ul>
     </dd>
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line502">line 502</a>
-            </span>
-        </p>
-    
+  
 </dl>
 
 
@@ -955,69 +913,34 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return array of boosters</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;units></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#snapShot">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="snapShot">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                snapShot<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>snapShot<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Take a snapshot of the state</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Take a snapshot of the state</p>
+    </p>
+  
 
 
 
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
@@ -1030,50 +953,57 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line537">line 537</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
+
+  
+
+  
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
-        <ul>
-            <li>Check if this should be moved out of the model and into a service</li>
-        </ul>
+      <ul>
+        
+          <li>
+            Check if this should be moved out of the model and into a service
+          </li>
+        
+      </ul>
     </dd>
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line537">line 537</a>
-            </span>
-        </p>
-    
+  
 </dl>
 
 
@@ -1089,123 +1019,93 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return array of boosters</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;object></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#updateBoosterConnections">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="updateBoosterConnections">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                updateBoosterConnections<span class="signature">(modifiedAt)</span><span class="type-signature"> &rarr; {Promise.&lt;units>}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>updateBoosterConnections<span class="signature">(modifiedAt)</span><span class="type-signature"> &rarr; {Promise.&lt;units>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Update the booster connections</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Update the booster connections</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>modifiedAt</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type">number</span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>modifiedAt</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1214,50 +1114,57 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line437">line 437</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
+
+  
+
+  
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
-        <ul>
-            <li>Check if this should be moved out of the model and into a service</li>
-        </ul>
+      <ul>
+        
+          <li>
+            Check if this should be moved out of the model and into a service
+          </li>
+        
+      </ul>
     </dd>
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line437">line 437</a>
-            </span>
-        </p>
-    
+  
 </dl>
 
 
@@ -1273,123 +1180,93 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return array of boosters</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;units></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#updateBoosterCounts">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="updateBoosterCounts">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                updateBoosterCounts<span class="signature">(diffs)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>updateBoosterCounts<span class="signature">(diffs)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Uppdate the booster counts on the control unit</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Uppdate the booster counts on the control unit</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        
-<tr class="deep-level-0">
-  
-      <td class="name"><code>diffs</code></td>
-  
-
-  <td class="type">
-  
       
-<span class="param-type">diffObj</span>
+        <th>Name</th>
+      
 
+      <th>Type</th>
 
-  
-  </td>
+      
 
-  
+      
 
-  
+      <th class="last">Description</th>
+    </tr>
+  </thead>
 
-  <td class="description last"><p>the diffs between the current state and previous state</p></td>
-</tr>
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>diffs</code></td>
+        
 
+        <td class="type">
+          
+            
+    <span class="param-type">
+      diffObj
+    </span>
 
     
-    </tbody>
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>the diffs between the current state and previous state</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1398,43 +1275,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line403">line 403</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line403">line 403</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -1450,148 +1330,122 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return found unit or null</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;unitObj></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#updateEddCounts">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="updateEddCounts">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                updateEddCounts<span class="signature">(nextState, diffs)</span><span class="type-signature"> &rarr; {Promise.&lt;units>}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>updateEddCounts<span class="signature">(nextState, diffs)</span><span class="type-signature"> &rarr; {Promise.&lt;units>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Update the EDD counts</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Update the EDD counts</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>nextState</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      nextState
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nextState</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">nextState</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>object</p></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>diffs</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">diffObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
+        <td class="description last">
+          <p>object</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>diffs</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      diffObj
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1600,50 +1454,57 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line464">line 464</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
+
+  
+
+  
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
-        <ul>
-            <li>Check if this should be moved out of the model and into a service</li>
-        </ul>
+      <ul>
+        
+          <li>
+            Check if this should be moved out of the model and into a service
+          </li>
+        
+      </ul>
     </dd>
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line464">line 464</a>
-            </span>
-        </p>
-    
+  
 </dl>
 
 
@@ -1659,173 +1520,151 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return array of boosters</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;units></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#updateUnit">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="updateUnit">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                updateUnit<span class="signature">(prevState, nextState, diffs)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>updateUnit<span class="signature">(prevState, nextState, diffs)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Update a unit that is found</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Update a unit that is found</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>prevState</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>prevState</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">unitObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>state found in the model</p></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nextState</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">unitObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>incoming state</p></td>
-</tr>
-
+        <td class="description last">
+          <p>state found in the model</p>
+          
+        </td>
+      </tr>
 
     
+      <tr>
+        
+          <td class="name"><code>nextState</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>diffs</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">diffObj</span>
+        
 
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>found diffs</p></td>
-</tr>
-
+        <td class="description last">
+          <p>incoming state</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>diffs</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      diffObj
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>found diffs</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -1834,43 +1673,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line220">line 220</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line220">line 220</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -1886,167 +1728,151 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise</span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#updateUnitState">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="updateUnitState">
-        
-        <span class="code-name">
-            
-                updateUnitState<span class="signature">(state, diffs, modifiedAt)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
-            
-        </span>
+      <span class="type-signature"></span>updateUnitState<span class="signature">(state, diffs, modifiedAt)</span><span class="type-signature"> &rarr; {Promise.&lt;unitObj>}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Applies the diffs to the State</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
-    </div>
-    
+  
+    <p class="summary">
+      <p>Applies the diffs to the State</p>
+    </p>
+  
 
 
 
-
-
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+  </div>
 
 
 
 
-    <h5>Parameters:</h5>
-    
+
+
+
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>state</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>state</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">unitObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>diffs</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">diffObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>the diffs between the current state and previous state</p></td>
-</tr>
-
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
 
     
+      <tr>
+        
+          <td class="name"><code>diffs</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      diffObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>modifiedAt</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
+        
 
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>timestamp on modifiedAt</p></td>
-</tr>
-
+        <td class="description last">
+          <p>the diffs between the current state and previous state</p>
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>modifiedAt</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>timestamp on modifiedAt</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -2055,43 +1881,46 @@
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line371">line 371</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
 
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line371">line 371</a>
-            </span>
-        </p>
-    
+  
+
+  
 </dl>
 
 
@@ -2107,64 +1936,33 @@
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>return found unit or null</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+      
         
-<span class="param-type">Promise.&lt;unitObj></span>
 
 
-    </div>
-    
-</div>
+  
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
+  <span class='name-container'>
+    <a class="link-icon" href="#upsertUnit">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
     <h4 class="name" id="upsertUnit">
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                upsertUnit<span class="signature">(nextState, forceFlag)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
+      <span class="type-signature">(async) </span>upsertUnit<span class="signature">(nextState, forceFlag)</span><span class="type-signature"> &rarr; {Promise}</span>
     </h4>
-    
+  </span>
 
-    
-    <p class="summary"><p>Upsert unit data</p></p>
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><div class="mermaid">graph LR
+  
+    <p class="summary">
+      <p>Upsert unit data</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><div class="mermaid">graph LR
 				subgraph incoming
 A[dataService]
 end
@@ -2176,8 +1974,7 @@ subgraph external
 diff -->|false|insertUnit
 diff -->|true|updateUnit
 end</div>
-    </div>
-    
+  </div>
 
 
 
@@ -2185,81 +1982,87 @@ end</div>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
+  <h5>Parameters:</h5>
+  
 
 <table class="params">
-    <thead>
+  <thead>
     <tr>
-        
+      
         <th>Name</th>
-        
+      
 
-        <th>Type</th>
+      <th>Type</th>
 
-        
+      
 
-        
+      
 
-        <th class="last">Description</th>
+      <th class="last">Description</th>
     </tr>
-    </thead>
+  </thead>
 
-    <tbody>
+  <tbody>
     
+      <tr>
+        
+          <td class="name"><code>nextState</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      unitObj
+    </span>
+
+    
+
+
+          
+        </td>
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nextState</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">unitObj</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-    
 
         
-<tr class="deep-level-0">
-  
-      <td class="name"><code>forceFlag</code></td>
-  
 
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>force an update even if there are no diffs</p></td>
-</tr>
-
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
 
     
-    </tbody>
+      <tr>
+        
+          <td class="name"><code>forceFlag</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          <p>force an update even if there are no diffs</p>
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
 </table>
 
 
@@ -2268,50 +2071,57 @@ end</div>
 
 <dl class="details">
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
+  
 
-    
-    
+  
 
-    
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line61">line 61</a>
+        </li>
+      </ul>
+    </dd>
+  
 
-    
+  
+
+  
+
+  
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
-        <ul>
-            <li>Check that this is functioning correctly</li>
-        </ul>
+      <ul>
+        
+          <li>
+            Check that this is functioning correctly
+          </li>
+        
+      </ul>
     </dd>
-    
-
-    
-        <p class="tag-source">
-            <a href="lib_models_dataModel.js.html" class="button">View Source</a>
-            <span>
-                <a href="lib_models_dataModel.js.html">lib/models/dataModel.js</a>, <a href="lib_models_dataModel.js.html#line61">line 61</a>
-            </span>
-        </p>
-    
+  
 </dl>
 
 
@@ -2327,70 +2137,30 @@ end</div>
 
 
 
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>void</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Promise</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-            </div>
-        </div>
+      
     
 
     
 
     
-</article>
-
+  </article>
 </section>
 
 
 
 
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 05 2019 12:53:59 GMT+0200 (South Africa Standard Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
-    </div>
-</footer>
+  <br class="clear">
 
-<script src="scripts/app.min.js"></script>
-<script src="scripts/linenumber.js"> </script>
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
 </body>
 </html>

@@ -14,32 +14,41 @@ module.exports = {
 	opts: {
 		encoding: "utf8",
 		destination: "docs/",
-		//readme: "readme.md",
+		readme: "readme.md",
 		recurse: true,
 		verbose: true,
-		template: "node_modules/better-docs"
+		//		template: "node_modules/better-docs",
+		template: "./jsdoc-template"
 	},
 	templates: {
-		cleverLinks: false,
-		monospaceLinks: false,
-		// default: {
-		// 	staticFiles: {
-		// 		include: ["./docs-src/statics"]
-		// 	}
-		// },
-		"better-docs": {
-			name: "State Management Server",
-			//logo: "images/logo.png",
-			navigation: [
-				{
-					label: "Github",
-					href: "https://github.com/SoftwareBrothers/admin-bro"
-				},
-				{
-					label: "Example Application",
-					href: "https://admin-bro-example-app.herokuapp.com/admin"
-				}
-			]
+		referenceTitle: "State Server API",
+		disableSort: false,
+		collapse: false,
+		resources: {
+			"happner-2": "https://github.com/happner/happner-2"
 		}
 	}
+	// templates: {
+	// 	cleverLinks: false,
+	// 	monospaceLinks: false
+	// default: {
+	// 	staticFiles: {
+	// 		include: ["./docs-src/statics"]
+	// 	}
+	// },
+	// "better-docs": {
+	// 	name: "State Management Server",
+	// 	//logo: "images/logo.png",
+	// 	navigation: [
+	// 		{
+	// 			label: "Github",
+	// 			href: "https://github.com/SoftwareBrothers/admin-bro"
+	// 		},
+	// 		{
+	// 			label: "Example Application",
+	// 			href: "https://admin-bro-example-app.herokuapp.com/admin"
+	// 		}
+	// 	]
+	// }
+	//}
 };
