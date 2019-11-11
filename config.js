@@ -41,9 +41,9 @@ class Config {
 				adminPassword: "happn",
 				services: {
 					security: {
-						config: {
-							pbkdf2Iterations: 1000
-						}
+						// config: {
+						// 	pbkdf2Iterations: 1000
+						// }
 					},
 					// data: {
 					// 	config: {
