@@ -1,7 +1,5 @@
 {
-	"prettier.printWidth": 100,
-	"prettier.useTabs": true,
-	"editor.fontLigatures": true,
-	"editor.fontFamily": "Fira Code",
-	"editor.foldingStrategy": "indentation"
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Fira Code",
+  "editor.foldingStrategy": "indentation"
 }
