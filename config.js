@@ -158,7 +158,14 @@ class Config {
 					env: { meshName: override.name || process.env.EDGE_INSTANCE_NAME },
 				},
 				systemRepository: {},
-				data: {},
+				data: {
+					data: {
+						routes: {
+							"persist/*": "persist",
+							"mem/*": "mem"
+						}
+					}
+				},
 				uiService: {
 					startMethod: "start",
 				},
