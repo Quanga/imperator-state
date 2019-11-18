@@ -231,7 +231,7 @@ class Config {
 						useEndpoint: override.useEndpoint || process.env.USE_ENDPOINT || false,
 						systemMode:
 							override.systemMode ||
-							this.getDotMode().systemMode ||
+							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100,
 					},
@@ -246,7 +246,7 @@ class Config {
 
 		if (valid) {
 			let file = JSON.parse(fs.readFileSync(modeFile, "utf8"));
-			return file;
+			return file.systemMode;
 		}
 		return null;
 	}
