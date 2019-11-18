@@ -9,12 +9,12 @@ const modes = require(path.resolve(__dirname, "./lib/constants/modeTemplates"));
 const fs = require("fs");
 
 class Config {
-	constructor(overrideObj = {}) {
+	constructor(override = {}) {
 		this.configuration = {
-			name: overrideObj.name || process.env.EDGE_INSTANCE_NAME,
+			name: override.name || process.env.EDGE_INSTANCE_NAME,
 			util: {
 				logCacheSize: 1000,
-				logLevel: overrideObj.logLevel || process.env.LOG_LEVEL || "info",
+				logLevel: override.logLevel || process.env.LOG_LEVEL || "info",
 				logTimeDelta: true,
 				logStackTraces: true, // if last arg to logger is instanceof Error
 				logComponents: [],
@@ -22,7 +22,7 @@ class Config {
 				logDateFormat: null,
 				logLayout: null,
 				logFile:
-					overrideObj.logFile ||
+					override.logFile ||
 					this.getPath("logs", process.env.EDGE_LOCAL_LOG_FILE) ||
 					this.getPath("logs", "./edge.log"),
 				logFileMaxSize: 1048576, // 1mb
@@ -32,7 +32,7 @@ class Config {
 			},
 			happn: {
 				//host: "0.0.0.0",
-				port: overrideObj.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
+				port: override.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
 					timeout: 30000,
 				},
@@ -57,7 +57,7 @@ class Config {
 									name: "nodes",
 									settings: {
 										filename:
-											overrideObj.logsdb ||
+											override.logsdb ||
 											this.getPath("db", process.env.LOGS_DB) ||
 											this.getPath("db", "./nodes.db"),
 									},
@@ -67,7 +67,7 @@ class Config {
 									name: "logs",
 									settings: {
 										filename:
-											overrideObj.logsdb ||
+											override.logsdb ||
 											this.getPath("db", process.env.LOGS_DB) ||
 											this.getPath("db", "./logs.db"),
 									},
@@ -77,7 +77,7 @@ class Config {
 									name: "warnings",
 									settings: {
 										filename:
-											overrideObj.warningsdb ||
+											override.warningsdb ||
 											this.getPath("db", process.env.WARNINGS_DB) ||
 											this.getPath("db", "./warnings.db"),
 									},
@@ -87,7 +87,7 @@ class Config {
 									name: "blasts",
 									settings: {
 										filename:
-											overrideObj.warningsdb ||
+											override.warningsdb ||
 											this.getPath("db", process.env.WARNINGS_DB) ||
 											this.getPath("db", "./blasts.db"),
 									},
@@ -97,7 +97,7 @@ class Config {
 									name: "ui",
 									settings: {
 										filename:
-											overrideObj.warningsdb ||
+											override.warningsdb ||
 											this.getPath("db", process.env.WARNINGS_DB) ||
 											this.getPath("db", "./ui.db"),
 									},
@@ -108,7 +108,7 @@ class Config {
 									isDefault: true,
 									settings: {
 										filename:
-											overrideObj.db ||
+											override.db ||
 											this.getPath("db", process.env.EDGE_DB) ||
 											this.getPath("db", "./edge.db"),
 									},
@@ -146,7 +146,7 @@ class Config {
 				systemService: {},
 				securityService: {
 					env: {
-						meshName: overrideObj.name || process.env.EDGE_INSTANCE_NAME,
+						meshName: override.name || process.env.EDGE_INSTANCE_NAME,
 					},
 				},
 				systemRepository: {},
@@ -158,7 +158,7 @@ class Config {
 				packetService: {
 					env: {
 						systemMode:
-							overrideObj.systemMode ||
+							override.systemMode ||
 							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100,
@@ -167,7 +167,7 @@ class Config {
 				dataService: {
 					env: {
 						systemMode:
-							overrideObj.systemMode ||
+							override.systemMode ||
 							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100,
@@ -177,18 +177,16 @@ class Config {
 				endpointService: {
 					stopMethod: "componentStop",
 					env: {
-						endpointIP: overrideObj.endpointIP || process.env.ENDPOINT_IP || "0.0.0.0",
-						endpointPort:
-							overrideObj.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
+						endpointIP: override.endpointIP || process.env.ENDPOINT_IP || "0.0.0.0",
+						endpointPort: override.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
 						endpointCheckInterval:
-							overrideObj.endpointCheckInterval ||
+							override.endpointCheckInterval ||
 							parseInt(process.env.EP_CHECK_INTERVAL, 10) ||
 							5000,
-						endpointName: overrideObj.endpointName || process.env.ENDPOINT_NAME || "edge_ssot",
+						endpointName: override.endpointName || process.env.ENDPOINT_NAME || "edge_ssot",
 						endpointUsername:
-							overrideObj.endpointUsername || process.env.ENDPOINT_USERNAME || "UNIT001",
-						endpointPassword:
-							overrideObj.endpointPassword || process.env.ENDPOINT_PASSWORD || "",
+							override.endpointUsername || process.env.ENDPOINT_USERNAME || "UNIT001",
+						endpointPassword: override.endpointPassword || process.env.ENDPOINT_PASSWORD || "",
 					},
 				},
 				nodeRepository: {},
@@ -202,16 +200,16 @@ class Config {
 				blastService: {
 					env: {
 						systemFiringTime:
-							overrideObj.systemFiringTime ||
+							override.systemFiringTime ||
 							parseInt(process.env.SYSTEM_FIRING_TIME, 10) ||
 							120000,
 						systemReportTime:
-							overrideObj.systemReportTime ||
+							override.systemReportTime ||
 							parseInt(process.env.SYSTEM_REPORT_TIME, 10) ||
 							180000,
 						theme:
 							this.getTheme(this.getDotMode()) ||
-							this.getTheme(overrideObj.mode) ||
+							this.getTheme(override.mode) ||
 							this.getTheme(process.env.MODE) ||
 							this.getTheme(systemModeTypes.AXXIS100),
 					},
@@ -221,9 +219,9 @@ class Config {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
 					env: {
-						useEndpoint: overrideObj.useEndpoint || process.env.USE_ENDPOINT || false,
+						useEndpoint: override.useEndpoint || process.env.USE_ENDPOINT || false,
 						systemMode:
-							overrideObj.systemMode ||
+							override.systemMode ||
 							this.getDotMode() ||
 							process.env.MODE ||
 							systemModeTypes.AXXIS100,

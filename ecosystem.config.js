@@ -12,134 +12,137 @@ module.exports = {
 			watch: false,
 			max_memory_restart: "800M",
 			env: {
-				NODE_ENV: "production"
+				NODE_ENV: "production",
 			},
 			env_production001: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_INSTANCE_NAME: "mesh-state-001",
 				EDGE_LOCAL_IP: "0.0.0.0",
 				MODE: systemModeTypes.AXXIS100_CFC,
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-edge-001",
-				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_NAME: "mesh-edge-001",
+				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
-				COMMUNICATION_CHECK_INTERVAL: 600000
+				COMMUNICATION_CHECK_INTERVAL: 600000,
 			},
 			env_production002: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_INSTANCE_NAME: "mesh-state-001",
 				MODE: systemModeTypes.AXXIS100,
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-edge-002",
-				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_NAME: "mesh-edge-002",
+				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 420000,
 				SYSTEM_REPORT_TIME: 600000,
-				COMMUNICATION_CHECK_INTERVAL: 600000
+				COMMUNICATION_CHECK_INTERVAL: 600000,
 			},
 			env_production003: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_INSTANCE_NAME: "mesh-state-001",
 				MODE: systemModeTypes.HYDRA,
 				EDGE_LOCAL_IP: "0.0.0.0",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-edge-002",
-				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_NAME: "mesh-edge-002",
+				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
-				COMMUNICATION_CHECK_INTERVAL: 800000
+				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 			env_production004: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_INSTANCE_NAME: "mesh-state-001",
 				MODE: systemModeTypes.AXXIS500_WIFI,
 				EDGE_LOCAL_IP: "0.0.0.0",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-edge-002",
-				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_NAME: "mesh-edge-002",
+				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 420000,
 				SYSTEM_REPORT_TIME: 600000,
-				COMMUNICATION_CHECK_INTERVAL: 800000
+				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 			env_production500: {
 				NODE_ENV: "production",
 				EDGE_INSTANCE_NAME: "edge_state",
 				MODE: "AXXIS500",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-edge-002",
-				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_NAME: "mesh-edge-002",
+				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 420000,
 				SYSTEM_REPORT_TIME: 840000,
 
-				COMMUNICATION_CHECK_INTERVAL: 800000
+				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 			env_productionAWS: {
 				NODE_ENV: "production",
-				EDGE_INSTANCE_NAME: "intelliblast-state-001",
+				EDGE_INSTANCE_NAME: "mesh-state-001",
 				EDGE_LOCAL_IP: "0.0.0.0",
 				EDGE_LOCAL_PORT: 55000,
 				MODE: "AXXIS100",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "intelliblast-sim-001",
-				ENDPOINT_USERNAME: "intelliblast-state-001",
+				ENDPOINT_NAME: "mesh-sim-001",
+				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				ENDPOINT_PORT: 55014,
 				SYSTEM_FIRING_TIME: 120000,
 				SYSTEM_REPORT_TIME: 300000,
-				COMMUNICATION_CHECK_INTERVAL: 800000
-			}
-		}
+				COMMUNICATION_CHECK_INTERVAL: 800000,
+			},
+		},
 	],
 
 	deploy: {
-		"production-intelliblast-edge-001": {
+		"production-mesh-edge-001": {
 			key: process.env.HOME + "/id_deploy",
 			user: "admin",
-			host: "intelliblast-edge-001",
+			host: "mesh-edge-001",
 			ref: "origin/stage-1.3",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003",
 		},
-		"production-intelliblast-edge-002": {
+		"production-mesh-edge-002": {
 			key: process.env.HOME + "/.ssh/id_rsa",
 			user: "admin",
-			host: "intelliblast.local",
+			host: "mesh.local",
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production002"
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production002",
 		},
-		"production-intelliblast-edge-003": {
+		"production-mesh-edge-003": {
 			user: "admin",
 			host: ["nick2"],
 			ref: "origin/stage-1.4",
 			exec_mode: "fork",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003 && pm2 save"
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production003 && pm2 save",
 		},
-		"production-intelliblast-edge-004": {
+		"production-mesh-edge-004": {
 			user: "admin",
 			host: ["nick2"],
 			ref: "origin/stage-1.4",
 			exec_mode: "fork",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save"
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save",
 		},
-		"production-intelliblast-edge-005": {
+		"production-mesh-edge-005": {
 			user: "admin",
 			host: ["nick1"],
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save"
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save",
 		},
 		production_aws: {
 			user: "ec2-user",
@@ -148,7 +151,8 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save"
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save",
 		},
 		nickvm: {
 			user: "hydrasim",
@@ -156,7 +160,8 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/hydrasim/state",
-			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save"
-		}
-	}
+			"post-deploy":
+				"npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save",
+		},
+	},
 };
