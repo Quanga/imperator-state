@@ -128,7 +128,7 @@ class Config {
 					reconnect: { max: 2000, retries: 100 },
 					config: {
 						port: 55030,
-						username: "mesh-state-001",
+						username: "_ADMIN",
 						password: "happn",
 					},
 				},
