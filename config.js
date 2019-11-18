@@ -123,6 +123,16 @@ class Config {
 					},
 				},
 			},
+			endpoints: {
+				"intelliblast-pdf": {
+					reconnect: { max: 2000, retries: 100 },
+					config: {
+						port: 55030,
+						username: "_ADMIN",
+						password: "happn",
+					},
+				},
+			},
 			modules: {
 				app: { path: `${__dirname}/app.js` },
 				blastRepository: { path: `${__dirname}/lib/repositories/blastRepository.js` },
@@ -145,9 +155,7 @@ class Config {
 			components: {
 				systemService: {},
 				securityService: {
-					env: {
-						meshName: override.name || process.env.EDGE_INSTANCE_NAME,
-					},
+					env: { meshName: override.name || process.env.EDGE_INSTANCE_NAME },
 				},
 				systemRepository: {},
 				data: {},
@@ -212,6 +220,7 @@ class Config {
 							this.getTheme(override.mode) ||
 							this.getTheme(process.env.MODE) ||
 							this.getTheme(systemModeTypes.AXXIS100),
+						template: "tem-ov-001",
 					},
 				},
 				queueService: {},
