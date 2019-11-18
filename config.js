@@ -253,7 +253,6 @@ class Config {
 
 	// TODO this is dangerous, add validation
 	getTheme(themeName) {
-		console.log(themeName)
 		if (!themeName) return null;
 		const foundTheme = modes[themeName].theme;
 		return styles[foundTheme];
