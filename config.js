@@ -124,7 +124,7 @@ class Config {
 				},
 			},
 			endpoints: {
-				"intelliblast-pdf": {
+				"mesh-pdf": {
 					reconnect: { max: 2000, retries: 100 },
 					config: {
 						port: 55030,
