@@ -220,7 +220,7 @@ class Config {
 							this.getTheme(override.mode) ||
 							this.getTheme(process.env.MODE) ||
 							this.getTheme(systemModeTypes.AXXIS100),
-						template: "tem-ov-001",
+						template: "tem_ov_001",
 					},
 				},
 				queueService: {},
@@ -246,7 +246,7 @@ class Config {
 
 		if (valid) {
 			let file = JSON.parse(fs.readFileSync(modeFile, "utf8"));
-			return file.systemMode;
+			return file.theme;
 		}
 		return null;
 	}
