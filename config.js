@@ -246,6 +246,7 @@ class Config {
 
 		if (valid) {
 			let file = JSON.parse(fs.readFileSync(modeFile, "utf8"));
+			console.log(file)
 			return file.theme;
 		}
 		return null;
