@@ -123,7 +123,7 @@ class Config {
 					},
 				},
 			},
-			endpoints: {
+			endpoints: (process.env.NODE_ENV!=='test')?{
 				"mesh-pdf": {
 					reconnect: { max: 2000, retries: 100 },
 					config: {
@@ -132,7 +132,7 @@ class Config {
 						password: "happn",
 					},
 				},
-			},
+			}:{},
 			modules: {
 				app: { path: `${__dirname}/app.js` },
 				blastRepository: { path: `${__dirname}/lib/repositories/blastRepository.js` },

@@ -81,10 +81,10 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultPresist).to.be.instanceOf(Array);
 			expect(resultPresist.length).to.be.equal(2);
 
-			let cbb = await resultPresist.find(unit => parseInt(unit.serial) === 13 && unit.typeId === 3);
+			let cbb = await resultPresist.find(unit => parseInt(unit.data.serial) === 13 && unit.data.typeId === 3);
 
-			expect(cbb.communicationStatus).to.be.equal(1); // communication status
-			expect(cbb.childCount).to.be.equal(0);
+			expect(cbb.data.communicationStatus).to.be.equal(1); // communication status
+			expect(cbb.data.childCount).to.be.equal(0);
 			expect(resultDataService.units["13"].data.communicationStatus).to.be.equal(1);
 			expect(resultDataService.units["13"].data.childCount).to.be.equal(0);
 
@@ -133,13 +133,13 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 
-			const cbb = resultPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
-			const edd1 = resultPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
+			const cbb = resultPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
+			const edd1 = resultPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
 
-			expect(cbb.communicationStatus).to.equal(1); // communication status
-			expect(edd1.windowId).to.equal(2); // communication status
-			expect(edd1.delay).to.equal(2000); // communication status
-			expect(cbb.childCount).to.equal(2);
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			expect(edd1.data.windowId).to.equal(2); // communication status
+			expect(edd1.data.delay).to.equal(2000); // communication status
+			expect(cbb.data.childCount).to.equal(2);
 
 			// let snapshot = await client.exchange.dataService.getSnapShot();
 			// console.log(JSON.stringify(snapshot));
