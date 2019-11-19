@@ -19,6 +19,7 @@
   "license": "",
   "homepage": "https://github.com/aecelectronics/Happner3_State.git",
   "devDependencies": {
+    "acorn": "^7.1.0",
     "better-docs": "^1.4.6",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
@@ -32,7 +33,7 @@
     "jsdoc-mermaid": "^1.0.0",
     "mocha": "^6.2.2",
     "nyc": "^14.1.1",
-    "prettier-eslint": "^9.0.1",
+    "prettier-eslint": "^9.0.0",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
     "sinon-with-promise": "^1.0.2"
