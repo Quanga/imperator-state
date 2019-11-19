@@ -41,7 +41,9 @@ describe("E2E - Repository", async function() {
 			endpointPassword: "happn",
 			systemFiringTime: 120000,
 			systemReportTime: 180000,
-			communicationCheckInterval: 300000
+			communicationCheckInterval: 300000,
+			systemMode: "AXXIS100",
+			mode: "AXXIS100",
 		};
 
 		beforeEach(async () => {
@@ -68,21 +70,24 @@ describe("E2E - Repository", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 8, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1]
+						data: [0, 0, 0, 0, 0, 0, 0, 1],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -93,18 +98,18 @@ describe("E2E - Repository", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -115,27 +120,27 @@ describe("E2E - Repository", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 
 			const dets = await mesh.exchange.nodeRepository.get("3/13/*");
-			console.log("DETS", dets);
-			expect(dets[1].logged).to.eql(1);
-			expect(dets[1].detonatorStatus).to.eql(0);
+			console.log(dets);
+			expect(dets[0].data.logged).to.eql(1);
+			expect(dets[0].data.detonatorStatus).to.eql(0);
 		});
 	});
 });

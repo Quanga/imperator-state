@@ -27,7 +27,7 @@ describe("INTEGRATION - Units", async function() {
 
 			client = await new Mesh.MeshClient({
 				secure: true,
-				port: 55000
+				port: 55000,
 			});
 
 			await util.asyncLogin(client);
@@ -42,11 +42,11 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 8, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1]
+						data: [0, 0, 0, 0, 0, 0, 0, 1],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 		});
 
@@ -64,13 +64,13 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 0,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-							}
-						]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -81,7 +81,9 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultPresist).to.be.instanceOf(Array);
 			expect(resultPresist.length).to.be.equal(2);
 
-			let cbb = await resultPresist.find(unit => parseInt(unit.data.serial) === 13 && unit.data.typeId === 3);
+			let cbb = await resultPresist.find(
+				unit => parseInt(unit.data.serial) === 13 && unit.data.typeId === 3,
+			);
 
 			expect(cbb.data.communicationStatus).to.be.equal(1); // communication status
 			expect(cbb.data.childCount).to.be.equal(0);
@@ -96,11 +98,14 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -111,18 +116,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -149,11 +154,14 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -164,18 +172,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -186,18 +194,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -207,13 +215,13 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 
-			const cbb = resultPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(2);
+			const cbb = resultPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(2);
 
-			const edd1 = resultPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd1.windowId).to.equal(2);
-			expect(edd1.delay).to.equal(3000);
+			const edd1 = resultPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd1.data.windowId).to.equal(2);
+			expect(edd1.data.delay).to.equal(3000);
 
 			let snapshot = await client.exchange.dataService.getSnapShot();
 			console.log(JSON.stringify(snapshot));
@@ -228,18 +236,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 1,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -250,18 +258,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -271,23 +279,26 @@ describe("INTEGRATION - Units", async function() {
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.equal(1);
 
-			let cbb = resPersist.find(x => x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1); // communication status
+			let cbb = resPersist.find(x => x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1); // communication status
 
-			let edd = resPersist.find(x => x.typeId === 4);
-			expect(edd.windowId).to.equal(2); // communication status
-			expect(edd.delay).to.equal(3000); // communication status
+			let edd = resPersist.find(x => x.data.typeId === 4);
+			expect(edd.data.windowId).to.equal(2); // communication status
+			expect(edd.data.delay).to.equal(3000); // communication status
 		});
 
 		it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -298,18 +309,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 1,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -320,18 +331,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -342,18 +353,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -363,14 +374,14 @@ describe("INTEGRATION - Units", async function() {
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.greaterThan(3);
 
-			const cbb = resPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(2);
+			const cbb = resPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(2);
 
-			const edd1 = resPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd1.windowId).to.equal(2);
-			expect(edd1.delay).to.equal(3000);
-			
+			const edd1 = resPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd1.data.windowId).to.equal(2);
+			expect(edd1.data.delay).to.equal(3000);
+
 			const x = await client.exchange.logsRepository.get("*");
 			console.log(x);
 		});
@@ -379,11 +390,14 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -394,18 +408,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 1,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -416,18 +430,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -438,13 +452,13 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1]
-							}
-						]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -457,23 +471,26 @@ describe("INTEGRATION - Units", async function() {
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.greaterThan(3);
 
-			const cbb = resPersist.find(x => parseInt(x.serial) === 13 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(2);
-			const edd1 = resPersist.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd1.windowId).to.equal(2);
-			expect(edd1.delay).to.equal(3000);
+			const cbb = resPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(2);
+			const edd1 = resPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd1.data.windowId).to.equal(2);
+			expect(edd1.data.delay).to.equal(3000);
 		});
 
 		it("can turn off detonatorStatus in attached dets with a keyswitch off", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -484,18 +501,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 1,
 								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now() + 300
+					createdAt: Date.now() + 300,
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -506,18 +523,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now() + 600
+					createdAt: Date.now() + 600,
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -531,13 +548,13 @@ describe("INTEGRATION - Units", async function() {
 				edd1 = null;
 
 			resPersist.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
 			});
 
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(2);
-			expect(edd1.detonatorStatus).to.equal(1);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(2);
+			expect(edd1.data.detonatorStatus).to.equal(1);
 
 			sendQueue.push({
 				message: {
@@ -547,13 +564,13 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
-							}
-						]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0],
+							},
+						],
 					}).packet,
-					createdAt: Date.now() + 900
+					createdAt: Date.now() + 900,
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -563,15 +580,15 @@ describe("INTEGRATION - Units", async function() {
 			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
 
 			resPersist.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
 			});
 			const snapshot = await client.exchange.dataService.getSnapShot();
 			console.log(snapshot.units[13].children);
 
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(2);
-			expect(edd1.detonatorStatus).to.equal(0);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(2);
+			expect(edd1.data.detonatorStatus).to.equal(0);
 		});
 
 		it("edge case - will ignore an 05 packet where the serial is 255 and the windowID is 255", async function() {
@@ -587,9 +604,9 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: "aaaa1005007300001828ff00ff001288",
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.timer(2000);
@@ -597,18 +614,21 @@ describe("INTEGRATION - Units", async function() {
 			let result = await client.exchange.nodeRepository.get("*");
 
 			expect(result.length).to.eql(2);
-			expect(result[1].childCount).to.eql(0);
+			expect(result[1].data.childCount).to.eql(0);
 		});
 
 		it("can turn off childCount", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 13, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -619,18 +639,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now() + 300
+					createdAt: Date.now() + 300,
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -641,18 +661,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now() + 600
+					createdAt: Date.now() + 600,
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -666,13 +686,13 @@ describe("INTEGRATION - Units", async function() {
 				edd1 = null;
 
 			result.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
 			});
 
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(2);
-			expect(edd1.detonatorStatus).to.equal(1);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(2);
+			expect(edd1.data.detonatorStatus).to.equal(1);
 
 			sendQueue.push({
 				message: {
@@ -682,13 +702,13 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 0,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0]
-							}
-						]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0],
+							},
+						],
 					}).packet,
-					createdAt: Date.now() + 900
+					createdAt: Date.now() + 900,
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -699,14 +719,14 @@ describe("INTEGRATION - Units", async function() {
 			if (result == null || result.length == 0) throw new Error("Empty result!");
 
 			result.forEach(x => {
-				if (parseInt(x.serial) === 13 && x.typeId === 3) cbb = x;
-				if (parseInt(x.serial) === 4523434 && x.typeId === 4) edd1 = x;
+				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
+				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
 			});
 
-			expect(cbb.communicationStatus).to.equal(1);
-			expect(cbb.childCount).to.equal(0);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			expect(cbb.data.childCount).to.equal(0);
 			expect(snapshot.units[13].children["1"].data.detonatorStatus).to.equal(0);
-			expect(edd1.detonatorStatus).to.equal(0);
+			expect(edd1.data.detonatorStatus).to.equal(0);
 		});
 	});
 });

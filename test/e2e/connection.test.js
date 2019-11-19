@@ -15,7 +15,7 @@ describe("E2E - Services", function() {
 					host: "localhost",
 					port: 55004,
 					setOptions: {
-						timeout: 40000
+						timeout: 40000,
 					},
 					persist: true,
 					secure: true,
@@ -23,10 +23,10 @@ describe("E2E - Services", function() {
 					services: {
 						data: {
 							config: {
-								filename: `${__dirname}/test.db`
-							}
-						}
-					}
+								filename: `${__dirname}/test.db`,
+							},
+						},
+					},
 				},
 				modules: {
 					queueService: {
@@ -45,13 +45,13 @@ describe("E2E - Services", function() {
 								return new Promise((resolve, reject) => {
 									resolve(0);
 								});
-							}
-						}
-					}
+							},
+						},
+					},
 				},
 				components: {
-					queueService: {}
-				}
+					queueService: {},
+				},
 			};
 
 			//let mesh = await Happner.create(testEndpoint);
@@ -76,8 +76,8 @@ describe("E2E - Services", function() {
 				username: "MESH_UNIT",
 				password: "1234",
 				groups: {
-					_ADMIN: true
-				}
+					_ADMIN: true,
+				},
 			};
 
 			await new Promise((resolve, reject) => {
@@ -97,11 +97,11 @@ describe("E2E - Services", function() {
 					kill: false, // kill the process once stopped
 					wait: 1000, // wait for callbacks before kill
 					exitCode: 1, // when kill, exit with this integer
-					reconnect: true // inform attached clients/endpoints to reconnect
+					reconnect: true, // inform attached clients/endpoints to reconnect
 				},
 				data => {
 					console.log("TEST SERVER STOPPED");
-				}
+				},
 			);
 
 			await utils.timer(2000);

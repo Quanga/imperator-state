@@ -45,11 +45,6 @@ class Config {
 							pbkdf2Iterations: 1000,
 						},
 					},
-					// data: {
-					// 	config: {
-					// 		filename: path.resolve(__dirname, "./db/edge.db")
-					// 	}
-					// }
 					data: {
 						config: {
 							datastores: [
@@ -123,16 +118,19 @@ class Config {
 					},
 				},
 			},
-			endpoints: (process.env.NODE_ENV!=='test')?{
-				"mesh-pdf": {
-					reconnect: { max: 2000, retries: 100 },
-					config: {
-						port: 55030,
-						username: "_ADMIN",
-						password: "happn",
-					},
-				},
-			}:{},
+			endpoints:
+				process.env.NODE_ENV !== "test"
+					? {
+							"mesh-pdf": {
+								reconnect: { max: 2000, retries: 100 },
+								config: {
+									port: 55030,
+									username: "_ADMIN",
+									password: "happn",
+								},
+							},
+					  }
+					: {},
 			modules: {
 				app: { path: `${__dirname}/app.js` },
 				blastRepository: { path: `${__dirname}/lib/repositories/blastRepository.js` },
@@ -162,9 +160,9 @@ class Config {
 					data: {
 						routes: {
 							"persist/*": "persist",
-							"mem/*": "mem"
-						}
-					}
+							"mem/*": "mem",
+						},
+					},
 				},
 				uiService: {
 					startMethod: "start",
@@ -173,19 +171,13 @@ class Config {
 				packetService: {
 					env: {
 						systemMode:
-							override.systemMode ||
-							this.getDotMode() ||
-							process.env.MODE ||
-							systemModeTypes.AXXIS100,
+							override.systemMode || this.getDotMode() || process.env.MODE || systemModeTypes.AXXIS100,
 					},
 				},
 				dataService: {
 					env: {
 						systemMode:
-							override.systemMode ||
-							this.getDotMode() ||
-							process.env.MODE ||
-							systemModeTypes.AXXIS100,
+							override.systemMode || this.getDotMode() || process.env.MODE || systemModeTypes.AXXIS100,
 					},
 				},
 				dataMapper: {},
@@ -195,12 +187,9 @@ class Config {
 						endpointIP: override.endpointIP || process.env.ENDPOINT_IP || "0.0.0.0",
 						endpointPort: override.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
 						endpointCheckInterval:
-							override.endpointCheckInterval ||
-							parseInt(process.env.EP_CHECK_INTERVAL, 10) ||
-							5000,
+							override.endpointCheckInterval || parseInt(process.env.EP_CHECK_INTERVAL, 10) || 5000,
 						endpointName: override.endpointName || process.env.ENDPOINT_NAME || "edge_ssot",
-						endpointUsername:
-							override.endpointUsername || process.env.ENDPOINT_USERNAME || "UNIT001",
+						endpointUsername: override.endpointUsername || process.env.ENDPOINT_USERNAME || "UNIT001",
 						endpointPassword: override.endpointPassword || process.env.ENDPOINT_PASSWORD || "",
 					},
 				},
@@ -215,13 +204,9 @@ class Config {
 				blastService: {
 					env: {
 						systemFiringTime:
-							override.systemFiringTime ||
-							parseInt(process.env.SYSTEM_FIRING_TIME, 10) ||
-							120000,
+							override.systemFiringTime || parseInt(process.env.SYSTEM_FIRING_TIME, 10) || 120000,
 						systemReportTime:
-							override.systemReportTime ||
-							parseInt(process.env.SYSTEM_REPORT_TIME, 10) ||
-							180000,
+							override.systemReportTime || parseInt(process.env.SYSTEM_REPORT_TIME, 10) || 180000,
 						theme:
 							this.getTheme(this.getDotMode()) ||
 							this.getTheme(override.mode) ||
@@ -230,17 +215,19 @@ class Config {
 						template: "tem_ov_001",
 					},
 				},
-				queueService: {},
+				queueService: {
+					env: {
+						systemMode:
+							override.systemMode || this.getDotMode() || process.env.MODE || systemModeTypes.AXXIS100,
+					},
+				},
 				app: {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
 					env: {
 						useEndpoint: override.useEndpoint || process.env.USE_ENDPOINT || false,
 						systemMode:
-							override.systemMode ||
-							this.getDotMode() ||
-							process.env.MODE ||
-							systemModeTypes.AXXIS100,
+							override.systemMode || this.getDotMode() || process.env.MODE || systemModeTypes.AXXIS100,
 					},
 				},
 			},

@@ -13,6 +13,10 @@ package-lock.json
 .env
 .clinic
 .DS_Store
+*.db
+.mode.json
+*.log
+
 
 ttyV0
 ttyV1

@@ -26,7 +26,7 @@ describe("INTEGRATION - Units", async function() {
 
 			client = await new Mesh.MeshClient({
 				secure: true,
-				port: 55000
+				port: 55000,
 			});
 
 			await util.asyncLogin(client);
@@ -41,11 +41,11 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 8, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1]
+						data: [0, 0, 0, 0, 0, 0, 0, 1],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 		});
 
@@ -58,11 +58,11 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
-						data: []
+						data: [],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -72,19 +72,23 @@ describe("INTEGRATION - Units", async function() {
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(0);
 
-			let cbb = result.filter(x => parseInt(x.serial) === 12 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.be.undefined;
+			let cbb = result.filter(x => parseInt(x.data.serial) === 12 && x.data.typeId === 3);
+			console.log(result);
+			expect(cbb).to.be.deep.equal([]);
 		});
 
 		it("can process a packet with CBBs 1 and 2 EDDs where no CBBs currently in database", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
-						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
+						data: [
+							{ serial: 4423423, windowId: 33 },
+							{ serial: 4523434, windowId: 34 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -94,25 +98,28 @@ describe("INTEGRATION - Units", async function() {
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
-			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
+			const cbb = result.find(x => parseInt(x.data.serial) === 12 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
 
-			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.be.null;
+			const edd1 = result.find(x => parseInt(x.data.serial) === 4423423 && x.data.typeId === 4);
+			expect(edd1.data.detonatorStatus).to.be.null;
 
-			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.be.null;
+			const edd2 = result.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd2.data.detonatorStatus).to.be.null;
 		});
 
 		it("can process a second packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
-						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
+						data: [
+							{ serial: 4423423, windowId: 33 },
+							{ serial: 4523434, windowId: 34 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -121,12 +128,12 @@ describe("INTEGRATION - Units", async function() {
 						data: [
 							{ serial: 4423425, windowId: 35 },
 							{ serial: 4523436, windowId: 36 },
-							{ serial: 4523437, windowId: 37 }
-						]
+							{ serial: 4523437, windowId: 37 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 			await util.holdTillDrained(sendQueue);
 			await util.timer(500);
@@ -135,25 +142,28 @@ describe("INTEGRATION - Units", async function() {
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
-			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
+			const cbb = result.find(x => parseInt(x.data.serial) === 12 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
 
-			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.be.null;
+			const edd1 = result.find(x => parseInt(x.data.serial) === 4423423 && x.data.typeId === 4);
+			expect(edd1.data.detonatorStatus).to.be.null;
 
-			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.be.null;
+			const edd2 = result.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd2.data.detonatorStatus).to.be.null;
 		});
 
 		it("can process a third packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
-						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
+						data: [
+							{ serial: 4423423, windowId: 33 },
+							{ serial: 4523434, windowId: 34 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -162,12 +172,12 @@ describe("INTEGRATION - Units", async function() {
 						data: [
 							{ serial: 4423425, windowId: 35 },
 							{ serial: 4523436, windowId: 36 },
-							{ serial: 4523437, windowId: 37 }
-						]
+							{ serial: 4523437, windowId: 37 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -176,12 +186,12 @@ describe("INTEGRATION - Units", async function() {
 						data: [
 							{ serial: 4423428, windowId: 38 },
 							{ serial: 4523439, windowId: 39 },
-							{ serial: 4523469, windowId: 40 }
-						]
+							{ serial: 4523469, windowId: 40 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -191,35 +201,41 @@ describe("INTEGRATION - Units", async function() {
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
-			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
+			const cbb = result.find(x => parseInt(x.data.serial) === 12 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
 
-			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.be.null;
+			const edd1 = result.find(x => parseInt(x.data.serial) === 4423423 && x.data.typeId === 4);
+			expect(edd1.data.detonatorStatus).to.be.null;
 
-			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.be.null;
+			const edd2 = result.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd2.data.detonatorStatus).to.be.null;
 		});
 
 		it("can handle a duplicate packet with CBBs 1 and 2 EDDs where two CBBs are currently in database", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
-						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
+						data: [
+							{ serial: 4423423, windowId: 33 },
+							{ serial: 4523434, windowId: 34 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 12, {
-						data: [{ serial: 4423423, windowId: 33 }, { serial: 4523434, windowId: 34 }]
+						data: [
+							{ serial: 4423423, windowId: 33 },
+							{ serial: 4523434, windowId: 34 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -228,12 +244,12 @@ describe("INTEGRATION - Units", async function() {
 						data: [
 							{ serial: 4423425, windowId: 35 },
 							{ serial: 4523436, windowId: 36 },
-							{ serial: 4523437, windowId: 37 }
-						]
+							{ serial: 4523437, windowId: 37 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -242,12 +258,12 @@ describe("INTEGRATION - Units", async function() {
 						data: [
 							{ serial: 4423428, windowId: 38 },
 							{ serial: 4523439, windowId: 39 },
-							{ serial: 4523469, windowId: 40 }
-						]
+							{ serial: 4523469, windowId: 40 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -257,12 +273,12 @@ describe("INTEGRATION - Units", async function() {
 			expect(result).to.be.instanceOf(Array);
 			expect(result.length).to.be.greaterThan(3);
 
-			const cbb = result.find(x => parseInt(x.serial) === 12 && x.typeId === 3);
-			expect(cbb.communicationStatus).to.equal(1);
-			const edd1 = result.find(x => parseInt(x.serial) === 4423423 && x.typeId === 4);
-			expect(edd1.detonatorStatus).to.null;
-			const edd2 = result.find(x => parseInt(x.serial) === 4523434 && x.typeId === 4);
-			expect(edd2.detonatorStatus).to.null;
+			const cbb = result.find(x => parseInt(x.data.serial) === 12 && x.data.typeId === 3);
+			expect(cbb.data.communicationStatus).to.equal(1);
+			const edd1 = result.find(x => parseInt(x.data.serial) === 4423423 && x.data.typeId === 4);
+			expect(edd1.data.detonatorStatus).to.null;
+			const edd2 = result.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			expect(edd2.data.detonatorStatus).to.null;
 		});
 
 		it("can clear the list of edds from the database for a CBB", async function() {
@@ -271,11 +287,14 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 22, {
-						data: [{ serial: 4423423, windowId: 1 }, { serial: 4523434, windowId: 2 }]
+						data: [
+							{ serial: 4423423, windowId: 1 },
+							{ serial: 4523434, windowId: 2 },
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -286,18 +305,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 22,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
-								delay: 2000
-							}
-						]
+								delay: 2000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
@@ -308,18 +327,18 @@ describe("INTEGRATION - Units", async function() {
 								serial: 22,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1]
+								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
-								delay: 3000
-							}
-						]
+								delay: 3000,
+							},
+						],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -338,11 +357,11 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(4, 22, {
-						data: [{ serial: 4294967295, windowId: 1 }]
+						data: [{ serial: 4294967295, windowId: 1 }],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
@@ -352,7 +371,7 @@ describe("INTEGRATION - Units", async function() {
 			resData = await dataService.getSnapShot();
 
 			mappedNodes = resPersisted.map(node => {
-				return { node: node.constructor.name, data: node };
+				return { node: node.constructor.name, data: node.data };
 			});
 
 			const cbb = mappedNodes.find(x => x.data.typeId === 3);

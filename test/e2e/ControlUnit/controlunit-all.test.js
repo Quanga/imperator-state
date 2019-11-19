@@ -32,7 +32,7 @@ describe("INTEGRATION - Units", async function() {
 
 			client.login({
 				username: "_ADMIN",
-				password: "happn"
+				password: "happn",
 			});
 		});
 
@@ -43,7 +43,7 @@ describe("INTEGRATION - Units", async function() {
 
 				client = await new Mesh.MeshClient({
 					secure: true,
-					port: 55000
+					port: 55000,
 				});
 
 				await AsyncLogin();
@@ -61,11 +61,11 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 12, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1]
+						data: [0, 0, 0, 0, 0, 0, 0, 1],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 		});
 
@@ -78,21 +78,21 @@ describe("INTEGRATION - Units", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 12, {
-						data: [0, 0, 0, 0, 0, 0, 0, 0]
+						data: [0, 0, 0, 0, 0, 0, 0, 0],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 12, {
-						data: [0, 0, 0, 0, 0, 0, 1, 1]
+						data: [0, 0, 0, 0, 0, 0, 1, 1],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await utils.holdTillDrained(sendQueue);
@@ -106,31 +106,31 @@ describe("INTEGRATION - Units", async function() {
 
 			let ibc = result[0];
 
-			expect(ibc.communicationStatus).to.equal(1);
-			expect(ibc.fireButton).to.equal(0);
-			expect(ibc.keySwitchStatus).to.equal(1);
-			expect(ibc.isolationRelay).to.equal(1);
+			expect(ibc.data.communicationStatus).to.equal(1);
+			expect(ibc.data.fireButton).to.equal(0);
+			expect(ibc.data.keySwitchStatus).to.equal(1);
+			expect(ibc.data.isolationRelay).to.equal(1);
 		});
 
 		it("can process a key switch disarmed on IBC 8 where previous state armed", async function() {
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 12, {
-						data: [0, 0, 0, 0, 0, 0, 1, 1]
+						data: [0, 0, 0, 0, 0, 0, 1, 1],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
 					packet: new PacketConstructor(8, 12, {
-						data: [0, 0, 0, 0, 0, 0, 1, 0]
+						data: [0, 0, 0, 0, 0, 0, 1, 0],
 					}).packet,
-					createdAt: Date.now()
+					createdAt: Date.now(),
 				},
-				wait: 300
+				wait: 300,
 			});
 
 			await utils.holdTillDrained(sendQueue);
@@ -143,10 +143,10 @@ describe("INTEGRATION - Units", async function() {
 
 			let ibc = result[0];
 
-			expect(ibc.communicationStatus).to.equal(1);
-			expect(ibc.fireButton).to.equal(0);
-			expect(ibc.keySwitchStatus).to.equal(0);
-			expect(ibc.isolationRelay).to.equal(1);
+			expect(ibc.data.communicationStatus).to.equal(1);
+			expect(ibc.data.fireButton).to.equal(0);
+			expect(ibc.data.keySwitchStatus).to.equal(0);
+			expect(ibc.data.isolationRelay).to.equal(1);
 		});
 	});
 });

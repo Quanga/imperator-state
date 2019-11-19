@@ -44,6 +44,7 @@
     "byte-data": "^16.0.3",
     "clone": "^2.1.2",
     "deep-object-diff": "^1.1.0",
+    "eslint": "^6.6.0",
     "find-process": "^1.4.2",
     "happn-3": "^10.4.3",
     "happn-logger": "git+https://github.com/Quanga/happn-logger.git",

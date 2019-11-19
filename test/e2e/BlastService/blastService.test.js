@@ -63,7 +63,7 @@ describe("E2E - Services", async function() {
 			endpointPassword: "happn",
 			systemFiringTime: 20000,
 			systemReportTime: 30000,
-			communicationCheckInterval: 300000
+			communicationCheckInterval: 300000,
 		};
 
 		it("can create a new blast model from a snapshot", async function() {
