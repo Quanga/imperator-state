@@ -45,7 +45,7 @@ module.exports = {
 				MODE: systemModeTypes.HYDRA,
 				EDGE_LOCAL_IP: "0.0.0.0",
 				USE_ENDPOINT: true,
-				ENDPOINT_NAME: "mesh-edge-002",
+				ENDPOINT_NAME: "mesh-edge-001",
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				SYSTEM_FIRING_TIME: 120000,
@@ -122,8 +122,7 @@ module.exports = {
 			exec_mode: "fork",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production003 && pm2 save",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production003 && pm2 save",
 		},
 		"production-mesh-edge-004": {
 			user: "admin",
@@ -132,8 +131,7 @@ module.exports = {
 			exec_mode: "fork",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save",
 		},
 		"production-mesh-edge-005": {
 			user: "admin",
@@ -141,8 +139,7 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/admin/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env production004 && pm2 save",
 		},
 		production_aws: {
 			user: "ec2-user",
@@ -151,8 +148,7 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/ec2-user/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save",
 		},
 		nickvm: {
 			user: "hydrasim",
@@ -160,8 +156,7 @@ module.exports = {
 			ref: "origin/stage-1.4",
 			repo: "git@github.com:aecelectronics/Happner3_State.git",
 			path: "/home/hydrasim/state",
-			"post-deploy":
-				"npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save",
+			"post-deploy": "npm install && pm2 reload ecosystem.config.js --env productionAWS && pm2 save",
 		},
 	},
 };

@@ -19,26 +19,26 @@ describe("UNIT - Models", async function() {
 			units: {
 				"115": {
 					data: { serial: 115, keySwitchStatus: 0 },
-					units: { unitsCount: 12 }
+					units: { unitsCount: 12 },
 				},
 				"123": {
 					data: { serial: 123, keySwitchStatus: 1 },
 					units: { unitsCount: 2 },
 					children: {
 						"1": { data: { serial: 21, detonatorStatus: 1 } },
-						"2": { data: { serial: 31, detonatorStatus: 1 } }
-					}
+						"2": { data: { serial: 31, detonatorStatus: 1 } },
+					},
 				},
 				"156": {
 					data: { serial: 156, keySwitchStatus: 0 },
-					units: { unitsCount: 0 }
-				}
-			}
+					units: { unitsCount: 0 },
+				},
+			},
 		};
 		it("will fail to create a BlastModel with no args", async () => {
 			expect(() => new BlastModel()).to.throw(
 				Error,
-				"All arguments must be specified to create a Blast Model"
+				"All arguments must be specified to create a Blast Model",
 			);
 		});
 
@@ -47,12 +47,7 @@ describe("UNIT - Models", async function() {
 			const reportingDuration = 5000;
 			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(
-				startSnapshot,
-				createdAt,
-				firingDuration,
-				reportingDuration
-			);
+			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
 
 			expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_FIRING);
 			expect(blastModel.data.createdAt).to.be.equal(createdAt);
@@ -62,7 +57,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }]
+				events: [{ diff: { fireButton: 0 } }],
 			};
 			await util.timer(1000);
 			blastModel.addLog(logObj);
@@ -88,12 +83,7 @@ describe("UNIT - Models", async function() {
 			const reportingDuration = 10000;
 			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(
-				startSnapshot,
-				createdAt,
-				firingDuration,
-				reportingDuration
-			);
+			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
 
 			await util.timer(500);
 
@@ -105,7 +95,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }]
+				events: [{ diff: { fireButton: 0 } }],
 			};
 
 			await util.timer(1000);
@@ -126,7 +116,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 1000,
-				events: [{ diff: { communicationState: 1 } }]
+				events: [{ diff: { communicationState: 1 } }],
 			};
 
 			blastModel.addLog(logObj);
@@ -139,7 +129,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 2000,
-				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }]
+				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }],
 			};
 
 			blastModel.addLog(logObj);
@@ -152,7 +142,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 3000,
-				events: [{ windowId: 2, diff: { detonatorStatus: 1 } }]
+				events: [{ windowId: 2, diff: { detonatorStatus: 1 } }],
 			};
 
 			blastModel.addLog(logObj);
@@ -171,12 +161,7 @@ describe("UNIT - Models", async function() {
 			const reportingDuration = 10000;
 			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(
-				startSnapshot,
-				createdAt,
-				firingDuration,
-				reportingDuration
-			);
+			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
 
 			const holdUntil = () =>
 				new Promise(resolve => {
@@ -196,7 +181,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }]
+				events: [{ diff: { fireButton: 0 } }],
 			};
 
 			await util.timer(1000);
@@ -208,7 +193,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 2000,
-				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }]
+				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }],
 			};
 
 			blastModel.addLog(logObj);
@@ -229,12 +214,7 @@ describe("UNIT - Models", async function() {
 			const reportingDuration = 10000;
 			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(
-				startSnapshot,
-				createdAt,
-				firingDuration,
-				reportingDuration
-			);
+			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
 
 			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRING);
 			expect(blastModel.watchLists.units).to.have.property("123");
@@ -245,7 +225,7 @@ describe("UNIT - Models", async function() {
 				serial: 42,
 				typeId: 0,
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }]
+				events: [{ diff: { fireButton: 0 } }],
 			};
 
 			await util.timer(1000);
@@ -258,7 +238,7 @@ describe("UNIT - Models", async function() {
 				serial: 123,
 				typeId: 3,
 				createdAt: createdAt + 15000,
-				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }]
+				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }],
 			};
 
 			blastModel.addLog(logObj);
