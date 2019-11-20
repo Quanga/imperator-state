@@ -14,10 +14,7 @@ describe("E2E - Services", function() {
 				happn: {
 					host: "localhost",
 					port: 55004,
-					setOptions: {
-						timeout: 40000,
-					},
-					persist: true,
+					setOptions: { timeout: 40000 },
 					secure: true,
 					adminPassword: "happn",
 					services: {

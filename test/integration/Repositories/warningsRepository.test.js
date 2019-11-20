@@ -29,7 +29,7 @@ const override = {
 	endpointPassword: "happn",
 	systemFiringTime: 120000,
 	systemReportTime: 180000,
-	communicationCheckInterval: 300000
+	communicationCheckInterval: 300000,
 };
 
 describe("INTEGRATION - Repositories", async function() {
@@ -57,11 +57,12 @@ describe("INTEGRATION - Repositories", async function() {
 
 		it("it can add warnings to the Warning Repository and get with no TO or FROM", async () => {
 			const createdAt = 10000;
+
 			for (let l = 0; l < 10; l++) {
 				let warningModel = new WarningModel({
 					createdAt: createdAt + l * 10,
 					serial: 33,
-					typeId: 3
+					typeId: 3,
 				});
 				warningModel.setWarning("test");
 				await mesh.exchange.warningsRepository.set(warningModel);
@@ -80,12 +81,15 @@ describe("INTEGRATION - Repositories", async function() {
 		});
 
 		it("it can get a warning by id from the warnings Repo", async () => {
+			let get2 = await mesh.exchange.warningsRepository.get("*");
+			console.log("check start", get2);
+
 			const createdAt = 10000;
 			for (let l = 0; l < 10; l++) {
 				let warningModel = new WarningModel({
 					createdAt: createdAt + l * 10,
 					serial: 33,
-					typeId: 3
+					typeId: 3,
 				});
 				warningModel.setWarning("test");
 				await mesh.exchange.warningsRepository.set(warningModel);
@@ -94,16 +98,15 @@ describe("INTEGRATION - Repositories", async function() {
 
 			let get = await mesh.exchange.warningsRepository.get("*");
 			let id = get[4].id;
-			console.log("ID is", id);
 
 			let getItem = await mesh.exchange.warningsRepository.getById(id);
 
-			getItem.ackBy = "tester user";
+			let item = getItem[0];
+			item.ackBy = "tester user";
 
-			delete getItem._meta;
-			await mesh.exchange.warningsRepository.set(getItem);
+			delete item._meta;
+			await mesh.exchange.warningsRepository.set(item);
 			let res = await mesh.exchange.warningsRepository.get("*");
-			console.log("res", res);
 
 			expect(res.length).to.be.equal(10);
 			expect(get[4].ackBy).to.be.null;

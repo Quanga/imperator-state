@@ -25,7 +25,7 @@ describe("INTEGRATION - Repositories", async function() {
 		new Promise((resolve, reject) => {
 			client = new Mesh.MeshClient({
 				secure: true,
-				port: 55000
+				port: 55000,
 			});
 
 			client.on("login/allow", () => resolve());
@@ -33,7 +33,7 @@ describe("INTEGRATION - Repositories", async function() {
 			client.on("login/error", () => reject());
 			client.login({
 				username: "_ADMIN",
-				password: "happn"
+				password: "happn",
 			});
 		});
 
@@ -59,12 +59,6 @@ describe("INTEGRATION - Repositories", async function() {
 			client.disconnect();
 			await serverHelper.stopServer();
 			// await serialPortHelper.destroy();
-		});
-
-		xit("can initialize the nodeRepository", async () => {
-			const { nodeRepository } = client.exchange;
-
-			nodeRepository.initialize();
 		});
 
 		it("can delete all node path data", async function() {
@@ -120,7 +114,7 @@ describe("INTEGRATION - Repositories", async function() {
 				cableFault: 0,
 				isolationRelay: 0,
 				earthLeakage: 0,
-				blastArmed: 0
+				blastArmed: 0,
 			};
 
 			let loadData = () =>
@@ -155,7 +149,7 @@ describe("INTEGRATION - Repositories", async function() {
 				cableFault: 0,
 				isolationRelay: 0,
 				earthLeakage: 0,
-				blastArmed: 0
+				blastArmed: 0,
 			};
 
 			const getAtPath = () =>
@@ -188,7 +182,7 @@ describe("INTEGRATION - Repositories", async function() {
 				cableFault: 0,
 				isolationRelay: 0,
 				earthLeakage: 0,
-				blastArmed: 0
+				blastArmed: 0,
 			};
 
 			await nodeRepository
@@ -211,7 +205,7 @@ describe("INTEGRATION - Repositories", async function() {
 						return;
 					}
 					//eventRef = _eventRef;
-				}
+				},
 			);
 
 			let controlUnit = {
@@ -228,7 +222,7 @@ describe("INTEGRATION - Repositories", async function() {
 				cableFault: 0,
 				isolationRelay: 0,
 				earthLeakage: 0,
-				blastArmed: 0
+				blastArmed: 0,
 			};
 
 			const getAtPath = () =>
@@ -261,7 +255,7 @@ describe("INTEGRATION - Repositories", async function() {
 				cableFault: 0,
 				isolationRelay: 1,
 				earthLeakage: 0,
-				blastArmed: 0
+				blastArmed: 0,
 			};
 			let result2 = await nodeRepository.updateNodeData(controlUnit);
 			await expect(result2.keySwitchStatus).to.eql(1);

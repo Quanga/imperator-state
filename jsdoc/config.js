@@ -4,12 +4,12 @@ module.exports = {
 	plugins: ["plugins/markdown", "node_modules/jsdoc-mermaid", "node_modules/better-docs/category"],
 	tags: {
 		allowUnknownTags: ["category", "mermaid"],
-		dictionaries: ["jsdoc", "closure"]
+		dictionaries: ["jsdoc", "closure"],
 	},
 	source: {
 		include: ["lib", "app.js", "server.js"],
 		includePattern: ".+\\.js(doc|x)?$",
-		excludePattern: "(^|\\/|\\\\)_"
+		excludePattern: "(^|\\/|\\\\)_",
 	},
 	opts: {
 		encoding: "utf8",
@@ -18,16 +18,16 @@ module.exports = {
 		recurse: true,
 		verbose: true,
 		//		template: "node_modules/better-docs",
-		template: "./jsdoc-template"
+		template: "./jsdoc-template",
 	},
 	templates: {
 		referenceTitle: "State Server API",
 		disableSort: false,
 		collapse: false,
 		resources: {
-			"happner-2": "https://github.com/happner/happner-2"
-		}
-	}
+			"happner-2": "https://github.com/happner/happner-2",
+		},
+	},
 	// templates: {
 	// 	cleverLinks: false,
 	// 	monospaceLinks: false
