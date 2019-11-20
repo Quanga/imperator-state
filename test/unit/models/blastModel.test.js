@@ -44,10 +44,15 @@ describe("UNIT - Models", async function() {
 
 		it("can create a new blastModel with a 5 second report time", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 5000;
-			const firingDuration = 1000;
+			const opts = {
+				reportingDuration: 5000,
+				firingDuration: 1000,
+			};
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
+			const blastModel = BlastModel.create(createdAt)
+				.withOpts(opts)
+				.withSnapshot(startSnapshot)
+				.start();
 
 			expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_FIRING);
 			expect(blastModel.data.createdAt).to.be.equal(createdAt);
@@ -80,10 +85,16 @@ describe("UNIT - Models", async function() {
 
 		it("can stop a blast when all dets and units return and not use timeout", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 10000;
-			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
+			const opts = {
+				reportingDuration: 10000,
+				firingDuration: 1000,
+			};
+
+			const blastModel = BlastModel.create(createdAt)
+				.withOpts(opts)
+				.withSnapshot(startSnapshot)
+				.start();
 
 			await util.timer(500);
 
@@ -158,14 +169,19 @@ describe("UNIT - Models", async function() {
 
 		it("leaving one det it will cause report to use the timeout rather", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 10000;
-			const firingDuration = 1000;
+			const opts = {
+				reportingDuration: 10000,
+				firingDuration: 1000,
+			};
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
+			const blastModel = BlastModel.create(createdAt)
+				.withOpts(opts)
+				.withSnapshot(startSnapshot)
+				.start();
 
 			const holdUntil = () =>
 				new Promise(resolve => {
-					blastModel.event.on(blastModelEvents.BLASTMODEL_LOG, data => {
+					blastModel.on(blastModelEvents.BLASTMODEL_LOG, data => {
 						if (data === blastModelStates.BLAST_TIMER_COMPLETE) {
 							console.log("BLAST_DATA_COMPLETE");
 							resolve();
@@ -211,11 +227,15 @@ describe("UNIT - Models", async function() {
 
 		it("a log with a createdAt time later than the blast completed will stop the blast", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 10000;
-			const firingDuration = 1000;
+			const opts = {
+				reportingDuration: 10000,
+				firingDuration: 1000,
+			};
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
-
+			const blastModel = BlastModel.create(createdAt)
+				.withOpts(opts)
+				.withSnapshot(startSnapshot)
+				.start();
 			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRING);
 			expect(blastModel.watchLists.units).to.have.property("123");
 			expect(blastModel.watchLists.units[123].length).to.eql(2);
