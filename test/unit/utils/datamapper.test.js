@@ -29,9 +29,9 @@ describe("UNIT - Utils", async function() {
 					earthLeakage: 0,
 					ledState: 6,
 					childCount: 2,
-					loadCount: 2
+					loadCount: 2,
 				},
-				meta: { storedPacketDate: 1312312312 }
+				meta: { storedPacketDate: 1312312312 },
 			};
 
 			const next = {
@@ -55,9 +55,9 @@ describe("UNIT - Utils", async function() {
 					earthLeakage: 0,
 					ledState: 6,
 					childCount: 2,
-					loadCount: 2
+					loadCount: 2,
 				},
-				meta: { storedPacketDate: 231231231 }
+				meta: { storedPacketDate: 231231231 },
 			};
 
 			let result = await datamapper.getUpdates(next, previous);
@@ -90,8 +90,8 @@ describe("UNIT - Utils", async function() {
 					cableFault: 0,
 					earthLeakage: 0,
 					ledState: 6,
-					childCount: 2
-				}
+					childCount: 2,
+				},
 			};
 
 			const next = {
@@ -99,7 +99,7 @@ describe("UNIT - Utils", async function() {
 					serial: 13,
 					typeId: 3,
 					parentType: 0,
-					createdAt: 1560599359030,
+					createdAt: null,
 					modifiedAt: 1560599359037,
 					path: "3/13",
 					communicationStatus: 1,
@@ -114,12 +114,11 @@ describe("UNIT - Utils", async function() {
 					cableFault: 0,
 					earthLeakage: 0,
 					ledState: 6,
-					childCount: 2
-				}
+					childCount: 2,
+				},
 			};
 
 			let result = await datamapper.getUpdates(next, previous);
-			console.log(result);
 			expect(result.shaftFault).to.eql(1);
 			expect(result.keySwitchStatus).to.eql(1);
 		});
@@ -148,8 +147,8 @@ describe("UNIT - Utils", async function() {
 					cableFault: 0,
 					earthLeakage: 0,
 					ledState: 6,
-					childCount: 2
-				}
+					childCount: 2,
+				},
 			};
 
 			const next = {
@@ -173,14 +172,14 @@ describe("UNIT - Utils", async function() {
 					cableFault: 0,
 					earthLeakage: 0,
 					ledState: 6,
-					childCount: 2
-				}
+					childCount: 2,
+				},
 			};
 
 			let result = await datamapper.getUpdates(next, previous);
 
 			console.log(result);
-			//expect(result.path).to.eql("3/13");
+			expect(result.path).to.eql("3/13");
 		});
 	});
 });

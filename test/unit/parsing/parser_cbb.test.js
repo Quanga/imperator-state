@@ -37,8 +37,8 @@ describe("UNIT - Parser", async function() {
 					ledState: null,
 					childCount: null,
 					packetSinceLastFiring: null,
-					lostPackets: null
-				}
+					lostPackets: null,
+				},
 			},
 			{
 				itemType: "EDDModel",
@@ -58,8 +58,8 @@ describe("UNIT - Parser", async function() {
 					tagged: null,
 					logged: null,
 					delay: null,
-					windowId: 97
-				}
+					windowId: 97,
+				},
 			},
 			{
 				itemType: "EDDModel",
@@ -79,8 +79,8 @@ describe("UNIT - Parser", async function() {
 					tagged: null,
 					logged: null,
 					delay: null,
-					windowId: 98
-				}
+					windowId: 98,
+				},
 			},
 			{
 				itemType: "EDDModel",
@@ -100,8 +100,8 @@ describe("UNIT - Parser", async function() {
 					tagged: null,
 					logged: null,
 					delay: null,
-					windowId: 99
-				}
+					windowId: 99,
+				},
 			},
 			{
 				itemType: "EDDModel",
@@ -121,9 +121,9 @@ describe("UNIT - Parser", async function() {
 					tagged: null,
 					logged: null,
 					delay: null,
-					windowId: 100
-				}
-			}
+					windowId: 100,
+				},
+			},
 		];
 
 		const packetTemplate = new PacketTemplate();
@@ -132,11 +132,11 @@ describe("UNIT - Parser", async function() {
 		it("can create an array of units containing CBB and EDD data from a packet", async function() {
 			const testObj = {
 				packet: "aaaa1c0400431b43e93c611b43e93d621b43e93e631b43e93f6414ac",
-				createdAt: now
+				createdAt: now,
 			};
 			const valid = await validator.validatePacket(
 				testObj,
-				packetTemplate.incomingCommTemplate[4].chunk
+				packetTemplate.incomingCommTemplate[4].chunk,
 			);
 
 			const parsedPacketArr = await parser.parse(valid);
@@ -145,7 +145,7 @@ describe("UNIT - Parser", async function() {
 			const res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
-					itemData: item.data
+					itemData: item.data,
 				};
 			});
 
@@ -178,8 +178,8 @@ describe("UNIT - Parser", async function() {
 						ledState: null,
 						childCount: null,
 						packetSinceLastFiring: null,
-						lostPackets: null
-					}
+						lostPackets: null,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -199,9 +199,9 @@ describe("UNIT - Parser", async function() {
 						tagged: null,
 						logged: null,
 						delay: null,
-						windowId: 255
-					}
-				}
+						windowId: 255,
+					},
+				},
 			];
 
 			const packetTemplate = new PacketTemplate();
@@ -210,12 +210,12 @@ describe("UNIT - Parser", async function() {
 
 			const testObj = {
 				packet: "aaaa0d040043ffffffffff8a44",
-				createdAt: now
+				createdAt: now,
 			};
 
 			const valid = await validator.validatePacket(
 				testObj,
-				packetTemplate.incomingCommTemplate[4].chunk
+				packetTemplate.incomingCommTemplate[4].chunk,
 			);
 
 			const parsedPacketArr = await parser.parse(valid);
@@ -224,7 +224,7 @@ describe("UNIT - Parser", async function() {
 			const res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
-					itemData: item.data
+					itemData: item.data,
 				};
 			});
 
