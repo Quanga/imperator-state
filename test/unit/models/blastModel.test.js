@@ -5,7 +5,6 @@ chai.use(require("chai-match"));
 const util = require("../../helpers/utils");
 
 const BlastModel = require("../../../lib/models/blastModel");
-const { blastModelEvents } = require("../../../lib/constants/eventConstants");
 const { blastModelStates } = require("../../../lib/constants/stateConstants");
 const { eventServiceLogTypes } = require("../../../lib/constants/typeConstants");
 
@@ -35,12 +34,6 @@ describe("UNIT - Models", async function() {
 				},
 			},
 		};
-		it("will fail to create a BlastModel with no args", async () => {
-			expect(() => new BlastModel()).to.throw(
-				Error,
-				"All arguments must be specified to create a Blast Model",
-			);
-		});
 
 		it("can create a new blastModel with a 5 second report time", async function() {
 			const createdAt = Date.now();
@@ -179,16 +172,6 @@ describe("UNIT - Models", async function() {
 				.withSnapshot(startSnapshot)
 				.start();
 
-			const holdUntil = () =>
-				new Promise(resolve => {
-					blastModel.on(blastModelEvents.BLASTMODEL_LOG, data => {
-						if (data === blastModelStates.BLAST_TIMER_COMPLETE) {
-							console.log("BLAST_DATA_COMPLETE");
-							resolve();
-						}
-					});
-				});
-
 			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRING);
 			expect(blastModel.watchLists.units).to.have.property("123");
 
@@ -218,7 +201,15 @@ describe("UNIT - Models", async function() {
 
 			await util.timer(1000);
 
-			await holdUntil();
+			await new Promise(resolve => {
+				blastModel.on("log", data => {
+					console.log("HEARING", data);
+					if (data === blastModelStates.BLAST_TIMER_COMPLETE) {
+						console.log("BLAST_DATA_COMPLETE");
+						resolve();
+					}
+				});
+			});
 			//console.log(JSON.stringify(await blastModel.getBlastReport(), null, 4));
 			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_TIMER_COMPLETE);
 			expect(blastModel.data.blastClosed).to.be.equal(createdAt + 11000);
