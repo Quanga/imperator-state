@@ -46,8 +46,8 @@ describe("UNIT - Parser", async function() {
 						ledState: 8,
 						childCount: 100,
 						lostPackets: null,
-						packetSinceLastFiring: null
-					}
+						packetSinceLastFiring: null,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -67,8 +67,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 1500,
-						windowId: 16
-					}
+						windowId: 16,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -88,8 +88,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 1600,
-						windowId: 17
-					}
+						windowId: 17,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -109,8 +109,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 1700,
-						windowId: 18
-					}
+						windowId: 18,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -130,8 +130,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 1800,
-						windowId: 19
-					}
+						windowId: 19,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -151,8 +151,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 1900,
-						windowId: 20
-					}
+						windowId: 20,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -172,8 +172,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2000,
-						windowId: 21
-					}
+						windowId: 21,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -193,8 +193,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2100,
-						windowId: 22
-					}
+						windowId: 22,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -214,8 +214,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2200,
-						windowId: 23
-					}
+						windowId: 23,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -235,8 +235,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2300,
-						windowId: 24
-					}
+						windowId: 24,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -256,8 +256,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2400,
-						windowId: 25
-					}
+						windowId: 25,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -277,8 +277,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2500,
-						windowId: 26
-					}
+						windowId: 26,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -298,8 +298,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2600,
-						windowId: 27
-					}
+						windowId: 27,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -319,8 +319,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2700,
-						windowId: 28
-					}
+						windowId: 28,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -340,8 +340,8 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2800,
-						windowId: 29
-					}
+						windowId: 29,
+					},
 				},
 				{
 					itemType: "EDDModel",
@@ -361,9 +361,9 @@ describe("UNIT - Parser", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2900,
-						windowId: 30
-					}
-				}
+						windowId: 30,
+					},
+				},
 			];
 			process.env.MODE = "AXXIS100";
 			const DataListParser = require("../../../lib/parsers/deviceDataParser");
@@ -376,12 +376,12 @@ describe("UNIT - Parser", async function() {
 			const testObj = {
 				packet:
 					"aaaa4805004364008a211001dc05110140061201a4061301080714016c071501d00716013408170198081801fc08190160091a01c4091b01280a1c018c0a1d01f00a1e01540b8f97",
-				createdAt: createTime
+				createdAt: createTime,
 			};
 
 			const valid = await validator.validatePacket(
 				testObj,
-				packetTemplate.incomingCommTemplate[5].chunk
+				packetTemplate.incomingCommTemplate[5].chunk,
 			);
 
 			let parsedPacketArr = await parser.parse(valid);
@@ -390,7 +390,7 @@ describe("UNIT - Parser", async function() {
 			let res = result.map(item => {
 				return {
 					itemType: item.constructor.name,
-					itemData: item.data
+					itemData: item.data,
 				};
 			});
 
@@ -409,8 +409,8 @@ describe("UNIT - Parser", async function() {
 			const p2 = [
 				{
 					packet: "aaaa0c05004d000d002a328c",
-					createdAt: 1567152123000
-				}
+					createdAt: 1567152123000,
+				},
 			];
 
 			// const testObj = {
@@ -426,7 +426,7 @@ describe("UNIT - Parser", async function() {
 
 				const valid = await validator.validatePacket(
 					packetOb,
-					packetTemplate.incomingCommTemplate[5].chunk
+					packetTemplate.incomingCommTemplate[5].chunk,
 				);
 
 				let parsedPacketArr = await parser.parse(valid);
@@ -435,7 +435,7 @@ describe("UNIT - Parser", async function() {
 				let res = result.map(item => {
 					return {
 						itemType: item.constructor.name,
-						itemData: item.data
+						itemData: item.data,
 					};
 				});
 				//console.log(res);

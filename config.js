@@ -129,8 +129,17 @@ class Config {
 									password: "happn",
 								},
 							},
+							// "mesh-mailer": {
+							// 	reconnect: { max: 2000, retries: 100 },
+							// 	config: {
+							// 		port: 55006,
+							// 		username: "_ADMIN",
+							// 		password: "happn",
+							// 	},
+							// },
 					  }
 					: {},
+
 			modules: {
 				app: { path: `${__dirname}/app.js` },
 				blastRepository: { path: `${__dirname}/lib/repositories/blastRepository.js` },
