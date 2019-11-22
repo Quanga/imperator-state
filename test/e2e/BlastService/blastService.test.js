@@ -13,10 +13,30 @@ const Config = require("../../../config");
 
 const utils = require("../../helpers/utils");
 describe("E2E - Services", async function() {
-	this.timeout(60000);
+	this.timeout(80000);
 	const simData = new SimData();
-
+	process.env.MODE = "HYDRA";
 	context("Blast Service", async () => {
+		const override = {
+			systemMode: "HYDRA",
+			logLevel: "info",
+			name: "edge_state",
+			db: "./edge.db",
+			host: "0.0.0.0",
+			port: 55007,
+			logFile: "./test_edge.log",
+			useEndpoint: false,
+			endpointName: "edge_ssot",
+			endpointIP: "0.0.0.0",
+			endpointPort: 55008,
+			endpointCheckInterval: 3000,
+			endpointUsername: "UNIT001",
+			endpointPassword: "happn",
+			systemFiringTime: 20000,
+			systemReportTime: 30000,
+			communicationCheckInterval: 300000,
+		};
+
 		let mesh, config;
 
 		const sendQueue = new Queue((task, cb) => {
@@ -44,29 +64,10 @@ describe("E2E - Services", async function() {
 		});
 
 		after(async () => {
-			await mesh.stop();
+			mesh.stop();
 		});
 
-		const override = {
-			logLevel: "info",
-			name: "edge_state",
-			db: "./edge.db",
-			host: "0.0.0.0",
-			port: 55007,
-			logFile: "./test_edge.log",
-			useEndpoint: false,
-			endpointName: "edge_ssot",
-			endpointIP: "0.0.0.0",
-			endpointPort: 55008,
-			endpointCheckInterval: 3000,
-			endpointUsername: "UNIT001",
-			endpointPassword: "happn",
-			systemFiringTime: 20000,
-			systemReportTime: 30000,
-			communicationCheckInterval: 300000,
-		};
-
-		it("can create a new blast model from a snapshot", async function() {
+		it("can create a new blast model from a snapshot", async () => {
 			const thisData = simData.createBlast1();
 			thisData.forEach(messageObj => sendQueue.push(messageObj));
 

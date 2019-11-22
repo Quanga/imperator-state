@@ -384,6 +384,8 @@ describe("INTEGRATION - Units", async function() {
 
 			const x = await client.exchange.logsRepository.get("*");
 			console.log(x);
+			const snapshot = await client.exchange.dataService.getSnapShot();
+			console.log(snapshot);
 		});
 
 		it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database3", async function() {
