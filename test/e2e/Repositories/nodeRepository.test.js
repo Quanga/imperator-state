@@ -7,12 +7,12 @@ const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 
-var Mesh = require("happner-2");
-const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("../../../lib/builders/packetConstructor");
 const util = require("../../helpers/utils");
 const Queue = require("better-queue");
 const Happner = require("happner-2");
-const Config = require("../../../config");
+const Config = require("../../../happner.config");
+const fields = require("../../../lib/configs/fields/fieldConstants");
 describe("E2E - Repository", async function() {
 	this.timeout(10000);
 
@@ -42,8 +42,6 @@ describe("E2E - Repository", async function() {
 			systemFiringTime: 120000,
 			systemReportTime: 180000,
 			communicationCheckInterval: 300000,
-			systemMode: "AXXIS100",
-			mode: "AXXIS100",
 		};
 
 		beforeEach(async () => {
@@ -69,9 +67,10 @@ describe("E2E - Repository", async function() {
 		it("can get the dets for a cbb by using the path", async function() {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(8, 8, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1],
-					}).packet,
+					packet: PktBldr.withCommand(8)
+						.withParent(8)
+						.withData([0, 0, 0, 0, 0, 0, 0, 1])
+						.build(),
 					createdAt: Date.now(),
 				},
 				wait: 300,
@@ -79,12 +78,13 @@ describe("E2E - Repository", async function() {
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
+					packet: PktBldr.withCommand(4)
+						.withParent(13)
+						.withData([
 							{ serial: 4423423, windowId: 1 },
 							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
+						])
+						.build(),
 					createdAt: Date.now(),
 				},
 				wait: 300,
@@ -92,8 +92,9 @@ describe("E2E - Repository", async function() {
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -105,8 +106,8 @@ describe("E2E - Repository", async function() {
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
+						])
+						.build(),
 					createdAt: Date.now(),
 				},
 				wait: 300,
@@ -114,8 +115,9 @@ describe("E2E - Repository", async function() {
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -127,8 +129,8 @@ describe("E2E - Repository", async function() {
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
-						],
-					}).packet,
+						])
+						.build(),
 					createdAt: Date.now(),
 				},
 				wait: 300,
@@ -138,9 +140,9 @@ describe("E2E - Repository", async function() {
 			await util.timer(2000);
 
 			const dets = await mesh.exchange.nodeRepository.get("3/13/*");
-			console.log(dets);
-			expect(dets[0].data.logged).to.eql(1);
-			expect(dets[0].data.detonatorStatus).to.eql(0);
+			console.log("DETS", dets);
+			expect(dets[1].data[fields.logged]).to.eql(1);
+			expect(dets[1].state[fields.communicationStatus]).to.eql(0);
 		});
 	});
 });

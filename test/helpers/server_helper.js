@@ -1,4 +1,3 @@
-//require("dotenv").config("../../.env");
 const { spawn } = require("child_process");
 var path = require("path");
 var libFolder = path.resolve(__dirname, "../../");
@@ -41,18 +40,15 @@ class ServerHelper {
 
 			console.log(":: STARTING SERVER............");
 
-			this.serverProc = await spawn(
-				"node",
-				[path.join(libFolder, "server.js"), args],
-				this.defaults
-			);
+			this.serverProc = await spawn("node", [path.join(libFolder, "server.js"), args], this.defaults);
 
 			await new Promise((resolve, reject) => {
 				this.serverProc.stdout.on("data", data => {
 					console.log(`${data}`);
 					this.emitter.emit("data", data);
 					if (
-						data.toString().match(/::::: APP STARTUP COMPLETE ::::::/g) ||
+						//data.toString().match(/::::: APP STARTUP COMPLETE ::::::/g) ||
+						data.toString().match(/listening at 0.0.0.0:55000/g) ||
 						data.toString().match(/SERVER SHUTDOWN/)
 					) {
 						resolve();

@@ -1,4 +1,4 @@
-const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("../../../lib/builders/packetConstructor");
 
 function BlastList() {}
 
@@ -10,9 +10,10 @@ BlastList.prototype.createBlast1 = function() {
 	//create a CCB
 	result.push({
 		message: {
-			packet: new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 0, 0],
-			}).packet,
+			packet: PktBldr.withCommand(8)
+				.withParent(8)
+				.withData([0, 0, 0, 0, 0, 0, 0, 0])
+				.build(),
 			createdAt: started,
 		},
 		wait: 1000,
@@ -21,16 +22,17 @@ BlastList.prototype.createBlast1 = function() {
 	//create CBB 13 with main=1 dc_supply=1
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 13, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(13)
+				.withData([
 					{
 						serial: 13,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 5000,
 		},
 		wait: 1000,
@@ -39,16 +41,17 @@ BlastList.prototype.createBlast1 = function() {
 	//create CBB 14 with main=1 dc_supply=1
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 14, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(14)
+				.withData([
 					{
 						serial: 14,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 15000,
 		},
 		wait: 1000,
@@ -57,16 +60,17 @@ BlastList.prototype.createBlast1 = function() {
 	//create CBB 15 with main=1 dc_supply=1
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 15, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(15)
+				.withData([
 					{
 						serial: 14,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 25000,
 		},
 		wait: 1000,
@@ -75,16 +79,17 @@ BlastList.prototype.createBlast1 = function() {
 	//create CBB 16 with main=1 dc_supply=1
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 16, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(16)
+				.withData([
 					{
 						serial: 14,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 35000,
 		},
 		wait: 1000,
@@ -93,12 +98,13 @@ BlastList.prototype.createBlast1 = function() {
 	//add 2 EDDs in list command to 13
 	result.push({
 		message: {
-			packet: new PacketConstructor(4, 13, {
-				data: [
+			packet: PktBldr.withCommand(4)
+				.withParent(13)
+				.withData([
 					{ serial: 4423423, windowId: 1 },
 					{ serial: 4523434, windowId: 2 },
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 45000,
 		},
 		wait: 1000,
@@ -107,12 +113,13 @@ BlastList.prototype.createBlast1 = function() {
 	//add 2 EDDs in list command to 14
 	result.push({
 		message: {
-			packet: new PacketConstructor(4, 14, {
-				data: [
+			packet: PktBldr.withCommand(4)
+				.withParent(14)
+				.withData([
 					{ serial: 4423478, windowId: 1 },
 					{ serial: 4523479, windowId: 2 },
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: Date.now(),
 		},
 		createdAt: started + 55000,
@@ -121,8 +128,9 @@ BlastList.prototype.createBlast1 = function() {
 	//add to 14 1 logged (first) and one tagged to the data of the EDDs
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 13, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(13)
+				.withData([
 					{
 						serial: 13,
 						childCount: 2,
@@ -139,8 +147,8 @@ BlastList.prototype.createBlast1 = function() {
 						rawData: [0, 0, 0, 0, 0, 1, 0, 0],
 						delay: 3000,
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 65000,
 		},
 		wait: 1000,
@@ -149,8 +157,9 @@ BlastList.prototype.createBlast1 = function() {
 	//add to 15 1 logged (first) and one tagged to the data of the EDDs
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 14, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(15)
+				.withData([
 					{
 						serial: 13,
 						childCount: 2,
@@ -167,8 +176,8 @@ BlastList.prototype.createBlast1 = function() {
 						rawData: [0, 0, 0, 0, 0, 1, 0, 0],
 						delay: 3000,
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 75000,
 		},
 		wait: 1000,
@@ -177,8 +186,9 @@ BlastList.prototype.createBlast1 = function() {
 	//turn the keyswitch on the CBB 14 which will arm it -
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 13, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(13)
+				.withData([
 					{
 						serial: 13,
 						childCount: 2,
@@ -195,8 +205,8 @@ BlastList.prototype.createBlast1 = function() {
 						rawData: [0, 1, 0, 0, 0, 1, 1, 0],
 						delay: 3000,
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 85000,
 		},
 		wait: 1000,
@@ -205,16 +215,17 @@ BlastList.prototype.createBlast1 = function() {
 	//turn the keyswitch on the CBB 16 which will arm it -
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 13, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(13)
+				.withData([
 					{
 						serial: 13,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 95000,
 		},
 		wait: 1000,
@@ -223,9 +234,10 @@ BlastList.prototype.createBlast1 = function() {
 	//arm the CCB
 	result.push({
 		message: {
-			packet: new PacketConstructor(8, 8, {
-				data: [0, 1, 0, 0, 0, 0, 0, 1],
-			}).packet,
+			packet: PktBldr.withCommand(8)
+				.withParent(8)
+				.withData([0, 1, 0, 0, 0, 0, 0, 1])
+				.build(),
 			createdAt: started + 100500,
 		},
 		wait: 1000,
@@ -234,9 +246,10 @@ BlastList.prototype.createBlast1 = function() {
 	//firebutton =i2 the CBB
 	result.push({
 		message: {
-			packet: new PacketConstructor(8, 8, {
-				data: [0, 1, 0, 0, 0, 1, 0, 1],
-			}).packet,
+			packet: PktBldr.withCommand(8)
+				.withParent(8)
+				.withData([0, 1, 0, 0, 0, 1, 0, 1])
+				.build(),
 			createdAt: started + 110500,
 		},
 		wait: 1000,
@@ -245,9 +258,10 @@ BlastList.prototype.createBlast1 = function() {
 	//fire button off
 	result.push({
 		message: {
-			packet: new PacketConstructor(8, 8, {
-				data: [0, 1, 0, 0, 0, 0, 0, 1],
-			}).packet,
+			packet: PktBldr.withCommand(8)
+				.withParent(8)
+				.withData([0, 1, 0, 0, 0, 0, 0, 1])
+				.build(),
 			createdAt: started + 210500,
 		},
 		wait: 2000,
@@ -257,9 +271,10 @@ BlastList.prototype.createBlast1 = function() {
 
 	result.push({
 		message: {
-			packet: new PacketConstructor(8, 8, {
-				data: [0, 0, 0, 0, 0, 0, 0, 0],
-			}).packet,
+			packet: PktBldr.withCommand(8)
+				.withParent(8)
+				.withData([0, 0, 0, 0, 0, 0, 0, 0])
+				.build(),
 			createdAt: started + 230500,
 		},
 		wait: 2000,
@@ -268,8 +283,9 @@ BlastList.prototype.createBlast1 = function() {
 	//post blast return from the CBB
 	result.push({
 		message: {
-			packet: new PacketConstructor(5, 13, {
-				data: [
+			packet: PktBldr.withCommand(5)
+				.withParent(13)
+				.withData([
 					{
 						serial: 13,
 						childCount: 0,
@@ -286,8 +302,8 @@ BlastList.prototype.createBlast1 = function() {
 						rawData: [0, 1, 1, 1, 1, 0, 0, 1],
 						delay: 3000,
 					},
-				],
-			}).packet,
+				])
+				.build(),
 			createdAt: started + 330500,
 		},
 		wait: 1000,

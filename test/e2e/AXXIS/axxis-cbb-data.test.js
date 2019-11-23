@@ -3,11 +3,22 @@ const expect = chai.expect;
 chai.use(require("chai-match"));
 
 const ServerHelper = require("../../helpers/server_helper");
-const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("../../../lib/builders/packetConstructor");
 const Queue = require("better-queue");
 const Mesh = require("happner-2");
 
 const util = require("../../helpers/utils");
+const fields = require("../../../lib/configs/fields/fieldConstants");
+const {
+	typeId,
+	serial,
+	communicationStatus,
+	childCount,
+	windowId,
+	delay,
+	keySwitchStatus,
+} = fields;
+const IntToIP = require("ip-to-int");
 
 describe("INTEGRATION - Units", async function() {
 	this.timeout(15000);
@@ -22,6 +33,8 @@ describe("INTEGRATION - Units", async function() {
 	});
 
 	context("CBB100 data test - 05 Command", async () => {
+		const createdAt = Date.now();
+
 		before(async () => {
 			await serverHelper.startServer("test");
 
@@ -29,7 +42,6 @@ describe("INTEGRATION - Units", async function() {
 				secure: true,
 				port: 55000,
 			});
-
 			await util.asyncLogin(client);
 		});
 
@@ -41,12 +53,13 @@ describe("INTEGRATION - Units", async function() {
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(8, 8, {
-						data: [0, 0, 0, 0, 0, 0, 0, 1],
-					}).packet,
-					createdAt: Date.now(),
+					packet: PktBldr.withCommand(8)
+						.withParent(8)
+						.withData([0, 0, 0, 0, 0, 0, 0, 1])
+						.build(),
+					createdAt,
 				},
-				wait: 300,
+				wait: 600,
 			});
 		});
 
@@ -58,37 +71,40 @@ describe("INTEGRATION - Units", async function() {
 		it("can process a packet with CBBs Data 1 where no CBBs are currently in database", async () => {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 0,
 								ledState: 6,
 								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
-			await util.timer(2000);
+			await util.timer(1000);
 
 			let resultPresist = await client.exchange.nodeRepository.get("*");
 			let resultDataService = await client.exchange.dataService.getSnapShot();
+
 			expect(resultPresist).to.be.instanceOf(Array);
 			expect(resultPresist.length).to.be.equal(2);
 
 			let cbb = await resultPresist.find(
-				unit => parseInt(unit.data.serial) === 13 && unit.data.typeId === 3,
+				unit => parseInt(unit.meta[serial]) === 13 && unit.meta[typeId] === 3,
 			);
 
-			expect(cbb.data.communicationStatus).to.be.equal(1); // communication status
-			expect(cbb.data.childCount).to.be.equal(0);
-			expect(resultDataService.units["13"].data.communicationStatus).to.be.equal(1);
-			expect(resultDataService.units["13"].data.childCount).to.be.equal(0);
+			expect(cbb.state[communicationStatus]).to.be.equal(1); // communication status
+			expect(cbb.data[childCount]).to.be.equal(0);
+
+			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(1);
+			expect(resultDataService[3][13].data[childCount]).to.be.equal(0);
 
 			let snapshot = await client.exchange.dataService.getSnapShot();
 			console.log(JSON.stringify(snapshot));
@@ -97,21 +113,23 @@ describe("INTEGRATION - Units", async function() {
 		it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
+					packet: PktBldr.withCommand(4)
+						.withParent(13)
+						.withData([
 							{ serial: 4423423, windowId: 1 },
 							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -123,9 +141,9 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
@@ -138,13 +156,13 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 
-			const cbb = resultPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
-			const edd1 = resultPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
+			const cbb = resultPersist.find(x => x.meta[serial] === 13 && x.meta[typeId] === 3);
+			const edd1 = resultPersist.find(x => x.meta[serial] === "0.69.5.170" && x.meta[typeId] === 4);
 
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
-			expect(edd1.data.windowId).to.equal(2); // communication status
-			expect(edd1.data.delay).to.equal(2000); // communication status
-			expect(cbb.data.childCount).to.equal(2);
+			expect(cbb.state[communicationStatus]).to.equal(1);
+			expect(edd1.meta[windowId]).to.equal(2);
+			expect(edd1.data[delay]).to.equal(2000);
+			expect(cbb.data[childCount]).to.equal(2);
 
 			// let snapshot = await client.exchange.dataService.getSnapShot();
 			// console.log(JSON.stringify(snapshot));
@@ -153,21 +171,23 @@ describe("INTEGRATION - Units", async function() {
 		it("can process a packet with CBBs and EDD Data 1 where  CBBs  and EDD currently in database", async function() {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
+					packet: PktBldr.withCommand(4)
+						.withParent(13)
+						.withData([
 							{ serial: 4423423, windowId: 1 },
 							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -179,17 +199,18 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -201,37 +222,38 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
+
+			let snapshot = await client.exchange.dataService.getSnapShot();
+			console.log(JSON.stringify(snapshot, null, 2));
 
 			const resultPersist = await client.exchange.nodeRepository.get("*");
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 
-			const cbb = resultPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(2);
+			const cbb = resultPersist.find(x => x.meta[serial] === 13 && x.meta[typeId] === 3);
+			expect(cbb.state[communicationStatus]).to.equal(1);
+			expect(cbb.data[childCount]).to.equal(2);
 
-			const edd1 = resultPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
-			expect(edd1.data.windowId).to.equal(2);
-			expect(edd1.data.delay).to.equal(3000);
-
-			let snapshot = await client.exchange.dataService.getSnapShot();
-			console.log(JSON.stringify(snapshot));
+			const edd1 = resultPersist.find(x => x.meta[serial] === "0.69.5.170" && x.meta[typeId] === 4);
+			expect(edd1.meta[windowId]).to.equal(2);
+			expect(edd1.data[delay]).to.equal(3000);
 		});
 
-		xit("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
+		it("can handle a packet with CBBs and EDD Data 1 where CBBs  is current  and EDD not in database", async function() {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 1,
@@ -243,17 +265,18 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -265,9 +288,9 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
@@ -276,35 +299,39 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(2000);
 
 			let resPersist = await client.exchange.nodeRepository.get("*");
+
 			expect(resPersist).to.be.instanceOf(Array);
-			expect(resPersist.length).to.be.equal(1);
+			expect(resPersist.length).to.be.equal(3);
 
-			let cbb = resPersist.find(x => x.data.typeId === 3);
-			expect(cbb.data.communicationStatus).to.equal(1); // communication status
+			let cbb = resPersist.find(x => x.meta[typeId] === 3);
 
-			let edd = resPersist.find(x => x.data.typeId === 4);
-			expect(edd.data.windowId).to.equal(2); // communication status
-			expect(edd.data.delay).to.equal(3000); // communication status
+			expect(cbb.state[communicationStatus]).to.equal(1); // communication status
+
+			let edd = resPersist.find(x => x.meta[typeId] === 4);
+			expect(edd.meta[windowId]).to.equal(2); // communication status
+			expect(edd.data[delay]).to.equal(3000); // communication status
 		});
 
 		it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database", async function() {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
+					packet: PktBldr.withCommand(4)
+						.withParent(13)
+						.withData([
 							{ serial: 4423423, windowId: 1 },
 							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 1,
@@ -316,17 +343,18 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -338,17 +366,18 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -360,9 +389,9 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
@@ -370,42 +399,45 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(1000);
 
+			// let snapshot = await client.exchange.dataService.getSnapShot();
+			// console.log(JSON.stringify(snapshot, null, 2));
+
 			let resPersist = await client.exchange.nodeRepository.get("*");
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.greaterThan(3);
 
-			const cbb = resPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(2);
+			const cbb = resPersist.find(x => x.meta[serial] === 13 && x.meta[typeId] === 3);
+			//expect(cbb[communicationStatus]).to.equal(1);
+			expect(cbb.data[childCount]).to.equal(2);
+			console.log("persist", JSON.stringify(resPersist, null, 2));
 
-			const edd1 = resPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
-			expect(edd1.data.windowId).to.equal(2);
-			expect(edd1.data.delay).to.equal(3000);
-
-			const x = await client.exchange.logsRepository.get("*");
-			console.log(x);
-			const snapshot = await client.exchange.dataService.getSnapShot();
-			console.log(snapshot);
+			const edd1 = resPersist.find(
+				x => x.meta[serial] === IntToIP(4523434).toIP() && x.meta[typeId] === 4,
+			);
+			expect(edd1.meta[windowId]).to.equal(2);
+			expect(edd1.data[delay]).to.equal(3000);
 		});
 
 		it("can process a change packet with CBBs and EDD Data 1 where  CBBs and EDD currently in database3", async function() {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
+					packet: PktBldr.withCommand(4)
+						.withParent(13)
+						.withData([
 							{ serial: 4423423, windowId: 1 },
 							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 1,
@@ -417,17 +449,18 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt: createdAt + 500,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
@@ -439,102 +472,109 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt: createdAt + 1000,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
 								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
 							},
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			await util.holdTillDrained(sendQueue);
-			await util.timer(1000);
+			await util.timer(2000);
 
 			const logs = await client.exchange.logsRepository.get("*", 1000, Date.now());
 			console.log(JSON.stringify(logs, null, 2));
 
+			//let snapshot = await client.exchange.dataService.getSnapShot();
+
 			let resPersist = await client.exchange.nodeRepository.get("*");
 			expect(resPersist).to.be.instanceOf(Array);
 			expect(resPersist.length).to.be.greaterThan(3);
+			console.log(JSON.stringify(resPersist, null, 2));
 
-			const cbb = resPersist.find(x => parseInt(x.data.serial) === 13 && x.data.typeId === 3);
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(2);
-			const edd1 = resPersist.find(x => parseInt(x.data.serial) === 4523434 && x.data.typeId === 4);
-			expect(edd1.data.windowId).to.equal(2);
-			expect(edd1.data.delay).to.equal(3000);
+			const cbb = resPersist.find(x => x.meta[serial] === 13 && x.meta[typeId] === 3);
+			//expect(cbb[communicationStatus]).to.equal(1);
+			expect(cbb.data[childCount]).to.equal(2);
+			const edd1 = resPersist.find(x => x.meta[serial] === "0.69.5.170" && x.meta[typeId] === 4);
+			expect(edd1.meta[windowId]).to.equal(2);
+			expect(edd1.data[delay]).to.equal(3000);
 		});
 
 		it("can turn off detonatorStatus in attached dets with a keyswitch off", async function() {
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
+					packet: PktBldr.withCommand(4)
+						.withParent(13)
+						.withData([
 							{ serial: 4423423, windowId: 1 },
 							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
-					createdAt: Date.now(),
+						])
+						.build(),
+					createdAt,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
 							},
 							{
 								windowId: 1,
 								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now() + 300,
+						])
+						.build(),
+					createdAt: createdAt + 300,
 				},
 				wait: 300,
 			});
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
 								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
 								delay: 2000,
 							},
-						],
-					}).packet,
-					createdAt: Date.now() + 600,
+						])
+						.build(),
+					createdAt: createdAt + 600,
 				},
 				wait: 300,
 			});
@@ -546,30 +586,27 @@ describe("INTEGRATION - Units", async function() {
 
 			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
 
-			let cbb = null,
-				edd1 = null;
+			let cbb = resPersist.find(x => x.meta[serial] === 13 && x.meta[typeId] === 3);
+			let edd1 = resPersist.find(x => x.meta[serial] === "0.69.5.170" && x.meta[typeId] === 4);
 
-			resPersist.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
-			});
-
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(2);
-			expect(edd1.data.detonatorStatus).to.equal(1);
+			//expect(cbb[communicationStatus]).to.equal(1);
+			expect(cbb.data[keySwitchStatus]).to.equal(1);
+			expect(cbb.data[childCount]).to.equal(2);
+			//expect(edd1[communicationStatus]).to.equal(0);
 
 			sendQueue.push({
 				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
+					packet: PktBldr.withCommand(5)
+						.withParent(13)
+						.withData([
 							{
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0],
+								rawData: [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
 							},
-						],
-					}).packet,
+						])
+						.build(),
 					createdAt: Date.now() + 900,
 				},
 				wait: 300,
@@ -578,157 +615,16 @@ describe("INTEGRATION - Units", async function() {
 			await util.holdTillDrained(sendQueue);
 			await util.timer(2000);
 			resPersist = await client.exchange.nodeRepository.get("*");
-
 			if (resPersist == null || resPersist.length == 0) throw new Error("Empty resPersist!");
 
-			resPersist.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
-			});
-			const snapshot = await client.exchange.dataService.getSnapShot();
-			console.log(snapshot.units[13].children);
+			cbb = resPersist.find(x => x.meta[serial] === 13 && x.meta[typeId] === 3);
+			edd1 = resPersist.find(x => x.meta[windowId] === 2);
+			//const snapshot = await client.exchange.dataService.getSnapShot();
 
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(2);
-			expect(edd1.data.detonatorStatus).to.equal(0);
-		});
-
-		it("edge case - will ignore an 05 packet where the serial is 255 and the windowID is 255", async function() {
-			//this is an edge case where a packet comes in after and EDDSIG which has an EDD with
-			//a delay of 255 and a windowID of 255
-
-			//prior to new revision all 05 commands could write to db, so it was ignored.
-
-			//item taken from cbb 115 - 27/05/2019
-			//aaaa1005007300001828ff00ff001288
-
-			//this fix is only applied in the data service after the EDDSIG
-			sendQueue.push({
-				message: {
-					packet: "aaaa1005007300001828ff00ff001288",
-					createdAt: Date.now(),
-				},
-				wait: 300,
-			});
-
-			await util.timer(2000);
-
-			let result = await client.exchange.nodeRepository.get("*");
-
-			expect(result.length).to.eql(2);
-			expect(result[1].data.childCount).to.eql(0);
-		});
-
-		it("can turn off childCount", async function() {
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(4, 13, {
-						data: [
-							{ serial: 4423423, windowId: 1 },
-							{ serial: 4523434, windowId: 2 },
-						],
-					}).packet,
-					createdAt: Date.now(),
-				},
-				wait: 300,
-			});
-
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-							},
-							{
-								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000,
-							},
-						],
-					}).packet,
-					createdAt: Date.now() + 300,
-				},
-				wait: 300,
-			});
-
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 2,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-							},
-							{
-								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
-								delay: 2000,
-							},
-						],
-					}).packet,
-					createdAt: Date.now() + 600,
-				},
-				wait: 300,
-			});
-
-			await util.holdTillDrained(sendQueue);
-			await util.timer(1000);
-
-			let result = await client.exchange.nodeRepository.get("*");
-
-			if (result == null || result.length == 0) throw new Error("Empty result!");
-
-			let cbb = null,
-				edd1 = null;
-
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
-			});
-
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(2);
-			expect(edd1.data.detonatorStatus).to.equal(1);
-
-			sendQueue.push({
-				message: {
-					packet: new PacketConstructor(5, 13, {
-						data: [
-							{
-								serial: 13,
-								childCount: 0,
-								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0],
-							},
-						],
-					}).packet,
-					createdAt: Date.now() + 900,
-				},
-				wait: 300,
-			});
-
-			await util.holdTillDrained(sendQueue);
-			await util.timer(2000);
-			result = await client.exchange.nodeRepository.get("*");
-			const snapshot = await client.exchange.dataService.getSnapShot();
-
-			if (result == null || result.length == 0) throw new Error("Empty result!");
-
-			result.forEach(x => {
-				if (parseInt(x.data.serial) === 13 && x.data.typeId === 3) cbb = x;
-				if (parseInt(x.data.serial) === 4523434 && x.data.typeId === 4) edd1 = x;
-			});
-
-			expect(cbb.data.communicationStatus).to.equal(1);
-			expect(cbb.data.childCount).to.equal(0);
-			expect(snapshot.units[13].children["1"].data.detonatorStatus).to.equal(0);
-			expect(edd1.data.detonatorStatus).to.equal(0);
+			expect(cbb.state[communicationStatus]).to.equal(1);
+			expect(cbb.data[keySwitchStatus]).to.equal(0);
+			expect(cbb.data[childCount]).to.equal(2);
+			expect(edd1.state[communicationStatus]).to.equal(0);
 		});
 	});
 });

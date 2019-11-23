@@ -26,7 +26,7 @@ module.exports = {
 			if (!data) reject("No data supplied");
 
 			const entries = data.toString();
-			const packets = entries.match(/aaaa[0-9,a-f]*/gm);
+			const packets = entries.match(/aaaa[0-9 a-f]*/gm);
 			const dates = entries.match(/\d*-\d*-\d*\s\d*:\d*:\d*/g);
 
 			const uniqueDates = dates.filter((v, i, a) => a.indexOf(v) === i);
@@ -51,7 +51,7 @@ module.exports = {
 					combined.push({
 						createdAt: results[i],
 						packet,
-						time: moment(results[i], "x").format("HH:mm:ss.SSSS")
+						time: moment(results[i], "x").format("HH:mm:ss.SSSS"),
 					});
 				}
 
@@ -59,7 +59,7 @@ module.exports = {
 					combined.push({
 						createdAt: results[i],
 						packet,
-						time: moment(results[i], "x").format("HH:mm:ss.SSSS")
+						time: moment(results[i], "x").format("HH:mm:ss.SSSS"),
 					});
 				}
 			});
@@ -84,13 +84,13 @@ module.exports = {
 
 			client.on("login/deny", () => reject());
 
-			client.on("login/error", () => {
-				console.log("CLIENT ISSUE::::::");
+			client.on("login/error", err => {
+				console.log("CLIENT ISSUE::::::", err);
 			});
 
 			client.login({
 				username: "_ADMIN",
-				password: "happn"
+				password: "happn",
 			});
 		}),
 	holdTillDrained: sendQueue =>
@@ -98,5 +98,5 @@ module.exports = {
 			sendQueue.on("drain", () => {
 				return resolve();
 			});
-		})
+		}),
 };

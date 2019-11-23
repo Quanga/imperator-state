@@ -241,9 +241,8 @@ class Config {
 					startMethod: "componentStart",
 					stopMethod: "componentStop",
 					env: {
-						useEndpoint: override.useEndpoint || process.env.USE_ENDPOINT || false,
-						systemMode:
-							override.systemMode || this.getDotMode() || process.env.MODE || systemModeTypes.AXXIS100,
+						useEndpoint: override.useEndpoint || this.parseEnv(process.env.USE_ENDPOINT) || false,
+						systemMode: override.systemMode || process.env.MODE || systemModeTypes.AXXIS100,
 					},
 				},
 				nodered: {
