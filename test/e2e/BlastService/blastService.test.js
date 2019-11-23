@@ -9,7 +9,7 @@ chai.use(sinonChai);
 const SimData = require("./blastMessages");
 const Queue = require("better-queue");
 const Happner = require("happner-2");
-const Config = require("../../../config");
+const Config = require("../../../happner.config");
 
 const utils = require("../../helpers/utils");
 describe("E2E - Services", async function() {

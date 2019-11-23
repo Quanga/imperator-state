@@ -1,0 +1,28 @@
+<script type="text/javascript">
+  RED.nodes.registerType('happner-in-node', {
+    category: 'happner',
+    color: '#a6bbcf',
+    defaults: {
+      name: {
+        value: ""
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "flow-in.png",
+    label: function() {
+      return "in";
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="happner-in-node">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="happner-in-node">
+  <p>Happner component node</p>
+</script>

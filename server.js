@@ -54,7 +54,7 @@ const start = () => {
 	const Mesh = require("happner-2");
 	this.mesh = new Mesh();
 
-	const Config = require("./config.js");
+	const Config = require("./happner.config");
 	const config = new Config().configuration;
 
 	return this.mesh.initialize(config, err => {

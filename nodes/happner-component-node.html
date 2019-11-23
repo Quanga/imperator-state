@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  RED.nodes.registerType('happner-component-node', {
+    category: 'happner',
+    color: '#a6bbcf',
+    defaults: {
+      name: {
+        value: ""
+      },
+      component: {
+        value: ""
+      },
+      method: {
+        value: ""
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "component-call.png",
+    label: function() {
+      return "component";
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="happner-component-node">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-component"><i class="icon-tag"></i> Component</label>
+    <input type="text" id="node-input-component" placeholder="Component Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-method"><i class="icon-tag"></i> Method</label>
+    <input type="text" id="node-input-method" placeholder="Method Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="happner-component-node">
+  <p>Happner component node</p>
+</script>
