@@ -649,6 +649,24 @@
      "file": "/Users/timbewsey1/Desktop/projects/edge_micro/state/node_modules/node-red-node-tail/28-tail.js"
     }
    }
+  },
+  "node-red-contrib-full-msg-json-schema-validation": {
+   "name": "node-red-contrib-full-msg-json-schema-validation",
+   "version": "1.1.0",
+   "local": false,
+   "nodes": {
+    "json-schema": {
+     "name": "json-schema",
+     "types": [
+      "json-full-schema-validator"
+     ],
+     "enabled": true,
+     "local": false,
+     "module": "node-red-contrib-full-msg-json-schema-validation",
+     "file": "/Users/timbewsey1/Desktop/projects/edge_micro/state/node_modules/node-red-contrib-full-msg-json-schema-validation/schema.js"
+    }
+   }
   }
- }
+ },
+ "_credentialSecret": "4d2fb2bdb8a3a0d8ec05f36af5370821372870c584bfdbe2c67f600c3f35b93f"
 }
