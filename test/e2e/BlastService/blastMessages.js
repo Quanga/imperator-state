@@ -125,6 +125,20 @@ BlastList.prototype.createBlast1 = function() {
 		createdAt: started + 55000,
 	});
 
+	result.push({
+		message: {
+			packet: PktBldr.withCommand(4)
+				.withParent(14)
+				.withData([
+					{ serial: 4423481, windowId: 1 },
+					{ serial: 4523482, windowId: 2 },
+				])
+				.build(),
+			createdAt: Date.now(),
+		},
+		createdAt: started + 55000,
+	});
+
 	//add to 14 1 logged (first) and one tagged to the data of the EDDs
 	result.push({
 		message: {

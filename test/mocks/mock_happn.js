@@ -21,7 +21,7 @@ var MockHappn = function() {
 		},
 		warn: message => {
 			console.log(message);
-		}
+		},
 	};
 
 	this.exchange = {
@@ -40,7 +40,7 @@ var MockHappn = function() {
 				return new Promise(function(resolve) {
 					resolve("my incoming message");
 				});
-			}
+			},
 		},
 		outgoingFileQueue: {
 			length: callback => {
@@ -53,23 +53,31 @@ var MockHappn = function() {
 			push: () =>
 				new Promise(function(resolve) {
 					resolve();
-				})
+				}),
 		},
 		dataService: {
 			insertPacketArr: () =>
-				new Promise(function(resolve) {
+				new Promise(resolve => {
 					resolve(1);
 				}),
 			upsertNodeDataArr: () =>
-				new Promise(function(resolve) {
+				new Promise(resolve => {
 					resolve();
-				})
+				}),
+			reportUpserts: () =>
+				new Promise(resolve => {
+					resolve();
+				}),
+			persistUnits: () =>
+				new Promise(resolve => {
+					resolve();
+				}),
 		},
 		packetService: {
 			extractData: message =>
 				new Promise(function(resolve) {
 					resolve();
-				})
+				}),
 		},
 		portUtil: {
 			getInstance: () =>
@@ -77,9 +85,9 @@ var MockHappn = function() {
 					resolve({
 						on: function(eventType, handler) {
 							return true;
-						}
+						},
 					});
-				})
+				}),
 		},
 		messageHandler: {
 			MessageReceiveHandler: () =>
@@ -87,40 +95,40 @@ var MockHappn = function() {
 					resolve(() => {
 						return true;
 					});
-				})
+				}),
 		},
 		parserFactory: {
 			getParser: packet => {
 				const parserFactory = require("../../lib/parsers/parser_factory");
 				let newMock = new MockHappn();
 				return new parserFactory().getParser(newMock, packet);
-			}
+			},
 		},
 		nodeRepository: {
 			getAllNodes: () =>
 				new Promise(resolve => {
 					resolve(self.nodes);
-				})
+				}),
 		},
 		logsRepository: {
 			set: arg =>
 				new Promise(resolve => {
 					console.log("LOG CALLED", arg);
 					resolve(arg);
-				})
+				}),
 		},
 		warningsRepository: {
 			set: arg =>
 				new Promise(resolve => {
 					console.log("WARNING CALLED WITH", arg);
 					resolve(arg);
-				})
+				}),
 		},
 		dataMapper: {
 			mapInsertPacket: packet => {
 				const mapper = require("../../lib/mappers/data_mapper");
 				return new mapper().mapInsertPacket(packet);
-			}
+			},
 		},
 		data: {},
 		eventService: {
@@ -132,21 +140,21 @@ var MockHappn = function() {
 			logPacketError: error =>
 				new Promise(resolve => {
 					resolve(error);
-				})
+				}),
 		},
 		queueService: {
 			validatePacket: () =>
 				new Promise(resolve => {
 					resolve();
-				})
-		}
+				}),
+		},
 	};
 };
 
 Object.defineProperty(MockHappn.prototype, "config", {
 	get: function() {
 		return {};
-	}
+	},
 });
 
 module.exports = MockHappn;

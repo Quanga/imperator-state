@@ -5,8 +5,9 @@ const { systemModeTypes, styles } = require(path.resolve(
 	__dirname,
 	"./lib/constants/typeConstants",
 ));
-const modes = require(path.resolve(__dirname, "./lib/constants/modeTemplates"));
+const modes = require(path.resolve(__dirname, "./lib/configs/modes/modes"));
 const fs = require("fs");
+const blastConfig = require("./lib/configs/blasts/blastsConfig");
 
 class Config {
 	constructor(override = {}) {
@@ -150,7 +151,6 @@ class Config {
 				eventService: { path: `${__dirname}/lib/services/event_service.js` },
 				logsRepository: { path: `${__dirname}/lib/repositories/logsRepository.js` },
 				nodeRepository: { path: `${__dirname}/lib/repositories/nodeRepository.js` },
-				packetService: { path: `${__dirname}/lib/services/packet_service.js` },
 				parserService: { path: `${__dirname}/lib/services/parserService.js` },
 				queueService: { path: `${__dirname}/lib/services/queue_service.js` },
 				securityService: { path: `${__dirname}/lib/services/securityService.js` },
@@ -184,12 +184,6 @@ class Config {
 						systemMode: override.mode || process.env.MODE || systemModeTypes.AXXIS100,
 					},
 				},
-				packetService: {
-					env: {
-						systemMode:
-							override.systemMode || this.getDotMode() || process.env.MODE || systemModeTypes.AXXIS100,
-					},
-				},
 				dataService: {
 					env: {
 						systemMode:
@@ -218,7 +212,10 @@ class Config {
 				},
 
 				blastService: {
+					startMethod: "componentStart",
+					stopMethod: "componentStop",
 					env: {
+						fsm: blastConfig.fsm,
 						systemFiringTime:
 							override.systemFiringTime || parseInt(process.env.SYSTEM_FIRING_TIME, 10) || 120000,
 						systemReportTime:
@@ -228,7 +225,6 @@ class Config {
 							this.getTheme(override.mode) ||
 							this.getTheme(process.env.MODE) ||
 							this.getTheme(systemModeTypes.AXXIS100),
-						template: "tem_ov_001",
 					},
 				},
 				queueService: {

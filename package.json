@@ -42,8 +42,10 @@
   "dependencies": {
     "@pm2/io": "^4.3.2",
     "better-queue": "^3.8.10",
+    "binary-parser": "^1.5.0",
     "byte-data": "^16.0.3",
     "clone": "^2.1.2",
+    "deep-equal": "^1.1.1",
     "deep-object-diff": "^1.1.0",
     "find-process": "^1.4.2",
     "happn-logger": "git+https://github.com/Quanga/happn-logger.git",
@@ -54,6 +56,7 @@
     "moment": "^2.24.0",
     "node-gzip": "^1.1.2",
     "node-red-contrib-full-msg-json-schema-validation": "^1.1.0",
+    "p-each-series": "^2.1.0",
     "pako": "^1.0.10",
     "pm2": "^4.1.2",
     "tcp-port-used": "^1.0.1",
@@ -61,6 +64,6 @@
     "uuid": "^3.3.3",
     "validate.io-timestamp": "^1.0.2",
     "ws": "^7.2.0",
-    "xstate": "^4.6.7"
+    "xstate": "^4.7.0-rc6"
   }
 }

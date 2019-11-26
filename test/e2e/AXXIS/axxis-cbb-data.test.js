@@ -152,7 +152,6 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(3000);
 
 			const resultPersist = await client.exchange.nodeRepository.get("*");
-
 			expect(resultPersist).to.be.instanceOf(Array);
 			expect(resultPersist.length).to.be.greaterThan(3);
 

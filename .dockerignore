@@ -1,0 +1,10 @@
+node_modules
+ecosystem.*
+*.db
+/test
+/.vscode
+/.nyc_output
+/ci
+/db
+/docs
+/jsdoc
