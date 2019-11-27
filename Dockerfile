@@ -7,7 +7,7 @@ RUN apk add --no-cache --virtual builds-deps build-base make gcc g++ python git 
 
 WORKDIR /app
 COPY package.json .
-RUN npm install --production
+RUN npm install 
 COPY . .
 RUN apk del builds-deps  
 
