@@ -74,15 +74,15 @@ describe("E2E - Services", async function() {
 			await utils.holdTillDrained(sendQueue);
 			await utils.timer(3000);
 
-			let result = await mesh.exchange.blastRepository.get("index");
+			let result = await mesh.exchange.blastRepository.get("index", "false");
 			delete result._meta;
 
 			let blastIds = Object.keys(result);
-			let firstBlastId = await mesh.exchange.blastRepository.get(blastIds[0]);
+			let firstBlastId = await mesh.exchange.blastRepository.get(blastIds[0], "true");
 			delete firstBlastId._meta;
 
-			console.log(result);
-			console.log(JSON.stringify(firstBlastId));
+			console.log("index", result);
+			console.log("blats", JSON.stringify(firstBlastId));
 		});
 	});
 });

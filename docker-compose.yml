@@ -1,0 +1,9 @@
+version: "3"
+services:
+  state:
+    image: perspective/state
+    ports:
+      - "3000:3000"
+      - "55000:55000"
+    environment:
+      - NODE_ENV=test

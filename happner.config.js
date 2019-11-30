@@ -32,7 +32,7 @@ class Config {
 				logger: null,
 			},
 			happn: {
-				//host: "0.0.0.0",
+				//host: "localhost",
 				port: override.port || parseInt(process.env.EDGE_LOCAL_PORT) || 55000,
 				setOptions: {
 					timeout: 30000,
@@ -216,10 +216,7 @@ class Config {
 					stopMethod: "componentStop",
 					env: {
 						fsm: blastConfig.fsm,
-						systemFiringTime:
-							override.systemFiringTime || parseInt(process.env.SYSTEM_FIRING_TIME, 10) || 120000,
-						systemReportTime:
-							override.systemReportTime || parseInt(process.env.SYSTEM_REPORT_TIME, 10) || 180000,
+						systemMode: override.mode || process.env.MODE || systemModeTypes.AXXIS100,
 						theme:
 							this.getTheme(this.getDotMode()) ||
 							this.getTheme(override.mode) ||
