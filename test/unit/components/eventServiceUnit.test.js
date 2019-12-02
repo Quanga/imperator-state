@@ -29,7 +29,7 @@ describe("UNIT - Components", async function() {
 				type: dataServiceEvents.EDD_SIGNAL_DETECTED,
 				typeId: 3,
 				createdAt: Date.now(),
-				serial: 23
+				serial: 23,
 			};
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
@@ -61,7 +61,7 @@ describe("UNIT - Components", async function() {
 						cableFault: 0,
 						earthLeakage: 0,
 						ledState: 6,
-						childCount: 1
+						childCount: 1,
 					},
 					units: {
 						unitsCount: 0,
@@ -69,12 +69,12 @@ describe("UNIT - Components", async function() {
 						loggedCount: 0,
 						programCount: 0,
 						detectedCount: 0,
-						detonatorStatusCount: 0
+						detonatorStatusCount: 0,
 					},
 					event: {
 						domain: null,
 						_events: {},
-						_eventsCount: 0
+						_eventsCount: 0,
 					},
 					children: {},
 					dataType: "data",
@@ -91,8 +91,8 @@ describe("UNIT - Components", async function() {
 						cableFault: 0,
 						earthLeakage: 0,
 						ledState: 6,
-						childCount: 1
-					}
+						childCount: 1,
+					},
 				},
 				{
 					data: {
@@ -111,7 +111,7 @@ describe("UNIT - Components", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2000,
-						windowId: 2
+						windowId: 2,
 					},
 					dataType: "data",
 					diff: {
@@ -122,8 +122,8 @@ describe("UNIT - Components", async function() {
 						boosterFired: 0,
 						tagged: 0,
 						logged: 1,
-						delay: 2000
-					}
+						delay: 2000,
+					},
 				},
 				{
 					data: {
@@ -142,7 +142,7 @@ describe("UNIT - Components", async function() {
 						tagged: 0,
 						logged: 1,
 						delay: 2000,
-						windowId: 2
+						windowId: 2,
 					},
 					dataType: "data",
 					diff: {
@@ -153,9 +153,9 @@ describe("UNIT - Components", async function() {
 						boosterFired: 0,
 						tagged: 0,
 						logged: 1,
-						delay: 2000
-					}
-				}
+						delay: 2000,
+					},
+				},
 			];
 
 			let sig = {
@@ -163,7 +163,7 @@ describe("UNIT - Components", async function() {
 				typeId: 3,
 				createdAt: Date.now(),
 				serial: 13,
-				payload
+				payload,
 			};
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];
@@ -191,9 +191,9 @@ describe("UNIT - Components", async function() {
 						tagged: null,
 						logged: null,
 						delay: null,
-						windowId: 35
+						windowId: 35,
 					},
-					dataType: "list"
+					dataType: "list",
 				},
 				{
 					data: {
@@ -212,9 +212,9 @@ describe("UNIT - Components", async function() {
 						tagged: null,
 						logged: null,
 						delay: null,
-						windowId: 36
+						windowId: 36,
 					},
-					dataType: "list"
+					dataType: "list",
 				},
 				{
 					data: {
@@ -233,10 +233,10 @@ describe("UNIT - Components", async function() {
 						tagged: null,
 						logged: null,
 						delay: null,
-						windowId: 37
+						windowId: 37,
 					},
-					dataType: "list"
-				}
+					dataType: "list",
+				},
 			];
 
 			let sig = {
@@ -244,7 +244,7 @@ describe("UNIT - Components", async function() {
 				typeId: 3,
 				createdAt: Date.now(),
 				serial: 13,
-				payload
+				payload,
 			};
 			const logRepoSpy = sandbox.spy(mock.exchange.logsRepository, "set");
 			eventService.emitQueue = [];

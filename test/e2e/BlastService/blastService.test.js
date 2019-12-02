@@ -72,8 +72,9 @@ describe("E2E - Services", async function() {
 			thisData.forEach(messageObj => sendQueue.push(messageObj));
 
 			await utils.holdTillDrained(sendQueue);
-			await utils.timer(3000);
+			await utils.timer(5000);
 
+			//let model = await mesh.exchange.blastService.getBlastModel();
 			let result = await mesh.exchange.blastRepository.get("index", "false");
 			delete result._meta;
 
@@ -83,6 +84,7 @@ describe("E2E - Services", async function() {
 
 			console.log("index", result);
 			console.log("blats", JSON.stringify(firstBlastId));
+			//console.log("model", JSON.stringify(model));
 		});
 	});
 });

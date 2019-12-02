@@ -8,7 +8,7 @@ const { communicationStatus, createdAt, path, serial, parentType, program } = fi
 const { mains, tooLowBat, lowBat, cableFault, calibration, typeId, shaftFault } = fields;
 const { keySwitchStatus, blastArmed, isolationRelay, lfs, dcSupplyVoltage } = fields;
 const { earthLeakage, ledState, childCount, parentSerial, windowId } = fields;
-const { bridgeWire, tagged, logged, delay, boosterFired } = fields;
+const { bridgeWire, tagged, logged, delay, boosterFired, detonatorStatus } = fields;
 
 const modes = require("../../../lib/configs/modes/modes");
 
@@ -68,6 +68,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 1500,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -89,6 +90,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 1600,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -110,6 +112,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 1700,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -131,6 +134,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 1800,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -152,6 +156,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 1900,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -173,6 +178,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2000,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -194,6 +200,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2100,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -215,6 +222,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2200,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -236,6 +244,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2300,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -257,6 +266,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2400,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -278,6 +288,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2500,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -299,6 +310,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2600,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -320,6 +332,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2700,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -341,6 +354,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2800,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -362,6 +376,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 2900,
+						[detonatorStatus]: 0,
 					},
 				},
 			];

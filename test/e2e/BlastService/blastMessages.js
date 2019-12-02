@@ -83,7 +83,7 @@ BlastList.prototype.createBlast1 = function() {
 				.withParent(16)
 				.withData([
 					{
-						serial: 14,
+						serial: 16,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
@@ -128,7 +128,7 @@ BlastList.prototype.createBlast1 = function() {
 	result.push({
 		message: {
 			packet: PktBldr.withCommand(4)
-				.withParent(14)
+				.withParent(15)
 				.withData([
 					{ serial: 4423481, windowId: 1 },
 					{ serial: 4523482, windowId: 2 },
@@ -153,12 +153,12 @@ BlastList.prototype.createBlast1 = function() {
 					},
 					{
 						windowId: 1,
-						rawData: [0, 0, 0, 0, 0, 0, 0, 1],
+						rawData: [1, 1, 0, 0, 1, 1, 1, 0],
 						delay: 2000,
 					},
 					{
 						windowId: 2,
-						rawData: [0, 0, 0, 0, 0, 1, 0, 0],
+						rawData: [1, 1, 0, 0, 1, 1, 1, 0],
 						delay: 3000,
 					},
 				])
@@ -175,19 +175,19 @@ BlastList.prototype.createBlast1 = function() {
 				.withParent(15)
 				.withData([
 					{
-						serial: 13,
+						serial: 15,
 						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 					},
 					{
 						windowId: 1,
-						rawData: [0, 0, 0, 0, 0, 0, 0, 1],
+						rawData: [1, 1, 0, 0, 1, 1, 1, 0],
 						delay: 2000,
 					},
 					{
 						windowId: 2,
-						rawData: [0, 0, 0, 0, 0, 1, 0, 0],
+						rawData: [1, 1, 0, 0, 1, 1, 1, 0],
 						delay: 3000,
 					},
 				])
@@ -201,22 +201,22 @@ BlastList.prototype.createBlast1 = function() {
 	result.push({
 		message: {
 			packet: PktBldr.withCommand(5)
-				.withParent(13)
+				.withParent(14)
 				.withData([
 					{
-						serial: 13,
+						serial: 14,
 						childCount: 2,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 					},
 					{
 						windowId: 1,
-						rawData: [0, 1, 0, 0, 0, 0, 1, 1],
+						rawData: [1, 1, 0, 0, 1, 1, 1, 0],
 						delay: 2000,
 					},
 					{
 						windowId: 2,
-						rawData: [0, 1, 0, 0, 0, 1, 1, 0],
+						rawData: [1, 1, 0, 0, 1, 1, 1, 0],
 						delay: 3000,
 					},
 				])
@@ -230,10 +230,10 @@ BlastList.prototype.createBlast1 = function() {
 	result.push({
 		message: {
 			packet: PktBldr.withCommand(5)
-				.withParent(13)
+				.withParent(16)
 				.withData([
 					{
-						serial: 13,
+						serial: 16,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
@@ -298,22 +298,22 @@ BlastList.prototype.createBlast1 = function() {
 	result.push({
 		message: {
 			packet: PktBldr.withCommand(5)
-				.withParent(13)
+				.withParent(14)
 				.withData([
 					{
-						serial: 13,
+						serial: 14,
 						childCount: 0,
 						ledState: 6,
 						rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 					},
 					{
 						windowId: 1,
-						rawData: [0, 1, 1, 1, 1, 0, 0, 1],
+						rawData: [1, 0, 0, 1, 1, 1, 0, 0],
 						delay: 2000,
 					},
 					{
 						windowId: 2,
-						rawData: [0, 1, 1, 1, 1, 0, 0, 1],
+						rawData: [1, 0, 0, 1, 1, 1, 0, 0],
 						delay: 3000,
 					},
 				])

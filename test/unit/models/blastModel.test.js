@@ -5,9 +5,6 @@ chai.use(require("chai-match"));
 const util = require("../../helpers/utils");
 
 const BlastModel = require("../../../lib/models/blastModel");
-const { blastModelEvents } = require("../../../lib/constants/eventConstants");
-const { blastModelStates } = require("../../../lib/configs/states/stateConstants");
-const { eventServiceLogTypes } = require("../../../lib/constants/typeConstants");
 const blastsConfig = require("../../../lib/configs/blasts/blastsConfig");
 
 describe("UNIT - Models", async function() {
@@ -59,22 +56,28 @@ describe("UNIT - Models", async function() {
 		};
 		it("can create a watchList from a snapshot", async function() {
 			const createdAt = Date.now();
-			const opts = { reportingDuration: 5000, firingDuration: 1000 };
 
 			const blastModel = BlastModel.create(createdAt)
-				.withOpts(opts)
-				.withSnapshot(startSnapshot);
+				.withId("test1")
+				.withTimer("firing", 3000)
+				.withTimer("reporting", 3000)
+				.withSnapshot(startSnapshot)
+				.start();
 
 			await util.timer(2000);
-			console.log(blastModel);
+			expect(blastModel.times.initiate).to.be.equal(createdAt);
+			expect(blastModel.times.totalDuration).to.be.equal(6000);
+			expect(blastModel.watchLists).to.exist;
+			expect(blastModel.watchLists.units["123"]).to.be.a("array");
 		});
 
 		it("can create a new blastModel with a 5 second report time", async function() {
 			const createdAt = Date.now();
-			const opts = { reportingDuration: 5000, firingDuration: 1000 };
 
 			const blastModel = BlastModel.create(createdAt)
-				.withOpts(opts)
+				.withId("test1")
+				.withTimer("firing", 5000)
+				.withTimer("reporting", 5000)
 				.withSnapshot(startSnapshot)
 				.on("state", state => {
 					console.log(state);
@@ -85,22 +88,17 @@ describe("UNIT - Models", async function() {
 
 			await util.timer(5000);
 
-			//expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_FIRING);
+			expect(blastModel.state.currentState.value).to.be.equal("firing");
 			expect(blastModel.meta.createdAt).to.be.equal(createdAt);
 
-			let logObj = {
-				logType: eventServiceLogTypes.UNIT_UPDATE,
-				serial: 42,
-				typeId: 0,
+			blastModel.toggleState({
+				state: { operation: "firing_complete" },
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }],
-			};
+			});
 
-			blastModel.addLog(logObj);
-			await util.timer(1000);
+			await util.timer(2000);
 
-			expect(blastModel.times.firingComplete).to.be.equal(createdAt + 1000);
-			expect(blastModel.times.firingTime).to.be.equal(1000);
+			expect(blastModel.state.currentState.context.firingComplete).to.be.equal(createdAt + 1000);
 			expect(blastModel.watchLists.count).to.be.equal(1);
 
 			expect(blastModel.data.snapshots.start.controlUnit.meta.serial).to.be.equal(42);
@@ -108,51 +106,59 @@ describe("UNIT - Models", async function() {
 			expect(blastModel.data.snapshots.start.active["123"].meta.serial).to.be.equal(123);
 			expect(blastModel.data.snapshots.start.inactive["156"].meta.serial).to.be.equal(156);
 
-			await util.timer(7000);
-			expect(blastModel.state.currentState).to.eql(closed);
-			expect(blastModel.times.blastClosed).to.be.equal(createdAt + 6000);
-			expect(blastModel.times.blastReturnTime).to.be.equal(5000);
+			await util.timer(8000);
+
+			expect(blastModel.state.currentState.value).to.eql("closed");
+			expect(blastModel.state.currentState.context.blastClosed).to.be.equal(createdAt + 10000);
+			expect(blastModel.state.currentState.context.method).to.be.equal("timer_completed");
 		});
 
 		it("can stop a blast when all dets and units return and not use timeout", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 10000;
-			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
+			const blastModel = BlastModel.create(createdAt)
+				.withTimer("firing", 1000)
+				.withTimer("reporting", 5000)
+				.withSnapshot(startSnapshot)
+				.on("state", state => {
+					console.log(state);
+				})
+				.on("log", log => console.log(log))
+				.withFSM(blastsConfig.fsm)
+				.start();
 
 			await util.timer(500);
 
-			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRING);
+			expect(blastModel.state.currentState.value).to.eql("firing");
 			expect(blastModel.watchLists.units).to.exist;
 
-			let logObj = {
-				logType: eventServiceLogTypes.UNIT_UPDATE,
-				serial: 42,
-				typeId: 0,
+			await util.timer(1000);
+
+			blastModel.toggleState({
+				state: { operation: "firing_complete" },
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }],
-			};
+			});
 
 			await util.timer(1000);
-			blastModel.addLog(logObj);
-			await util.timer(1000);
 
-			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRED);
-			expect(blastModel.data.firingComplete).to.be.equal(createdAt + 1000);
-			expect(blastModel.data.firingTime).to.be.equal(1000);
+			expect(blastModel.state.currentState.value).to.eql("watching");
+			expect(blastModel.state.currentState.context.firingComplete).to.be.equal(createdAt + 1000);
 
 			expect(blastModel.watchLists.units["123"]).to.exist;
 			expect(blastModel.watchLists.units["123"].length).to.be.equal(2);
 
 			await util.timer(500);
 
-			logObj = {
-				logType: eventServiceLogTypes.UNIT_UPDATE,
-				serial: 123,
-				typeId: 3,
-				createdAt: createdAt + 1000,
-				events: [{ diff: { communicationState: 1 } }],
+			let logObj = {
+				meta: {
+					logType: "eventService/UNIT_UPDATE",
+					serial: 123,
+					typeId: 3,
+					createdAt: createdAt + 1000,
+				},
+				data: {
+					events: { "3": [{ diff: { communicationState: 1 } }] },
+				},
 			};
 
 			blastModel.addLog(logObj);
@@ -161,11 +167,15 @@ describe("UNIT - Models", async function() {
 			expect(blastModel.watchLists.units["123"].length).to.be.equal(2);
 
 			logObj = {
-				logType: eventServiceLogTypes.DET_UPDATE,
-				serial: 123,
-				typeId: 3,
-				createdAt: createdAt + 2000,
-				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }],
+				meta: {
+					logType: "eventService/UNIT_UPDATE",
+					serial: 123,
+					typeId: 3,
+					createdAt: createdAt + 2000,
+				},
+				data: {
+					events: { "4": [{ meta: { windowId: 1 }, diff: { connectionStatus: 1 } }] },
+				},
 			};
 
 			blastModel.addLog(logObj);
@@ -174,11 +184,15 @@ describe("UNIT - Models", async function() {
 			expect(blastModel.watchLists.units["123"].length).to.be.equal(1);
 
 			logObj = {
-				logType: eventServiceLogTypes.DET_UPDATE,
-				serial: 123,
-				typeId: 3,
-				createdAt: createdAt + 3000,
-				events: [{ windowId: 2, diff: { detonatorStatus: 1 } }],
+				meta: {
+					logType: "eventService/UNIT_UPDATE",
+					serial: 123,
+					typeId: 3,
+					createdAt: createdAt + 3000,
+				},
+				data: {
+					events: { "4": [{ meta: { windowId: 2 }, diff: { connectionStatus: 1 } }] },
+				},
 			};
 
 			blastModel.addLog(logObj);
@@ -187,49 +201,57 @@ describe("UNIT - Models", async function() {
 			expect(blastModel.watchLists.units["123"]).to.be.undefined;
 
 			//console.log(JSON.stringify(await blastModel.getBlastReport(), null, 2));
-			expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_DATA_COMPLETE);
-			expect(blastModel.data.blastClosed).to.be.equal(createdAt + 3000);
-			expect(blastModel.data.blastReturnTime).to.be.equal(2000);
+			expect(blastModel.state.currentState.value).to.be.equal("closed");
+			expect(blastModel.state.currentState.context.blastClosed).to.be.equal(createdAt + 3000);
 		});
 
 		it("leaving one det it will cause report to use the timeout rather", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 10000;
-			const firingDuration = 1000;
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
+			const blastModel = BlastModel.create(createdAt)
+				.withId("test1")
+				.withTimer("firing", 1000)
+				.withTimer("reporting", 5000)
+				.withSnapshot(startSnapshot)
+				.on("state", state => {
+					console.log(state);
+				})
+				.on("log", log => console.log(log))
+				.withFSM(blastsConfig.fsm)
+				.start();
 
 			const holdUntil = () =>
 				new Promise(resolve => {
-					blastModel.event.on(blastModelEvents.BLASTMODEL_LOG, data => {
-						if (data === blastModelStates.BLAST_TIMER_COMPLETE) {
+					blastModel.on("state", data => {
+						if (data.state === "closed") {
 							console.log("BLAST_DATA_COMPLETE");
 							resolve();
 						}
 					});
 				});
 
-			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRING);
+			expect(blastModel.state.currentState.value).to.eql("firing");
 			expect(blastModel.watchLists.units).to.have.property("123");
 
-			let logObj = {
-				logType: eventServiceLogTypes.UNIT_UPDATE,
-				serial: 42,
-				typeId: 0,
+			await util.timer(1000);
+
+			blastModel.toggleState({
+				state: { operation: "firing_complete" },
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }],
-			};
+			});
 
 			await util.timer(1000);
-			blastModel.addLog(logObj);
-			await util.timer(1000);
 
-			logObj = {
-				logType: eventServiceLogTypes.DET_UPDATE,
-				serial: 123,
-				typeId: 3,
-				createdAt: createdAt + 2000,
-				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }],
+			let logObj = {
+				meta: {
+					logType: "eventService/DET_UPDATE",
+					serial: 123,
+					typeId: 3,
+					createdAt: createdAt + 2000,
+				},
+				data: {
+					events: { "4": [{ meta: { windowId: 1 }, diff: { detonatorStatus: 1 } }] },
+				},
 			};
 
 			blastModel.addLog(logObj);
@@ -240,51 +262,59 @@ describe("UNIT - Models", async function() {
 
 			await holdUntil();
 			//console.log(JSON.stringify(await blastModel.getBlastReport(), null, 4));
-			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_TIMER_COMPLETE);
-			expect(blastModel.data.blastClosed).to.be.equal(createdAt + 11000);
-			expect(blastModel.data.blastReturnTime).to.be.equal(10000);
+			expect(blastModel.state.currentState.value).to.equal("closed");
+			expect(blastModel.state.currentState.context.method).to.equal("timer_completed");
+			expect(blastModel.state.currentState.context.blastClosed).to.be.equal(createdAt + 6000);
 		});
 
 		it("a log with a createdAt time later than the blast completed will stop the blast", async function() {
 			const createdAt = Date.now();
-			const reportingDuration = 10000;
-			const firingDuration = 1000;
+			const blastModel = BlastModel.create(createdAt)
+				.withId("test1")
+				.withTimer("firing", 1000)
+				.withTimer("reporting", 5000)
+				.withSnapshot(startSnapshot)
+				.on("state", state => {
+					console.log(state);
+				})
+				.on("log", log => console.log(log))
+				.withFSM(blastsConfig.fsm)
+				.start();
 
-			const blastModel = new BlastModel(startSnapshot, createdAt, firingDuration, reportingDuration);
-
-			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRING);
+			expect(blastModel.state.currentState.value).to.eql("firing");
 			expect(blastModel.watchLists.units).to.have.property("123");
 			expect(blastModel.watchLists.units[123].length).to.eql(2);
 
-			let logObj = {
-				logType: eventServiceLogTypes.UNIT_UPDATE,
-				serial: 42,
-				typeId: 0,
+			await util.timer(1000);
+
+			blastModel.toggleState({
+				state: { operation: "firing_complete" },
 				createdAt: createdAt + 1000,
-				events: [{ diff: { fireButton: 0 } }],
+			});
+
+			await util.timer(1000);
+
+			expect(blastModel.state.currentState.value).to.equal("watching");
+			let logObj = {
+				meta: {
+					logType: "eventService/DET_UPDATE",
+					serial: 123,
+					typeId: 3,
+					createdAt: createdAt + 15000,
+				},
+				data: {
+					events: { "4": [{ meta: { windowId: 1 }, diff: { detonatorStatus: 1 } }] },
+				},
 			};
 
-			await util.timer(1000);
-			blastModel.addLog(logObj);
-			await util.timer(1000);
-
-			expect(blastModel.data.state).to.eql(blastModelStates.BLAST_FIRED);
-			logObj = {
-				logType: eventServiceLogTypes.DET_UPDATE,
-				serial: 123,
-				typeId: 3,
-				createdAt: createdAt + 15000,
-				events: [{ windowId: 1, diff: { detonatorStatus: 1 } }],
-			};
-
 			blastModel.addLog(logObj);
 
 			await util.timer(1000);
 
-			expect(blastModel.data.state).to.be.equal(blastModelStates.BLAST_TIMER_COMPLETE_BYPACKET);
-			expect(blastModel.data.blastClosed).to.be.equal(createdAt + 15000);
-			expect(blastModel.data.blastReturnTime).to.be.equal(14000);
-			expect(blastModel.timer).to.be.null;
+			expect(blastModel.state.currentState.value).to.be.equal("closed");
+			expect(blastModel.state.currentState.context.blastClosed).to.be.equal(createdAt + 15000);
+			expect(blastModel.state.currentState.context.method).to.be.equal("pseudo_data_completed");
+			//expect(blastModel.timer).to.be.null;
 		});
 	});
 });

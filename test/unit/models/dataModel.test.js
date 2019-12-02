@@ -9,7 +9,6 @@ const chaiPromise = require("chai-as-promised");
 chai.use(sinonChai);
 chai.use(chaiPromise);
 
-const Mock = require("../../mocks/mock_happn");
 const utils = require("../../helpers/utils");
 const modes = require("../../../lib/configs/modes/modes");
 const fields = require("../../../lib/configs/fields/fieldConstants");
@@ -32,7 +31,6 @@ const DataModel = require("../../../lib/models/dataModel");
 const UnitModelFactory = require("../../../lib/models/units/unitModelFactory");
 
 describe("UNIT - Models", async function() {
-	const mockHappn = new Mock();
 	context("Datamodel", async () => {
 		afterEach(() => {
 			sandbox.restore();
