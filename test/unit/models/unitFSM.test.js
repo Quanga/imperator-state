@@ -32,7 +32,7 @@ describe("UNIT - Models", async function() {
 		});
 
 		it("can create a new FSM model with a FSM injected", async () => {
-			const unitFSM = UnitFSM.create().withFSM(unitsFSMs[0]);
+			const unitFSM = UnitFSM.create().withFSM(unitsFSMs()[0]);
 
 			expect(unitFSM).to.be.instanceOf(UnitFSM);
 			expect(unitFSM.fsm).to.be.exist;
@@ -41,7 +41,7 @@ describe("UNIT - Models", async function() {
 		it("can create a new FSM model with a FSM injected and triggers for type 0", async () => {
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[0].fsm)
-				.withFSM(unitsFSMs[0])
+				.withFSM(unitsFSMs()[0])
 				.start();
 
 			expect(unitFSM).to.be.instanceOf(UnitFSM);
@@ -54,7 +54,7 @@ describe("UNIT - Models", async function() {
 
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[3].fsm)
-				.withFSM(unitsFSMs[3])
+				.withFSM(unitsFSMs()[3])
 				.on("state", state => {
 					console.log(state);
 					callSpy(state);
@@ -71,7 +71,7 @@ describe("UNIT - Models", async function() {
 			const callSpy = sandbox.spy();
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[0].fsm)
-				.withFSM(unitsFSMs[0])
+				.withFSM(unitsFSMs()[0])
 				.on("state", state => {
 					console.log(state);
 					callSpy(state);
@@ -92,7 +92,7 @@ describe("UNIT - Models", async function() {
 			const callSpy = sandbox.spy();
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[0].fsm)
-				.withFSM(unitsFSMs[0])
+				.withFSM(unitsFSMs()[0])
 				.start();
 
 			unitFSM.on("state", state => {
@@ -112,9 +112,16 @@ describe("UNIT - Models", async function() {
 
 		it("can create toggel to ARMED state with type 3", async () => {
 			const callSpy = sandbox.spy();
+
+			const obj = {
+				disconnectChildren: () => {
+					console.log("working");
+				},
+			};
+
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[3].fsm)
-				.withFSM(unitsFSMs[3])
+				.withFSM(unitsFSMs({}, obj)[3])
 				.start();
 
 			unitFSM.on("state", state => {
@@ -141,7 +148,7 @@ describe("UNIT - Models", async function() {
 
 		it("can create timeout with type 3", async () => {
 			const callSpy = sandbox.spy();
-			const fsmRecipe = unitsFSMs[3];
+			const fsmRecipe = unitsFSMs()[3];
 			fsmRecipe[1] = {
 				delays: {
 					COMM_INACTIVE: (context, event) => {
@@ -182,7 +189,7 @@ describe("UNIT - Models", async function() {
 
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[0].fsm)
-				.withFSM(unitsFSMs[0])
+				.withFSM(unitsFSMs()[0])
 				.start()
 				.withState(initialState);
 
@@ -205,7 +212,7 @@ describe("UNIT - Models", async function() {
 			const callSpy = sandbox.spy();
 			const unitFSM = UnitFSM.create()
 				.withTriggers(unitsSchemas[0].fsm)
-				.withFSM(unitsFSMs[0])
+				.withFSM(unitsFSMs()[0])
 				.on("state", state => {
 					console.log(state);
 					callSpy(state);

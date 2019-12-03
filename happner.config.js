@@ -195,7 +195,7 @@ class Config {
 					stopMethod: "componentStop",
 					env: {
 						endpointIP: override.endpointIP || process.env.ENDPOINT_IP || "0.0.0.0",
-						endpointPort: override.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55004,
+						endpointPort: override.endpointPort || parseInt(process.env.ENDPOINT_PORT) || 55014,
 						endpointCheckInterval:
 							override.endpointCheckInterval || parseInt(process.env.EP_CHECK_INTERVAL, 10) || 5000,
 						endpointName: override.endpointName || process.env.ENDPOINT_NAME || "edge_ssot",
