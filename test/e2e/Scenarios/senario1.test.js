@@ -300,6 +300,9 @@ describe("INTEGRATION - Units", async function() {
 			console.log(JSON.stringify(blastReport));
 			console.log(JSON.stringify(blastReport).length);
 			console.log(JSON.stringify(blastReportCompressed).length);
+
+			const logs = await client.exchange.logsRepository.get("*");
+			console.log(JSON.stringify(logs));
 		});
 	});
 });
