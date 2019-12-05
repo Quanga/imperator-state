@@ -7,7 +7,7 @@ coverage
 edge.log*
 router_log.txt*
 .env-test
-package-lock.json
+# package-lock.json
 .nyc_output
 .vscode
 .env

@@ -1,4 +1,5 @@
-const pmx = require("@pm2/io");
+const Mesh = require("happner-2");
+const Config = require("./happner.config");
 
 if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
@@ -22,39 +23,11 @@ const Server = async () => {
 	start();
 };
 
-const stop = () =>
-	new Promise((resolve, reject) => {
-		this.mesh
-			.stop(
-				{
-					kill: true,
-					wait: 10000,
-					exitCode: 2,
-					reconnect: false,
-				},
-				(err, data) => {
-					if (err) console.log(err);
-					console.log("stopped", data);
-					return reject(err);
-				},
-			)
-			.then(() => resolve());
-	});
-
 /**
  * @function start
  */
 const start = () => {
-	pmx.action("stop", reply => {
-		stop()
-			.then(() => reply({ done: "stopping" }))
-			.catch(err => reply({ err: err }));
-	});
-
-	const Mesh = require("happner-2");
 	this.mesh = new Mesh();
-
-	const Config = require("./happner.config");
 	const config = new Config().configuration;
 
 	return this.mesh.initialize(config, err => {

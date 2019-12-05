@@ -1,4 +1,4 @@
-node_modules
+node_modules/
 ecosystem.*
 *.db
 /test
@@ -8,3 +8,5 @@ ecosystem.*
 /db
 /docs
 /jsdoc
+nyc_config.js
+
