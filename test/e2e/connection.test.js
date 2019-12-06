@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 const Happner = require("happner-2");
-//const Config = require("../../config.js");
 const ServerHelper = require("../helpers/server_helper");
 const utils = require("../helpers/utils");
 

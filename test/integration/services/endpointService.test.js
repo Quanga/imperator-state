@@ -15,7 +15,8 @@ describe("INTEGRATION -- Services", async function() {
 
 	this.timeout(30000);
 	const Happner = require("happner-2");
-	const Config = require("../../../config");
+	require("dotenv").config({ path: `${__dirname}/.env.test` });
+	const config = require("../../../happner.config");
 
 	const override = {
 		logLevel: "info",
@@ -33,12 +34,12 @@ describe("INTEGRATION -- Services", async function() {
 		endpointPassword: "happn",
 		systemFiringTime: 120000,
 		systemReportTime: 180000,
-		communicationCheckInterval: 300000
+		communicationCheckInterval: 300000,
 	};
 
 	context("Endpoint Service tests", async function() {
 		//let consoleLogStub;
-		let mesh, config;
+		let mesh;
 
 		beforeEach(() => {
 			sandbox.reset();
@@ -50,7 +51,6 @@ describe("INTEGRATION -- Services", async function() {
 		});
 		it("can correctly start and stop the server with no endpoint", async function() {
 			try {
-				config = new Config(override).configuration;
 				mesh = new Happner();
 
 				await mesh.initialize(config);
@@ -74,7 +74,6 @@ describe("INTEGRATION -- Services", async function() {
 		it("can correctly start and stop the server with endpoint enabled but will not connect", async function() {
 			try {
 				override.useEndpoint = true;
-				config = new Config(override).configuration;
 				mesh = new Happner();
 
 				await mesh.initialize(config);
@@ -100,15 +99,14 @@ describe("INTEGRATION -- Services", async function() {
 		});
 
 		it("can correctly start and stop the server with endpoint enabled and will connect", async () => {
-			override.useEndpoint = true;
-			config = new Config(override).configuration;
+			process.env.USE_INPUT_INSTANCE = "true";
 
 			const securityModule = {
 				start: function($happn, callback) {
 					const testUser = {
 						username: "UNIT001",
 						password: "happn",
-						groups: { _ADMIN: true }
+						groups: { _ADMIN: true },
 					};
 
 					$happn.exchange.security.upsertUser(testUser, err => {
@@ -117,7 +115,7 @@ describe("INTEGRATION -- Services", async function() {
 					});
 
 					callback();
-				}
+				},
 			};
 
 			const queueModule = {
@@ -134,7 +132,7 @@ describe("INTEGRATION -- Services", async function() {
 				size: function($happn, user, callback) {
 					console.log("size called", user);
 					callback(null, 0);
-				}
+				},
 			};
 
 			const epMesh = await Happner.create({
@@ -143,22 +141,22 @@ describe("INTEGRATION -- Services", async function() {
 					host: "0.0.0.0",
 					port: 55008,
 					secure: true,
-					adminPassword: "happn"
+					adminPassword: "happn",
 				},
 				modules: {
 					securityService: {
-						instance: securityModule
+						instance: securityModule,
 					},
 					queueService: {
-						instance: queueModule
-					}
+						instance: queueModule,
+					},
 				},
 				components: {
 					securityService: {
-						startMethod: "start"
+						startMethod: "start",
 					},
-					queueService: {}
-				}
+					queueService: {},
+				},
 			});
 
 			mesh = new Happner();
@@ -183,15 +181,14 @@ describe("INTEGRATION -- Services", async function() {
 		});
 
 		it("can correctly connect to the endpoint and get 10 packets", async () => {
-			override.useEndpoint = true;
-			config = new Config(override).configuration;
+			process.env.USE_INPUT_INSTANCE = "true";
 
 			const securityModule = {
 				start: function($happn, callback) {
 					const testUser = {
 						username: "UNIT001",
 						password: "happn",
-						groups: { _ADMIN: true }
+						groups: { _ADMIN: true },
 					};
 
 					$happn.exchange.security.upsertUser(testUser, err => {
@@ -200,7 +197,7 @@ describe("INTEGRATION -- Services", async function() {
 					});
 
 					callback();
-				}
+				},
 			};
 
 			const queueModule = {
@@ -225,9 +222,9 @@ describe("INTEGRATION -- Services", async function() {
 				dequeue: function($happn, user, callback) {
 					const packet = {
 						packet: new PacketConstructor(8, 8, {
-							data: [0, 0, 0, 0, 0, 0, 0, this.flip]
+							data: [0, 0, 0, 0, 0, 0, 0, this.flip],
 						}).packet,
-						createdAt: Date.now()
+						createdAt: Date.now(),
 					};
 					if (this.flip === 0) {
 						this.flip = 1;
@@ -235,8 +232,8 @@ describe("INTEGRATION -- Services", async function() {
 						this.flip = 0;
 					}
 					this.queuesize--;
-					callback( packet);
-				}
+					callback(packet);
+				},
 			};
 
 			const epMesh = await Happner.create({
@@ -245,22 +242,22 @@ describe("INTEGRATION -- Services", async function() {
 					host: "0.0.0.0",
 					port: 55008,
 					secure: true,
-					adminPassword: "happn"
+					adminPassword: "happn",
 				},
 				modules: {
 					securityService: {
-						instance: securityModule
+						instance: securityModule,
 					},
 					queueService: {
-						instance: queueModule
-					}
+						instance: queueModule,
+					},
 				},
 				components: {
 					securityService: {
-						startMethod: "start"
+						startMethod: "start",
 					},
-					queueService: {}
-				}
+					queueService: {},
+				},
 			});
 
 			mesh = new Happner();
@@ -305,7 +302,7 @@ describe("INTEGRATION -- Services", async function() {
 						const testUser = {
 							username: "UNIT001",
 							password: "happn",
-							groups: { _ADMIN: true }
+							groups: { _ADMIN: true },
 						};
 
 						$happn.exchange.security.upsertUser(testUser, err => {
@@ -314,7 +311,7 @@ describe("INTEGRATION -- Services", async function() {
 						});
 
 						callback();
-					}
+					},
 				};
 
 				const queueModule = {
@@ -337,9 +334,9 @@ describe("INTEGRATION -- Services", async function() {
 					dequeue: function($happn, user, callback) {
 						const packet = {
 							packet: new PacketConstructor(8, 8, {
-								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
+								data: [0, 0, 0, 0, 0, 0, 0, this.flip],
 							}).packet,
-							createdAt: Date.now()
+							createdAt: Date.now(),
 						};
 						if (this.flip === 0) {
 							this.flip = 1;
@@ -348,7 +345,7 @@ describe("INTEGRATION -- Services", async function() {
 						}
 						this.queuesize--;
 						callback(null, packet);
-					}
+					},
 				};
 
 				const epMesh = await Happner.create({
@@ -357,22 +354,22 @@ describe("INTEGRATION -- Services", async function() {
 						host: "0.0.0.0",
 						port: 55008,
 						secure: true,
-						adminPassword: "happn"
+						adminPassword: "happn",
 					},
 					modules: {
 						securityService: {
-							instance: securityModule
+							instance: securityModule,
 						},
 						queueService: {
-							instance: queueModule
-						}
+							instance: queueModule,
+						},
 					},
 					components: {
 						securityService: {
-							startMethod: "start"
+							startMethod: "start",
 						},
-						queueService: {}
-					}
+						queueService: {},
+					},
 				});
 
 				mesh = new Happner();
@@ -422,7 +419,7 @@ describe("INTEGRATION -- Services", async function() {
 						const testUser = {
 							username: "UNIT001",
 							password: "happn",
-							groups: { _ADMIN: true }
+							groups: { _ADMIN: true },
 						};
 
 						$happn.exchange.security.upsertUser(testUser, err => {
@@ -431,7 +428,7 @@ describe("INTEGRATION -- Services", async function() {
 						});
 
 						callback();
-					}
+					},
 				};
 
 				const queueModule = {
@@ -454,9 +451,9 @@ describe("INTEGRATION -- Services", async function() {
 					dequeue: function($happn, user, callback) {
 						const packet = {
 							packet: new PacketConstructor(8, 8, {
-								data: [0, 0, 0, 0, 0, 0, 0, this.flip]
+								data: [0, 0, 0, 0, 0, 0, 0, this.flip],
 							}).packet,
-							createdAt: Date.now()
+							createdAt: Date.now(),
 						};
 						if (this.flip === 0) {
 							this.flip = 1;
@@ -465,7 +462,7 @@ describe("INTEGRATION -- Services", async function() {
 						}
 						this.queuesize--;
 						callback(null, packet);
-					}
+					},
 				};
 
 				const epConfig = {
@@ -474,22 +471,22 @@ describe("INTEGRATION -- Services", async function() {
 						host: "0.0.0.0",
 						port: 55008,
 						secure: true,
-						adminPassword: "happn"
+						adminPassword: "happn",
 					},
 					modules: {
 						securityService: {
-							instance: securityModule
+							instance: securityModule,
 						},
 						queueService: {
-							instance: queueModule
-						}
+							instance: queueModule,
+						},
 					},
 					components: {
 						securityService: {
-							startMethod: "start"
+							startMethod: "start",
 						},
-						queueService: {}
-					}
+						queueService: {},
+					},
 				};
 
 				const epMesh = await Happner.create(epConfig);
@@ -516,12 +513,12 @@ describe("INTEGRATION -- Services", async function() {
 					epMesh.stop(
 						{
 							kill: false, // kill the process once stopped
-							reconnect: true // inform attached clients/endpoints to reconnect
+							reconnect: true, // inform attached clients/endpoints to reconnect
 						},
 						() => {
 							console.log("EP STOPPED");
 							resolve();
-						}
+						},
 					);
 				});
 

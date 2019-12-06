@@ -11,18 +11,17 @@ chai.use(sinonChai);
 const sandbox = sinon.createSandbox();
 
 const Happner = require("happner-2");
-const Config = require("../../../config");
-const util = require("../../helpers/utils");
-const override = require("./override");
+require("dotenv").config({ path: `${__dirname}/.env.test` });
+const config = require("../../../happner.config");
+
 const simData = require("./simData.json");
 
 describe("INTEGRATION - Repositories", async function() {
 	this.timeout(10000);
 	context("BlastRepository Tests", async () => {
-		let config, mesh;
+		let mesh;
 
 		beforeEach(async () => {
-			config = new Config(override).configuration;
 			mesh = new Happner();
 
 			await mesh.initialize(config);

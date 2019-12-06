@@ -4,7 +4,6 @@ var expect = chai.expect;
 var chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
-const should = chai.should();
 var Mesh = require("happner-2");
 
 const ServerHelper = require("../../helpers/server_helper");

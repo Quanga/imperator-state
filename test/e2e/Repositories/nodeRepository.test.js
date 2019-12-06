@@ -11,13 +11,15 @@ const PktBldr = require("../../../lib/builders/packetConstructor");
 const util = require("../../helpers/utils");
 const Queue = require("better-queue");
 const Happner = require("happner-2");
-const Config = require("../../../happner.config");
 const fields = require("../../../lib/configs/fields/fieldConstants");
+
+require("dotenv").config({ path: `${__dirname}/.env.test` });
+const config = require("../../../happner.config");
 describe("E2E - Repository", async function() {
 	this.timeout(10000);
 
 	context("Node Repository", async () => {
-		let mesh, config;
+		let mesh;
 
 		const sendQueue = new Queue((task, cb) => {
 			setTimeout(() => {
@@ -25,27 +27,7 @@ describe("E2E - Repository", async function() {
 			}, task.wait);
 		});
 
-		const override = {
-			logLevel: "info",
-			name: "edge_state",
-			db: "./edge.db",
-			host: "0.0.0.0",
-			port: 55007,
-			logFile: "./test_edge.log",
-			useEndpoint: false,
-			endpointName: "edge_ssot",
-			endpointIP: "0.0.0.0",
-			endpointPort: 55008,
-			endpointCheckInterval: 3000,
-			endpointUsername: "UNIT001",
-			endpointPassword: "happn",
-			systemFiringTime: 120000,
-			systemReportTime: 180000,
-			communicationCheckInterval: 300000,
-		};
-
 		beforeEach(async () => {
-			config = new Config(override).configuration;
 			mesh = new Happner();
 
 			await mesh.initialize(config);

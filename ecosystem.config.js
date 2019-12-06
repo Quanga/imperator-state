@@ -23,9 +23,6 @@ module.exports = {
 				ENDPOINT_NAME: "mesh-edge-001",
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 120000,
-				SYSTEM_REPORT_TIME: 300000,
-				COMMUNICATION_CHECK_INTERVAL: 600000,
 			},
 			env_production002: {
 				NODE_ENV: "production",
@@ -35,9 +32,6 @@ module.exports = {
 				ENDPOINT_NAME: "mesh-edge-002",
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 420000,
-				SYSTEM_REPORT_TIME: 600000,
-				COMMUNICATION_CHECK_INTERVAL: 600000,
 			},
 			env_production003: {
 				NODE_ENV: "production",
@@ -48,9 +42,6 @@ module.exports = {
 				ENDPOINT_NAME: "mesh-edge-001",
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 120000,
-				SYSTEM_REPORT_TIME: 300000,
-				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 			env_production004: {
 				NODE_ENV: "production",
@@ -61,9 +52,6 @@ module.exports = {
 				ENDPOINT_NAME: "mesh-edge-002",
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 420000,
-				SYSTEM_REPORT_TIME: 600000,
-				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 			env_production500: {
 				NODE_ENV: "production",
@@ -73,10 +61,6 @@ module.exports = {
 				ENDPOINT_NAME: "mesh-edge-002",
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
-				SYSTEM_FIRING_TIME: 420000,
-				SYSTEM_REPORT_TIME: 840000,
-
-				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 			env_productionAWS: {
 				NODE_ENV: "production",
@@ -89,9 +73,6 @@ module.exports = {
 				ENDPOINT_USERNAME: "mesh-state-001",
 				ENDPOINT_PASSWORD: "ibstate",
 				ENDPOINT_PORT: 55014,
-				SYSTEM_FIRING_TIME: 120000,
-				SYSTEM_REPORT_TIME: 300000,
-				COMMUNICATION_CHECK_INTERVAL: 800000,
 			},
 		},
 	],

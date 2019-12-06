@@ -25,7 +25,7 @@ describe("INTEGRATION - Service", async function() {
 		new Promise((resolve, reject) => {
 			client = new Mesh.MeshClient({
 				secure: true,
-				port: 55000
+				port: 55000,
 			});
 
 			client.on("login/allow", () => resolve());
@@ -33,7 +33,7 @@ describe("INTEGRATION - Service", async function() {
 			client.on("login/error", () => reject());
 			client.login({
 				username: "_ADMIN",
-				password: "happn"
+				password: "happn",
 			});
 		});
 

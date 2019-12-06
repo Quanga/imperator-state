@@ -1,7 +1,4 @@
 /* eslint-disable no-unused-vars */
-const path = require("path");
-const os = require("os");
-const fs = require("fs");
 
 /**
  * @category System
@@ -97,15 +94,14 @@ App.prototype.componentStop = function($happn) {
  */
 App.prototype.startRouter = function($happn) {
 	const { endpointService, dataService } = $happn.exchange;
-	const { env } = $happn.config;
 	const { log } = $happn;
 
 	return (async () => {
 		try {
 			await dataService.initialise();
-			if (env.useEndpoint) await endpointService.start();
+			if (process.env.USE_INPUT_INSTANCE === "true") await endpointService.start();
 
-			log.info(`System Mode: ${env.systemMode}`);
+			log.info(`System Mode: ${process.env.MODE}`);
 			log.info("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			log.error("start error", err);

@@ -8,38 +8,37 @@ chai.use(sinonChai);
 
 const sandbox = sinon.createSandbox();
 
-var Mesh = require("happner-2");
 const Happner = require("happner-2");
-const Config = require("../../../config");
+require("dotenv").config({ path: `${__dirname}/.env.test` });
+const config = require("../../../happner.config");
 const util = require("../../helpers/utils");
 const LogModel = require("../../../lib/models/logModel");
 
-const override = {
-	logLevel: "info",
-	name: "edge_state",
-	db: "./edge.db",
-	host: "0.0.0.0",
-	port: 55007,
-	logFile: "./test_edge.log",
-	useEndpoint: false,
-	endpointName: "edge_ssot",
-	endpointIP: "0.0.0.0",
-	endpointPort: 55008,
-	endpointCheckInterval: 3000,
-	endpointUsername: "UNIT001",
-	endpointPassword: "happn",
-	systemFiringTime: 120000,
-	systemReportTime: 180000,
-	communicationCheckInterval: 300000
-};
+// const override = {
+// 	logLevel: "info",
+// 	name: "edge_state",
+// 	db: "./edge.db",
+// 	host: "0.0.0.0",
+// 	port: 55007,
+// 	logFile: "./test_edge.log",
+// 	useEndpoint: false,
+// 	endpointName: "edge_ssot",
+// 	endpointIP: "0.0.0.0",
+// 	endpointPort: 55008,
+// 	endpointCheckInterval: 3000,
+// 	endpointUsername: "UNIT001",
+// 	endpointPassword: "happn",
+// 	systemFiringTime: 120000,
+// 	systemReportTime: 180000,
+// 	communicationCheckInterval: 300000,
+// };
 
 describe("INTEGRATION - Repositories", async function() {
 	this.timeout(10000);
 	context("LogsRepository Tests", async () => {
-		let config, mesh;
+		let mesh;
 
 		beforeEach(async () => {
-			config = new Config(override).configuration;
 			mesh = new Happner();
 
 			await mesh.initialize(config);
@@ -50,7 +49,6 @@ describe("INTEGRATION - Repositories", async function() {
 			await mesh.exchange.logsRepository.delete("*");
 			await mesh.exchange.warningsRepository.delete("*");
 			await mesh.exchange.blastRepository.delete("*");
-			console.log("SATRTED");
 		});
 
 		afterEach(() => {

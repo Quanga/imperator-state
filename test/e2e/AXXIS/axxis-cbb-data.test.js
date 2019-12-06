@@ -9,15 +9,8 @@ const Mesh = require("happner-2");
 
 const util = require("../../helpers/utils");
 const fields = require("../../../lib/configs/fields/fieldConstants");
-const {
-	typeId,
-	serial,
-	communicationStatus,
-	childCount,
-	windowId,
-	delay,
-	keySwitchStatus,
-} = fields;
+const { typeId, serial, communicationStatus, childCount } = fields;
+const { windowId, delay, keySwitchStatus } = fields;
 const IntToIP = require("ip-to-int");
 
 describe("INTEGRATION - Units", async function() {
@@ -107,7 +100,7 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultDataService[3][13].data[childCount]).to.be.equal(0);
 
 			let snapshot = await client.exchange.dataService.getSnapShot();
-			console.log(JSON.stringify(snapshot));
+			//console.log(JSON.stringify(snapshot));
 		});
 
 		it("can process a packet with CBBs and EDD Data 1 where no CBBs currently in database", async () => {
