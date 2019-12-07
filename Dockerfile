@@ -42,7 +42,6 @@ RUN npm install --only=prod \
 
 COPY . .
 
-ENV NODE_ENV=test
 
 EXPOSE 55000
 EXPOSE 8000
