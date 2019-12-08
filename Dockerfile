@@ -1,4 +1,5 @@
 FROM node:10.17-stretch AS build
+RUN apt install git
 
 WORKDIR /app
 
