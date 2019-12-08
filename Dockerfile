@@ -1,4 +1,4 @@
-FROM node:10.17-stretch
+FROM node:10.17-stretch AS build
 
 WORKDIR /app
 
@@ -27,6 +27,12 @@ ENV PATH /app/node_modules/.bin$PATH
 
 RUN npm install --only=prod \
     && npm cache clean --force 
+
+FROM node:10.17-alpine AS prod
+WORKDIR /app
+RUN apk add procps
+
+COPY --from=build /app/node_modules node_modules
 
 COPY . .
 VOLUME /var/imperator/

@@ -1,9 +1,9 @@
 version: "3.7"
 services:
- state:
-  image: perspective/state
-  ports:
-   - "8000:8000"
-   - "55000:55000"
-  environment:
-   - NODE_ENV=test
+  state:
+    build: .
+    ports:
+      - "8000:8000"
+      - "55000:55000"
+    environment:
+      - NODE_ENV=test
