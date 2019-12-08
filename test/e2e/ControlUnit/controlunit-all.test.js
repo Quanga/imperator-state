@@ -4,7 +4,7 @@ chai.use(require("chai-match"));
 
 var Mesh = require("happner-2");
 const ServerHelper = require("../../helpers/server_helper");
-const PktBldr = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("imperator-packet-constructor");
 const Queue = require("better-queue");
 const utils = require("../../helpers/utils");
 const fields = require("../../../lib/configs/fields/fieldConstants");

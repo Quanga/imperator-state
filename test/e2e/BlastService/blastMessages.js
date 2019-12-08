@@ -1,4 +1,4 @@
-const PktBldr = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("imperator-packet-constructor");
 
 function BlastList() {}
 

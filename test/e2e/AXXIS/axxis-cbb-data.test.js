@@ -3,7 +3,7 @@ const expect = chai.expect;
 chai.use(require("chai-match"));
 
 const ServerHelper = require("../../helpers/server_helper");
-const PktBldr = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("imperator-packet-constructor");
 const Queue = require("better-queue");
 const Mesh = require("happner-2");
 
@@ -71,7 +71,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 0,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 							},
 						])
 						.build(),
@@ -127,7 +127,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
@@ -184,7 +184,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
@@ -207,7 +207,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
+								rawData: [1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
@@ -250,7 +250,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 1,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
@@ -273,7 +273,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
@@ -328,7 +328,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 1,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
@@ -351,7 +351,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+								rawData: [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
 							},
 							{
 								windowId: 2,
@@ -374,11 +374,11 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
 							},
 							{
 								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								rawData: [0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
 						])
@@ -434,11 +434,11 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 1,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 0, 0, 1],
+								rawData: [0, 0, 0, 0, 0, 0, 1],
 								delay: 2000,
 							},
 						])
@@ -457,11 +457,11 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+								rawData: [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0],
 							},
 							{
 								windowId: 2,
-								rawData: [1, 0, 0, 0, 0, 1, 1, 1],
+								rawData: [0, 0, 0, 0, 1, 1, 1],
 								delay: 3000,
 							},
 						])
@@ -480,7 +480,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
+								rawData: [0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1],
 							},
 						])
 						.build(),
@@ -534,11 +534,11 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+								rawData: [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
 							},
 							{
 								windowId: 1,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+								rawData: [1, 0, 0, 0, 1, 1, 1],
 								delay: 2000,
 							},
 						])
@@ -557,11 +557,11 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+								rawData: [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
 							},
 							{
 								windowId: 2,
-								rawData: [1, 1, 0, 0, 0, 1, 1, 1],
+								rawData: [1, 0, 0, 0, 1, 1, 1],
 								delay: 2000,
 							},
 						])
@@ -595,7 +595,7 @@ describe("INTEGRATION - Units", async function() {
 								serial: 13,
 								childCount: 2,
 								ledState: 6,
-								rawData: [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+								rawData: [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
 							},
 						])
 						.build(),

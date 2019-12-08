@@ -7,7 +7,7 @@ const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 
-const PacketConstructor = require("../../../lib/builders/packetConstructor");
+const PacketConstructor = require("imperator-packet-constructor");
 const util = require("../../helpers/utils");
 
 describe("INTEGRATION -- Services", async function() {

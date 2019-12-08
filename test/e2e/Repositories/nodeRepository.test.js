@@ -7,7 +7,7 @@ const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
 chai.use(sinonChai);
 
-const PktBldr = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("imperator-packet-constructor");
 const util = require("../../helpers/utils");
 const Queue = require("better-queue");
 const Happner = require("happner-2");

@@ -49,6 +49,7 @@
 		"happn-logger": "git+https://github.com/Quanga/happn-logger.git",
 		"happner-2": "11.0.1",
 		"happner-red-bed": "^1.0.0",
+		"imperator-packet-constructor": "git@github.com:Quanga/imperator-packet-constructor.git",
 		"ip-to-int": "^0.3.1",
 		"moment": "^2.24.0",
 		"node-red-contrib-full-msg-json-schema-validation": "^1.1.0",

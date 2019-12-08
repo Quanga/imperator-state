@@ -3,7 +3,7 @@ const expect = chai.expect;
 chai.use(require("chai-match"));
 
 const ServerHelper = require("../../helpers/server_helper");
-const PktBldr = require("../../../lib/builders/packetConstructor");
+const PktBldr = require("imperator-packet-constructor");
 const Queue = require("better-queue");
 const Mesh = require("happner-2");
 
@@ -95,7 +95,7 @@ describe("INTEGRATION - Units", async function() {
 								childCount: 0,
 								ledState: 1,
 								//main:1 dcSupply:1
-								rawData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+								rawData: [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
 							},
 						])
 						.build(),
