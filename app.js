@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-
+const delay = require("delay");
 /**
  * @category System
  * @module app
@@ -98,8 +98,17 @@ App.prototype.startRouter = function($happn) {
 
 	return (async () => {
 		try {
-			await dataService.initialise();
-			if (process.env.USE_INPUT_INSTANCE === "true") await endpointService.start();
+			log.info("Starting App Entrypoint");
+			log.info("Initializing dataService");
+			const dataServiceStarted = await dataService.initialise();
+			await delay(2000);
+
+			if (dataServiceStarted) {
+				if (process.env.USE_INPUT_MODULE === "true") {
+					log.info("Initializing input");
+					await endpointService.start();
+				}
+			}
 
 			log.info(`System Mode: ${process.env.MODE}`);
 			log.info("::::: APP STARTUP COMPLETE ::::::");
