@@ -1,9 +1,45 @@
 version: "3.7"
 services:
   state:
-    build: .
+    container_name: imperator-state
+    build:
+      context: .
+      target: prod
     ports:
       - "8000:8000"
       - "55000:55000"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     environment:
-      - NODE_ENV=test
+      - NODE_ENV=production
+      - DOCKERED=true
+      # Happn Info
+      - MESH_NAME=mesh-state-001
+      - HOST=0.0.0.0
+      - HAPPN_PORT=55000
+      - SECURE_MESH=true
+      - MASTER_PASS=happn
+      # DB names
+      - DEFAULT_DB=edge.db
+      - NODES_DB=nodes.db
+      - LOGS_DB=logs.db
+      - WARNINGS_DB=warnings.db
+      - BLASTS_DB=blasts.db
+      - UI_DB=ui.db
+      # Mode for system
+      - MODE=AXXIS100
+      # logger vars
+      - LOG_LEVEL=info
+      - LOG_FILE=edge.log
+      # Services to use
+      - USE_LOCAL_SERVICES=false
+      # Input Module for SIM
+      - USE_INPUT_MODULE=false
+      - INPUT_MODULE_NAME=mesh-sim-001
+      - INPUT_MODULE_HOST=imperator_simulator_1
+      - INPUT_MODULE_PORT=55014
+      - INPUT_MODULE_CHECK_INTERVAL=10000
+      - INPUT_MODULE_USER=mesh-state-001
+      - INPUT_MODULE_PASSWORD=ibstate
