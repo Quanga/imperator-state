@@ -405,5 +405,34 @@ describe("UNIT - Parser", async function() {
 
 			expect(res).to.deep.equal(expected);
 		});
+
+		it("can parse generic 05", async () => {
+			const now = Date.now();
+
+			const testObj = {
+				packet:
+					"aaaa4c0500435b991440116740061273a4061367080714736c071567d00716733408176798081873fc08196760091a73c4091b67280a1c738c0a1d67f00a1e73540b1f67b80b20731c0c47af",
+				createdAt: now,
+			};
+
+			const parsedArr = Parser.create()
+				.withMode(modes.AXXIS100)
+				.withPacket(testObj)
+				.build();
+
+			const result = await UnitBuilder.create(UnitModelFactory).fromArray(parsedArr);
+
+			let res = result.units.map(item => {
+				return {
+					itemType: item.constructor.name,
+					itemMeta: item.meta,
+					itemState: item.state,
+					itemData: item.data,
+				};
+			});
+			console.log(JSON.stringify(res, null, 2));
+		});
 	});
 });
+
+//aaaa4c0500435b991440116740061273a4061367080714736c071567d00716733408176798081873fc08196760091a73c4091b67280a1c738c0a1d67f00a1e73540b1f67b80b20731c0c47af
