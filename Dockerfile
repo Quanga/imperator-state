@@ -1,32 +1,15 @@
 FROM node:10.17-stretch AS build
+#FROM arm32v7/node:10-stretch AS build
 RUN apt install git
 
 WORKDIR /app
-
-# RUN apk add --no-cache --virtual .builds-deps \
-#     build-base \
-# binutils-gold \
-# g++ \
-# gcc \
-# gnupg \
-# libgcc \
-# linux-headers \
-# make \
-# python \
-# udev \
-# && apk add procps git\
-# && npm install bcrypt --build-from-source \
-# && apk del .builds-deps 
-
-# RUN apk add procps git curl
-
 
 
 COPY package.json package-lock.json* ./
 
 ENV PATH /app/node_modules/.bin$PATH
 
-RUN npm install --only=prod \
+RUN npm install --production \
     && npm cache clean --force 
 
 FROM node:10.17-alpine AS prod
