@@ -12,6 +12,7 @@ chai.use(chaiPromise);
 const utils = require("../../helpers/utils");
 const modes = require("../../../lib/configs/modes/modes");
 const fields = require("../../../lib/configs/fields/fieldConstants");
+
 const {
 	communicationStatus,
 	serial,
