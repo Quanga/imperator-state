@@ -52,7 +52,7 @@ describe("UNIT - Models", async function() {
 			a = await dataModel.stageUpsert(cbb2);
 			await dataModel.commitUpsert(a);
 
-			const snapshot = await dataModel.snapShot();
+			const snapshot = dataModel.snapShot();
 			console.log(JSON.stringify(snapshot, null, 2));
 		});
 	});

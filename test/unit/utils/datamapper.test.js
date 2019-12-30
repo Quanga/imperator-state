@@ -1,185 +1,35 @@
 const DataMapper = require("../../../lib/mappers/data_mapper");
-const expect = require("expect.js");
+const chai = require("chai");
+const expect = chai.expect;
+chai.use(require("chai-match"));
+const chaiPromise = require("chai-as-promised");
+
+const { PrimaryUnitModel, SecondaryUnitModel } = require("../../../lib/models/units/unitModels");
+
+chai.use(chaiPromise);
 
 describe("UNIT - Utils", async function() {
 	this.timeout(2000);
 
 	context("DataMapper", async () => {
-		it("can remap determine the changes in a node against its previous node", async function() {
-			const datamapper = new DataMapper();
-
-			const previous = {
-				data: {
-					serial: 13,
-					typeId: 3,
-					parentType: 0,
-					createdAt: 1560599359030,
-					modifiedAt: 1560599359031,
-					path: "3/13",
-					communicationStatus: 1,
-					blastArmed: 0,
-					keySwitchStatus: 0,
-					isolationRelay: 0,
-					mains: 0,
-					lowBat: 1,
-					tooLowBat: 0,
-					dcSupplyVoltage: 0,
-					shaftFault: 0,
-					cableFault: 0,
-					earthLeakage: 0,
-					ledState: 6,
-					childCount: 2,
-					loadCount: 2,
+		it("can remap a JSON unit to a class unit correctly", async function() {
+			const datamapper = DataMapper.create();
+			const testArr = [
+				{
+					meta: { serial: 23, typeId: 0 },
+					data: { keySwitchStatus: 0 },
+					state: { communicationState: 1 },
 				},
-				meta: { storedPacketDate: 1312312312 },
-			};
-
-			const next = {
-				data: {
-					serial: 13,
-					typeId: 3,
-					parentType: 0,
-					createdAt: 1560599359030,
-					modifiedAt: 1560599359037,
-					path: "3/13",
-					communicationStatus: 1,
-					blastArmed: 0,
-					keySwitchStatus: 1,
-					isolationRelay: 0,
-					mains: 0,
-					lowBat: 1,
-					tooLowBat: 0,
-					dcSupplyVoltage: 0,
-					shaftFault: 1,
-					cableFault: 0,
-					earthLeakage: 0,
-					ledState: 6,
-					childCount: 2,
-					loadCount: 2,
+				{
+					meta: { serial: 23, typeId: 4 },
+					data: { keySwitchStatus: 0 },
+					state: { communicationState: 1 },
 				},
-				meta: { storedPacketDate: 231231231 },
-			};
+			];
+			let result = datamapper.mapToUnits(testArr);
 
-			let result = await datamapper.getUpdates(next, previous);
-			console.log(result);
-
-			expect(result.keySwitchStatus).to.eql(1);
-			expect(result.shaftFault).to.eql(1);
-		});
-
-		it("can remap nulls in previous ", async function() {
-			const datamapper = new DataMapper();
-
-			const previous = {
-				data: {
-					serial: 13,
-					typeId: 3,
-					parentType: 0,
-					createdAt: 1560599359030,
-					modifiedAt: 1560599359031,
-					path: "3/13",
-					communicationStatus: null,
-					blastArmed: null,
-					keySwitchStatus: null,
-					isolationRelay: null,
-					mains: 0,
-					lowBat: 1,
-					tooLowBat: 0,
-					dcSupplyVoltage: 0,
-					shaftFault: 0,
-					cableFault: 0,
-					earthLeakage: 0,
-					ledState: 6,
-					childCount: 2,
-				},
-			};
-
-			const next = {
-				data: {
-					serial: 13,
-					typeId: 3,
-					parentType: 0,
-					createdAt: null,
-					modifiedAt: 1560599359037,
-					path: "3/13",
-					communicationStatus: 1,
-					blastArmed: 0,
-					keySwitchStatus: 1,
-					isolationRelay: 0,
-					mains: 0,
-					lowBat: 1,
-					tooLowBat: 0,
-					dcSupplyVoltage: 0,
-					shaftFault: 1,
-					cableFault: 0,
-					earthLeakage: 0,
-					ledState: 6,
-					childCount: 2,
-				},
-			};
-
-			let result = await datamapper.getUpdates(next, previous);
-			expect(result.shaftFault).to.eql(1);
-			expect(result.keySwitchStatus).to.eql(1);
-		});
-
-		it("can remap null values against its previous node", async function() {
-			const datamapper = new DataMapper();
-
-			const previous = {
-				data: {
-					serial: 13,
-					parentSerial: null,
-					typeId: 3,
-					parentType: 0,
-					createdAt: 1560599359030,
-					modifiedAt: 1560599359037,
-					path: "3/13",
-					communicationStatus: 1,
-					blastArmed: 0,
-					keySwitchStatus: 0,
-					isolationRelay: 0,
-					mains: 0,
-					lowBat: 1,
-					tooLowBat: 0,
-					dcSupplyVoltage: 0,
-					shaftFault: 1,
-					cableFault: 0,
-					earthLeakage: 0,
-					ledState: 6,
-					childCount: 2,
-				},
-			};
-
-			const next = {
-				data: {
-					serial: 13,
-					parentSerial: null,
-					typeId: 3,
-					parentType: 0,
-					createdAt: 1560599359030,
-					modifiedAt: 1560599359031,
-					path: null,
-					communicationStatus: 1,
-					blastArmed: null,
-					keySwitchStatus: null,
-					isolationRelay: null,
-					mains: null,
-					lowBat: 1,
-					tooLowBat: 0,
-					dcSupplyVoltage: 0,
-					shaftFault: 0,
-					cableFault: 0,
-					earthLeakage: 0,
-					ledState: 6,
-					childCount: 2,
-				},
-			};
-
-			let result = await datamapper.getUpdates(next, previous);
-
-			console.log(result);
-			expect(result.path).to.eql("3/13");
+			expect(result[0]).to.instanceOf(PrimaryUnitModel);
+			expect(result[1]).to.instanceOf(SecondaryUnitModel);
 		});
 	});
 });

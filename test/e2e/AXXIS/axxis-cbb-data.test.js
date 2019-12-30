@@ -99,7 +99,7 @@ describe("INTEGRATION - Units", async function() {
 			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(1);
 			expect(resultDataService[3][13].data[childCount]).to.be.equal(0);
 
-			let snapshot = await client.exchange.dataService.getSnapShot();
+			//let snapshot = await client.exchange.dataService.getSnapShot();
 			//console.log(JSON.stringify(snapshot));
 		});
 
@@ -156,6 +156,8 @@ describe("INTEGRATION - Units", async function() {
 			expect(edd1.data[delay]).to.equal(2000);
 			expect(cbb.data[childCount]).to.equal(2);
 
+			const logs = await client.exchange.logsRepository.get("*", 0, Date.now(), 50);
+			console.log(logs);
 			// let snapshot = await client.exchange.dataService.getSnapShot();
 			// console.log(JSON.stringify(snapshot));
 		});

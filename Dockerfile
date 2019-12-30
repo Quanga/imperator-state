@@ -4,11 +4,7 @@ RUN apt install git
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-
-ENV PATH /app/node_modules/.bin$PATH
-
-RUN npm install --production \
-    && npm cache clean --force 
+RUN npm install --production 
 
 
 FROM node:10.17-alpine AS prod

@@ -1,16 +1,17 @@
 if (process.env.NODE_ENV === "test") {
 	require("dotenv").config();
 }
-
+const path = require("path");
 const Mesh = require("happner-2");
-const config = require("./happner.config");
+const config = require(path.resolve(__dirname, "./happner.config"));
 
 /**
  * @module Server
  * @function Server
  * @summary Entry Point
  */
-const Server = async () => {
+const Server = () => {
+	console.log(process.env.MESH_NAME);
 	if (process.env.MESH_NAME === undefined) {
 		console.error(
 			"Environemnt Variables not loaded.... please check NODE_ENV and how you are injecting your variables",
@@ -25,6 +26,7 @@ const Server = async () => {
  * @function start
  */
 const start = () => {
+	console.log("inside starting");
 	this.mesh = new Mesh();
 
 	this.mesh.initialize(config, err => {
@@ -41,7 +43,7 @@ const start = () => {
 		});
 	});
 };
-
+console.log("starting");
 Server();
 
 /**

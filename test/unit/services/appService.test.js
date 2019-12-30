@@ -4,8 +4,10 @@ const Happner = require("happner-2");
 
 const config = require("../../../config");
 const assert = require("assert");
-const expect = require("expect.js");
 const util = require("../../helpers/utils");
+const chai = require("chai");
+const expect = chai.expect;
+chai.use(require("chai-match"));
 
 describe("INTEGRATION", async function() {
 	let meshInstance;
@@ -56,9 +58,9 @@ describe("INTEGRATION", async function() {
 			await meshInstance.exchange.app.setAppInfo(
 				{
 					...info,
-					setupComplete: true
+					setupComplete: true,
 				},
-				"persist"
+				"persist",
 			);
 
 			let result = await meshInstance.exchange.app.getPersistedAppInfo();
@@ -79,7 +81,7 @@ describe("INTEGRATION", async function() {
 					if (error) {
 						throw new Error(error);
 					}
-				}
+				},
 			);
 
 			let info = await meshInstance.exchange.app.getAppInfo();
@@ -87,9 +89,9 @@ describe("INTEGRATION", async function() {
 			await meshInstance.exchange.app.setAppInfo(
 				{
 					...info,
-					setupComplete: true
+					setupComplete: true,
 				},
-				"persist"
+				"persist",
 			);
 
 			await util.timer(100);
@@ -99,9 +101,9 @@ describe("INTEGRATION", async function() {
 			await meshInstance.exchange.app.setAppInfo(
 				{
 					...info,
-					setupComplete: false
+					setupComplete: false,
 				},
-				"persist"
+				"persist",
 			);
 			await util.timer(100);
 
@@ -119,7 +121,7 @@ describe("INTEGRATION", async function() {
 				"*",
 				{
 					event_type: "set",
-					initialCallback: true
+					initialCallback: true,
 				},
 				(data, meta) => {
 					events.push({ data: data, meta: meta });
@@ -128,15 +130,15 @@ describe("INTEGRATION", async function() {
 					if (error) {
 						throw new Error("cannot connect,", _eventRef);
 					}
-				}
+				},
 			);
 
 			await meshInstance.exchange.app.setAppInfo(
 				{
 					...info,
-					setupComplete: true
+					setupComplete: true,
 				},
-				"persist"
+				"persist",
 			);
 
 			await util.timer(100);
@@ -147,9 +149,9 @@ describe("INTEGRATION", async function() {
 			await meshInstance.exchange.app.setAppInfo(
 				{
 					...info,
-					setupComplete: false
+					setupComplete: false,
 				},
-				"persist"
+				"persist",
 			);
 			await util.timer(100);
 

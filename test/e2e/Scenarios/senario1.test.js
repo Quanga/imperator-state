@@ -9,16 +9,7 @@ const Mesh = require("happner-2");
 
 const util = require("../../helpers/utils");
 const fields = require("../../../lib/configs/fields/fieldConstants");
-const {
-	typeId,
-	serial,
-	communicationStatus,
-	childCount,
-	windowId,
-	delay,
-	keySwitchStatus,
-	detonatorStatus,
-} = fields;
+const { communicationStatus, keySwitchStatus, detonatorStatus } = fields;
 
 describe("INTEGRATION - Units", async function() {
 	this.timeout(60000);
@@ -159,13 +150,13 @@ describe("INTEGRATION - Units", async function() {
 			});
 
 			await util.holdTillDrained(sendQueue);
-			await util.timer(1000);
+			await util.timer(1200);
 
 			let resultDataService = await client.exchange.dataService.getSnapShot();
 
 			// console.log(resultDataService[0][8]);
 			// console.log(resultDataService[3][13]);
-			// console.log(resultDataService[4][13][1]);
+			console.log(resultDataService);
 
 			expect(resultDataService[0][8].data[keySwitchStatus]).to.be.equal(0);
 			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(1);

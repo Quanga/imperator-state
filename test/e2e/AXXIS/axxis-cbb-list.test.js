@@ -330,7 +330,7 @@ describe("INTEGRATION - Units", async function() {
 							},
 							{
 								windowId: 2,
-								rawData: [0, 0, 0, 0, 0, 0, 1],
+								rawData: [1, 0, 1, 1, 1, 1, 1],
 								delay: 2000,
 							},
 						])
@@ -352,8 +352,8 @@ describe("INTEGRATION - Units", async function() {
 								rawData: [0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1],
 							},
 							{
-								windowId: 2,
-								rawData: [0, 0, 0, 0, 1, 1, 1],
+								windowId: 1,
+								rawData: [1, 1, 1, 1, 1, 1, 1],
 								delay: 3000,
 							},
 						])
@@ -372,7 +372,7 @@ describe("INTEGRATION - Units", async function() {
 			let mappedNodes = resPersisted.map(node => {
 				return { node: node.constructor.name, data: node.data };
 			});
-
+			console.log(JSON.stringify(resData[3]["22"], null, 2));
 			expect(resData[3]["22"].children[4].length).to.eql(2);
 			expect(mappedNodes.length).to.eql(4);
 

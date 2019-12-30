@@ -333,7 +333,7 @@ describe("UNIT - Models", async function() {
 			expect(dataModel.units[0][22].children[3].length).to.be.equal(2);
 			expect(dataModel.units[0][22][counts][3].data[keySwitchStatus]).to.be.equal(1);
 			//expect(dataModel.units[0][22][counts][3].state[communicationStatus]).to.be.equal(1);
-			const snap = await dataModel.snapShot();
+			const snap = dataModel.snapShot();
 			console.log(JSON.stringify(snap, null, 2));
 		});
 
