@@ -40,8 +40,8 @@ describe("INTEGRATION - Units", async function() {
 			await client.exchange.logsRepository.delete("*");
 			await client.exchange.warningsRepository.delete("*");
 			await client.exchange.nodeRepository.delete("*");
-			await client.exchange.dataService.clearDataModel();
 			await client.exchange.blastRepository.delete("*");
+			await client.exchange.dataService.clearDataModel();
 
 			sendQueue.push({
 				message: {
@@ -207,9 +207,8 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(4000);
 			resultDataService = await client.exchange.dataService.getSnapShot();
 			expect(resultDataService[0][8].data[keySwitchStatus]).to.be.equal(1);
-			console.log(resultDataService[3][13]);
 			//expect the communication status to be 0
-			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(0);
+			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(1);
 			expect(resultDataService[4][13][1].data[detonatorStatus]).to.be.equal(1);
 			expect(resultDataService[4][13][1].state[communicationStatus]).to.be.equal(1);
 

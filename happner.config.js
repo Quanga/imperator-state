@@ -1,10 +1,10 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+const path = require("path");
 
-const blastConfig = require("./lib/configs/blasts/blastsConfig");
-
-const loggerConfig = require("./lib/configs/happner/logger");
-const happnConfig = require("./lib/configs/happner/happn");
-const endpoints = require("./lib/configs/happner/endpoints");
+const blastConfig = require(path.resolve(__dirname, "./lib/configs/blasts/blastsConfig"));
+const loggerConfig = require(path.resolve(__dirname, "./lib/configs/happner/logger"));
+const happnConfig = require(path.resolve(__dirname, "./lib/configs/happner/happn"));
+const endpoints = require(path.resolve(__dirname, "./lib/configs/happner/endpoints"));
 
 const Config = {
 	name: process.env.MESH_NAME,
@@ -36,14 +36,7 @@ const Config = {
 		systemService: {},
 		securityService: { env: { meshName: process.env.EDGE_INSTANCE_NAME } },
 		systemRepository: {},
-		data: {
-			// data: {
-			// 	routes: {
-			// 		"persist/*": "persist",
-			// 		"mem/*": "mem",
-			// 	},
-			// },
-		},
+		data: {},
 		uiService: {
 			startMethod: "start",
 		},
@@ -52,14 +45,6 @@ const Config = {
 		dataMapper: {},
 		endpointService: {
 			stopMethod: "componentStop",
-			// env: {
-			// 	endpointIP: process.env.ENDPOINT_IP || "0.0.0.0",
-			// 	endpointPort: parseInt(process.env.ENDPOINT_PORT) || 55014,
-			// 	endpointCheckInterval: parseInt(process.env.EP_CHECK_INTERVAL, 10) || 5000,
-			// 	endpointName: process.env.ENDPOINT_NAME || "edge_ssot",
-			// 	endpointUsername: process.env.ENDPOINT_USERNAME || "UNIT001",
-			// 	endpointPassword: process.env.ENDPOINT_PASSWORD || "",
-			// },
 		},
 		nodeRepository: {},
 		blastRepository: {},

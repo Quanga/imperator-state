@@ -7,7 +7,7 @@ const modes = require("../../../lib/configs/modes/modes");
 const fields = require("../../../lib/configs/fields/fieldConstants");
 const { communicationStatus, createdAt, path, serial, parentType, program } = fields;
 const { calibration, typeId, parentSerial, windowId } = fields;
-const { bridgeWire, tagged, logged, delay, boosterFired } = fields;
+const { bridgeWire, tagged, logged, delay, boosterFired, detonatorStatus } = fields;
 
 const UnitModelFactory = require("../../../lib/models/units/unitModelFactory");
 const UnitBuilder = require("../../../lib/builders/unitBuilder");
@@ -52,6 +52,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9200,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -75,6 +76,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9300,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -98,6 +100,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9400,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -121,6 +124,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9500,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -144,6 +148,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9600,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -167,6 +172,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9700,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -190,6 +196,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9800,
+						[detonatorStatus]: 0,
 					},
 				},
 				{
@@ -213,6 +220,7 @@ describe("UNIT - Parser", async function() {
 						[tagged]: 0,
 						[logged]: 1,
 						[delay]: 9900,
+						[detonatorStatus]: 0,
 					},
 				},
 			];
@@ -239,7 +247,7 @@ describe("UNIT - Parser", async function() {
 				};
 			});
 
-			await expect(res).to.deep.equal(expected);
+			expect(res).to.deep.equal(expected);
 		});
 	});
 });

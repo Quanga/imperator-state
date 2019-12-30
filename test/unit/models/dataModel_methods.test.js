@@ -39,18 +39,22 @@ describe("UNIT - Models", async function() {
 			const dataModel = DataModel.create();
 
 			const cu = UnitModelFactory(0).withSerial(22);
-			const cbb1 = UnitModelFactory(3).withSerial(101);
-			cbb1.data = { test1: "test1" };
-			const cbb2 = UnitModelFactory(3).withSerial(102);
-			cbb2.data = { test1: "test1" };
+			const cbb1 = UnitModelFactory(3)
+				.withSerial(101)
+				.setObj("data", { test1: "test1" });
+			const cbb2 = UnitModelFactory(3)
+				.withSerial(102)
+				.setObj("data", { test1: "test1" });
+			const edd1 = UnitModelFactory(4)
+				.withWindowId(1)
+				.withParent(101)
+				.setObj("data", { test1: "test1" });
 
 			let a;
-			a = await dataModel.stageUpsert(cu);
-			await dataModel.commitUpsert(a);
-			a = await dataModel.stageUpsert(cbb1);
-			await dataModel.commitUpsert(a);
-			a = await dataModel.stageUpsert(cbb2);
-			await dataModel.commitUpsert(a);
+
+			const allunits = [cu, cbb1, cbb2, edd1];
+			const staged = await Promise.all(allunits.map(u => dataModel.stageUpsert(u)));
+			staged.forEach(upd => dataModel.commitUpsert(upd));
 
 			const snapshot = dataModel.snapShot();
 			console.log(JSON.stringify(snapshot, null, 2));
