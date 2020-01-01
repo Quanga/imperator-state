@@ -12,7 +12,7 @@ const fields = require("../../../lib/configs/fields/fieldConstants");
 const { communicationStatus, keySwitchStatus, detonatorStatus } = fields;
 
 describe("INTEGRATION - Units", async function() {
-	this.timeout(60000);
+	this.timeout(80000);
 	let serverHelper = new ServerHelper();
 	let client;
 
@@ -75,7 +75,10 @@ describe("INTEGRATION - Units", async function() {
 		15: keySwitchStatus,
 	*/
 		it("it can load two CBBs and turn off communication status when CCB is armed", async () => {
+			await util.timer(5000);
+
 			//load CBB 13
+
 			sendQueue.push({
 				message: {
 					packet: PktBldr.withCommand(5)
@@ -87,6 +90,26 @@ describe("INTEGRATION - Units", async function() {
 								ledState: 1,
 								//main:1 dcSupply:1
 								rawData: [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+							},
+						])
+						.build(),
+					createdAt,
+				},
+				wait: 300,
+			});
+
+			//load CBB 72 with cable fault
+			sendQueue.push({
+				message: {
+					packet: PktBldr.withCommand(5)
+						.withParent(72)
+						.withData([
+							{
+								serial: 72,
+								childCount: 0,
+								ledState: 1,
+								//main:1 dcSupply:1
+								rawData: [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],
 							},
 						])
 						.build(),
@@ -156,7 +179,7 @@ describe("INTEGRATION - Units", async function() {
 
 			// console.log(resultDataService[0][8]);
 			// console.log(resultDataService[3][13]);
-			console.log(resultDataService);
+			console.log("DATA MODEL", resultDataService);
 
 			expect(resultDataService[0][8].data[keySwitchStatus]).to.be.equal(0);
 			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(1);

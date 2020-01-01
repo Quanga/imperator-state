@@ -81,7 +81,7 @@ describe("INTEGRATION - Units", async function() {
 			});
 
 			await util.holdTillDrained(sendQueue);
-			await util.timer(1000);
+			await util.timer(2000);
 
 			let resultPresist = await client.exchange.nodeRepository.get("*");
 			let resultDataService = await client.exchange.dataService.getSnapShot();

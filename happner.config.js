@@ -61,7 +61,9 @@ const Config = {
 				fsm: blastConfig.fsm,
 			},
 		},
-		queueService: {},
+		queueService: {
+			startMethod: "componentStart",
+		},
 		app: {
 			startMethod: "componentStart",
 			stopMethod: "componentStop",

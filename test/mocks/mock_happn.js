@@ -137,10 +137,6 @@ var MockHappn = function() {
 				new Promise(resolve => {
 					resolve(error);
 				}),
-			logPacketError: error =>
-				new Promise(resolve => {
-					resolve(error);
-				}),
 		},
 		queueService: {
 			validatePacket: () =>
