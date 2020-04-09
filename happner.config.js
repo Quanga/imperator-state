@@ -12,6 +12,7 @@ const Config = {
 	...happnConfig,
 	...endpoints,
 	modules: {
+		nodered: { path: "happner-red-bed" },
 		app: { path: `${__dirname}/app.js` },
 		blastRepository: { path: `${__dirname}/lib/repositories/blastRepository.js` },
 		blastService: { path: `${__dirname}/lib/services/blast_service.js` },
@@ -28,11 +29,15 @@ const Config = {
 		systemService: { path: `${__dirname}/lib/services/systemService.js` },
 		uiService: { path: `${__dirname}/lib/services/ui_service.js` },
 		warningsRepository: { path: `${__dirname}/lib/repositories/warningsRepository.js` },
-		nodered: {
-			path: "happner-red-bed",
-		},
 	},
 	components: {
+		nodered: {
+			accessLevel: "mesh",
+			initMethod: "init",
+
+			stopMethod: "stop",
+			config: { projectPath: __dirname },
+		},
 		systemService: {},
 		securityService: { env: { meshName: process.env.EDGE_INSTANCE_NAME } },
 		systemRepository: {},
@@ -61,21 +66,10 @@ const Config = {
 				fsm: blastConfig.fsm,
 			},
 		},
-		queueService: {
-			startMethod: "componentStart",
-		},
+		queueService: {},
 		app: {
 			startMethod: "componentStart",
 			stopMethod: "componentStop",
-		},
-		nodered: {
-			accessLevel: "mesh",
-			initMethod: "init",
-			startMethod: "start",
-			stopMethod: "stop",
-			config: {
-				projectPath: __dirname,
-			},
 		},
 	},
 };

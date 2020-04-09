@@ -99,4 +99,23 @@ module.exports = {
 				return resolve();
 			});
 		}),
+	removeDbFolder: async dbPath => {
+		const dbFolder = await new Promise((resolve, reject) => {
+			fs.stat(dbPath, (err, stats) => {
+				if (err) return reject(err);
+
+				resolve(stats);
+			});
+		});
+
+		if (dbFolder.isDirectory()) {
+			await new Promise((resolve, reject) => {
+				fs.rmdir(dbPath, { recursive: true }, err => {
+					if (err) return reject(err);
+					console.log("db folder was deleted");
+					resolve();
+				});
+			});
+		}
+	},
 };

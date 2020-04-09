@@ -1,0 +1,328 @@
+[
+	{
+		"data": {
+			"keySwitchStatus": 1,
+			"isolationRelay": 0,
+			"fireButton": 0,
+			"cableFault": 0,
+			"earthLeakage": 0,
+			"blastArmed": 0
+		},
+		"meta": {
+			"path": "0/8",
+			"typeId": 0,
+			"createdAt": 1578026182700,
+			"serial": 8,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 1
+		}
+	},
+	{
+		"data": {
+			"childCount": 4,
+			"ledState": 2,
+			"isolationRelay": 0,
+			"lfs": 0,
+			"blastArmed": 0,
+			"tooLowBat": 0,
+			"lowBat": 0,
+			"dcSupplyVoltage": 1,
+			"shaftFault": 0,
+			"mains": 1,
+			"earthLeakage": 0,
+			"cableFault": 0,
+			"keySwitchStatus": 1
+		},
+		"meta": {
+			"path": "3/13",
+			"typeId": 3,
+			"parentType": 0,
+			"createdAt": 1578026182794,
+			"serial": 13,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 1
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 100
+		},
+		"meta": {
+			"path": "3/13/4/1",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.126.255",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 1,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 109
+		},
+		"meta": {
+			"path": "3/13/4/10",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.8",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 10,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 101
+		},
+		"meta": {
+			"path": "3/13/4/2",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.0",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 2,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 102
+		},
+		"meta": {
+			"path": "3/13/4/3",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.1",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 3,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 103
+		},
+		"meta": {
+			"path": "3/13/4/4",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.2",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 4,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 104
+		},
+		"meta": {
+			"path": "3/13/4/5",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.3",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 5,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 105
+		},
+		"meta": {
+			"path": "3/13/4/6",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.4",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 6,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 106
+		},
+		"meta": {
+			"path": "3/13/4/7",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.5",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 7,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 107
+		},
+		"meta": {
+			"path": "3/13/4/8",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.6",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 8,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"bridgeWire": 0,
+			"calibration": 0,
+			"program": 1,
+			"boosterFired": 0,
+			"tagged": 0,
+			"detonatorStatus": 0,
+			"logged": 0,
+			"delay": 108
+		},
+		"meta": {
+			"path": "3/13/4/9",
+			"typeId": 4,
+			"parentType": 3,
+			"serial": "0.67.127.7",
+			"createdAt": 1578026182794,
+			"parentSerial": 13,
+			"windowId": 9,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 0
+		}
+	},
+	{
+		"data": {
+			"childCount": 0,
+			"ledState": 1,
+			"isolationRelay": 0,
+			"lfs": 0,
+			"blastArmed": 0,
+			"tooLowBat": 0,
+			"lowBat": 0,
+			"dcSupplyVoltage": 1,
+			"shaftFault": 0,
+			"mains": 1,
+			"earthLeakage": 0,
+			"cableFault": 1,
+			"keySwitchStatus": 0
+		},
+		"meta": {
+			"path": "3/72",
+			"typeId": 3,
+			"parentType": 0,
+			"createdAt": 1578026182794,
+			"serial": 72,
+			"modifiedAt": 1578026182794
+		},
+		"state": {
+			"communicationStatus": 1
+		}
+	}
+]

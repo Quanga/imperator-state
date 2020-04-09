@@ -25,7 +25,7 @@ describe("UNIT - Models", async function() {
 				"123": {
 					meta: { serial: 123 },
 					data: { keySwitchStatus: 1 },
-					counts: { keySwitchStatus: 2 },
+					counts: { detonatorStatus: 2 },
 					state: { communicationStatus: 1 },
 					children: { "4": [1, 2] },
 				},
@@ -33,7 +33,7 @@ describe("UNIT - Models", async function() {
 				"156": {
 					meta: { serial: 156 },
 					data: { keySwitchStatus: 0 },
-					counts: { communicationStatus: 0 },
+					counts: { detonatorStatus: 0 },
 					state: { communicationStatus: 1 },
 					children: {},
 				},
@@ -54,6 +54,19 @@ describe("UNIT - Models", async function() {
 				},
 			},
 		};
+
+		it("can correctly format the snapshot", async () => {
+			const createdAt = Date.now();
+
+			const blastModel = BlastModel.create(createdAt)
+				.withId("test1")
+				.withTimer("firing", 3000)
+				.withTimer("reporting", 3000)
+				.withSnapshot(startSnapshot)
+				.start();
+
+			console.log(blastModel.data.snapshots.start);
+		});
 		it("can create a watchList from a snapshot", async function() {
 			const createdAt = Date.now();
 

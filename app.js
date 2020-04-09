@@ -93,11 +93,15 @@ App.prototype.componentStop = function($happn) {
 				I-->J(emit:STARTED)
  */
 App.prototype.startRouter = function($happn) {
-	const { endpointService, dataService } = $happn.exchange;
+	const { endpointService, dataService, queueService, nodered } = $happn.exchange;
 	const { log } = $happn;
 
 	return (async () => {
 		try {
+			if (!process.env.MODE) {
+				throw new Error("[ ENVIRONMENT ]: MODE needs to be set in Environment");
+			}
+
 			log.info("Starting App Entrypoint");
 			log.info("Initializing dataService");
 			const dataServiceStarted = await dataService.initialise();
@@ -105,12 +109,13 @@ App.prototype.startRouter = function($happn) {
 
 			if (dataServiceStarted) {
 				if (process.env.USE_INPUT_MODULE === "true") {
-					log.info("Initializing input");
+					log.info("[ INPUT ]:Initializing input");
 					await endpointService.start();
 				}
 			}
-
-			log.info(`System Mode: ${process.env.MODE}`);
+			await nodered.start();
+			await queueService.start();
+			log.info(`[ SYSTEM MODE ] ${process.env.MODE}`);
 			log.info("::::: APP STARTUP COMPLETE ::::::");
 		} catch (err) {
 			log.error("start error", err);

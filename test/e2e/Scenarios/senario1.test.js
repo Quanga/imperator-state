@@ -26,7 +26,7 @@ describe("INTEGRATION - Units", async function() {
 	context("Scenario 1", async () => {
 		const createdAt = Date.now();
 
-		before(async () => {
+		beforeEach("delete all current nodes, logs, warnings", async () => {
 			await serverHelper.startServer("test");
 
 			client = await new Mesh.MeshClient({
@@ -34,9 +34,8 @@ describe("INTEGRATION - Units", async function() {
 				port: 55000,
 			});
 			await util.asyncLogin(client);
-		});
 
-		beforeEach("delete all current nodes, logs, warnings", async function() {
+			console.log(JSON.stringify(await client.exchange.nodeRepository.get("*"), null, 2));
 			await client.exchange.logsRepository.delete("*");
 			await client.exchange.warningsRepository.delete("*");
 			await client.exchange.nodeRepository.delete("*");
@@ -230,8 +229,7 @@ describe("INTEGRATION - Units", async function() {
 			await util.timer(4000);
 			resultDataService = await client.exchange.dataService.getSnapShot();
 			expect(resultDataService[0][8].data[keySwitchStatus]).to.be.equal(1);
-			//expect the communication status to be 0
-			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(1);
+			expect(resultDataService[3][13].state[communicationStatus]).to.be.equal(0);
 			expect(resultDataService[4][13][1].data[detonatorStatus]).to.be.equal(1);
 			expect(resultDataService[4][13][1].state[communicationStatus]).to.be.equal(1);
 
@@ -315,7 +313,7 @@ describe("INTEGRATION - Units", async function() {
 			console.log(JSON.stringify(blastReportCompressed).length);
 
 			const logs = await client.exchange.logsRepository.get("*");
-			console.log(JSON.stringify(logs));
+			console.log(JSON.stringify(logs, null, 2));
 		});
 	});
 });
